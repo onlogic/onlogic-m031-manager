@@ -53,16 +53,23 @@ def main():
         print(my_dio.get_do(1))
         print(my_dio.get_do(2))
         print(my_dio.get_do(3))
-
-
+        
         print('*'*20)
         for i in range(0, 8):
             print(my_dio.set_do(i, 1))
             time.sleep(1)
 
+        for i in range(0, 8):
+            print(my_dio.set_do(i, 0))
+            time.sleep(1)
+
+        my_dio.get_di_contact()
+
+        my_dio.set_di_contact(0)
+        my_dio.set_di_contact(1)
+
         # print(my_dio.get_di_contact())
         # print(my_dio.get_do_contact())
-        
 
     except KeyboardInterrupt:
         print("Operation terminated by user.")

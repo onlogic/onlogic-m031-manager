@@ -1,3 +1,4 @@
+#TODO Replace everything with appropriate enums
 from enum import IntEnum
 
 ################ Constants #################
@@ -31,20 +32,19 @@ class ShellParams(IntEnum):
 GET_DI = 0x20
 SET_DO = 0x21
 GET_DO = 0x22
-GET_DI_CONTACT = 0x3F
-GET_DO_CONTACT = 0x40
-SET_DI_CONTACT = 0x41
-SET_DO_CONTACT = 0x42
-
+SET_DO_CONTACT = 0x23
+GET_DO_CONTACT = 0x24
+SET_DI_CONTACT = 0x25
+GET_DI_CONTACT = 0x26
 
 class Kinds(IntEnum):
     GET_DI = 0x20
     SET_DO = 0x21
     GET_DO = 0x22
-    GET_DI_CONTACT = 0x3F
-    GET_DO_CONTACT = 0x40
-    SET_DI_CONTACT = 0x41
-    SET_DO_CONTACT = 0x42
+    SET_DO_CONTACT = 0x23
+    GET_DO_CONTACT = 0x24
+    SET_DI_CONTACT = 0x25
+    GET_DI_CONTACT = 0x26
 
 # Command Set adhering to shell format 
 # header: sof, crc, len, kind; data

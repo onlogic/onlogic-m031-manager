@@ -216,7 +216,7 @@ class HX52xDioHandler():
             byte_in_port = self.port.read(1)
             response_frame.append(byte_in_port)
             self.port.write(SHELL_ACK.to_bytes(1, byteorder='little')) 
-
+        print(response_frame)
         return b''.join(response_frame)
 
     def get_di(self, di_pin:int) -> int:
@@ -299,25 +299,26 @@ class HX52xDioHandler():
         print(f"Recieved Command {frame}")
 
         # TODO: valid check here
-        print(bytes(frame[:-1]))
-        if bytes(frame[:-1]) != set_do_command:
-            print(f"\033[91mERROR | SEND CONFIRMATION FAILURE\033[0m")
-            return -3
+        # print(bytes(frame[:-1]))
+        # if bytes(frame[:-1]) != set_do_command:
+        #     print(f"\033[91mERROR | SEND CONFIRMATION FAILURE\033[0m")
+        #     return -3
 
         return 0
 
     def get_di_contact(self) -> int: # An error occurred: 'set' object is not callable, why       
-        contact_state_cmd = self.__construct_command(Kinds.GET_DI_CONTACT)
+        di_contact_state_cmd = self.__construct_command(Kinds.GET_DI_CONTACT)
         
         self.__reset(nack_counter=64)
-        if not self.__send_command(contact_state_cmd):
+        if not self.__send_command(di_contact_state_cmd):
             return -1
         
         frame = self.__receive_command()
-        
+        print(frame)
+
         self.__reset(nack_counter=64, reset_buffers=False) 
         time.sleep(.004)
-        
+
         # Retrieve di value located in penultimate idx of frame
         val = frame[-2]
         if val in [0, 1]:
@@ -326,10 +327,13 @@ class HX52xDioHandler():
         print(f"\033[91mERROR | NON-BINARY DATATYPE DETECTED\033[0m")
         return -1
 
-    def get_do_contact(self) -> int:        
+    def get_do_contact(self) -> int:
+
+        do_contact_state_cmd = self.__construct_command(Kinds.GET_DO_CONTACT)
+
         # Enclose each value read with buffer clearances
         self.__reset(nack_counter=64)
-        if not self.__send_command(get_do_contact_command):
+        if not self.__send_command(do_contact_state_cmd):
             return -1
         
         frame = self.__receive_command()
@@ -337,7 +341,7 @@ class HX52xDioHandler():
         self.__reset(nack_counter=64, reset_buffers=False) # why reset twice in get_di command
         time.sleep(.004)
 
-        print(frame)
+        print(i for i in frame)
         
         # Retrieve di value located in penultimate idx of frame
         val = frame[-2]
@@ -351,10 +355,12 @@ class HX52xDioHandler():
             if contact_type < 0 or contact_type > 1:
                 raise ValueError(f"\033[91mOut of Range Contact Type Provided: {contact_type}. Valid Range [0-1]\033[0m")
             
+            set_di_contact_state_cmd = self.__construct_command(Kinds.SET_DI_CONTACT, contact_type)
+
             # Enclose each value read with buffer clearances
             self.__reset(nack_counter=64)
 
-            if not self.__send_command(set_di_contact_commands, contact_type):
+            if not self.__send_command(set_di_contact_state_cmd):
                 return -1
             
             frame = self.__receive_command()
@@ -364,13 +370,15 @@ class HX52xDioHandler():
             
             # validate
 
-            print(f"\033[91mERROR | NON-BINARY DATATYPE DETECTED. return value: {val}\033[0m")
+            print(f"\033[91mERROR | NON-BINARY DATATYPE DETECTED\033[0m")
             return -1
 
     def set_do_contact(self, contact_type:int) -> int:
         if contact_type < 0 or contact_type > 1:
             raise ValueError(f"\033[91mOut of Range Contact Type Provided: {contact_type}. Valid Range [0-1]\033[0m")
         
+        set_di_contact_state_cmd = self.__construct_command(Kinds.GET_DI_CONTACT, contact_type)
+
         # Enclose each value read with buffer clearances
         self.__reset(nack_counter=64)
         if not self.__send_command(set_do_contact_commands, contact_type):
@@ -385,7 +393,7 @@ class HX52xDioHandler():
         
         # TODO: Generate check
         
-        print(f"\033[91mERROR | NON-BINARY DATATYPE DETECTED. return value: {val}\033[0m")
+        print(f"\033[91mERROR | NON-BINARY DATATYPE DETECTED\033[0m")
         return -1
     
     def show_all_io_states(self):
