@@ -307,13 +307,13 @@ class HX52xDioHandler():
         return 0
 
     def get_di_contact(self) -> int: # An error occurred: 'set' object is not callable, why       
-        di_contact_state_cmd = self.__construct_command(Kinds.GET_DI_CONTACT)
+        di_contact_state_cmd = self.__construct_command(0x3F)
         
         self.__reset(nack_counter=64)
         if not self.__send_command(di_contact_state_cmd):
             return -1
         
-        frame = self.__receive_command()
+        frame = self.__receive_command(6)
         print(frame)
 
         self.__reset(nack_counter=64, reset_buffers=False) 
@@ -329,19 +329,19 @@ class HX52xDioHandler():
 
     def get_do_contact(self) -> int:
 
-        do_contact_state_cmd = self.__construct_command(Kinds.GET_DO_CONTACT)
+        do_contact_state_cmd = self.__construct_command(0x40)
 
         # Enclose each value read with buffer clearances
         self.__reset(nack_counter=64)
         if not self.__send_command(do_contact_state_cmd):
             return -1
         
-        frame = self.__receive_command()
+        frame = self.__receive_command(6)
         
         self.__reset(nack_counter=64, reset_buffers=False) # why reset twice in get_di command
         time.sleep(.004)
 
-        print(i for i in frame)
+        print(frame)
         
         # Retrieve di value located in penultimate idx of frame
         val = frame[-2]
@@ -381,7 +381,7 @@ class HX52xDioHandler():
 
         # Enclose each value read with buffer clearances
         self.__reset(nack_counter=64)
-        if not self.__send_command(set_do_contact_commands, contact_type):
+        if not self.__send_command(set_di_contact_state_cmd):
             return -1
         
         frame = self.__receive_command()
