@@ -82,27 +82,27 @@ class HX52xDioHandler():
             raise serial.SerialException(f"\033[91mERROR | {e}: Are you on the right port?\033[0m")
 
     def create_logger(self):
-         '''Create Logger with 2 priorities'''
-         if self.logger_mode == 'off':
-             return
- 
-         self.logger = logging.getLogger()
-         now = datetime.now().strftime("%m_%d_%Y_%H_%M_%S")
-         level_dict = { 
-              'error' : logging.ERROR,
-              'frames': logging.DEBUG,
-               }
-         
-         level = level_dict.get(self.logger_mode, "Unknown")
-         
-         if level == 'Unknown' or level is None:
-             del self.logger
-             return
-         
-         logging.basicConfig (
-             filename=f"can_session_{now}.log",
-             format='[%(asctime)s %(levelname)s %(filename)s:%(lineno)d -> %(funcName)s()] %(message)s',
-             level=level
+        '''Create Logger with 2 priorities'''
+        if self.logger_mode == 'off':
+            return
+          
+        self.logger = logging.getLogger()
+        now = datetime.now().strftime("%m_%d_%Y_%H_%M_%S")
+        level_dict = { 
+            'error' : logging.ERROR,
+            'frames': logging.DEBUG,
+            }
+
+        level = level_dict.get(self.logger_mode, "Unknown")
+
+        if level == 'Unknown' or level is None:
+            del self.logger
+            return
+
+        logging.basicConfig (
+            filename=f"dio_session_{now}.log",
+            format='[%(asctime)s %(levelname)s %(filename)s:%(lineno)d -> %(funcName)s()] %(message)s',
+            level=level
         )
 
     def __mcu_connection_check(self) -> None:
@@ -204,7 +204,7 @@ class HX52xDioHandler():
         
         return False
 
-    def __receive_command(self, response_frame_len=RESPONSE_FRAME_LEN) -> bytes:
+    def __receive_command(self, response_frame_len:int=RESPONSE_FRAME_LEN) -> bytes:
         '''\
         receive command in expected format that complies with UART Shell.
         The response_frame list should always end with a NACK ['\a'] 
@@ -377,7 +377,7 @@ class HX52xDioHandler():
         if contact_type < 0 or contact_type > 1:
             raise ValueError(f"\033[91mOut of Range Contact Type Provided: {contact_type}. Valid Range [0-1]\033[0m")
         
-        set_di_contact_state_cmd = self.__construct_command(Kinds.GET_DI_CONTACT, contact_type)
+        set_di_contact_state_cmd = self.__construct_command(Kinds.SET_DO_CONTACT, contact_type)
 
         # Enclose each value read with buffer clearances
         self.__reset(nack_counter=64)
@@ -396,11 +396,14 @@ class HX52xDioHandler():
         print(f"\033[91mERROR | NON-BINARY DATATYPE DETECTED\033[0m")
         return -1
     
-    def show_all_io_states(self):
+    def get_all_io_states(self):
         pass
 
-    def set_all_outputs(self, do_lst:list) -> int:
+    def set_all_output_states(self, do_lst:list) -> int:
         pass
 
-    def get_all_inputs(self) -> list:
+    def get_all_input_states(self) -> list:
+        pass
+
+    def get_all_output_states(self) -> list:
         pass
