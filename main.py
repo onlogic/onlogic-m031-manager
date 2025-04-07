@@ -56,15 +56,15 @@ def main():
         print(my_dio.get_do(2))
         print(my_dio.get_do(3))
         
-        print('*'*20)
-        print("TEST set_do")
-        for i in range(0, 8):
-            print(my_dio.set_do(i, 1))
-            time.sleep(.1)
+        # print('*'*20)
+        # print("TEST set_do")
+        # for i in range(0, 8):
+        #     print(my_dio.set_do(i, 1))
+        #     time.sleep(.1)
 
-        for i in range(0, 8):
-            print(my_dio.set_do(i, 0))
-            time.sleep(.1)
+        # for i in range(0, 8):
+        #     print(my_dio.set_do(i, 0))
+        #     time.sleep(.1)
 
         print("TEST get_di_contact")
         print(my_dio.get_di_contact())
