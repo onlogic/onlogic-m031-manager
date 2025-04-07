@@ -53,6 +53,7 @@ class HX52xDioHandler():
 
     def __repr__(self):
         '''COM port and command set of DioInputHandler.'''
+        # TODO: Flesh this out
         # serial.__version__
         return f"\nPort: {self.serial_connection_label}\n"
     
@@ -175,10 +176,10 @@ class HX52xDioHandler():
 
     def __validate_input_param(self, dio_input_parameter, valid_input_range:list, input_type:type):
         if type(dio_input_parameter) != input_type:
-            raise TypeError(f"\033ERROR: {type(dio_input_parameter)} was found when {input_type} was expected\033[0m")
+            raise TypeError(f"\033[91mERROR: {type(dio_input_parameter)} was found when {input_type} was expected\033[0m")
             
         if dio_input_parameter < valid_input_range[0] or dio_input_parameter > valid_input_range[1]:
-            raise ValueError(f"\033[91mOut of Value Provided: {dio_input_parameter}. Valid Range {valid_input_range}\033[0m")
+            raise ValueError(f"\033[91mOut of Range Value Provided: {dio_input_parameter}. Valid Range {valid_input_range}\033[0m")
 
     def __validate_recieved_frame(self, return_frame, info_offset, valid_options, end_offset):
         if info_offset is not None and return_frame[-info_offset] not in valid_options:
@@ -193,7 +194,6 @@ class HX52xDioHandler():
 
     @functools.lru_cache(maxsize=128)
     def __construct_command(self, kind:Kinds, *payload:int) -> bytes:
-
         # self.__validate_message_bytes(kind, payload)
         
         crc_calculation = crc8.smbus((bytes([len(payload), kind, *payload])))
@@ -386,9 +386,7 @@ class HX52xDioHandler():
         time.sleep(.004)
         
         # validate
-
-        print(f"\033[91mERROR | NON-BINARY DATATYPE DETECTED\033[0m")
-        return -1
+        return 0
 
     def set_do_contact(self, contact_type:int) -> int:
         if contact_type < 0 or contact_type > 1:
@@ -409,8 +407,7 @@ class HX52xDioHandler():
         print(frame)
         
         # TODO: Generate check
-        print(f"\033[91mERROR | NON-BINARY DATATYPE DETECTED\033[0m")
-        return -1
+        return 0
     
     def get_all_io_states(self) -> list:
         return []

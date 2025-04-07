@@ -24,10 +24,6 @@ NOTE:
     - CTRL+C can be used to exit the program.
 
     - There is a time.sleep(.004) delay in get_di for stabilization.
-
-    - This has been tested on Windows only.
-
-    - If you are having any issues, feel free to email me directly at nick.hanna@onlogic.com.
 """
 
 import timeit # Optional: measure time taken per sample
@@ -45,38 +41,66 @@ def main():
         # Init input handler
         my_dio = HX52xDioHandler()
         
-        print("TEST get_di")
-        print(my_dio.get_di(0))
-        # print(my_dio.get_di(1))
-        # print(my_dio.get_di(2))
-        # print(my_dio.get_di(3))
+        print("=" * 30)
+        print("TESTING DIGITAL INPUTS (get_di)")
+        print("=" * 30)
+        print(f"DI Channel 0: {my_dio.get_di(0)}")
+        print(f"DI Channel 1: {my_dio.get_di(1)}")
+        print(f"DI Channel 2: {my_dio.get_di(2)}")
+        print(f"DI Channel 3: {my_dio.get_di(3)}")
+        print()
 
-        print("TEST get_do")
-        print(my_dio.get_do(0))
-        # print(my_dio.get_do(1))
-        # print(my_dio.get_do(2))
-        # print(my_dio.get_do(3))
-        
-        print("TEST set_do")
-        for i in range(0, 1):
-            print(my_dio.set_do(i, 1))
+        print("=" * 30)
+        print("TESTING DIGITAL OUTPUTS (get_do)")
+        print("=" * 30)
+        print(f"DO Channel 0: {my_dio.get_do(0)}")
+        print(f"DO Channel 1: {my_dio.get_do(1)}")
+        print(f"DO Channel 2: {my_dio.get_do(2)}")
+        print(f"DO Channel 3: {my_dio.get_do(3)}")
+        print()
+
+        print("=" * 30)
+        print("TESTING DIGITAL OUTPUTS (set_do)")
+        print("=" * 30)
+        print("Setting DO channels to 1:")
+        for i in range(0, 7):
+            result = my_dio.set_do(i, 1)
+            print(f"Setting DO Channel {i} to 1: Result = {result}")
             time.sleep(.1)
-
-        for i in range(0, 1):
-            print(my_dio.set_do(i, 0))
+        print("\nSetting DO channels to 0:")
+        for i in range(0, 7):
+            result = my_dio.set_do(i, 0)
+            print(f"Setting DO Channel {i} to 0: Result = {result}")
             time.sleep(.1)
+        print()
 
-        print("TEST get_di_contact")
-        print(my_dio.get_di_contact())
+        print("=" * 30)
+        print("TESTING DIGITAL INPUT CONTACT (get_di_contact)")
+        print("=" * 30)
+        print(f"DI Contact Status: {my_dio.get_di_contact()}")
+        print()
 
-        print("TEST get_do_contact")
-        print(my_dio.get_do_contact())
+        print("=" * 30)
+        print("TESTING DIGITAL OUTPUT CONTACT (get_do_contact)")
+        print("=" * 30)
+        print(f"DO Contact Status: {my_dio.get_do_contact()}")
+        print()
 
-        print("TEST set_di_contact")
+        print("=" * 30)
+        print("TESTING SET DIGITAL INPUT CONTACT (set_di_contact)")
+        print("=" * 30)
+        print("Setting DI Contact to 0:")
         my_dio.set_di_contact(0)
+        print("Set DI Contact to 0 (no direct print)")
+        print()
 
-        print("TEST set_di_contact")
+        print("=" * 30)
+        print("TESTING SET DIGITAL INPUT CONTACT (set_di_contact)")
+        print("=" * 30)
+        print("Setting DI Contact to 1:")
         my_dio.set_di_contact(1)
+        print("Set DI Contact to 1 (no direct print)")
+        print()
 
     except KeyboardInterrupt:
         print("Operation terminated by user.")

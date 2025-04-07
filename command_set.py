@@ -1,5 +1,3 @@
-
-
 ################ Constants #################
 MCU_VID_PID = "353F:A105"
 TIME_THRESHOLD = 2.5
@@ -22,16 +20,11 @@ class Kinds:
     SET_DI_CONTACT = 0x25
     GET_DI_CONTACT = 0x26
 
-'''
 class ErrorTypes:
-    RECV_NONBINARY_DATATYPE_DETECTED = -1
-    RECV_FRAME_CONFIRMATION_FAILURE = -2
-
-    AKNOWLEDGEMENT_ERROR = -4
-
-
-'''
-
+    SEND_SUCCESS = 0
+    SEND_COMMAND_FAILURE = -1
+    RECV_NONBINARY_DATATYPE_DETECTED = -2
+    RECV_FRAME_CONFIRMATION_FAILURE = -3
+    
 ############################################
-
 # sof, crc, len, kind, data
