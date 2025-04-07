@@ -21,20 +21,23 @@ References:
 
 import time
 import serial
-from colorama import just_fix_windows_console
-from serial.tools import list_ports as system_ports
-from command_set import *
-from fastcrc import crc8
+import functools
 import datetime
 import logging
+
+from colorama import just_fix_windows_console
+from serial.tools import list_ports as system_ports
+from command_set import ProtocolConstants, Kinds, MCU_VID_PID, TIME_THRESHOLD
+from fastcrc import crc8
 
 class HX52xDioHandler():
     '''
     Administers the serial connection with the
-    microcontroller embedded in the HX52x.
+    microcontroller embedded in the K/HX-52x DIO-Add in Card.
     '''
-    def __init__(self, serial_connection_label:str=None):
+    def __init__(self, serial_connection_label:str=None, logger_mode:str="None"):
         '''Init class by establishing serial connection.'''
+        self.logger_mode = logger_mode   
         just_fix_windows_console() # Color coding for errors and such
         self.is_setup=False
         self.serial_connection_label = serial_connection_label
@@ -46,11 +49,7 @@ class HX52xDioHandler():
     def __del__(self):
         '''Destroy the object and end device communication gracefully.'''
         if self.is_setup:
-            time.sleep(.1)
-            self.__reset()
-            self.port.reset_input_buffer()
-            self.port.reset_output_buffer()
-            self.port.close()
+            self.close_dio_connection()
 
     def __repr__(self):
         '''COM port and command set of DioInputHandler.'''
@@ -81,16 +80,18 @@ class HX52xDioHandler():
         except serial.SerialException as e:
             raise serial.SerialException(f"\033[91mERROR | {e}: Are you on the right port?\033[0m")
 
-    def create_logger(self):
-        '''Create Logger with 2 priorities'''
+    def __create_logger(self):
+        '''Create Logger with INFO, DEBUG, and ERROR Debugging'''
         if self.logger_mode == 'off':
             return
           
         self.logger = logging.getLogger()
         now = datetime.now().strftime("%m_%d_%Y_%H_%M_%S")
+
         level_dict = { 
-            'error' : logging.ERROR,
+            'info'  : logging.INFO,
             'frames': logging.DEBUG,
+            'error' : logging.ERROR,
             }
 
         level = level_dict.get(self.logger_mode, "Unknown")
@@ -100,7 +101,7 @@ class HX52xDioHandler():
             return
 
         logging.basicConfig (
-            filename=f"dio_session_{now}.log",
+            filename=f"HX52x_session_{now}.log",
             format='[%(asctime)s %(levelname)s %(filename)s:%(lineno)d -> %(funcName)s()] %(message)s',
             level=level
         )
@@ -117,19 +118,19 @@ class HX52xDioHandler():
         initial_time = time.time()
         current_time = 0
 
-        self.port.write(SHELL_ACK.to_bytes(1, byteorder='little'))
-        while current_time - initial_time <= TIME_THRESHOLD and nack_count < NACKS_NEEDED:
+        self.port.write(ProtocolConstants.SHELL_ACK.to_bytes(1, byteorder='little'))
+        while current_time - initial_time <= TIME_THRESHOLD and nack_count < ProtocolConstants.NACKS_NEEDED:
             current_time = time.time()
             if self.port.inWaiting() > 0:
                 # If received byte is not what was expected, reset counter
                 byte_in_port = self.port.read(1)
-                if int.from_bytes(byte_in_port, byteorder='little') == SHELL_NACK:
+                if int.from_bytes(byte_in_port, byteorder='little') == ProtocolConstants.SHELL_NACK:
                     # print(bytes_in_port) # Should be NACKS...
                     nack_count += 1
-                    self.port.write(SHELL_ACK.to_bytes(1, byteorder='little'))
+                    self.port.write(ProtocolConstants.SHELL_ACK.to_bytes(1, byteorder='little'))
                     time.sleep(.004)
 
-        if nack_count == NACKS_NEEDED:
+        if nack_count == ProtocolConstants.NACKS_NEEDED:
             print("\033[32mDIO Interface Found\033[0m")
             return
 
@@ -139,7 +140,7 @@ class HX52xDioHandler():
 
         raise ValueError("ERROR | AKNOWLEDGEMENT ERROR")
 
-    def __reset(self, nack_counter:int=NUM_NACKS, reset_buffers:bool=True) -> None:
+    def __reset(self, nack_counter:int=ProtocolConstants.NUM_NACKS, reset_buffers:bool=True) -> None:
         '''Reset following the LPMCU ACK-NACK pattern.'''
         # Expensive operation, shouldn't be done twice per read
         if reset_buffers:
@@ -153,47 +154,69 @@ class HX52xDioHandler():
             if bytes_sent > 1024:
                 raise RuntimeError("Cannot recover MCU")
             # Begin buffer clear feedback loop
-            self.port.write(SHELL_ACK.to_bytes(1, byteorder='little'))
+            self.port.write(ProtocolConstants.SHELL_ACK.to_bytes(1, byteorder='little'))
             bytes_sent += 1
             byte_in_port = self.port.read(1)
 
             # If received byte is not what was expected, reset counter
-            if int.from_bytes(byte_in_port, byteorder='little') == SHELL_NACK:
+            if int.from_bytes(byte_in_port, byteorder='little') == ProtocolConstants.SHELL_NACK:
                 bytes_to_send -= 1
             else:
                 bytes_to_send = nack_counter
 
-    def validate_message_params(self, kind:Kinds, *payload:int):
-        pass
+    def close_dio_connection(self):
+        # HX52xDioHandler.__construct_command.cache_clear()
+        # TODO: Figure out why is the sleep function Erroring when lru_cache is enabled in destructor
+        # time.sleep(.001) 
+        self.__reset()
+        self.port.reset_input_buffer()
+        self.port.reset_output_buffer()
+        self.port.close()
 
-    def validate_recieved_frame(self, input_command:bytes, kind:Kinds):
-        pass
+    def __validate_input_param(self, dio_input_parameter, valid_input_range:list, input_type:type):
+        if type(dio_input_parameter) != input_type:
+            raise TypeError(f"\033ERROR: {type(dio_input_parameter)} was found when {input_type} was expected\033[0m")
+            
+        if dio_input_parameter < valid_input_range[0] or dio_input_parameter > valid_input_range[1]:
+            raise ValueError(f"\033[91mOut of Value Provided: {dio_input_parameter}. Valid Range {valid_input_range}\033[0m")
 
-    # @lru_cache(maxsize=128)
-    def __construct_command(self, kind:Kinds, *payload:int) -> bytes:
+    def __validate_recieved_frame(self, return_frame, info_offset, valid_options, end_offset):
+        if info_offset is not None and return_frame[-info_offset] not in valid_options:
+            print(f"\033[91mERROR | SEND CONFIRMATION FAILURE\033[0m")
+            return -1
+            
+        if return_frame[-end_offset] != ProtocolConstants.SHELL_NACK:
+            print(f"\033[91mERROR | SEND CONFIRMATION FAILURE\033[0m")
+            return -2
         
-        self.validate_message_params(kind, payload)
+        return 0
+
+    @functools.lru_cache(maxsize=128)
+    def __construct_command(self, kind:Kinds, *payload:int) -> bytes:
+
+        # self.__validate_message_bytes(kind, payload)
         
         crc_calculation = crc8.smbus((bytes([len(payload), kind, *payload])))
         
-        constructed_command = bytes([ShellParams.SHELL_SOF, 
+        constructed_command = bytes([ProtocolConstants.SHELL_SOF, 
                                      crc_calculation, 
                                      len(payload), 
                                      kind, 
                                      *payload
                                      ])    
         
-        print("Construct Command", constructed_command)
+        print("Constructed Command", constructed_command)
         return constructed_command
 
     def __send_command(self, command_to_send:bytes) -> bool:
         # send command byte by byte and validate response
+        # print("LEN IS", len(command_to_send), "\n")
         shell_ack_cnt = 0
         for byte in command_to_send:
             self.port.write(byte.to_bytes(1, byteorder='little'))
             byte_in_port = self.port.read(1)
             
-            if int.from_bytes(byte_in_port, byteorder='little') == SHELL_ACK:
+            if int.from_bytes(byte_in_port, byteorder='little') == ProtocolConstants.SHELL_ACK:
                 shell_ack_cnt += 1
 
         if shell_ack_cnt == len(command_to_send):
@@ -204,18 +227,18 @@ class HX52xDioHandler():
         
         return False
 
-    def __receive_command(self, response_frame_len:int=RESPONSE_FRAME_LEN) -> bytes:
+    def __receive_command(self, response_frame_len:int=ProtocolConstants.RESPONSE_FRAME_LEN) -> bytes:
         '''\
         receive command in expected format that complies with UART Shell.
         The response_frame list should always end with a NACK ['\a'] 
         command indicating the end of the received payload.
         '''
         response_frame = []
-        self.port.write(SHELL_ACK.to_bytes(1, byteorder='little')) 
+        self.port.write(ProtocolConstants.SHELL_ACK.to_bytes(1, byteorder='little')) 
         for _ in range(response_frame_len): 
             byte_in_port = self.port.read(1)
             response_frame.append(byte_in_port)
-            self.port.write(SHELL_ACK.to_bytes(1, byteorder='little')) 
+            self.port.write(ProtocolConstants.SHELL_ACK.to_bytes(1, byteorder='little')) 
         print(response_frame)
         return b''.join(response_frame)
 
@@ -228,9 +251,8 @@ class HX52xDioHandler():
         :return:        returns 1, indicating on, 0, indicating off, 
                         and -1, indicating an error occured in the sample
         """
-        if di_pin < 0 or di_pin > 7:
-            raise ValueError(f"\033[91mOut of Range Pin Value Provided: {di_pin}. Valid Range [0-7]\033[0m")
-
+        self.__validate_input_param(di_pin, [0,7], int)
+        
         di_command = self.__construct_command(Kinds.GET_DI, di_pin)
 
         # Enclose each value read with buffer clearances
@@ -253,8 +275,7 @@ class HX52xDioHandler():
 
     
     def get_do(self, do_pin:int) -> int:
-        if do_pin < 0 or do_pin > 7:
-            raise ValueError(f"\033[91mOut of Range Pin Value Provided: {do_pin}. Valid Range [0-3]\033[0m")
+        self.__validate_input_param(do_pin, [0,7], int)
 
         do_command = self.__construct_command(Kinds.GET_DO, do_pin)
 
@@ -279,10 +300,8 @@ class HX52xDioHandler():
         return -2
 
     def set_do(self, pin:int, value:int) -> int:
-        if pin < 0 or pin > 7:
-            raise ValueError(f"\033[91mOut of Range Pin Value Provided: {pin}. Valid Range [0-7]\033[0m")
-        if value not in [0, 1]:
-            raise ValueError(f"\033[91mOut of Range Value Provided: {value}. Valid Range [0-1]\033[0m")
+        self.__validate_input_param(pin, [0,7], int)
+        self.__validate_input_param(value, [0,1], int)
         
         set_do_command = self.__construct_command(Kinds.GET_DO, pin, value)
         
@@ -298,11 +317,9 @@ class HX52xDioHandler():
         
         print(f"Recieved Command {frame}")
 
-        # TODO: valid check here
-        # print(bytes(frame[:-1]))
-        # if bytes(frame[:-1]) != set_do_command:
-        #     print(f"\033[91mERROR | SEND CONFIRMATION FAILURE\033[0m")
-        #     return -3
+        if frame[-2] not in [0, 1] or frame[-1] != ProtocolConstants.SHELL_NACK:
+            print(f"\033[91mERROR | SEND CONFIRMATION FAILURE\033[0m")
+            return -3
 
         return 0
 
@@ -328,7 +345,7 @@ class HX52xDioHandler():
         return -1
 
     def get_do_contact(self) -> int:
-
+        # TODO: FIX 0x40
         do_contact_state_cmd = self.__construct_command(0x40)
 
         # Enclose each value read with buffer clearances
@@ -352,26 +369,26 @@ class HX52xDioHandler():
         return -1
 
     def set_di_contact(self, contact_type:int) -> int:
-            if contact_type < 0 or contact_type > 1:
-                raise ValueError(f"\033[91mOut of Range Contact Type Provided: {contact_type}. Valid Range [0-1]\033[0m")
-            
-            set_di_contact_state_cmd = self.__construct_command(Kinds.SET_DI_CONTACT, contact_type)
+        if contact_type < 0 or contact_type > 1:
+            raise ValueError(f"\033[91mOut of Range Contact Type Provided: {contact_type}. Valid Range [0-1]\033[0m")
+        
+        set_di_contact_state_cmd = self.__construct_command(Kinds.SET_DI_CONTACT, contact_type)
 
-            # Enclose each value read with buffer clearances
-            self.__reset(nack_counter=64)
+        # Enclose each value read with buffer clearances
+        self.__reset(nack_counter=64)
 
-            if not self.__send_command(set_di_contact_state_cmd):
-                return -1
-            
-            frame = self.__receive_command()
-            
-            self.__reset(nack_counter=64, reset_buffers=False)
-            time.sleep(.004)
-            
-            # validate
-
-            print(f"\033[91mERROR | NON-BINARY DATATYPE DETECTED\033[0m")
+        if not self.__send_command(set_di_contact_state_cmd):
             return -1
+        
+        frame = self.__receive_command()
+        
+        self.__reset(nack_counter=64, reset_buffers=False)
+        time.sleep(.004)
+        
+        # validate
+
+        print(f"\033[91mERROR | NON-BINARY DATATYPE DETECTED\033[0m")
+        return -1
 
     def set_do_contact(self, contact_type:int) -> int:
         if contact_type < 0 or contact_type > 1:
@@ -392,18 +409,17 @@ class HX52xDioHandler():
         print(frame)
         
         # TODO: Generate check
-        
         print(f"\033[91mERROR | NON-BINARY DATATYPE DETECTED\033[0m")
         return -1
     
-    def get_all_io_states(self):
-        pass
+    def get_all_io_states(self) -> list:
+        return []
 
     def set_all_output_states(self, do_lst:list) -> int:
-        pass
+        return 0
 
     def get_all_input_states(self) -> list:
-        pass
+        return []
 
     def get_all_output_states(self) -> list:
-        pass
+        return []

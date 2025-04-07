@@ -33,6 +33,7 @@ NOTE:
 import timeit # Optional: measure time taken per sample
 from HX52xDioHandler import HX52xDioHandler
 import time
+
 def main():
     '''main, implementation of session logic.'''
 
@@ -46,25 +47,24 @@ def main():
         
         print("TEST get_di")
         print(my_dio.get_di(0))
-        print(my_dio.get_di(1))
-        print(my_dio.get_di(2))
-        print(my_dio.get_di(3))
+        # print(my_dio.get_di(1))
+        # print(my_dio.get_di(2))
+        # print(my_dio.get_di(3))
 
         print("TEST get_do")
         print(my_dio.get_do(0))
-        print(my_dio.get_do(1))
-        print(my_dio.get_do(2))
-        print(my_dio.get_do(3))
+        # print(my_dio.get_do(1))
+        # print(my_dio.get_do(2))
+        # print(my_dio.get_do(3))
         
-        # print('*'*20)
-        # print("TEST set_do")
-        # for i in range(0, 8):
-        #     print(my_dio.set_do(i, 1))
-        #     time.sleep(.1)
+        print("TEST set_do")
+        for i in range(0, 1):
+            print(my_dio.set_do(i, 1))
+            time.sleep(.1)
 
-        # for i in range(0, 8):
-        #     print(my_dio.set_do(i, 0))
-        #     time.sleep(.1)
+        for i in range(0, 1):
+            print(my_dio.set_do(i, 0))
+            time.sleep(.1)
 
         print("TEST get_di_contact")
         print(my_dio.get_di_contact())
@@ -72,15 +72,15 @@ def main():
         print("TEST get_do_contact")
         print(my_dio.get_do_contact())
 
-        # print("TEST set_di_contact")
-        # my_dio.set_di_contact(0)
+        print("TEST set_di_contact")
+        my_dio.set_di_contact(0)
 
-        # print("TEST set_di_contact")
-        # my_dio.set_di_contact(1)
+        print("TEST set_di_contact")
+        my_dio.set_di_contact(1)
 
     except KeyboardInterrupt:
         print("Operation terminated by user.")
-    finally:
+    finally: 
         print("\033[93mExiting...\033[0m")
         del my_dio
 
