@@ -214,7 +214,7 @@ class HX52xDioHandler():
             if return_frame[target_index] not in target_range:
                 return StatusTypes.RECV_NONBINARY_DATATYPE_DETECTED
 
-        return StatusTypes.RECV_SUCCESS
+        return StatusTypes.SUCCESS
 
     def close_dio_connection(self):
         # HX52xDioHandler.__construct_command.cache_clear()
@@ -253,7 +253,7 @@ class HX52xDioHandler():
                 shell_ack_cnt += 1
 
         if shell_ack_cnt == len(command_to_send):
-            return True # StatusTypes.SEND_SUCCESS
+            return True # StatusTypes.SUCCESS
 
         print("\033[91mERROR | AKNOWLEDGEMENT ERROR: "\
               "mismatch in number of aknowledgements, reduce access speed?\033[0m")
@@ -299,7 +299,6 @@ class HX52xDioHandler():
         time.sleep(.004)
 
         # Retrieve di value located in penultimate idx of frame
-
         val = frame[-2]
         if val in [0, 1]:
             return val
@@ -323,9 +322,7 @@ class HX52xDioHandler():
         self.__reset(nack_counter=64, reset_buffers=False)
         time.sleep(.004)
 
-        print(self.__check_crc(frame))
         print(frame)
-
         # Retrieve di value located in penultimate idx of frame
         # ret_val = self.__validate_recieved_frame(frame, -2, [0,1])
         # if ret_val is not StatusTypes.RECV_SUCCESS:
@@ -351,7 +348,6 @@ class HX52xDioHandler():
         
         print(f"Recieved Command {frame}")
 
-        print(self.__check_crc(frame))
         #TODO Move into validation function
         # if frame[-2] not in [0, 1] or frame[-1] != ProtocolConstants.SHELL_NACK:
         #     print(f"\033[91mERROR | SEND CONFIRMATION FAILURE\033[0m")
@@ -441,7 +437,7 @@ class HX52xDioHandler():
 
         # Validate HERE
 
-        return StatusTypes.SEND_SUCCESS
+        return StatusTypes.SUCCESS
 
     def get_all_input_states(self) -> list:
         all_input_states = []
@@ -466,4 +462,4 @@ class HX52xDioHandler():
         for i in do_lst:
             self.set_do(i)
 
-        return StatusTypes.SEND_SUCCESS
+        return StatusTypes.SUCCESS

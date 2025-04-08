@@ -24,8 +24,7 @@ class Kinds:
     GET_DI_CONTACT = 0x50
 
 class StatusTypes:
-    SEND_SUCCESS = 0
-    RECV_SUCCESS = 0
+    SUCCESS = 0
     SEND_CMD_FAILURE = -1
     RECV_NONBINARY_DATATYPE_DETECTED = -2
     RECV_FRAME_NACK_ERROR = -3
