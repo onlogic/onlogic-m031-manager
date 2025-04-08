@@ -91,7 +91,7 @@ class HX52xDioHandler():
 
         level_dict = { 
             'info'  : logging.INFO,
-            'frames': logging.DEBUG,
+            'debug' : logging.DEBUG,
             'error' : logging.ERROR,
             }
 
@@ -163,7 +163,7 @@ class HX52xDioHandler():
             # If received byte is not what was expected, reset counter
             if int.from_bytes(byte_in_port, byteorder='little') == ProtocolConstants.SHELL_NACK:
                 bytes_to_send -= 1
-            else:
+            else:    
                 bytes_to_send = nack_counter
 
     def __validate_input_param(self, dio_input_parameter, valid_input_range:list, input_type:type):
@@ -173,8 +173,40 @@ class HX52xDioHandler():
         if dio_input_parameter < valid_input_range[0] or dio_input_parameter > valid_input_range[1]:
             raise ValueError(f"\033[91mERROR | Out of Range Value Provided: {dio_input_parameter}. Valid Range {valid_input_range}\033[0m")
 
-    def __check_crc(self) -> bool:
-        pass
+    def __check_crc(self, frame) -> bool:
+        '''
+        constructed_command = bytes([ProtocolConstants.SHELL_SOF, 
+                                     crc_calculation, 
+                                     len(payload), 
+                                     kind, 
+                                     *payload
+                                     ])    
+        '''
+
+        crc_val = crc8.smbus(
+            frame[2],
+            frame[3],
+            frame[4:-1]
+        )
+
+        if crc_val != frame[3]:
+            return False
+
+        return True
+    
+    def __log_print(self, message_info, print_to_console=True, log=False, level=False):
+        if print_to_console:
+            print(message_info)
+
+        if log is not None and level is not None:
+            if level == logging.INFO:
+                self.logger.info(message_info)
+            elif level == logging.DEBUG:
+                self.logger.debug(message_info)
+            elif level == logging.ERROR:
+                self.logger.error(message_info)
+            else:
+                raise ValueError("INCORRECT DEBUG INPUT INTO LOGGER")
 
     def __validate_recieved_frame(self, return_frame:list, target_index:int=None, target_range:list=None) -> int:
         if return_frame[-1] != ProtocolConstants.SHELL_NACK:
@@ -385,43 +417,56 @@ class HX52xDioHandler():
 
         if not self.__send_command(set_di_contact_state_cmd):
             return -1
-        
-        frame = self.__receive_command()
-        
+
+        frame = self.__receive_command(6)
+
         self.__reset(nack_counter=64, reset_buffers=False)
         time.sleep(.004)
+
+        # validate HERE
         
-        # validate
         return 0
 
     def set_do_contact(self, contact_type:int) -> int:
         self.__validate_input_param(contact_type, [0,1], int)
-        
+
         set_di_contact_state_cmd = self.__construct_command(Kinds.SET_DO_CONTACT, contact_type)
 
         # Enclose each value read with buffer clearances
         self.__reset(nack_counter=64)
         if not self.__send_command(set_di_contact_state_cmd):
             return -1
-        
-        frame = self.__receive_command()
+
+        frame = self.__receive_command(6)
         
         self.__reset(nack_counter=64, reset_buffers=False)
         time.sleep(.004)
 
-        print(frame)
-        
-        # TODO: Generate check
-        return StatusTypes.SEND_SUCCESS
-    
-    def get_all_io_states(self) -> list:
-        return []
+        # Validate HERE
 
-    def set_all_output_states(self, do_lst:list) -> int:
-        return 0
+        return StatusTypes.SEND_SUCCESS
 
     def get_all_input_states(self) -> list:
-        return []
+        all_input_states = []
+        
+        for i in range(0, 8):
+            all_input_states.append(self.get_di(i))
+
+        return all_input_states
 
     def get_all_output_states(self) -> list:
-        return []
+        all_output_states = []
+        
+        for i in range(0, 8):
+            all_output_states.append(self.get_do(i))
+
+        return all_output_states
+
+    def get_all_io_states(self) -> list:
+        return [self.get_all_input_states(), self.get_all_output_states()]
+
+    def set_all_output_states(self, do_lst:list) -> int:
+        for i in do_lst:
+            self.set_do(i)
+
+        return StatusTypes.SEND_SUCCESS

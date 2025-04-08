@@ -24,7 +24,8 @@ class StatusTypes:
     SEND_SUCCESS = 0
     SEND_CMD_FAILURE = -1
     RECV_NONBINARY_DATATYPE_DETECTED = -2
-    RECV_FRAME_CONFIRMATION_FAILURE = -3
+    RECV_FRAME_NACK_ERROR = -3
+    RECV_FRAME_CRC_ERROR = -4
     
 
 ############################################
