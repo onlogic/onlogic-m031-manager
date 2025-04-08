@@ -35,9 +35,10 @@ class HX52xDioHandler():
     Administers the serial connection with the
     microcontroller embedded in the K/HX-52x DIO-Add in Card.
     '''
-    def __init__(self, serial_connection_label:str=None, logger_mode:str="None"):
+    def __init__(self, serial_connection_label:str=None, logger_mode:str="off"):
         '''Init class by establishing serial connection.'''
         self.logger_mode = logger_mode   
+        self.__create_logger()
         just_fix_windows_console() # Color coding for errors and such
         self.is_setup=False
         self.serial_connection_label = serial_connection_label
@@ -70,7 +71,7 @@ class HX52xDioHandler():
                           )
                     return port.device
         return None
-        
+    
     def __init_port(self) -> serial.Serial:
         '''Init port and establish USB-UART connection.'''
         if self.serial_connection_label is None:
@@ -172,27 +173,6 @@ class HX52xDioHandler():
             
         if dio_input_parameter < valid_input_range[0] or dio_input_parameter > valid_input_range[1]:
             raise ValueError(f"\033[91mERROR | Out of Range Value Provided: {dio_input_parameter}. Valid Range {valid_input_range}\033[0m")
-
-    def __check_crc(self, frame) -> bool:
-        '''
-        constructed_command = bytes([ProtocolConstants.SHELL_SOF, 
-                                     crc_calculation, 
-                                     len(payload), 
-                                     kind, 
-                                     *payload
-                                     ])    
-        '''
-
-        crc_val = crc8.smbus(
-            frame[2],
-            frame[3],
-            frame[4:-1]
-        )
-
-        if crc_val != frame[3]:
-            return False
-
-        return True
     
     def __log_print(self, message_info, print_to_console=True, log=False, level=False):
         if print_to_console:
@@ -206,21 +186,35 @@ class HX52xDioHandler():
             elif level == logging.ERROR:
                 self.logger.error(message_info)
             else:
-                raise ValueError("INCORRECT DEBUG INPUT INTO LOGGER")
+                raise ValueError("INCORRECT MODE INPUT INTO LOGGER")
+
+    def __check_crc(self, frame:bytes) -> bool:
+        if len(frame) < 4:
+            return False
+        
+        crc_bytes = frame[2:-1]
+        crc_val = crc8.smbus(crc_bytes)
+
+        print(crc_val)
+
+        if crc_val != frame[1]:
+            return False
+
+        return True
 
     def __validate_recieved_frame(self, return_frame:list, target_index:int=None, target_range:list=None) -> int:
         if return_frame[-1] != ProtocolConstants.SHELL_NACK:
-            return ProtocolConstants.RECV_FRAME_NACK_ERROR
-        
+            return StatusTypes.RECV_FRAME_NACK_ERROR
+
         is_crc = self.__check_crc(return_frame)
         if is_crc:
-            return ProtocolConstants.RECV_FRAME_CRC_ERROR
+            return StatusTypes.RECV_FRAME_CRC_ERROR
         
         if target_index is not None:
             if return_frame[target_index] not in target_range:
-                return ProtocolConstants.RECV_NONBINARY_DATATYPE_DETECTED
+                return StatusTypes.RECV_NONBINARY_DATATYPE_DETECTED
 
-        return StatusTypes.SEND_SUCCESS
+        return StatusTypes.RECV_SUCCESS
 
     def close_dio_connection(self):
         # HX52xDioHandler.__construct_command.cache_clear()
@@ -242,7 +236,7 @@ class HX52xDioHandler():
                                      len(payload), 
                                      kind, 
                                      *payload
-                                     ])    
+                                     ])
         
         print("Constructed Command", constructed_command)
         return constructed_command
@@ -301,10 +295,11 @@ class HX52xDioHandler():
 
         frame = self.__receive_command()
 
-        self.__reset(nack_counter=64, reset_buffers=False) # why reset twice
+        self.__reset(nack_counter=64, reset_buffers=False)
         time.sleep(.004)
 
         # Retrieve di value located in penultimate idx of frame
+
         val = frame[-2]
         if val in [0, 1]:
             return val
@@ -328,15 +323,15 @@ class HX52xDioHandler():
         self.__reset(nack_counter=64, reset_buffers=False)
         time.sleep(.004)
 
+        print(self.__check_crc(frame))
         print(frame)
 
         # Retrieve di value located in penultimate idx of frame
-        val = frame[-2]
-        if val in [0, 1]:
-            return val
-
-        print("\033[91mERROR | NON-BINARY DATATYPE DETECTED\033[0m")
-        return -2
+        # ret_val = self.__validate_recieved_frame(frame, -2, [0,1])
+        # if ret_val is not StatusTypes.RECV_SUCCESS:
+        #     return ret_val
+        
+        return frame[-2]
 
     def set_do(self, pin:int, value:int) -> int:
         self.__validate_input_param(pin, [0,7], int)
@@ -356,10 +351,11 @@ class HX52xDioHandler():
         
         print(f"Recieved Command {frame}")
 
+        print(self.__check_crc(frame))
         #TODO Move into validation function
-        if frame[-2] not in [0, 1] or frame[-1] != ProtocolConstants.SHELL_NACK:
-            print(f"\033[91mERROR | SEND CONFIRMATION FAILURE\033[0m")
-            return -3
+        # if frame[-2] not in [0, 1] or frame[-1] != ProtocolConstants.SHELL_NACK:
+        #     print(f"\033[91mERROR | SEND CONFIRMATION FAILURE\033[0m")
+        #     return -3
 
         return 0
 
@@ -377,9 +373,9 @@ class HX52xDioHandler():
         time.sleep(.004)
 
         # Retrieve di value located in penultimate idx of frame
-        val = frame[-2]
-        if val in [0, 1]:
-            return val
+        # val = frame[-2]
+        # if val in [0, 1]:
+        #     return val
         
         print(f"\033[91mERROR | NON-BINARY DATATYPE DETECTED\033[0m")
         return -1
@@ -394,15 +390,16 @@ class HX52xDioHandler():
         
         frame = self.__receive_command(6)
         
-        self.__reset(nack_counter=64, reset_buffers=False) # why reset twice in get_di command
+        self.__reset(nack_counter=64, reset_buffers=False)
         time.sleep(.004)
 
         print(frame)
-        
+        print(self.__check_crc(frame))
+
         # Retrieve di value located in penultimate idx of frame
-        val = frame[-2]
-        if val in [0, 1]:
-            return val
+        # val = frame[-2]
+        # if val in [0, 1]:
+        #     return val
         
         print(f"\033[91mERROR | NON-BINARY DATATYPE DETECTED\033[0m")
         return -1
@@ -424,7 +421,7 @@ class HX52xDioHandler():
         time.sleep(.004)
 
         # validate HERE
-        
+
         return 0
 
     def set_do_contact(self, contact_type:int) -> int:
@@ -438,7 +435,7 @@ class HX52xDioHandler():
             return -1
 
         frame = self.__receive_command(6)
-        
+                
         self.__reset(nack_counter=64, reset_buffers=False)
         time.sleep(.004)
 

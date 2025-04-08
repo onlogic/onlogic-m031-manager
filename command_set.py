@@ -3,6 +3,9 @@ MCU_VID_PID = "353F:A105"
 TIME_THRESHOLD = 2.5
 
 class ProtocolConstants:
+    MCU_VID_PID = "353F:A105"
+    TIME_THRESHOLD = 2.5
+
     # Hardcoded transmission values
     SHELL_SOF  = 0x01
     SHELL_ACK  = 0x0D # decimal 13, ascii equiv is '\r'
@@ -22,11 +25,11 @@ class Kinds:
 
 class StatusTypes:
     SEND_SUCCESS = 0
+    RECV_SUCCESS = 0
     SEND_CMD_FAILURE = -1
     RECV_NONBINARY_DATATYPE_DETECTED = -2
     RECV_FRAME_NACK_ERROR = -3
     RECV_FRAME_CRC_ERROR = -4
-    
 
 ############################################
 # sof, crc, len, kind, data
