@@ -27,7 +27,7 @@ import logging
 
 from colorama import just_fix_windows_console
 from serial.tools import list_ports as system_ports
-from command_set import ProtocolConstants, Kinds, MCU_VID_PID, TIME_THRESHOLD
+from command_set import ProtocolConstants, Kinds, StatusTypes, MCU_VID_PID, TIME_THRESHOLD
 from fastcrc import crc8
 
 class HX52xDioHandler():
@@ -154,6 +154,7 @@ class HX52xDioHandler():
         while bytes_to_send > 0:
             if bytes_sent > 1024:
                 raise RuntimeError("Cannot recover MCU")
+            
             # Begin buffer clear feedback loop
             self.port.write(ProtocolConstants.SHELL_ACK.to_bytes(1, byteorder='little'))
             bytes_sent += 1
@@ -165,6 +166,30 @@ class HX52xDioHandler():
             else:
                 bytes_to_send = nack_counter
 
+    def __validate_input_param(self, dio_input_parameter, valid_input_range:list, input_type:type):
+        if type(dio_input_parameter) != input_type:
+            raise TypeError(f"\033[91mERROR | {type(dio_input_parameter)} was found when {input_type} was expected\033[0m")
+            
+        if dio_input_parameter < valid_input_range[0] or dio_input_parameter > valid_input_range[1]:
+            raise ValueError(f"\033[91mERROR | Out of Range Value Provided: {dio_input_parameter}. Valid Range {valid_input_range}\033[0m")
+
+    def __check_crc(self) -> bool:
+        pass
+
+    def __validate_recieved_frame(self, return_frame:list, target_index:int=None, target_range:list=None) -> int:
+        if return_frame[-1] != ProtocolConstants.SHELL_NACK:
+            return ProtocolConstants.RECV_FRAME_NACK_ERROR
+        
+        is_crc = self.__check_crc(return_frame)
+        if is_crc:
+            return ProtocolConstants.RECV_FRAME_CRC_ERROR
+        
+        if target_index is not None:
+            if return_frame[target_index] not in target_range:
+                return ProtocolConstants.RECV_NONBINARY_DATATYPE_DETECTED
+
+        return StatusTypes.SEND_SUCCESS
+
     def close_dio_connection(self):
         # HX52xDioHandler.__construct_command.cache_clear()
         # TODO: Figure out why is the sleep function Erroring when lru_cache is enabled in destructor
@@ -173,24 +198,6 @@ class HX52xDioHandler():
         self.port.reset_input_buffer()
         self.port.reset_output_buffer()
         self.port.close()
-
-    def __validate_input_param(self, dio_input_parameter, valid_input_range:list, input_type:type):
-        if type(dio_input_parameter) != input_type:
-            raise TypeError(f"\033[91mERROR: {type(dio_input_parameter)} was found when {input_type} was expected\033[0m")
-            
-        if dio_input_parameter < valid_input_range[0] or dio_input_parameter > valid_input_range[1]:
-            raise ValueError(f"\033[91mOut of Range Value Provided: {dio_input_parameter}. Valid Range {valid_input_range}\033[0m")
-
-    def __validate_recieved_frame(self, return_frame, info_offset, valid_options, end_offset):
-        if info_offset is not None and return_frame[-info_offset] not in valid_options:
-            print(f"\033[91mERROR | SEND CONFIRMATION FAILURE\033[0m")
-            return -1
-            
-        if return_frame[-end_offset] != ProtocolConstants.SHELL_NACK:
-            print(f"\033[91mERROR | SEND CONFIRMATION FAILURE\033[0m")
-            return -2
-        
-        return 0
 
     @functools.lru_cache(maxsize=128)
     def __construct_command(self, kind:Kinds, *payload:int) -> bytes:
@@ -220,12 +227,12 @@ class HX52xDioHandler():
                 shell_ack_cnt += 1
 
         if shell_ack_cnt == len(command_to_send):
-            return True
+            return True # StatusTypes.SEND_SUCCESS
 
         print("\033[91mERROR | AKNOWLEDGEMENT ERROR: "\
               "mismatch in number of aknowledgements, reduce access speed?\033[0m")
         
-        return False
+        return False # StatusTypes.SEND_CMD_FAILURE
 
     def __receive_command(self, response_frame_len:int=ProtocolConstants.RESPONSE_FRAME_LEN) -> bytes:
         '''\
@@ -317,14 +324,15 @@ class HX52xDioHandler():
         
         print(f"Recieved Command {frame}")
 
+        #TODO Move into validation function
         if frame[-2] not in [0, 1] or frame[-1] != ProtocolConstants.SHELL_NACK:
             print(f"\033[91mERROR | SEND CONFIRMATION FAILURE\033[0m")
             return -3
 
         return 0
 
-    def get_di_contact(self) -> int: # An error occurred: 'set' object is not callable, why       
-        di_contact_state_cmd = self.__construct_command(0x3F)
+    def get_di_contact(self) -> int:
+        di_contact_state_cmd = self.__construct_command(Kinds.GET_DI_CONTACT)
         
         self.__reset(nack_counter=64)
         if not self.__send_command(di_contact_state_cmd):
@@ -345,8 +353,7 @@ class HX52xDioHandler():
         return -1
 
     def get_do_contact(self) -> int:
-        # TODO: FIX 0x40
-        do_contact_state_cmd = self.__construct_command(0x40)
+        do_contact_state_cmd = self.__construct_command(Kinds.GET_DO_CONTACT)
 
         # Enclose each value read with buffer clearances
         self.__reset(nack_counter=64)
@@ -369,8 +376,7 @@ class HX52xDioHandler():
         return -1
 
     def set_di_contact(self, contact_type:int) -> int:
-        if contact_type < 0 or contact_type > 1:
-            raise ValueError(f"\033[91mOut of Range Contact Type Provided: {contact_type}. Valid Range [0-1]\033[0m")
+        self.__validate_input_param(contact_type, [0,1], int)
         
         set_di_contact_state_cmd = self.__construct_command(Kinds.SET_DI_CONTACT, contact_type)
 
@@ -389,8 +395,7 @@ class HX52xDioHandler():
         return 0
 
     def set_do_contact(self, contact_type:int) -> int:
-        if contact_type < 0 or contact_type > 1:
-            raise ValueError(f"\033[91mOut of Range Contact Type Provided: {contact_type}. Valid Range [0-1]\033[0m")
+        self.__validate_input_param(contact_type, [0,1], int)
         
         set_di_contact_state_cmd = self.__construct_command(Kinds.SET_DO_CONTACT, contact_type)
 
@@ -407,7 +412,7 @@ class HX52xDioHandler():
         print(frame)
         
         # TODO: Generate check
-        return 0
+        return StatusTypes.SEND_SUCCESS
     
     def get_all_io_states(self) -> list:
         return []

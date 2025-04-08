@@ -73,7 +73,7 @@ def main():
             print(f"Setting DO Channel {i} to 0: Result = {result}")
             time.sleep(.1)
         print()
-
+        
         print("=" * 30)
         print("TESTING DIGITAL INPUT CONTACT (get_di_contact)")
         print("=" * 30)
@@ -91,7 +91,7 @@ def main():
         print("=" * 30)
         print("Setting DI Contact to 0:")
         my_dio.set_di_contact(0)
-        print("Set DI Contact to 0 (no direct print)")
+        print("Set DI Contact to 0")
         print()
 
         print("=" * 30)
@@ -99,7 +99,7 @@ def main():
         print("=" * 30)
         print("Setting DI Contact to 1:")
         my_dio.set_di_contact(1)
-        print("Set DI Contact to 1 (no direct print)")
+        print("Set DI Contact to 1")
         print()
 
     except KeyboardInterrupt:
