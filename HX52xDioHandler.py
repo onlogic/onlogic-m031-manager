@@ -291,7 +291,7 @@ class HX52xDioHandler():
         # Enclose each value read with buffer clearances
         self.__reset(nack_counter=64)
         if not self.__send_command(di_command):
-            return -1
+            return StatusTypes.SUCCESS
 
         frame = self.__receive_command()
 
@@ -299,12 +299,19 @@ class HX52xDioHandler():
         time.sleep(.004)
 
         # Retrieve di value located in penultimate idx of frame
-        val = frame[-2]
-        if val in [0, 1]:
-            return val
+        # val = frame[-2]
+        # if val in [0, 1]:
+        #     return val
 
-        print("\033[91mERROR | NON-BINARY DATATYPE DETECTED\033[0m")
-        return -1
+        # print("\033[91mERROR | NON-BINARY DATATYPE DETECTED\033[0m")
+        # return -1
+
+        # Retrieve do value located in penultimate idx of frame
+        ret_val = self.__validate_recieved_frame(frame, -2, [0,1])
+        if ret_val is not StatusTypes.SUCCESS:
+            return ret_val
+        
+        return frame[-2]
 
     
     def get_do(self, do_pin:int) -> int:
@@ -315,18 +322,17 @@ class HX52xDioHandler():
         # Enclose each value read with buffer clearances
         self.__reset(nack_counter=64)
         if not self.__send_command(do_command):
-            return -1
+            return StatusTypes.SEND_CMD_FAILURE
 
         frame = self.__receive_command()
 
         self.__reset(nack_counter=64, reset_buffers=False)
         time.sleep(.004)
 
-        print(frame)
-        # Retrieve di value located in penultimate idx of frame
-        # ret_val = self.__validate_recieved_frame(frame, -2, [0,1])
-        # if ret_val is not StatusTypes.RECV_SUCCESS:
-        #     return ret_val
+        # Retrieve do value located in penultimate idx of frame
+        ret_val = self.__validate_recieved_frame(frame, -2, [0,1])
+        if ret_val is not StatusTypes.SUCCESS:
+            return ret_val
         
         return frame[-2]
 
@@ -340,7 +346,7 @@ class HX52xDioHandler():
         self.__reset(nack_counter=64)
 
         if not self.__send_command(set_do_command):
-            return -1
+            return StatusTypes.SEND_CMD_FAILURE
 
         frame = self.__receive_command()
 
@@ -352,15 +358,18 @@ class HX52xDioHandler():
         # if frame[-2] not in [0, 1] or frame[-1] != ProtocolConstants.SHELL_NACK:
         #     print(f"\033[91mERROR | SEND CONFIRMATION FAILURE\033[0m")
         #     return -3
+        ret_val = self.__validate_recieved_frame(frame, -2, [0,1])
+        if ret_val is not StatusTypes.SUCCESS:
+            return ret_val
 
-        return 0
+        return StatusTypes.SUCCESS
 
     def get_di_contact(self) -> int:
         di_contact_state_cmd = self.__construct_command(Kinds.GET_DI_CONTACT)
         
         self.__reset(nack_counter=64)
         if not self.__send_command(di_contact_state_cmd):
-            return -1
+            return StatusTypes.SEND_CMD_FAILURE
         
         frame = self.__receive_command(6)
         print(frame)
@@ -382,7 +391,7 @@ class HX52xDioHandler():
         # Enclose each value read with buffer clearances
         self.__reset(nack_counter=64)
         if not self.__send_command(do_contact_state_cmd):
-            return -1
+            return StatusTypes.SEND_CMD_FAILURE
         
         frame = self.__receive_command(6)
         
@@ -409,7 +418,7 @@ class HX52xDioHandler():
         self.__reset(nack_counter=64)
 
         if not self.__send_command(set_di_contact_state_cmd):
-            return -1
+            return StatusTypes.SEND_CMD_FAILURE
 
         frame = self.__receive_command(6)
 
@@ -428,7 +437,7 @@ class HX52xDioHandler():
         # Enclose each value read with buffer clearances
         self.__reset(nack_counter=64)
         if not self.__send_command(set_di_contact_state_cmd):
-            return -1
+            return StatusTypes.SEND_CMD_FAILURE
 
         frame = self.__receive_command(6)
                 
