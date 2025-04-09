@@ -195,7 +195,9 @@ class HX52xDioHandler():
         crc_bytes = frame[2:-1]
         crc_val = crc8.smbus(crc_bytes)
 
-        print(crc_val)
+        
+
+        print(fcrc_val)
 
         if crc_val != frame[1]:
             return False
@@ -248,7 +250,7 @@ class HX52xDioHandler():
         for byte in command_to_send:
             self.port.write(byte.to_bytes(1, byteorder='little'))
             byte_in_port = self.port.read(1)
-            
+
             if int.from_bytes(byte_in_port, byteorder='little') == ProtocolConstants.SHELL_ACK:
                 shell_ack_cnt += 1
 
@@ -257,7 +259,7 @@ class HX52xDioHandler():
 
         print("\033[91mERROR | AKNOWLEDGEMENT ERROR: "\
               "mismatch in number of aknowledgements, reduce access speed?\033[0m")
-        
+
         return False # StatusTypes.SEND_CMD_FAILURE
 
     def __receive_command(self, response_frame_len:int=ProtocolConstants.RESPONSE_FRAME_LEN) -> bytes:
@@ -285,7 +287,7 @@ class HX52xDioHandler():
                         and -1, indicating an error occured in the sample
         """
         self.__validate_input_param(di_pin, [0,7], int)
-        
+
         di_command = self.__construct_command(Kinds.GET_DI, di_pin)
 
         # Enclose each value read with buffer clearances
@@ -339,9 +341,9 @@ class HX52xDioHandler():
     def set_do(self, pin:int, value:int) -> int:
         self.__validate_input_param(pin, [0,7], int)
         self.__validate_input_param(value, [0,1], int)
-        
+
         set_do_command = self.__construct_command(Kinds.GET_DO, pin, value)
-        
+
         # Enclose each value read with buffer clearances
         self.__reset(nack_counter=64)
 
@@ -351,7 +353,7 @@ class HX52xDioHandler():
         frame = self.__receive_command()
 
         self.__reset(nack_counter=64, reset_buffers=False)
-        
+
         print(f"Recieved Command {frame}")
 
         #TODO Move into validation function
@@ -381,9 +383,12 @@ class HX52xDioHandler():
         # val = frame[-2]
         # if val in [0, 1]:
         #     return val
-        
+        ret_val = self.__validate_recieved_frame(frame, -2, [0,1])
+        if ret_val is not StatusTypes.SUCCESS:
+            return ret_val
+
         print(f"\033[91mERROR | NON-BINARY DATATYPE DETECTED\033[0m")
-        return -1
+        return frame[-2]
 
     def get_do_contact(self) -> int:
         do_contact_state_cmd = self.__construct_command(Kinds.GET_DO_CONTACT)
@@ -399,15 +404,19 @@ class HX52xDioHandler():
         time.sleep(.004)
 
         print(frame)
-        print(self.__check_crc(frame))
+        # print(self.__check_crc(frame))
 
         # Retrieve di value located in penultimate idx of frame
         # val = frame[-2]
         # if val in [0, 1]:
         #     return val
-        
+
+        ret_val = self.__validate_recieved_frame(frame, -2, [0,1])
+        if ret_val is not StatusTypes.SUCCESS:
+            return ret_val
+
         print(f"\033[91mERROR | NON-BINARY DATATYPE DETECTED\033[0m")
-        return -1
+        return frame[-2]
 
     def set_di_contact(self, contact_type:int) -> int:
         self.__validate_input_param(contact_type, [0,1], int)
@@ -426,8 +435,11 @@ class HX52xDioHandler():
         time.sleep(.004)
 
         # validate HERE
+        ret_val = self.__validate_recieved_frame(frame, -2, [0,1])
+        if ret_val is not StatusTypes.SUCCESS:
+            return ret_val
 
-        return 0
+        return StatusTypes.SUCCESS
 
     def set_do_contact(self, contact_type:int) -> int:
         self.__validate_input_param(contact_type, [0,1], int)
@@ -445,6 +457,9 @@ class HX52xDioHandler():
         time.sleep(.004)
 
         # Validate HERE
+        ret_val = self.__validate_recieved_frame(frame, -2, [0,1])
+        if ret_val is not StatusTypes.SUCCESS:
+            return ret_val
 
         return StatusTypes.SUCCESS
 
