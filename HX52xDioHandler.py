@@ -12,8 +12,6 @@ Contains:
         + private method: __reset
         + private method: __send_command
         + public method:  get_di
-        + public method:  get_di_contact
-        + public method:  set_di_contact  
 
 References:
     https://fastcrc.readthedocs.io/en/latest/
@@ -24,23 +22,28 @@ import serial
 import functools
 import datetime
 import logging
+import sys
 
-from colorama import just_fix_windows_console
 from serial.tools import list_ports as system_ports
 from command_set import ProtocolConstants, Kinds, StatusTypes
 from fastcrc import crc8
+from colorama import just_fix_windows_console
+from datetime import datetime
+from typing import Optional
 
 class HX52xDioHandler():
     '''
     Administers the serial connection with the
     microcontroller embedded in the K/HX-52x DIO-Add in Card.
     '''
-    def __init__(self, serial_connection_label:str=None, logger_mode:str="off"):
+    def __init__(self, serial_connection_label:str=None, 
+                 logger_mode:str=None, handler_mode:str=None):
         '''Init class by establishing serial connection.'''
-        self.logger_mode = logger_mode   
+        self.logger_mode = self.__handle_lconfig_str(logger_mode)
+        self.handler_mode = self.__handle_lconfig_str(handler_mode)
         self.__create_logger()
         just_fix_windows_console() # Color coding for errors and such
-        self.is_setup=False
+        self.is_setup=False      
         self.serial_connection_label = serial_connection_label
         self.port = self.__init_port()
         self.__mcu_connection_check()
@@ -58,17 +61,19 @@ class HX52xDioHandler():
         # serial.__version__
         return f"\nPort: {self.serial_connection_label}\n"
     
-    def __get_device_port(self, dev_id:str, location:str=None) -> str:
+    def __get_device_port(self, dev_id:str, location:str=None) -> str | None:
         """Scan and return the port of the target device."""
         all_ports = system_ports.comports() 
         for port in sorted(all_ports):
             if dev_id in port.hwid:
                 if location and location in port.location:
-                    print(f"Port: {port}\n"
-                          f"Port Location: {port.location}\n"
-                          f"Hardware ID: {port.hwid}\n"
-                          f"Device: {port.device}\n"
-                          )
+                    self.__log_print(f"Port: {port}\n"
+                                     f"Port Location: {port.location}\n"
+                                     f"Hardware ID: {port.hwid}\n"
+                                     f"Device: {port.device}\n",
+                                     log=True,
+                                     level=logging.INFO
+                                    )
                     return port.device
         return None
     
@@ -82,11 +87,17 @@ class HX52xDioHandler():
         except serial.SerialException as e:
             raise serial.SerialException(f"\033[91mERROR | {e}: Are you on the right port?\033[0m")
 
-    def __create_logger(self):
+    def __handle_lconfig_str(self, input_str:str) -> str | None:
+        return input_str.lower().strip() if input_str is isinstance(input_str, str) else input_str
+
+    def __create_logger(self) -> None:
         '''Create Logger with INFO, DEBUG, and ERROR Debugging'''
-        if self.logger_mode == 'off':
+        if self.logger_mode in [None, "off"]:
             return
-          
+
+        if self.logger_mode not in ['info', 'debug','error']:
+            self.logger_mode = None
+
         self.logger = logging.getLogger()
         now = datetime.now().strftime("%m_%d_%Y_%H_%M_%S")
 
@@ -99,13 +110,31 @@ class HX52xDioHandler():
         level = level_dict.get(self.logger_mode, "Unknown")
 
         if level == 'Unknown' or level is None:
+            self.logger_mode == 'off'
             del self.logger
             return
+        
+        filename=f"HX52x_session_{now}.log"
+
+        handlers = [
+            logging.FileHandler(filename),
+            logging.StreamHandler(sys.stdout)
+        ]        
+
+        if self.handler_mode == "both":
+            pass    
+        elif self.handler_mode == "console":
+            handlers.pop(0)
+        elif self.file_handler == "file":
+            handlers.pop(1)
+        else:
+            print("Incorrect Logging Parameters Provided \
+                   Defaulting Logger to Console Logging")
 
         logging.basicConfig (
-            filename=f"HX52x_session_{now}.log",
             format='[%(asctime)s %(levelname)s %(filename)s:%(lineno)d -> %(funcName)s()] %(message)s',
-            level=level
+            level=level,
+            handlers=handlers  
         )
 
     def __mcu_connection_check(self) -> None:
@@ -172,16 +201,19 @@ class HX52xDioHandler():
     def __validate_input_param(self, dio_input_parameter, valid_input_range:list, input_type:type):
         if type(dio_input_parameter) != input_type:
             raise TypeError(f"\033[91mERROR | {type(dio_input_parameter)} was found when {input_type} was expected\033[0m")
-            
+
         if dio_input_parameter < valid_input_range[0] \
                 or dio_input_parameter > valid_input_range[1]:
             raise ValueError(f"\033[91mERROR | Out of Range Value Provided: {dio_input_parameter}. Valid Range {valid_input_range}\033[0m")
     
-    def __log_print(self, message_info:str, print_to_console:bool=True, log=False, level=False) -> bool:
+    def __log_print(self, message_info:str, print_to_console:bool=True, log:bool=False, level:Optional[int]=False) -> bool:
         if print_to_console:
             print(message_info)
 
-        if log is not None and level is not None:
+        if log is not None \
+                and level is not None \
+                and self.logger_mode not in ["off", None]:
+
             if level == logging.INFO:
                 self.logger.info(message_info)
             elif level == logging.DEBUG:
@@ -198,17 +230,25 @@ class HX52xDioHandler():
         crc_bytes = frame[2:-1]
         crc_val = crc8.smbus(crc_bytes)
 
-        print(f"CALCULATED {crc_val} : EXISTING {frame[1]}")
+        self.__log_print(f"CALCULATED {crc_val} : EXISTING {frame[1]}",
+                         print_to_console=False,
+                         log=True,
+                         level=logging.DEBUG
+                        )
 
         if crc_val != frame[1]:
-            print("CRC MISMATCH")
+            self.__log_print(f"CRC MISMATCH",
+                             print_to_console=True,
+                             log=True,
+                             level=logging.ERROR
+                            )
             return False
 
         return True
 
     def __validate_recieved_frame(self, return_frame:list, target_index:int=None, target_range:list=None) -> int:
-        if return_frame[0] != ProtocolConstants.SHELL_ACK:
-            return StatusTypes.RECV_FRAME_ACK_ERROR
+        # if return_frame[0] != ProtocolConstants.SHELL_ACK:
+        #     return StatusTypes.RECV_FRAME_ACK_ERROR
 
         if return_frame[-1] != ProtocolConstants.SHELL_NACK:
             return StatusTypes.RECV_FRAME_NACK_ERROR
@@ -245,7 +285,12 @@ class HX52xDioHandler():
                                      *payload
                                      ])
         
-        print("Constructed Command", constructed_command)
+        self.__log_print(f"Constructed Command {constructed_command}",
+                        print_to_console=False,
+                        log=True,
+                        level=logging.INFO
+                        )
+        
         return constructed_command
 
     def __send_command(self, command_to_send:bytes) -> bool:
@@ -262,8 +307,12 @@ class HX52xDioHandler():
         if shell_ack_cnt == len(command_to_send):
             return True # StatusTypes.SUCCESS
 
-        print("\033[91mERROR | AKNOWLEDGEMENT ERROR: "\
-              "mismatch in number of aknowledgements, reduce access speed?\033[0m")
+        self.__log_print(f"\033[91mERROR | AKNOWLEDGEMENT ERROR: "\
+                         "mismatch in number of aknowledgements, reduce access speed?\033[0m",
+                        print_to_console=False,
+                        log=True,
+                        level=logging.ERROR
+                        )
 
         return False # StatusTypes.SEND_CMD_FAILURE
 

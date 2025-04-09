@@ -39,7 +39,7 @@ def main():
 
     try:
         # Init input handler
-        my_dio = HX52xDioHandler()
+        my_dio = HX52xDioHandler(logger_mode="on", handler_mode="yapperoo")
         
         print("=" * 30)
         print("TESTING DIGITAL INPUTS (get_di)")
@@ -90,7 +90,7 @@ def main():
         print("TESTING SET DIGITAL INPUT CONTACT (set_di_contact)")
         print("=" * 30)
         print("Setting DI Contact to 0:")
-        my_dio.set_di_contact(0)
+        my_dio.set_di_contact(1)
         print("Set DI Contact to 0")
         print()
 
@@ -98,7 +98,7 @@ def main():
         print("TESTING SET DIGITAL INPUT CONTACT (set_di_contact)")
         print("=" * 30)
         print("Setting DI Contact to 1:")
-        my_dio.set_di_contact(1)
+        my_dio.set_di_contact(0)
         print("Set DI Contact to 1")
         print()
 

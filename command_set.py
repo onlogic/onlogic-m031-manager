@@ -1,4 +1,5 @@
 ################ Constants #################
+
 class ProtocolConstants:
     MCU_VID_PID = "353F:A105"
     TIME_THRESHOLD = 2.5
@@ -7,9 +8,11 @@ class ProtocolConstants:
     SHELL_SOF  = 0x01
     SHELL_ACK  = 0x0D # decimal 13, ascii equiv is '\r'
     SHELL_NACK = 0x07 # decimal 7, ascii equiv is '\a'
+
+    # Serial Check Values    
     NUM_NACKS  = 255 + 4
     RESPONSE_FRAME_LEN = 7
-    NACKS_NEEDED = 5 # Comport Check Values    
+    NACKS_NEEDED = 5 
 
 class Kinds:
     GET_DI = 0x20
