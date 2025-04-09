@@ -1,7 +1,4 @@
 ################ Constants #################
-MCU_VID_PID = "353F:A105"
-TIME_THRESHOLD = 2.5
-
 class ProtocolConstants:
     MCU_VID_PID = "353F:A105"
     TIME_THRESHOLD = 2.5
@@ -29,6 +26,7 @@ class StatusTypes:
     RECV_NONBINARY_DATATYPE_DETECTED = -2
     RECV_FRAME_NACK_ERROR = -3
     RECV_FRAME_CRC_ERROR = -4
+    RECV_FRAME_ACK_ERROR = -5
 
 ############################################
 # sof, crc, len, kind, data
