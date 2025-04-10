@@ -64,7 +64,7 @@ def main():
         for i in range(0, 8):
             result = my_dio.set_do(i, 1)
             print(f"Setting DO Channel {i} to 1: Result = {result}")
-            time.sleep(.1)
+            time.sleep(.1)       
         print("\nSetting DO channels to 0:")
         for i in range(0, 8):
             result = my_dio.set_do(i, 0)
@@ -88,7 +88,7 @@ def main():
         print("TESTING SET DIGITAL INPUT CONTACT (set_di_contact)")
         print("=" * 30)
         print("Setting DI Contact to 1:")
-        my_dio.set_di_contact(1)
+        my_dio.set_di_contact(0)
         print("Set DI Contact to 1")
         print()
 
@@ -96,7 +96,7 @@ def main():
         print("TESTING SET DIGITAL INPUT CONTACT (set_di_contact)")
         print("=" * 30)
         print("Setting DI Contact to 0:")
-        my_dio.set_di_contact(0)
+        my_dio.set_di_contact(1)
         print("Set DI Contact to 0")
         print()
 

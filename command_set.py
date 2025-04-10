@@ -30,6 +30,7 @@ class StatusTypes:
     RECV_FRAME_NACK_ERROR = -3
     RECV_FRAME_CRC_ERROR = -4
     RECV_FRAME_ACK_ERROR = -5
+    RECV_FRAME_SOF_ERROR = -6
 
 ############################################
 # sof, crc, len, kind, data

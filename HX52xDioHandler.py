@@ -267,7 +267,7 @@ class HX52xDioHandler():
 
     def __validate_recieved_frame(self, return_frame:list, target_index:int=None, target_range:list=None) -> int:
         if return_frame[0] != ProtocolConstants.SHELL_SOF:
-            return StatusTypes.RECV_FRAME_ACK_ERROR
+            return StatusTypes.RECV_FRAME_SOF_ERROR
 
         if return_frame[-1] != ProtocolConstants.SHELL_NACK:
             return StatusTypes.RECV_FRAME_NACK_ERROR
@@ -425,7 +425,7 @@ class HX52xDioHandler():
         self.__validate_input_param(pin, [0,7], int)
         self.__validate_input_param(value, [0,1], int)
 
-        set_do_command = self.__construct_command(Kinds.GET_DO, pin, value)
+        set_do_command = self.__construct_command(Kinds.SET_DO, pin, value)
 
         # Enclose each value read with buffer clearances
         self.__reset(nack_counter=64)
