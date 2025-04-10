@@ -38,7 +38,7 @@ def main():
     my_dio = None
 
     try:
-        # Init input handler
+        # Init DIO handler
         my_dio = HX52xDioHandler() #logger_mode="DEBUG", handler_mode="BOTH"
         
         print("=" * 30)
