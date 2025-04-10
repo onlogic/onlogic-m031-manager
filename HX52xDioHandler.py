@@ -130,7 +130,7 @@ class HX52xDioHandler():
         elif self.handler_mode == "file":
             handlers.pop(1)
         else:
-            # TODO: Should I Defaul Logger to Console Logging
+            # TODO: Should I Default Logger to Console Logging
             raise ValueError ("Incorrect Logging Parameters Provided") 
 
         logging.basicConfig (
