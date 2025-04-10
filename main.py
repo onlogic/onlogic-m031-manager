@@ -53,7 +53,7 @@ def main():
         print("TESTING DIGITAL OUTPUTS (get_do)")
         print("=" * 30)
         for i in range(8):
-            print(f"DI Channel {i}: {my_dio.get_do(i)}")
+            print(f"DO Channel {i}: {my_dio.get_do(i)}")
             time.sleep(.01)
         print()
 
