@@ -227,7 +227,7 @@ class HX52xDioHandler():
         if print_to_console and self.logger_mode != "console":
             print(message_info)
 
-        if log is not False \
+        if log is True \
                 and level is not None \
                 and self.logger_mode not in ["off", None]:
 
@@ -266,8 +266,6 @@ class HX52xDioHandler():
         return True
 
     def __validate_recieved_frame(self, return_frame:list, target_index:int=None, target_range:list=None) -> int:
-        self.__log_print(return_frame[0])
-
         if return_frame[0] != ProtocolConstants.SHELL_SOF:
             return StatusTypes.RECV_FRAME_ACK_ERROR
 
