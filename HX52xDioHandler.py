@@ -134,7 +134,7 @@ class HX52xDioHandler():
                    Defaulting Logger to Console Logging")
 
         logging.basicConfig (
-            format='%(asctime)s %(levelname)s %(filename)s %(message)s',
+            format='[%(asctime)s %(levelname)s %(filename)s %(message)s',
             level=level,
             handlers=handlers  
         )
@@ -166,12 +166,20 @@ class HX52xDioHandler():
                     time.sleep(.004)
 
         if nack_count == ProtocolConstants.NACKS_NEEDED:
-            print("\033[32mDIO Interface Found\033[0m")
+            self.__log_print("\033[32mDIO Interface Found\033[0m",
+                            print_to_console=True,
+                            log=True,
+                            level=logging.INFO
+                        )
             return
 
-        print(f"\033[91mERROR | AKNOWLEDGEMENT ERROR: "\
-              f"mismatch in number of nacks, check if {self.serial_connection_label} "\
-              f"is the right port?\033[0m")
+        self.__log_print(f"\033[91mERROR | AKNOWLEDGEMENT ERROR: "\
+                         f"mismatch in number of nacks, check if {self.serial_connection_label} "\
+                         f"is the right port?\033[0m",
+                         print_to_console=True,
+                         log=True,
+                         level=logging.ERROR
+                        )
 
         raise ValueError("ERROR | AKNOWLEDGEMENT ERROR")
 
@@ -213,14 +221,13 @@ class HX52xDioHandler():
         frame = sys._getframe(3)
         lineno = frame.f_lineno
         function = frame.f_code.co_name
-        
         return f":{lineno} -> {function}()] {message_info}"
 
-    def __log_print(self, message_info:str, print_to_console:bool=True, log:bool=False, level:Optional[int]=False) -> bool:
+    def __log_print(self, message_info:str, print_to_console:bool=True, log:bool=False, level:Optional[int]=None) -> bool:
         if print_to_console and self.logger_mode != "console":
             print(message_info)
 
-        if log is not None \
+        if log is not False \
                 and level is not None \
                 and self.logger_mode not in ["off", None]:
 
@@ -259,8 +266,10 @@ class HX52xDioHandler():
         return True
 
     def __validate_recieved_frame(self, return_frame:list, target_index:int=None, target_range:list=None) -> int:
-        # if return_frame[0] != ProtocolConstants.SHELL_ACK:
-        #     return StatusTypes.RECV_FRAME_ACK_ERROR
+        self.__log_print(return_frame[0])
+
+        if return_frame[0] != ProtocolConstants.SHELL_SOF:
+            return StatusTypes.RECV_FRAME_ACK_ERROR
 
         if return_frame[-1] != ProtocolConstants.SHELL_NACK:
             return StatusTypes.RECV_FRAME_NACK_ERROR
@@ -342,7 +351,7 @@ class HX52xDioHandler():
             response_frame.append(byte_in_port)
             self.port.write(ProtocolConstants.SHELL_ACK.to_bytes(1, byteorder='little')) 
         
-        self.__log_print(f"Constructed Command {response_frame}",
+        self.__log_print(f"Recieved Command List {response_frame}",
                         print_to_console=False,
                         log=True,
                         level=logging.INFO
@@ -373,6 +382,12 @@ class HX52xDioHandler():
         self.__reset(nack_counter=64, reset_buffers=False)
         time.sleep(.004)
 
+        self.__log_print(f"recieved command bytestr {frame}",
+                        print_to_console=False,
+                        log=True,
+                        level=logging.DEBUG
+                        )
+
         # Retrieve do value located in penultimate idx of frame
         ret_val = self.__validate_recieved_frame(frame, -2, [0,1])
         if ret_val is not StatusTypes.SUCCESS:
@@ -394,6 +409,12 @@ class HX52xDioHandler():
 
         self.__reset(nack_counter=64, reset_buffers=False)
         time.sleep(.004)
+
+        self.__log_print(f"recieved command bytestr {frame}",
+                        print_to_console=False,
+                        log=True,
+                        level=logging.DEBUG
+                        )
 
         # Retrieve do value located in penultimate idx of frame
         ret_val = self.__validate_recieved_frame(frame, -2, [0,1])
@@ -418,7 +439,11 @@ class HX52xDioHandler():
 
         self.__reset(nack_counter=64, reset_buffers=False)
 
-        print(f"Recieved Command {frame}")
+        self.__log_print(f"recieved command bytestr {frame}",
+                        print_to_console=False,
+                        log=True,
+                        level=logging.DEBUG
+                        )
 
         ret_val = self.__validate_recieved_frame(frame, -2, [0,1])
         if ret_val is not StatusTypes.SUCCESS:
@@ -434,10 +459,15 @@ class HX52xDioHandler():
             return StatusTypes.SEND_CMD_FAILURE
         
         frame = self.__receive_command(6)
-        print(frame) 
 
         self.__reset(nack_counter=64, reset_buffers=False) 
         time.sleep(.004)
+
+        self.__log_print(f"recieved command bytestr {frame}",
+                        print_to_console=False,
+                        log=True,
+                        level=logging.DEBUG
+                        )
 
         ret_val = self.__validate_recieved_frame(frame, -2, [0,1])
         if ret_val is not StatusTypes.SUCCESS:
@@ -458,7 +488,11 @@ class HX52xDioHandler():
         self.__reset(nack_counter=64, reset_buffers=False)
         time.sleep(.004)
 
-        print(frame)
+        self.__log_print(f"recieved command bytestr {frame}",
+                        print_to_console=False,
+                        log=True,
+                        level=logging.DEBUG
+                        )
 
         ret_val = self.__validate_recieved_frame(frame, -2, [0,1])
         if ret_val is not StatusTypes.SUCCESS:
@@ -482,6 +516,12 @@ class HX52xDioHandler():
         self.__reset(nack_counter=64, reset_buffers=False)
         time.sleep(.004)
 
+        self.__log_print(f"recieved command bytestr {frame}",
+                        print_to_console=False,
+                        log=True,
+                        level=logging.DEBUG
+                        )
+
         ret_val = self.__validate_recieved_frame(frame, -2, [0,1])
         if ret_val is not StatusTypes.SUCCESS:
             return ret_val
@@ -502,6 +542,12 @@ class HX52xDioHandler():
                 
         self.__reset(nack_counter=64, reset_buffers=False)
         time.sleep(.004)
+
+        self.__log_print(f"recieved command bytestr {frame}",
+                        print_to_console=False,
+                        log=True,
+                        level=logging.DEBUG
+                        )
 
         ret_val = self.__validate_recieved_frame(frame, -2, [0,1])
         if ret_val is not StatusTypes.SUCCESS:
