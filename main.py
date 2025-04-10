@@ -39,7 +39,7 @@ def main():
 
     try:
         # Init DIO handler
-        my_dio = HX52xDioHandler() #logger_mode="DEBUG", handler_mode="BOTH"
+        my_dio = HX52xDioHandler(logger_mode="DEBUG", handler_mode="BOTH") #logger_mode="DEBUG", handler_mode="BOTH"
         
         print("=" * 30)
         print("TESTING DIGITAL INPUTS (get_di)")
@@ -87,17 +87,33 @@ def main():
         print("=" * 30)
         print("TESTING SET DIGITAL INPUT CONTACT (set_di_contact)")
         print("=" * 30)
-        print("Setting DI Contact to 1:")
-        my_dio.set_di_contact(0)
-        print("Set DI Contact to 1")
+        print("Setting DI Contact to 0:")
+        print(f"STATUS CODE: {my_dio.set_di_contact(0)}")
+        print("Set DI Contact to 0")
         print()
 
         print("=" * 30)
         print("TESTING SET DIGITAL INPUT CONTACT (set_di_contact)")
         print("=" * 30)
-        print("Setting DI Contact to 0:")
-        my_dio.set_di_contact(1)
-        print("Set DI Contact to 0")
+        print("Setting DI Contact to 1:")
+        print(f"STATUS CODE: {my_dio.set_di_contact(1)}")
+        print("Set DI Contact to 1")
+        print()
+
+        print("=" * 30)
+        print("TESTING SET DIGITAL OUTPUT CONTACT (set_do_contact)")
+        print("=" * 30)
+        print("Setting DO Contact to 0:")
+        print(f"STATUS CODE: {my_dio.set_do_contact(0)}")
+        print("Set DO Contact to 0")
+        print()
+
+        print("=" * 30)
+        print("TESTING SET DIGITAL OUTPUT CONTACT (set_do_contact)")
+        print("=" * 30)
+        print("Setting DO Contact to 1:")
+        print(f"STATUS CODE: {my_dio.set_do_contact(1)}")
+        print("Set DO Contact to 1")
         print()
 
     except KeyboardInterrupt:
