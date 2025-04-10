@@ -44,7 +44,7 @@ def main():
         print("=" * 30)
         print("TESTING DIGITAL INPUTS (get_di)")
         print("=" * 30)
-        for i in range(7):
+        for i in range(8):
             print(f"DI Channel {i}: {my_dio.get_di(i)}")
             time.sleep(.1)
         print()
@@ -52,21 +52,21 @@ def main():
         print("=" * 30)
         print("TESTING DIGITAL OUTPUTS (get_do)")
         print("=" * 30)
-        for i in range(7):
+        for i in range(8):
             print(f"DI Channel {i}: {my_dio.get_do(i)}")
-            time.sleep(.1)
+            time.sleep(.01)
         print()
 
         print("=" * 30)
         print("TESTING DIGITAL OUTPUTS (set_do)")
         print("=" * 30)
         print("Setting DO channels to 1:")
-        for i in range(0, 7):
+        for i in range(0, 8):
             result = my_dio.set_do(i, 1)
             print(f"Setting DO Channel {i} to 1: Result = {result}")
             time.sleep(.1)
         print("\nSetting DO channels to 0:")
-        for i in range(0, 7):
+        for i in range(0, 8):
             result = my_dio.set_do(i, 0)
             print(f"Setting DO Channel {i} to 0: Result = {result}")
             time.sleep(.1)

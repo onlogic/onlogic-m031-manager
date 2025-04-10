@@ -130,8 +130,8 @@ class HX52xDioHandler():
         elif self.handler_mode == "file":
             handlers.pop(1)
         else:
-            print("Incorrect Logging Parameters Provided \
-                   Defaulting Logger to Console Logging")
+            # TODO: Should I Defaul Logger to Console Logging
+            raise ValueError ("Incorrect Logging Parameters Provided") 
 
         logging.basicConfig (
             format='[%(asctime)s %(levelname)s %(filename)s %(message)s',
@@ -276,9 +276,9 @@ class HX52xDioHandler():
         if not is_crc:
             return StatusTypes.RECV_FRAME_CRC_ERROR
         
-        if target_index is not None:
-            if return_frame[target_index] not in target_range:
-                return StatusTypes.RECV_NONBINARY_DATATYPE_DETECTED
+        if target_index is not None \
+                and return_frame[target_index] not in target_range:
+            return StatusTypes.RECV_NONBINARY_DATATYPE_DETECTED
 
         return StatusTypes.SUCCESS
 
@@ -296,7 +296,7 @@ class HX52xDioHandler():
     def __construct_command(self, kind:Kinds, *payload:int) -> bytes:
         # self.__validate_message_bytes(kind, payload)
         
-        crc_calculation = crc8.smbus((bytes([len(payload), kind, *payload])))
+        crc_calculation = crc8.smbus(bytes([len(payload), kind, *payload]))
         
         constructed_command = bytes([ProtocolConstants.SHELL_SOF, 
                                      crc_calculation, 
@@ -553,6 +553,8 @@ class HX52xDioHandler():
 
         return StatusTypes.SUCCESS
 
+    '''
+    # NOTE: MARCO/LUKE, should I add functionality similar to this?:
     def get_all_input_states(self) -> list:
         
         all_input_states = []
@@ -577,3 +579,4 @@ class HX52xDioHandler():
             self.set_do(i)
 
         return StatusTypes.SUCCESS
+    '''
