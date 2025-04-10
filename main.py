@@ -39,7 +39,7 @@ def main():
 
     try:
         # Init input handler
-        my_dio = HX52xDioHandler(logger_mode="DEBUG", handler_mode="BOTH") #logger_mode="DEBUG", handler_mode="BOTH"
+        my_dio = HX52xDioHandler() #logger_mode="DEBUG", handler_mode="BOTH"
         
         print("=" * 30)
         print("TESTING DIGITAL INPUTS (get_di)")
