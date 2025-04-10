@@ -20,7 +20,6 @@ References:
 import time
 import serial
 import functools
-import datetime
 import logging
 import sys
 
@@ -87,17 +86,20 @@ class HX52xDioHandler():
         except serial.SerialException as e:
             raise serial.SerialException(f"\033[91mERROR | {e}: Are you on the right port?\033[0m")
 
-    def __handle_lconfig_str(self, input_str:str) -> str | None:
-        return input_str.lower().strip() if input_str is isinstance(input_str, str) else input_str
+    @staticmethod
+    def __handle_lconfig_str(input_str:str) -> str | None:
+        return input_str.lower().strip() if isinstance(input_str, str) else input_str
 
     def __create_logger(self) -> None:
         '''Create Logger with INFO, DEBUG, and ERROR Debugging'''
         if self.logger_mode in [None, "off"]:
+            print("Logger Mode off, ignoring")
             return
 
         if self.logger_mode not in ['info', 'debug','error']:
-            self.logger_mode = None
-
+            print("Logger Mode", self.logger_mode)
+            raise ValueError("ERROR Invalid logger_mode")
+        
         self.logger = logging.getLogger()
         now = datetime.now().strftime("%m_%d_%Y_%H_%M_%S")
 
@@ -106,13 +108,13 @@ class HX52xDioHandler():
             'debug' : logging.DEBUG,
             'error' : logging.ERROR,
             }
-
+        
         level = level_dict.get(self.logger_mode, "Unknown")
 
         if level == 'Unknown' or level is None:
-            self.logger_mode == 'off'
+            self.logger_mode = 'off'
             del self.logger
-            return
+            raise ValueError("ERROR Invalid logger_mode")
         
         filename=f"HX52x_session_{now}.log"
 
@@ -125,14 +127,14 @@ class HX52xDioHandler():
             pass    
         elif self.handler_mode == "console":
             handlers.pop(0)
-        elif self.file_handler == "file":
+        elif self.handler_mode == "file":
             handlers.pop(1)
         else:
             print("Incorrect Logging Parameters Provided \
                    Defaulting Logger to Console Logging")
 
         logging.basicConfig (
-            format='[%(asctime)s %(levelname)s %(filename)s:%(lineno)d -> %(funcName)s()] %(message)s',
+            format='%(asctime)s %(levelname)s %(filename)s %(message)s',
             level=level,
             handlers=handlers  
         )
@@ -206,20 +208,30 @@ class HX52xDioHandler():
                 or dio_input_parameter > valid_input_range[1]:
             raise ValueError(f"\033[91mERROR | Out of Range Value Provided: {dio_input_parameter}. Valid Range {valid_input_range}\033[0m")
     
+    @staticmethod
+    def __format_log_message(message_info):
+        frame = sys._getframe(3)
+        lineno = frame.f_lineno
+        function = frame.f_code.co_name
+        
+        return f":{lineno} -> {function}()] {message_info}"
+
     def __log_print(self, message_info:str, print_to_console:bool=True, log:bool=False, level:Optional[int]=False) -> bool:
-        if print_to_console:
+        if print_to_console and self.logger_mode != "console":
             print(message_info)
 
         if log is not None \
                 and level is not None \
                 and self.logger_mode not in ["off", None]:
 
+            log_msg = self.__format_log_message(message_info)
+
             if level == logging.INFO:
-                self.logger.info(message_info)
+                self.logger.info(log_msg)
             elif level == logging.DEBUG:
-                self.logger.debug(message_info)
+                self.logger.debug(log_msg)
             elif level == logging.ERROR:
-                self.logger.error(message_info)
+                self.logger.error(log_msg)
             else:
                 raise ValueError("INCORRECT MODE INPUT INTO LOGGER")
 
@@ -265,7 +277,8 @@ class HX52xDioHandler():
 
     def close_dio_connection(self):
         # HX52xDioHandler.__construct_command.cache_clear()
-        # TODO: Figure out why is the sleep function Erroring when lru_cache is enabled in destructor
+        # TODO: Figure out why is the sleep function Erroring when lru_cache is enabled 
+        # in destructor with time.sleep uncommented 
         # time.sleep(.001) 
         self.__reset()
         self.port.reset_input_buffer()
@@ -305,7 +318,7 @@ class HX52xDioHandler():
                 shell_ack_cnt += 1
 
         if shell_ack_cnt == len(command_to_send):
-            return True # StatusTypes.SUCCESS
+            return True 
 
         self.__log_print(f"\033[91mERROR | AKNOWLEDGEMENT ERROR: "\
                          "mismatch in number of aknowledgements, reduce access speed?\033[0m",
@@ -314,7 +327,7 @@ class HX52xDioHandler():
                         level=logging.ERROR
                         )
 
-        return False # StatusTypes.SEND_CMD_FAILURE
+        return False
 
     def __receive_command(self, response_frame_len:int=ProtocolConstants.RESPONSE_FRAME_LEN) -> bytes:
         '''\
@@ -328,7 +341,13 @@ class HX52xDioHandler():
             byte_in_port = self.port.read(1)
             response_frame.append(byte_in_port)
             self.port.write(ProtocolConstants.SHELL_ACK.to_bytes(1, byteorder='little')) 
-        print(response_frame)
+        
+        self.__log_print(f"Constructed Command {response_frame}",
+                        print_to_console=False,
+                        log=True,
+                        level=logging.INFO
+                        )
+
         return b''.join(response_frame)
 
     def get_di(self, di_pin:int) -> int:
