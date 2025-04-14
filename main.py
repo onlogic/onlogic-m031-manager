@@ -41,16 +41,18 @@ def main():
         print("TESTING DIGITAL INPUTS (get_di)")
         print("=" * 30)
         for i in range(8):
-            print(f"DI Channel {i}: {my_dio.get_di(i)}")
-            time.sleep(.1)
+            di_val = my_dio.get_di(i)
+            print(f"DI Channel {i}: {di_val}")
+            # time.sleep(.1)
         print()
 
         print("=" * 30)
         print("TESTING DIGITAL OUTPUTS (get_do)")
         print("=" * 30)
         for i in range(8):
-            print(f"DO Channel {i}: {my_dio.get_do(i)}")
-            time.sleep(.01)
+            do_val = my_dio.get_do(i)
+            print(f"DO Channel {i}: {do_val}")
+            # time.sleep(.01)
         print()
 
         print("=" * 30)
@@ -60,12 +62,12 @@ def main():
         for i in range(0, 8):
             result = my_dio.set_do(i, 1)
             print(f"Setting DO Channel {i} to 1: Status Code = {result}")
-            time.sleep(.1)       
+            # time.sleep(.1)       
         print("\nSetting DO channels to 0:")
         for i in range(0, 8):
             result = my_dio.set_do(i, 0)
             print(f"Setting DO Channel {i} to 0: Status Code = {result}")
-            time.sleep(.1)
+            # time.sleep(.1)
         print()
         
         print("=" * 30)
@@ -111,6 +113,27 @@ def main():
         print(f"STATUS CODE: {my_dio.set_do_contact(1)}")
         print("Set DO Contact to 1")
         print()
+
+        print("=" * 30)
+        print("TESTING GET ALL INPUT STATES")
+        print("=" * 30)
+        print(my_dio.get_all_input_states())
+
+        print("=" * 30)
+        print("TESTING GET ALL OUTPUT STATES")
+        print("=" * 30)
+        print(my_dio.get_all_output_states())
+        
+        print("=" * 30)
+        print("TESTING SET ALL OUTPUT STATES")
+        print("=" * 30)
+        print(my_dio.set_all_output_states([0, 0, 0, 1, 0, 0, 0, 1]))
+
+        print("=" * 30)
+        print("TESTING GET ALL INPUT & OUTPUT STATES")
+        print("=" * 30)
+        for i in range(20):
+            print(my_dio.get_all_io_states())
 
     except KeyboardInterrupt:
         print("Operation terminated by user.")

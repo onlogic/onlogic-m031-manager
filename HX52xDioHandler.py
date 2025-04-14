@@ -62,11 +62,16 @@ class HX52xDioHandler():
         if self.is_setup:
             self.close_dio_connection()
 
-    def __repr__(self):
+    def __str__(self):
         '''COM port and command set of DioInputHandler.'''
-        # TODO: Flesh this out
-        # serial.__version__
-        return f"\nPort: {self.serial_connection_label}\n"
+        # TODO: Add Python utility Version and FW version?
+        repr_str = f"Port: {self.serial_connection_label}\n"   \
+                   f"Pyserial Version: {serial.__version__}\n" \
+                   f"Logger Mode: {self.logger_mode}\n"        \
+                   f"Handler Mode: {self.handler_mode}\n"      \
+                   f"Main Functionality Setup {self.is_setup}"
+        
+        return repr_str
     
     def __get_device_port(self, dev_id:str, location:str=None) -> str | None:
         """Scan and return the port of the target device."""
@@ -486,7 +491,8 @@ class HX52xDioHandler():
         frame = self.__receive_command()
 
         self.__reset(nack_counter=64, reset_buffers=False)
-
+        time.sleep(.004)
+        
         self.__log_print(f"recieved command bytestr {frame}",
                         print_to_console=False,
                         log=True,
@@ -603,17 +609,14 @@ class HX52xDioHandler():
 
         return StatusTypes.SUCCESS
 
-    '''
-    # NOTE: MARCO/LUKE, should I add functionality similar to this?:
     def get_all_input_states(self) -> list:
-        
         all_input_states = []
         for i in range(0, 8):
             all_input_states.append(self.get_di(i))
 
         return all_input_states
 
-    def get_all_output_states(self) -> list:
+    def get_all_output_states(self) -> list | None:
         all_output_states = []
         
         for i in range(0, 8):
@@ -624,9 +627,12 @@ class HX52xDioHandler():
     def get_all_io_states(self) -> list:
         return [self.get_all_input_states(), self.get_all_output_states()]
 
-    def set_all_output_states(self, do_lst:list) -> int:
-        for i in do_lst:
-            self.set_do(i)
+    def set_all_output_states(self, do_lst:list) -> list:
+        if len(do_lst) < 8:
+            raise ValueError("ERROR | Incorrect amount of inputs specified.")
 
-        return StatusTypes.SUCCESS
-    '''
+        error_codes = []
+        for do_lst_idx, do_lst_val in enumerate(do_lst):
+            error_codes.append(self.set_do(do_lst_idx, do_lst_val))
+
+        return error_codes
