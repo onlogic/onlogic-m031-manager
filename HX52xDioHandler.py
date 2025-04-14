@@ -26,7 +26,7 @@ import sys
 from serial.tools import list_ports as system_ports
 from command_set import ProtocolConstants, Kinds, StatusTypes
 from fastcrc import crc8
-from colorama import just_fix_windows_console
+from colorama import Fore, init
 from datetime import datetime
 from typing import Optional
 
@@ -39,8 +39,8 @@ class HX52xDioHandler():
                  logger_mode:str=None, handler_mode:str=None):
         '''Init class by establishing serial connection.'''
 
-        # Color coding for errors and such
-        just_fix_windows_console()
+        # Init colorama: Color coding for errors and such
+        init(autoreset=True) 
 
         # Setup mechanism so deleter does not delete non-existant object 
         self.is_setup=False   
@@ -92,7 +92,14 @@ class HX52xDioHandler():
         try:
             return serial.Serial(self.serial_connection_label, 115200, timeout=1)
         except serial.SerialException as e:
-            raise serial.SerialException(f"\033[91mERROR | {e}: Are you on the right port?\033[0m")
+            serial_connect_err = f"ERROR | {e}: Are you on the right port?"
+            self.__log_print(serial_connect_err,
+                             print_to_console=True,
+                             color=Fore.RED,
+                             log=True,
+                             level=logging.ERROR
+                             )
+            raise serial.SerialException(serial_connect_err)
 
     @staticmethod
     def __handle_lconfig_str(input_str:str) -> str | None:
@@ -138,7 +145,7 @@ class HX52xDioHandler():
         elif self.handler_mode == "file":
             handlers.pop(1)
         else:
-            raise ValueError ("Incorrect Logging Parameters Provided") 
+            raise ValueError("Incorrect Logging Parameters Provided") 
 
         logging.basicConfig (
             format='[%(asctime)s %(levelname)s %(filename)s %(message)s',
@@ -173,17 +180,19 @@ class HX52xDioHandler():
                     time.sleep(.004)
 
         if nack_count == ProtocolConstants.NACKS_NEEDED:
-            self.__log_print("\033[32mDIO Interface Found\033[0m",
+            self.__log_print("DIO Interface Found",
                             print_to_console=True,
+                            color=Fore.GREEN,
                             log=True,
                             level=logging.INFO
                         )
             return
 
-        self.__log_print(f"\033[91mERROR | AKNOWLEDGEMENT ERROR: "\
+        self.__log_print(f"ERROR | AKNOWLEDGEMENT ERROR: "\
                          f"mismatch in number of nacks, check if {self.serial_connection_label} "\
-                         f"is the right port?\033[0m",
+                         f"is the right port?",
                          print_to_console=True,
+                         color=Fore.RED,
                          log=True,
                          level=logging.ERROR
                         )
@@ -202,9 +211,10 @@ class HX52xDioHandler():
         bytes_sent = 0
         while bytes_to_send > 0:
             if bytes_sent > 1024:
-                ack_error_msg = f"\033[91mERROR | AKNOWLEDGEMENT ERROR: Cannot recover MCU \033[0m"
+                ack_error_msg = f"ERROR | AKNOWLEDGEMENT ERROR: Cannot recover MCU"
                 self.__log_print(ack_error_msg,
                                  print_to_console=True,
+                                 color=Fore.RED,
                                  log=True,
                                  level=logging.ERROR
                                  )
@@ -224,11 +234,30 @@ class HX52xDioHandler():
 
     def __validate_input_param(self, dio_input_parameter, valid_input_range:list, input_type:type):
         if type(dio_input_parameter) != input_type:
-            raise TypeError(f"\033[91mERROR | {type(dio_input_parameter)} was found when {input_type} was expected\033[0m")
+            type_error_msg = f"ERROR | {type(dio_input_parameter)} was found when {input_type} was expected"
+            
+            self.__log_print(type_error_msg,
+                            print_to_console=True,
+                            color=Fore.RED,
+                            log=True,
+                            level=logging.ERROR
+                            )
+            
+            raise TypeError(type_error_msg)
 
         if dio_input_parameter < valid_input_range[0] \
                 or dio_input_parameter > valid_input_range[1]:
-            raise ValueError(f"\033[91mERROR | Out of Range Value Provided: {dio_input_parameter}. Valid Range {valid_input_range}\033[0m")
+            value_error_msg = "ERROR | Out of Range Value Provided: " + str(dio_input_parameter) + "." + \
+                  " Valid Range " + str(valid_input_range)
+            
+            self.__log_print(value_error_msg,
+                            print_to_console=True,
+                            color=Fore.RED,
+                            log=True,
+                            level=logging.ERROR
+                            )
+            
+            raise ValueError(value_error_msg)
     
     @staticmethod
     def __format_log_message(message_info):
@@ -237,9 +266,15 @@ class HX52xDioHandler():
         function = frame.f_code.co_name
         return f":{lineno} -> {function}()] {message_info}"
 
-    def __log_print(self, message_info:str, print_to_console:bool=True, log:bool=False, level:Optional[int]=None) -> bool:
+    def __log_print(self, message_info:str, print_to_console:bool=True, color:str=None, 
+                    log:bool=False, level:Optional[int]=None) -> bool:
         if print_to_console and self.logger_mode != "console":
-            print(message_info)
+            if color == Fore.RED:
+                print(Fore.RED + message_info)
+            elif color == Fore.GREEN:
+                print(Fore.GREEN + message_info)
+            else:
+                print(message_info)
 
         if log is True \
                 and level is not None \
@@ -341,9 +376,10 @@ class HX52xDioHandler():
         if shell_ack_cnt == len(command_to_send):
             return True 
 
-        self.__log_print(f"\033[91mERROR | AKNOWLEDGEMENT ERROR: "\
-                         "mismatch in number of aknowledgements, reduce access speed?\033[0m",
+        self.__log_print(f"ERROR | AKNOWLEDGEMENT ERROR: "\
+                         "mismatch in number of aknowledgements, reduce access speed?",
                         print_to_console=False,
+                        color=Fore.RED,
                         log=True,
                         level=logging.ERROR
                         )

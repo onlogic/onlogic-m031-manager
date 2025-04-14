@@ -18,12 +18,8 @@ Usage:
 
 NOTE: 
     - This program was tested on Python 3.13.0 and Python 3.12.4
-
-    - TODO: Automatically find and latch on to the dio terminal using HW serial methods
     
     - CTRL+C can be used to exit the program.
-
-    - There is a time.sleep(.004) delay in get_di for stabilization.
 """
 
 import timeit # Optional: measure time taken per sample
@@ -39,7 +35,7 @@ def main():
 
     try:
         # Init DIO handler
-        my_dio = HX52xDioHandler(logger_mode="DEBUG", handler_mode="CONSOLE") #logger_mode="DEBUG", handler_mode="BOTH"
+        my_dio = HX52xDioHandler() #logger_mode="DEBUG", handler_mode="BOTH"
         
         print("=" * 30)
         print("TESTING DIGITAL INPUTS (get_di)")
@@ -63,12 +59,12 @@ def main():
         print("Setting DO channels to 1:")
         for i in range(0, 8):
             result = my_dio.set_do(i, 1)
-            print(f"Setting DO Channel {i} to 1: Result = {result}")
+            print(f"Setting DO Channel {i} to 1: Status Code = {result}")
             time.sleep(.1)       
         print("\nSetting DO channels to 0:")
         for i in range(0, 8):
             result = my_dio.set_do(i, 0)
-            print(f"Setting DO Channel {i} to 0: Result = {result}")
+            print(f"Setting DO Channel {i} to 0: Status Code = {result}")
             time.sleep(.1)
         print()
         
@@ -96,7 +92,7 @@ def main():
         print("TESTING SET DIGITAL INPUT CONTACT (set_di_contact)")
         print("=" * 30)
         print("Setting DI Contact to 1:")
-        print(f"STATUS CODE: {my_dio.set_di_contact(1)}")
+        print(f"Status Code: {my_dio.set_di_contact(1)}")
         print("Set DI Contact to 1")
         print()
 
@@ -104,7 +100,7 @@ def main():
         print("TESTING SET DIGITAL OUTPUT CONTACT (set_do_contact)")
         print("=" * 30)
         print("Setting DO Contact to 0:")
-        print(f"STATUS CODE: {my_dio.set_do_contact(0)}")
+        print(f"Status Code: {my_dio.set_do_contact(0)}")
         print("Set DO Contact to 0")
         print()
 
