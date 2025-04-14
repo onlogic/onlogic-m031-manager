@@ -38,11 +38,19 @@ class HX52xDioHandler():
     def __init__(self, serial_connection_label:str=None, 
                  logger_mode:str=None, handler_mode:str=None):
         '''Init class by establishing serial connection.'''
+
+        # Color coding for errors and such
+        just_fix_windows_console()
+
+        # Setup mechanism so deleter does not delete non-existant object 
+        self.is_setup=False   
+
+        # Set up logger 
         self.logger_mode = self.__handle_lconfig_str(logger_mode)
         self.handler_mode = self.__handle_lconfig_str(handler_mode)
         self.__create_logger()
-        just_fix_windows_console() # Color coding for errors and such
-        self.is_setup=False      
+
+        # Serial device functionality
         self.serial_connection_label = serial_connection_label
         self.port = self.__init_port()
         self.__mcu_connection_check()
@@ -130,7 +138,6 @@ class HX52xDioHandler():
         elif self.handler_mode == "file":
             handlers.pop(1)
         else:
-            # TODO: Should I Default Logger to Console Logging
             raise ValueError ("Incorrect Logging Parameters Provided") 
 
         logging.basicConfig (
@@ -195,7 +202,14 @@ class HX52xDioHandler():
         bytes_sent = 0
         while bytes_to_send > 0:
             if bytes_sent > 1024:
-                raise RuntimeError("Cannot recover MCU")
+                ack_error_msg = f"\033[91mERROR | AKNOWLEDGEMENT ERROR: Cannot recover MCU \033[0m"
+                self.__log_print(ack_error_msg,
+                                 print_to_console=True,
+                                 log=True,
+                                 level=logging.ERROR
+                                 )
+                
+                raise RuntimeError(ack_error_msg)
             
             # Begin buffer clear feedback loop
             self.port.write(ProtocolConstants.SHELL_ACK.to_bytes(1, byteorder='little'))
