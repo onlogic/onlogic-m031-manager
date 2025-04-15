@@ -66,7 +66,7 @@ class HX52xDioHandler():
         '''COM port and command set of DioInputHandler.'''
         # TODO: Add Python utility Version and FW version?
         repr_str = f"Port: {self.serial_connection_label}\n"   \
-                   f"Pyserial Version: {serial.__version__}\n" \
+                   f"PySerial Version: {serial.__version__}\n" \
                    f"Logger Mode: {self.logger_mode}\n"        \
                    f"Handler Mode: {self.handler_mode}\n"      \
                    f"Main Functionality Setup {self.is_setup}"
