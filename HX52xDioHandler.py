@@ -35,14 +35,13 @@ class HX52xDioHandler():
     Administers the serial connection with the
     microcontroller embedded in the K/HX-52x DIO-Add in Card.
     '''
-    def __init__(self, serial_connection_label:str=None, 
-                 logger_mode:str=None, handler_mode:str=None):
+    def __init__(self, logger_mode:str=None, handler_mode:str=None):
         '''Init class by establishing serial connection.'''
 
         # Init colorama: Color coding for errors and such
         init(autoreset=True) 
 
-        # Setup mechanism so deleter does not delete non-existant object 
+        # Setup mechanism so deleter does not delete non-existant objects
         self.is_setup=False   
 
         # Set up logger 
@@ -50,17 +49,10 @@ class HX52xDioHandler():
         self.handler_mode = self.__handle_lconfig_str(handler_mode)
         self.__create_logger()
 
-        # Serial device functionality
-        self.serial_connection_label = serial_connection_label
-        self.port = self.__init_port()
-        self.__mcu_connection_check()
-        self.is_setup=True
-        self.__reset()
-
     def __del__(self):
         '''Destroy the object and end device communication gracefully.'''
         if self.is_setup:
-            self.close_dio_connection()
+            self.close_connection()
 
     def __str__(self):
         '''COM port and command set of DioInputHandler.'''
@@ -267,6 +259,9 @@ class HX52xDioHandler():
                 bytes_to_send = nack_counter
 
     def __validate_input_param(self, dio_input_parameter, valid_input_range:list, input_type:type):
+        if self.is_setup is False:
+            raise serial.SerialException("ERROR | Serial Connection is not set up, did you claim the port?")
+
         if type(dio_input_parameter) != input_type:
             type_error_msg = f"ERROR | {type(dio_input_parameter)} was found when {input_type} was expected"
             
@@ -358,7 +353,15 @@ class HX52xDioHandler():
 
         return StatusTypes.SUCCESS
 
-    def close_dio_connection(self):
+    def claim(self, serial_connection_label:str=None):
+        # Serial device functionality
+        self.serial_connection_label = serial_connection_label
+        self.port = self.__init_port()
+        self.__mcu_connection_check()
+        self.is_setup=True
+        self.__reset()
+
+    def close_connection(self):
         # HX52xDioHandler.__construct_command.cache_clear()
         # TODO: Figure out why is the sleep function Erroring when lru_cache is enabled 
         # in destructor with time.sleep uncommented 
