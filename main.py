@@ -34,7 +34,7 @@ def main():
 
     try:
         # Init DIO handler
-        my_dio = HX52xDioHandler(logger_mode="DEBUG", handler_mode="Console") #logger_mode="DEBUG", handler_mode="BOTH"
+        my_dio = HX52xDioHandler(logger_mode=None, handler_mode="BOTH") #logger_mode="DEBUG", handler_mode="BOTH"
         my_dio.claim()
         
         print("=" * 30)

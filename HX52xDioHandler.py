@@ -146,6 +146,12 @@ class HX52xDioHandler():
             handlers=handlers  
         )
 
+        self.__log_print(f"Logger Initialized...",
+                         print_to_console=False,
+                         log=True,
+                         level=logging.INFO
+                        )
+
     @staticmethod
     def __format_log_message(message_info):
         frame = sys._getframe(3)
