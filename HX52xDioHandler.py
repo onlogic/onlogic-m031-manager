@@ -118,11 +118,24 @@ class HX52xDioHandler():
 
         if self.logger_mode not in ['info', 'debug','error']:
             print("Logger Mode", self.logger_mode)
-            raise ValueError("ERROR Invalid logger_mode")
+            raise ValueError("ERROR | Invalid logger_mode")
+        
+        now = datetime.now().strftime("%m_%d_%Y_%H_%M_%S")
+        filename=f"HX52x_session_{now}.log"
+
+        handlers = []
+        if self.handler_mode == "both":
+            handlers.extend([logging.FileHandler(filename), 
+                            logging.StreamHandler(sys.stdout)])
+        elif self.handler_mode == "console":
+            handlers.append(logging.StreamHandler(sys.stdout))
+        elif self.handler_mode == "file":
+            handlers.append(logging.FileHandler(filename))
+        else:
+            raise ValueError("ERROR | Incorrect Handle Parameter Provided") 
         
         self.logger = logging.getLogger()
-        now = datetime.now().strftime("%m_%d_%Y_%H_%M_%S")
-
+    
         level_dict = { 
             'info'  : logging.INFO,
             'debug' : logging.DEBUG,
@@ -134,24 +147,8 @@ class HX52xDioHandler():
         if level == 'Unknown' or level is None:
             self.logger_mode = 'off'
             del self.logger
-            raise ValueError("ERROR Invalid logger_mode")
+            raise ValueError("ERROR | Invalid logger_mode")
         
-        filename=f"HX52x_session_{now}.log"
-
-        handlers = [
-            logging.FileHandler(filename),
-            logging.StreamHandler(sys.stdout)
-        ]        
-
-        if self.handler_mode == "both":
-            pass    
-        elif self.handler_mode == "console":
-            handlers.pop(0)
-        elif self.handler_mode == "file":
-            handlers.pop(1)
-        else:
-            raise ValueError("Incorrect Logging Parameters Provided") 
-
         logging.basicConfig (
             format='[%(asctime)s %(levelname)s %(filename)s %(message)s',
             level=level,
