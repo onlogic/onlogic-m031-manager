@@ -70,9 +70,9 @@ class HX52xDioHandler():
                    f"Logger Mode: {self.logger_mode}\n"        \
                    f"Handler Mode: {self.handler_mode}\n"      \
                    f"Main Functionality Setup {self.is_setup}"
-        
+
         return repr_str
-    
+
     def __get_device_port(self, dev_id:str, location:str=None) -> str | None:
         """Scan and return the port of the target device."""
         all_ports = system_ports.comports() 
@@ -88,7 +88,7 @@ class HX52xDioHandler():
                                     )
                     return port.device
         return None
-    
+
     def __init_port(self) -> serial.Serial:
         '''Init port and establish USB-UART connection.'''
         if self.serial_connection_label is None:
@@ -157,6 +157,38 @@ class HX52xDioHandler():
             level=level,
             handlers=handlers  
         )
+
+    @staticmethod
+    def __format_log_message(message_info):
+        frame = sys._getframe(3)
+        lineno = frame.f_lineno
+        function = frame.f_code.co_name
+        return f":{lineno} -> {function}()] {message_info}"
+
+    def __log_print(self, message_info:str, print_to_console:bool=True, color:str=None, 
+                    log:bool=False, level:Optional[int]=None) -> bool:
+        if print_to_console and self.logger_mode != "console":
+            if color == Fore.RED:
+                print(Fore.RED + message_info)
+            elif color == Fore.GREEN:
+                print(Fore.GREEN + message_info)
+            else:
+                print(message_info)
+
+        if log is True \
+                and level is not None \
+                and self.logger_mode not in ["off", None]:
+
+            log_msg = self.__format_log_message(message_info)
+
+            if level == logging.INFO:
+                self.logger.info(log_msg)
+            elif level == logging.DEBUG:
+                self.logger.debug(log_msg)
+            elif level == logging.ERROR:
+                self.logger.error(log_msg)
+            else:
+                raise ValueError("ERROR | INCORRECT MODE INPUT INTO LOGGER")
 
     def __mcu_connection_check(self) -> None:
         '''\
@@ -263,38 +295,6 @@ class HX52xDioHandler():
                             )
             
             raise ValueError(value_error_msg)
-    
-    @staticmethod
-    def __format_log_message(message_info):
-        frame = sys._getframe(3)
-        lineno = frame.f_lineno
-        function = frame.f_code.co_name
-        return f":{lineno} -> {function}()] {message_info}"
-
-    def __log_print(self, message_info:str, print_to_console:bool=True, color:str=None, 
-                    log:bool=False, level:Optional[int]=None) -> bool:
-        if print_to_console and self.logger_mode != "console":
-            if color == Fore.RED:
-                print(Fore.RED + message_info)
-            elif color == Fore.GREEN:
-                print(Fore.GREEN + message_info)
-            else:
-                print(message_info)
-
-        if log is True \
-                and level is not None \
-                and self.logger_mode not in ["off", None]:
-
-            log_msg = self.__format_log_message(message_info)
-
-            if level == logging.INFO:
-                self.logger.info(log_msg)
-            elif level == logging.DEBUG:
-                self.logger.debug(log_msg)
-            elif level == logging.ERROR:
-                self.logger.error(log_msg)
-            else:
-                raise ValueError("INCORRECT MODE INPUT INTO LOGGER")
 
     def __check_crc(self, frame:bytes) -> bool:
         if len(frame) < 4:
@@ -311,6 +311,7 @@ class HX52xDioHandler():
 
         if crc_val != frame[1]:
             self.__log_print(f"CRC MISMATCH",
+                             color=Fore.RED,
                              print_to_console=True,
                              log=True,
                              level=logging.ERROR
@@ -321,17 +322,41 @@ class HX52xDioHandler():
 
     def __validate_recieved_frame(self, return_frame:list, target_index:int=None, target_range:list=None) -> int:
         if return_frame[0] != ProtocolConstants.SHELL_SOF:
+            self.__log_print(f"SOF Frame not found",
+                             color=Fore.RED,
+                             print_to_console=True,
+                             log=True,
+                             level=logging.ERROR
+                            )
             return StatusTypes.RECV_FRAME_SOF_ERROR
 
         if return_frame[-1] != ProtocolConstants.SHELL_NACK:
+            self.__log_print(f"NACK not found in desired index",
+                             color=Fore.RED,
+                             print_to_console=True,
+                             log=True,
+                             level=logging.ERROR
+                            )
             return StatusTypes.RECV_FRAME_NACK_ERROR
 
         is_crc = self.__check_crc(return_frame)
         if not is_crc:
+            self.__log_print(f"CRC Check fail",
+                             color=Fore.RED,
+                             print_to_console=True,
+                             log=True,
+                             level=logging.ERROR
+                            )
             return StatusTypes.RECV_FRAME_CRC_ERROR
-        
+
         if target_index is not None \
                 and return_frame[target_index] not in target_range:
+            self.__log_print(f"Value at target index not in target range",
+                             color=Fore.RED,
+                             print_to_console=True,
+                             log=True,
+                             level=logging.ERROR
+                            )
             return StatusTypes.RECV_NONBINARY_DATATYPE_DETECTED
 
         return StatusTypes.SUCCESS
@@ -340,7 +365,7 @@ class HX52xDioHandler():
         # HX52xDioHandler.__construct_command.cache_clear()
         # TODO: Figure out why is the sleep function Erroring when lru_cache is enabled 
         # in destructor with time.sleep uncommented 
-        # time.sleep(.001) 
+        # time.sleep(.001)
         self.__reset()
         self.port.reset_input_buffer()
         self.port.reset_output_buffer()
@@ -492,7 +517,7 @@ class HX52xDioHandler():
 
         self.__reset(nack_counter=64, reset_buffers=False)
         time.sleep(.004)
-        
+
         self.__log_print(f"recieved command bytestr {frame}",
                         print_to_console=False,
                         log=True,
@@ -616,7 +641,7 @@ class HX52xDioHandler():
 
         return all_input_states
 
-    def get_all_output_states(self) -> list | None:
+    def get_all_output_states(self) -> list:
         all_output_states = []
         
         for i in range(0, 8):
