@@ -7,10 +7,10 @@ Description:
 
 Contains:
     - class: DioInputHandler
-        + private method: __init_port
-        + private method: __mcu_connection_check
-        + private method: __reset
-        + private method: __send_command
+        + private method: _init_port
+        + private method: _mcu_connection_check
+        + private method: _reset
+        + private method: _send_command
         + public method:  get_di
 
 References:
@@ -47,7 +47,7 @@ class HX52xDioHandler():
         # Set up logger 
         self.logger_mode = self.__handle_lconfig_str(logger_mode)
         self.handler_mode = self.__handle_lconfig_str(handler_mode)
-        self.__create_logger()
+        self._create_logger()
 
     def __del__(self):
         '''Destroy the object and end device communication gracefully.'''
@@ -64,13 +64,13 @@ class HX52xDioHandler():
 
         return repr_str
 
-    def __get_device_port(self, dev_id:str, location:str=None) -> str | None:
+    def _get_device_port(self, dev_id:str, location:str=None) -> str | None:
         """Scan and return the port of the target device."""
         all_ports = system_ports.comports() 
         for port in sorted(all_ports):
             if dev_id in port.hwid:
                 if location and location in port.location:
-                    self.__log_print(f"Port: {port}\n"
+                    self._log_print(f"Port: {port}\n"
                                      f"Port Location: {port.location}\n"
                                      f"Hardware ID: {port.hwid}\n"
                                      f"Device: {port.device}\n",
@@ -80,16 +80,16 @@ class HX52xDioHandler():
                     return port.device
         return None
 
-    def __init_port(self) -> serial.Serial:
+    def _init_port(self) -> serial.Serial:
         '''Init port and establish USB-UART connection.'''
         if self.serial_connection_label is None:
-            self.serial_connection_label = self.__get_device_port(ProtocolConstants.MCU_VID_PID, ".0")
+            self.serial_connection_label = self._get_device_port(ProtocolConstants.MCU_VID_PID, ".0")
 
         try:
             return serial.Serial(self.serial_connection_label, 115200, timeout=1)
         except serial.SerialException as e:
             serial_connect_err = f"ERROR | {e}: Are you on the right port?"
-            self.__log_print(serial_connect_err,
+            self._log_print(serial_connect_err,
                              print_to_console=True,
                              color=Fore.RED,
                              log=True,
@@ -101,7 +101,7 @@ class HX52xDioHandler():
     def __handle_lconfig_str(input_str:str) -> str | None:
         return input_str.lower().strip() if isinstance(input_str, str) else input_str
 
-    def __create_logger(self) -> None:
+    def _create_logger(self) -> None:
         '''Create Logger with INFO, DEBUG, and ERROR Debugging'''
         if self.logger_mode in [None, "off"]:
             print("Logger Mode off, ignoring")
@@ -146,20 +146,20 @@ class HX52xDioHandler():
             handlers=handlers  
         )
 
-        self.__log_print(f"Logger Initialized...",
+        self._log_print(f"Logger Initialized...",
                          print_to_console=False,
                          log=True,
                          level=logging.INFO
                         )
 
     @staticmethod
-    def __format_log_message(message_info):
+    def _format_log_message(message_info):
         frame = sys._getframe(3)
         lineno = frame.f_lineno
         function = frame.f_code.co_name
         return f":{lineno} -> {function}()] {message_info}"
 
-    def __log_print(self, message_info:str, print_to_console:bool=True, color:str=None, 
+    def _log_print(self, message_info:str, print_to_console:bool=True, color:str=None, 
                     log:bool=False, level:Optional[int]=None) -> bool:
         if print_to_console and self.logger_mode != "console":
             if color == Fore.RED:
@@ -173,7 +173,7 @@ class HX52xDioHandler():
                 and level is not None \
                 and self.logger_mode not in ["off", None]:
 
-            log_msg = self.__format_log_message(message_info)
+            log_msg = self._format_log_message(message_info)
 
             if level == logging.INFO:
                 self.logger.info(log_msg)
@@ -184,7 +184,7 @@ class HX52xDioHandler():
             else:
                 raise ValueError("ERROR | INCORRECT MODE INPUT INTO LOGGER")
 
-    def __mcu_connection_check(self) -> None:
+    def _mcu_connection_check(self) -> None:
         '''\
         Check state of MCU, if it returns '\a' successively
         within a proper time interval, the correct port is found.
@@ -211,7 +211,7 @@ class HX52xDioHandler():
                     time.sleep(.004)
 
         if nack_count == ProtocolConstants.NACKS_NEEDED:
-            self.__log_print("DIO Interface Found",
+            self._log_print("DIO Interface Found",
                             print_to_console=True,
                             color=Fore.GREEN,
                             log=True,
@@ -219,7 +219,7 @@ class HX52xDioHandler():
                         )
             return
 
-        self.__log_print(f"ERROR | AKNOWLEDGEMENT ERROR: "\
+        self._log_print(f"ERROR | AKNOWLEDGEMENT ERROR: "\
                          f"mismatch in number of nacks, check if {self.serial_connection_label} "\
                          f"is the right port?",
                          print_to_console=True,
@@ -230,7 +230,7 @@ class HX52xDioHandler():
 
         raise ValueError("ERROR | AKNOWLEDGEMENT ERROR")
 
-    def __reset(self, nack_counter:int=ProtocolConstants.NUM_NACKS, reset_buffers:bool=True) -> None:
+    def _reset(self, nack_counter:int=ProtocolConstants.NUM_NACKS, reset_buffers:bool=True) -> None:
         '''Reset following the LPMCU ACK-NACK pattern.'''
         # Expensive operation, shouldn't be done twice per read
         if reset_buffers:
@@ -243,7 +243,7 @@ class HX52xDioHandler():
         while bytes_to_send > 0:
             if bytes_sent > 1024:
                 ack_error_msg = f"ERROR | AKNOWLEDGEMENT ERROR: Cannot recover MCU"
-                self.__log_print(ack_error_msg,
+                self._log_print(ack_error_msg,
                                  print_to_console=True,
                                  color=Fore.RED,
                                  log=True,
@@ -263,14 +263,14 @@ class HX52xDioHandler():
             else:    
                 bytes_to_send = nack_counter
 
-    def __validate_input_param(self, dio_input_parameter, valid_input_range:list, input_type:type):
+    def _validate_input_param(self, dio_input_parameter, valid_input_range:list, input_type:type):
         if self.is_setup is False:
             raise serial.SerialException("ERROR | Serial Connection is not set up, did you claim the port?")
 
         if type(dio_input_parameter) != input_type:
             type_error_msg = f"ERROR | {type(dio_input_parameter)} was found when {input_type} was expected"
             
-            self.__log_print(type_error_msg,
+            self._log_print(type_error_msg,
                             print_to_console=True,
                             color=Fore.RED,
                             log=True,
@@ -284,7 +284,7 @@ class HX52xDioHandler():
             value_error_msg = "ERROR | Out of Range Value Provided: " + str(dio_input_parameter) + "." + \
                   " Valid Range " + str(valid_input_range)
             
-            self.__log_print(value_error_msg,
+            self._log_print(value_error_msg,
                             print_to_console=True,
                             color=Fore.RED,
                             log=True,
@@ -293,21 +293,21 @@ class HX52xDioHandler():
             
             raise ValueError(value_error_msg)
 
-    def __check_crc(self, frame:bytes) -> bool:
+    def _check_crc(self, frame:bytes) -> bool:
         if len(frame) < 4:
             return False
         
         crc_bytes = frame[2:-1]
         crc_val = crc8.smbus(crc_bytes)
 
-        self.__log_print(f"CALCULATED {crc_val} : EXISTING {frame[1]}",
+        self._log_print(f"CALCULATED {crc_val} : EXISTING {frame[1]}",
                          print_to_console=False,
                          log=True,
                          level=logging.DEBUG
                         )
 
         if crc_val != frame[1]:
-            self.__log_print(f"CRC MISMATCH",
+            self._log_print(f"CRC MISMATCH",
                              color=Fore.RED,
                              print_to_console=True,
                              log=True,
@@ -317,9 +317,9 @@ class HX52xDioHandler():
 
         return True
 
-    def __validate_recieved_frame(self, return_frame:list, target_index:int=None, target_range:list=None) -> int:
+    def _validate_recieved_frame(self, return_frame:list, target_index:int=None, target_range:list=None) -> int:
         if return_frame[0] != ProtocolConstants.SHELL_SOF:
-            self.__log_print(f"SOF Frame not found",
+            self._log_print(f"SOF Frame not found",
                              color=Fore.RED,
                              print_to_console=True,
                              log=True,
@@ -328,7 +328,7 @@ class HX52xDioHandler():
             return StatusTypes.RECV_FRAME_SOF_ERROR
 
         if return_frame[-1] != ProtocolConstants.SHELL_NACK:
-            self.__log_print(f"NACK not found in desired index",
+            self._log_print(f"NACK not found in desired index",
                              color=Fore.RED,
                              print_to_console=True,
                              log=True,
@@ -336,9 +336,9 @@ class HX52xDioHandler():
                             )
             return StatusTypes.RECV_FRAME_NACK_ERROR
 
-        is_crc = self.__check_crc(return_frame)
+        is_crc = self._check_crc(return_frame)
         if not is_crc:
-            self.__log_print(f"CRC Check fail",
+            self._log_print(f"CRC Check fail",
                              color=Fore.RED,
                              print_to_console=True,
                              log=True,
@@ -348,7 +348,7 @@ class HX52xDioHandler():
 
         if target_index is not None \
                 and return_frame[target_index] not in target_range:
-            self.__log_print(f"Value at target index not in target range",
+            self._log_print(f"Value at target index not in target range",
                              color=Fore.RED,
                              print_to_console=True,
                              log=True,
@@ -361,25 +361,25 @@ class HX52xDioHandler():
     def claim(self, serial_connection_label:str=None):
         # Serial device functionality
         self.serial_connection_label = serial_connection_label
-        self.port = self.__init_port()
-        self.__mcu_connection_check()
+        self.port = self._init_port()
+        self._mcu_connection_check()
         self.is_setup=True
-        self.__reset()
+        self._reset()
 
     def close_connection(self):
-        # HX52xDioHandler.__construct_command.cache_clear()
+        # HX52xDioHandler._construct_command.cache_clear()
         # TODO: Figure out why is the sleep function Erroring when lru_cache is enabled 
         # in destructor with time.sleep uncommented 
         # time.sleep(.001)
         if self.is_setup:
-            self.__reset()
+            self._reset()
             self.port.reset_input_buffer()
             self.port.reset_output_buffer()
             self.port.close()
             self.is_setup = False
 
     @functools.lru_cache(maxsize=128)
-    def __construct_command(self, kind:Kinds, *payload:int) -> bytes:
+    def _construct_command(self, kind:Kinds, *payload:int) -> bytes:
         # self.validate_message_bytes(kind, payload)
         
         crc_calculation = crc8.smbus(bytes([len(payload), kind, *payload]))
@@ -391,7 +391,7 @@ class HX52xDioHandler():
                                      *payload
                                      ])
         
-        self.__log_print(f"Constructed Command {constructed_command}",
+        self._log_print(f"Constructed Command {constructed_command}",
                         print_to_console=False,
                         log=True,
                         level=logging.INFO
@@ -399,7 +399,7 @@ class HX52xDioHandler():
         
         return constructed_command
 
-    def __send_command(self, command_to_send:bytes) -> bool:
+    def _send_command(self, command_to_send:bytes) -> bool:
         # send command byte by byte and validate response
         # print("LEN IS", len(command_to_send), "\n")
         shell_ack_cnt = 0
@@ -413,7 +413,7 @@ class HX52xDioHandler():
         if shell_ack_cnt == len(command_to_send):
             return True 
 
-        self.__log_print(f"ERROR | AKNOWLEDGEMENT ERROR: "\
+        self._log_print(f"ERROR | AKNOWLEDGEMENT ERROR: "\
                          "mismatch in number of aknowledgements, reduce access speed?",
                         print_to_console=False,
                         color=Fore.RED,
@@ -423,7 +423,7 @@ class HX52xDioHandler():
 
         return False
 
-    def __receive_command(self, response_frame_len:int=ProtocolConstants.RESPONSE_FRAME_LEN) -> bytes:
+    def _receive_command(self, response_frame_len:int=ProtocolConstants.RESPONSE_FRAME_LEN) -> bytes:
         '''\
         receive command in expected format that complies with UART Shell.
         The response_frame list should always end with a NACK ['\a'] 
@@ -436,7 +436,7 @@ class HX52xDioHandler():
             response_frame.append(byte_in_port)
             self.port.write(ProtocolConstants.SHELL_ACK.to_bytes(1, byteorder='little')) 
         
-        self.__log_print(f"Recieved Command List {response_frame}",
+        self._log_print(f"Recieved Command List {response_frame}",
                         print_to_console=False,
                         log=True,
                         level=logging.INFO
@@ -453,189 +453,189 @@ class HX52xDioHandler():
         :return:        returns 1, indicating on, 0, indicating off, 
                         and -1, indicating an error occured in the sample
         """
-        self.__validate_input_param(di_pin, [0,7], int)
+        self._validate_input_param(di_pin, [0,7], int)
 
-        di_command = self.__construct_command(Kinds.GET_DI, di_pin)
+        di_command = self._construct_command(Kinds.GET_DI, di_pin)
 
         # Enclose each value read with buffer clearances
-        self.__reset(nack_counter=64)
-        if not self.__send_command(di_command):
+        self._reset(nack_counter=64)
+        if not self._send_command(di_command):
             return StatusTypes.SUCCESS
 
-        frame = self.__receive_command()
+        frame = self._receive_command()
 
-        self.__reset(nack_counter=64, reset_buffers=False)
+        self._reset(nack_counter=64, reset_buffers=False)
         time.sleep(.004)
 
-        self.__log_print(f"recieved command bytestr {frame}",
+        self._log_print(f"recieved command bytestr {frame}",
                         print_to_console=False,
                         log=True,
                         level=logging.DEBUG
                         )
 
         # Retrieve do value located in penultimate idx of frame
-        ret_val = self.__validate_recieved_frame(frame, -2, [0,1])
+        ret_val = self._validate_recieved_frame(frame, -2, [0,1])
         if ret_val is not StatusTypes.SUCCESS:
             return ret_val
         
         return frame[-2]
     
     def get_do(self, do_pin:int) -> int:
-        self.__validate_input_param(do_pin, [0,7], int)
+        self._validate_input_param(do_pin, [0,7], int)
 
-        do_command = self.__construct_command(Kinds.GET_DO, do_pin)
+        do_command = self._construct_command(Kinds.GET_DO, do_pin)
 
         # Enclose each value read with buffer clearances
-        self.__reset(nack_counter=64)
-        if not self.__send_command(do_command):
+        self._reset(nack_counter=64)
+        if not self._send_command(do_command):
             return StatusTypes.SEND_CMD_FAILURE
 
-        frame = self.__receive_command()
+        frame = self._receive_command()
 
-        self.__reset(nack_counter=64, reset_buffers=False)
+        self._reset(nack_counter=64, reset_buffers=False)
         time.sleep(.004)
 
-        self.__log_print(f"recieved command bytestr {frame}",
+        self._log_print(f"recieved command bytestr {frame}",
                         print_to_console=False,
                         log=True,
                         level=logging.DEBUG
                         )
 
         # Retrieve do value located in penultimate idx of frame
-        ret_val = self.__validate_recieved_frame(frame, -2, [0,1])
+        ret_val = self._validate_recieved_frame(frame, -2, [0,1])
         if ret_val is not StatusTypes.SUCCESS:
             return ret_val
         
         return frame[-2]
 
     def set_do(self, pin:int, value:int) -> int:
-        self.__validate_input_param(pin, [0,7], int)
-        self.__validate_input_param(value, [0,1], int)
+        self._validate_input_param(pin, [0,7], int)
+        self._validate_input_param(value, [0,1], int)
 
-        set_do_command = self.__construct_command(Kinds.SET_DO, pin, value)
+        set_do_command = self._construct_command(Kinds.SET_DO, pin, value)
 
         # Enclose each value read with buffer clearances
-        self.__reset(nack_counter=64)
+        self._reset(nack_counter=64)
 
-        if not self.__send_command(set_do_command):
+        if not self._send_command(set_do_command):
             return StatusTypes.SEND_CMD_FAILURE
 
-        frame = self.__receive_command()
+        frame = self._receive_command()
 
-        self.__reset(nack_counter=64, reset_buffers=False)
+        self._reset(nack_counter=64, reset_buffers=False)
         time.sleep(.004)
 
-        self.__log_print(f"recieved command bytestr {frame}",
+        self._log_print(f"recieved command bytestr {frame}",
                         print_to_console=False,
                         log=True,
                         level=logging.DEBUG
                         )
 
-        ret_val = self.__validate_recieved_frame(frame, -2, [0,1])
+        ret_val = self._validate_recieved_frame(frame, -2, [0,1])
         if ret_val is not StatusTypes.SUCCESS:
             return ret_val
 
         return StatusTypes.SUCCESS
 
     def get_di_contact(self) -> int:
-        di_contact_state_cmd = self.__construct_command(Kinds.GET_DI_CONTACT)
+        di_contact_state_cmd = self._construct_command(Kinds.GET_DI_CONTACT)
         
-        self.__reset(nack_counter=64)
-        if not self.__send_command(di_contact_state_cmd):
+        self._reset(nack_counter=64)
+        if not self._send_command(di_contact_state_cmd):
             return StatusTypes.SEND_CMD_FAILURE
         
-        frame = self.__receive_command(6)
+        frame = self._receive_command(6)
 
-        self.__reset(nack_counter=64, reset_buffers=False) 
+        self._reset(nack_counter=64, reset_buffers=False) 
         time.sleep(.004)
 
-        self.__log_print(f"recieved command bytestr {frame}",
+        self._log_print(f"recieved command bytestr {frame}",
                         print_to_console=False,
                         log=True,
                         level=logging.DEBUG
                         )
 
-        ret_val = self.__validate_recieved_frame(frame, -2, [0,1])
+        ret_val = self._validate_recieved_frame(frame, -2, [0,1])
         if ret_val is not StatusTypes.SUCCESS:
             return ret_val
 
         return frame[-2]
 
     def get_do_contact(self) -> int:
-        do_contact_state_cmd = self.__construct_command(Kinds.GET_DO_CONTACT)
+        do_contact_state_cmd = self._construct_command(Kinds.GET_DO_CONTACT)
 
         # Enclose each value read with buffer clearances
-        self.__reset(nack_counter=64)
-        if not self.__send_command(do_contact_state_cmd):
+        self._reset(nack_counter=64)
+        if not self._send_command(do_contact_state_cmd):
             return StatusTypes.SEND_CMD_FAILURE
         
-        frame = self.__receive_command(6)
+        frame = self._receive_command(6)
         
-        self.__reset(nack_counter=64, reset_buffers=False)
+        self._reset(nack_counter=64, reset_buffers=False)
         time.sleep(.004)
 
-        self.__log_print(f"recieved command bytestr {frame}",
+        self._log_print(f"recieved command bytestr {frame}",
                         print_to_console=False,
                         log=True,
                         level=logging.DEBUG
                         )
 
-        ret_val = self.__validate_recieved_frame(frame, -2, [0,1])
+        ret_val = self._validate_recieved_frame(frame, -2, [0,1])
         if ret_val is not StatusTypes.SUCCESS:
             return ret_val
 
         return frame[-2]
 
     def set_di_contact(self, contact_type:int) -> int:
-        self.__validate_input_param(contact_type, [0,1], int)
+        self._validate_input_param(contact_type, [0,1], int)
         
-        set_di_contact_state_cmd = self.__construct_command(Kinds.SET_DI_CONTACT, contact_type)
+        set_di_contact_state_cmd = self._construct_command(Kinds.SET_DI_CONTACT, contact_type)
 
         # Enclose each value read with buffer clearances
-        self.__reset(nack_counter=64)
+        self._reset(nack_counter=64)
 
-        if not self.__send_command(set_di_contact_state_cmd):
+        if not self._send_command(set_di_contact_state_cmd):
             return StatusTypes.SEND_CMD_FAILURE
 
-        frame = self.__receive_command(6)
+        frame = self._receive_command(6)
 
-        self.__reset(nack_counter=64, reset_buffers=False)
+        self._reset(nack_counter=64, reset_buffers=False)
         time.sleep(.004)
 
-        self.__log_print(f"recieved command bytestr {frame}",
+        self._log_print(f"recieved command bytestr {frame}",
                         print_to_console=False,
                         log=True,
                         level=logging.DEBUG
                         )
 
-        ret_val = self.__validate_recieved_frame(frame, -2, [0,1])
+        ret_val = self._validate_recieved_frame(frame, -2, [0,1])
         if ret_val is not StatusTypes.SUCCESS:
             return ret_val
 
         return StatusTypes.SUCCESS
 
     def set_do_contact(self, contact_type:int) -> int:
-        self.__validate_input_param(contact_type, [0,1], int)
+        self._validate_input_param(contact_type, [0,1], int)
 
-        set_di_contact_state_cmd = self.__construct_command(Kinds.SET_DO_CONTACT, contact_type)
+        set_di_contact_state_cmd = self._construct_command(Kinds.SET_DO_CONTACT, contact_type)
 
         # Enclose each value read with buffer clearances
-        self.__reset(nack_counter=64)
-        if not self.__send_command(set_di_contact_state_cmd):
+        self._reset(nack_counter=64)
+        if not self._send_command(set_di_contact_state_cmd):
             return StatusTypes.SEND_CMD_FAILURE
 
-        frame = self.__receive_command(6)
+        frame = self._receive_command(6)
                 
-        self.__reset(nack_counter=64, reset_buffers=False)
+        self._reset(nack_counter=64, reset_buffers=False)
         time.sleep(.004)
 
-        self.__log_print(f"recieved command bytestr {frame}",
+        self._log_print(f"recieved command bytestr {frame}",
                         print_to_console=False,
                         log=True,
                         level=logging.DEBUG
                         )
 
-        ret_val = self.__validate_recieved_frame(frame, -2, [0,1])
+        ret_val = self._validate_recieved_frame(frame, -2, [0,1])
         if ret_val is not StatusTypes.SUCCESS:
             return ret_val
 
