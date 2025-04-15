@@ -24,7 +24,6 @@ NOTE:
 
 import timeit # Optional: measure time taken per sample
 from HX52xDioHandler import HX52xDioHandler
-import time
 
 def main():
     '''main, implementation of session logic.'''
@@ -35,7 +34,7 @@ def main():
 
     try:
         # Init DIO handler
-        my_dio = HX52xDioHandler(logger_mode="DEBUG", handler_mode="BOTH") #logger_mode="DEBUG", handler_mode="BOTH"
+        my_dio = HX52xDioHandler(logger_mode="DEBUG", handler_mode="Console") #logger_mode="DEBUG", handler_mode="BOTH"
         my_dio.claim()
         
         print("=" * 30)
@@ -163,12 +162,11 @@ def main():
             start_time = timeit.default_timer()
             print(my_dio.get_all_io_states())
             print(f"The time difference [In Seconds] is : {timeit.default_timer() - start_time:.6f}")
-
     except KeyboardInterrupt:
         print("Operation terminated by user.")
     finally: 
         print("\033[93mExiting...\033[0m")
-        del my_dio
+        my_dio.close_connection() # del my_dio
 
 if __name__ == "__main__":
     main()

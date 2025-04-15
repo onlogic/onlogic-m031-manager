@@ -51,8 +51,7 @@ class HX52xDioHandler():
 
     def __del__(self):
         '''Destroy the object and end device communication gracefully.'''
-        if self.is_setup:
-            self.close_connection()
+        self.close_connection()
 
     def __str__(self):
         '''COM port and command set of DioInputHandler.'''
@@ -366,14 +365,16 @@ class HX52xDioHandler():
         # TODO: Figure out why is the sleep function Erroring when lru_cache is enabled 
         # in destructor with time.sleep uncommented 
         # time.sleep(.001)
-        self.__reset()
-        self.port.reset_input_buffer()
-        self.port.reset_output_buffer()
-        self.port.close()
+        if self.is_setup:
+            self.__reset()
+            self.port.reset_input_buffer()
+            self.port.reset_output_buffer()
+            self.port.close()
+            self.is_setup = False
 
     @functools.lru_cache(maxsize=128)
     def __construct_command(self, kind:Kinds, *payload:int) -> bytes:
-        # self.__validate_message_bytes(kind, payload)
+        # self.validate_message_bytes(kind, payload)
         
         crc_calculation = crc8.smbus(bytes([len(payload), kind, *payload]))
         
