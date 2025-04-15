@@ -663,8 +663,8 @@ class HX52xDioHandler():
         if len(do_lst) < 8:
             raise ValueError("ERROR | Incorrect amount of inputs specified.")
 
-        error_codes = []
+        status_codes = []
         for do_lst_idx, do_lst_val in enumerate(do_lst):
-            error_codes.append(self.set_do(do_lst_idx, do_lst_val))
+            status_codes.append(self.set_do(do_lst_idx, do_lst_val))
 
-        return error_codes
+        return status_codes
