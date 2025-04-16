@@ -34,9 +34,9 @@ def main():
 
     try:
         # Init DIO handler
-        my_dio = HX52xDioHandler(logger_mode="DEBUG", handler_mode="BOTH") #logger_mode="DEBUG", handler_mode="BOTH"
+        my_dio = HX52xDioHandler() #logger_mode="DEBUG", handler_mode="BOTH"
         my_dio.claim()
-        
+
         print("=" * 30)
         print("TESTING DIGITAL INPUTS (get_di)")
         print("=" * 30)
@@ -155,18 +155,19 @@ def main():
         print(my_dio.set_all_output_states([0, 1, 0, 1, 0, 0, 0, 1]))
         print(f"The time difference [In Seconds] is : {timeit.default_timer() - start_time:.6f}")
 
-        print("=" * 30)
-        print("TESTING GET ALL INPUT & OUTPUT STATES")
-        print("=" * 30)
-        for i in range(20):
-            start_time = timeit.default_timer()
-            print(my_dio.get_all_io_states())
-            print(f"The time difference [In Seconds] is : {timeit.default_timer() - start_time:.6f}")
+        # print("=" * 30)
+        # print("TESTING GET ALL INPUT & OUTPUT STATES")
+        # print("=" * 30)
+        # for i in range(20):
+        #     start_time = timeit.default_timer()
+        #     print(my_dio.get_all_io_states())
+        #     print(f"The time difference [In Seconds] is : {timeit.default_timer() - start_time:.6f}")
     except KeyboardInterrupt:
         print("Operation terminated by user.")
     finally: 
         print("\033[93mExiting...\033[0m")
-        my_dio.close_connection() # del my_dio
+        if my_dio is not None:
+            my_dio.close_connection() 
 
 if __name__ == "__main__":
     main()

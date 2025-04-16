@@ -2,7 +2,7 @@ import sys
 import logging
 from datetime import datetime
 from typing import Optional
-from colorama import Fore, init
+from colorama import Fore
 
 class LoggingUtil():
     def __init__(self, logger_mode, handler_mode):
@@ -10,29 +10,43 @@ class LoggingUtil():
         self.handler_mode = handler_mode
         self.logger = None
         
-    def _create_logger(self):# -> logging.RootLogger:
-        '''Create Logger with INFO, DEBUG, and ERROR Debugging'''
+    @staticmethod
+    def _create_filename():
+        return f"HX52x_session_{datetime.now().strftime("%m_%d_%Y_%H_%M_%S")}.log"
+
+    def _check_logger_mode(self):
         if self.logger_mode in [None, "off"]:
             print("Logger Mode off, ignoring")
-            return
+            return None
 
         if self.logger_mode not in ['info', 'debug','error']:
             print("Logger Mode", self.logger_mode)
             raise ValueError("ERROR | Invalid logger_mode")
-        
-        now = datetime.now().strftime("%m_%d_%Y_%H_%M_%S")
-        filename=f"HX52x_session_{now}.log"
+    
+        return self.logger_mode
 
+    def _create_handlers(self, filename):
         handlers = []
         if self.handler_mode == "both":
             handlers.extend([logging.FileHandler(filename), 
-                            logging.StreamHandler(sys.stdout)])
+                             logging.StreamHandler(sys.stdout)])
         elif self.handler_mode == "console":
             handlers.append(logging.StreamHandler(sys.stdout))
         elif self.handler_mode == "file":
             handlers.append(logging.FileHandler(filename))
         else:
             raise ValueError("ERROR | Incorrect Handle Parameter Provided") 
+        
+        return handlers
+    
+    def _create_logger(self):# -> logging.RootLogger:
+        '''Create Logger with INFO, DEBUG, and ERROR Debugging'''
+        result = self._check_logger_mode()
+        if result is None:
+            return
+        
+        filename = self._create_filename()
+        handlers = self._create_handlers(filename)
         
         self.logger = logging.getLogger()
     
@@ -50,7 +64,7 @@ class LoggingUtil():
             raise ValueError("ERROR | Invalid logger_mode")
         
         logging.basicConfig (
-            format='[%(asctime)s %(levelname)s %(filename)s %(message)s',
+            format='[%(asctime)s %(levelname)s %(filename)s:%(lineno)d -> %(funcName)s()] %(message)s',
             level=level,
             handlers=handlers  
         )
@@ -61,15 +75,7 @@ class LoggingUtil():
                          level=logging.INFO
                         )
 
-    @staticmethod
-    def _format_log_message(message_info):
-        frame = sys._getframe(3)
-        lineno = frame.f_lineno
-        function = frame.f_code.co_name
-        return f":{lineno} -> {function}()] {message_info}"
-
-    def _log_print(self, message_info:str, print_to_console:bool=True, color:str=None, 
-                    log:bool=False, level:Optional[int]=None) -> bool:
+    def _lprint(self, message_info, print_to_console, color):
         if print_to_console and self.logger_mode != "console":
             if color == Fore.RED:
                 print(Fore.RED + message_info)
@@ -78,17 +84,23 @@ class LoggingUtil():
             else:
                 print(message_info)
 
+    def _output_log(self, log_msg, level, stacklevel=3):
+        if level == logging.INFO:
+            self.logger.info(log_msg, stacklevel=stacklevel)
+        elif level == logging.DEBUG:
+            self.logger.debug(log_msg, stacklevel=stacklevel)
+        elif level == logging.ERROR:
+            self.logger.error(log_msg, stacklevel=stacklevel)
+        else:
+            raise ValueError("ERROR | INCORRECT MODE INPUT INTO LOGGER")
+
+    def _log_print(self, message:str, print_to_console:bool=True, color:str=None, 
+                    log:bool=False, level:Optional[int]=None) -> bool:
+        
+        self._lprint(message, print_to_console, color)
+
         if log is True \
                 and level is not None \
                 and self.logger_mode not in ["off", None]:
 
-            log_msg = self._format_log_message(message_info)
-
-            if level == logging.INFO:
-                self.logger.info(log_msg)
-            elif level == logging.DEBUG:
-                self.logger.debug(log_msg)
-            elif level == logging.ERROR:
-                self.logger.error(log_msg)
-            else:
-                raise ValueError("ERROR | INCORRECT MODE INPUT INTO LOGGER")
+            self._output_log(message, level)
