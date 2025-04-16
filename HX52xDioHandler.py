@@ -20,15 +20,12 @@ References:
 import time
 import serial
 import functools
-import logging
-import sys
 
+from LoggingUtil import LoggingUtil, logging
 from serial.tools import list_ports as system_ports
 from command_set import ProtocolConstants, Kinds, StatusTypes
 from fastcrc import crc8
 from colorama import Fore, init
-from datetime import datetime
-from typing import Optional
 
 class HX52xDioHandler():
     '''
@@ -44,10 +41,12 @@ class HX52xDioHandler():
         # Setup mechanism so deleter does not delete non-existant objects
         self.is_setup=False   
 
-        # Set up logger 
-        self.logger_mode = self.__handle_lconfig_str(logger_mode)
-        self.handler_mode = self.__handle_lconfig_str(handler_mode)
-        self._create_logger()
+        # Set up logger
+        logger_mode = self.__handle_lconfig_str(logger_mode)
+        handler_mode = self.__handle_lconfig_str(handler_mode)
+
+        self.logger_util = LoggingUtil(logger_mode, handler_mode)
+        self.logger_util._create_logger()
 
     def __del__(self):
         '''Destroy the object and end device communication gracefully.'''
@@ -58,9 +57,9 @@ class HX52xDioHandler():
         # TODO: Add Python utility Version and FW version?
         repr_str = f"Port: {self.serial_connection_label}\n"   \
                    f"PySerial Version: {serial.__version__}\n" \
-                   f"Logger Mode: {self.logger_mode}\n"        \
-                   f"Handler Mode: {self.handler_mode}\n"      \
                    f"Main Functionality Setup {self.is_setup}"
+                #    f"Logger Mode: {self.logger_mode}\n"        \
+                #    f"Handler Mode: {self.handler_mode}\n"      \
 
         return repr_str
 
@@ -70,7 +69,7 @@ class HX52xDioHandler():
         for port in sorted(all_ports):
             if dev_id in port.hwid:
                 if location and location in port.location:
-                    self._log_print(f"Port: {port}\n"
+                    self.logger_util._log_print(f"Port: {port}\n"
                                      f"Port Location: {port.location}\n"
                                      f"Hardware ID: {port.hwid}\n"
                                      f"Device: {port.device}\n",
@@ -89,7 +88,7 @@ class HX52xDioHandler():
             return serial.Serial(self.serial_connection_label, 115200, timeout=1)
         except serial.SerialException as e:
             serial_connect_err = f"ERROR | {e}: Are you on the right port?"
-            self._log_print(serial_connect_err,
+            self.logger_util._log_print(serial_connect_err,
                              print_to_console=True,
                              color=Fore.RED,
                              log=True,
@@ -100,89 +99,6 @@ class HX52xDioHandler():
     @staticmethod
     def __handle_lconfig_str(input_str:str) -> str | None:
         return input_str.lower().strip() if isinstance(input_str, str) else input_str
-
-    def _create_logger(self) -> None:
-        '''Create Logger with INFO, DEBUG, and ERROR Debugging'''
-        if self.logger_mode in [None, "off"]:
-            print("Logger Mode off, ignoring")
-            return
-
-        if self.logger_mode not in ['info', 'debug','error']:
-            print("Logger Mode", self.logger_mode)
-            raise ValueError("ERROR | Invalid logger_mode")
-        
-        now = datetime.now().strftime("%m_%d_%Y_%H_%M_%S")
-        filename=f"HX52x_session_{now}.log"
-
-        handlers = []
-        if self.handler_mode == "both":
-            handlers.extend([logging.FileHandler(filename), 
-                            logging.StreamHandler(sys.stdout)])
-        elif self.handler_mode == "console":
-            handlers.append(logging.StreamHandler(sys.stdout))
-        elif self.handler_mode == "file":
-            handlers.append(logging.FileHandler(filename))
-        else:
-            raise ValueError("ERROR | Incorrect Handle Parameter Provided") 
-        
-        self.logger = logging.getLogger()
-    
-        level_dict = { 
-            'info'  : logging.INFO,
-            'debug' : logging.DEBUG,
-            'error' : logging.ERROR,
-            }
-        
-        level = level_dict.get(self.logger_mode, "Unknown")
-
-        if level == 'Unknown' or level is None:
-            self.logger_mode = 'off'
-            del self.logger
-            raise ValueError("ERROR | Invalid logger_mode")
-        
-        logging.basicConfig (
-            format='[%(asctime)s %(levelname)s %(filename)s %(message)s',
-            level=level,
-            handlers=handlers  
-        )
-
-        self._log_print(f"Logger Initialized...",
-                         print_to_console=False,
-                         log=True,
-                         level=logging.INFO
-                        )
-
-    @staticmethod
-    def _format_log_message(message_info):
-        frame = sys._getframe(3)
-        lineno = frame.f_lineno
-        function = frame.f_code.co_name
-        return f":{lineno} -> {function}()] {message_info}"
-
-    def _log_print(self, message_info:str, print_to_console:bool=True, color:str=None, 
-                    log:bool=False, level:Optional[int]=None) -> bool:
-        if print_to_console and self.logger_mode != "console":
-            if color == Fore.RED:
-                print(Fore.RED + message_info)
-            elif color == Fore.GREEN:
-                print(Fore.GREEN + message_info)
-            else:
-                print(message_info)
-
-        if log is True \
-                and level is not None \
-                and self.logger_mode not in ["off", None]:
-
-            log_msg = self._format_log_message(message_info)
-
-            if level == logging.INFO:
-                self.logger.info(log_msg)
-            elif level == logging.DEBUG:
-                self.logger.debug(log_msg)
-            elif level == logging.ERROR:
-                self.logger.error(log_msg)
-            else:
-                raise ValueError("ERROR | INCORRECT MODE INPUT INTO LOGGER")
 
     def _mcu_connection_check(self) -> None:
         '''\
@@ -211,7 +127,7 @@ class HX52xDioHandler():
                     time.sleep(.004)
 
         if nack_count == ProtocolConstants.NACKS_NEEDED:
-            self._log_print("DIO Interface Found",
+            self.logger_util._log_print("DIO Interface Found",
                             print_to_console=True,
                             color=Fore.GREEN,
                             log=True,
@@ -219,7 +135,7 @@ class HX52xDioHandler():
                         )
             return
 
-        self._log_print(f"ERROR | AKNOWLEDGEMENT ERROR: "\
+        self.logger_util._log_print(f"ERROR | AKNOWLEDGEMENT ERROR: "\
                          f"mismatch in number of nacks, check if {self.serial_connection_label} "\
                          f"is the right port?",
                          print_to_console=True,
@@ -243,7 +159,7 @@ class HX52xDioHandler():
         while bytes_to_send > 0:
             if bytes_sent > 1024:
                 ack_error_msg = f"ERROR | AKNOWLEDGEMENT ERROR: Cannot recover MCU"
-                self._log_print(ack_error_msg,
+                self.logger_util._log_print(ack_error_msg,
                                  print_to_console=True,
                                  color=Fore.RED,
                                  log=True,
@@ -270,7 +186,7 @@ class HX52xDioHandler():
         if type(dio_input_parameter) != input_type:
             type_error_msg = f"ERROR | {type(dio_input_parameter)} was found when {input_type} was expected"
             
-            self._log_print(type_error_msg,
+            self.logger_util._log_print(type_error_msg,
                             print_to_console=True,
                             color=Fore.RED,
                             log=True,
@@ -284,7 +200,7 @@ class HX52xDioHandler():
             value_error_msg = "ERROR | Out of Range Value Provided: " + str(dio_input_parameter) + "." + \
                   " Valid Range " + str(valid_input_range)
             
-            self._log_print(value_error_msg,
+            self.logger_util._log_print(value_error_msg,
                             print_to_console=True,
                             color=Fore.RED,
                             log=True,
@@ -300,14 +216,14 @@ class HX52xDioHandler():
         crc_bytes = frame[2:-1]
         crc_val = crc8.smbus(crc_bytes)
 
-        self._log_print(f"CALCULATED {crc_val} : EXISTING {frame[1]}",
+        self.logger_util._log_print(f"CALCULATED {crc_val} : EXISTING {frame[1]}",
                          print_to_console=False,
                          log=True,
                          level=logging.DEBUG
                         )
 
         if crc_val != frame[1]:
-            self._log_print(f"CRC MISMATCH",
+            self.logger_util._log_print(f"CRC MISMATCH",
                              color=Fore.RED,
                              print_to_console=True,
                              log=True,
@@ -319,7 +235,7 @@ class HX52xDioHandler():
 
     def _validate_recieved_frame(self, return_frame:list, target_index:int=None, target_range:list=None) -> int:
         if return_frame[0] != ProtocolConstants.SHELL_SOF:
-            self._log_print(f"SOF Frame not found",
+            self.logger_util._log_print(f"SOF Frame not found",
                              color=Fore.RED,
                              print_to_console=True,
                              log=True,
@@ -328,7 +244,7 @@ class HX52xDioHandler():
             return StatusTypes.RECV_FRAME_SOF_ERROR
 
         if return_frame[-1] != ProtocolConstants.SHELL_NACK:
-            self._log_print(f"NACK not found in desired index",
+            self.logger_util._log_print(f"NACK not found in desired index",
                              color=Fore.RED,
                              print_to_console=True,
                              log=True,
@@ -338,7 +254,7 @@ class HX52xDioHandler():
 
         is_crc = self._check_crc(return_frame)
         if not is_crc:
-            self._log_print(f"CRC Check fail",
+            self.logger_util._log_print(f"CRC Check fail",
                              color=Fore.RED,
                              print_to_console=True,
                              log=True,
@@ -348,7 +264,7 @@ class HX52xDioHandler():
 
         if target_index is not None \
                 and return_frame[target_index] not in target_range:
-            self._log_print(f"Value at target index not in target range",
+            self.logger_util._log_print(f"Value at target index not in target range",
                              color=Fore.RED,
                              print_to_console=True,
                              log=True,
@@ -391,7 +307,7 @@ class HX52xDioHandler():
                                      *payload
                                      ])
         
-        self._log_print(f"Constructed Command {constructed_command}",
+        self.logger_util._log_print(f"Constructed Command {constructed_command}",
                         print_to_console=False,
                         log=True,
                         level=logging.INFO
@@ -413,7 +329,7 @@ class HX52xDioHandler():
         if shell_ack_cnt == len(command_to_send):
             return True 
 
-        self._log_print(f"ERROR | AKNOWLEDGEMENT ERROR: "\
+        self.logger_util._log_print(f"ERROR | AKNOWLEDGEMENT ERROR: "\
                          "mismatch in number of aknowledgements, reduce access speed?",
                         print_to_console=False,
                         color=Fore.RED,
@@ -436,7 +352,7 @@ class HX52xDioHandler():
             response_frame.append(byte_in_port)
             self.port.write(ProtocolConstants.SHELL_ACK.to_bytes(1, byteorder='little')) 
         
-        self._log_print(f"Recieved Command List {response_frame}",
+        self.logger_util._log_print(f"Recieved Command List {response_frame}",
                         print_to_console=False,
                         log=True,
                         level=logging.INFO
@@ -467,7 +383,7 @@ class HX52xDioHandler():
         self._reset(nack_counter=64, reset_buffers=False)
         time.sleep(.004)
 
-        self._log_print(f"recieved command bytestr {frame}",
+        self.logger_util._log_print(f"recieved command bytestr {frame}",
                         print_to_console=False,
                         log=True,
                         level=logging.DEBUG
@@ -495,7 +411,7 @@ class HX52xDioHandler():
         self._reset(nack_counter=64, reset_buffers=False)
         time.sleep(.004)
 
-        self._log_print(f"recieved command bytestr {frame}",
+        self.logger_util._log_print(f"recieved command bytestr {frame}",
                         print_to_console=False,
                         log=True,
                         level=logging.DEBUG
@@ -525,7 +441,7 @@ class HX52xDioHandler():
         self._reset(nack_counter=64, reset_buffers=False)
         time.sleep(.004)
 
-        self._log_print(f"recieved command bytestr {frame}",
+        self.logger_util._log_print(f"recieved command bytestr {frame}",
                         print_to_console=False,
                         log=True,
                         level=logging.DEBUG
@@ -549,7 +465,7 @@ class HX52xDioHandler():
         self._reset(nack_counter=64, reset_buffers=False) 
         time.sleep(.004)
 
-        self._log_print(f"recieved command bytestr {frame}",
+        self.logger_util._log_print(f"recieved command bytestr {frame}",
                         print_to_console=False,
                         log=True,
                         level=logging.DEBUG
@@ -574,7 +490,7 @@ class HX52xDioHandler():
         self._reset(nack_counter=64, reset_buffers=False)
         time.sleep(.004)
 
-        self._log_print(f"recieved command bytestr {frame}",
+        self.logger_util._log_print(f"recieved command bytestr {frame}",
                         print_to_console=False,
                         log=True,
                         level=logging.DEBUG
@@ -602,7 +518,7 @@ class HX52xDioHandler():
         self._reset(nack_counter=64, reset_buffers=False)
         time.sleep(.004)
 
-        self._log_print(f"recieved command bytestr {frame}",
+        self.logger_util._log_print(f"recieved command bytestr {frame}",
                         print_to_console=False,
                         log=True,
                         level=logging.DEBUG
@@ -629,7 +545,7 @@ class HX52xDioHandler():
         self._reset(nack_counter=64, reset_buffers=False)
         time.sleep(.004)
 
-        self._log_print(f"recieved command bytestr {frame}",
+        self.logger_util._log_print(f"recieved command bytestr {frame}",
                         print_to_console=False,
                         log=True,
                         level=logging.DEBUG
