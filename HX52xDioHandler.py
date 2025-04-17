@@ -294,8 +294,9 @@ class HX52xDioHandler():
             self.port.close()
             self.is_setup = False
 
-    @functools.lru_cache(maxsize=128) 
+    @functools.lru_cache(maxsize=128)
     def _construct_command(self, kind:Kinds, *payload:int) -> bytes:
+        # self.validate_message_bytes(kind, payload)
         
         crc_calculation = crc8.smbus(bytes([len(payload), kind, *payload]))
         

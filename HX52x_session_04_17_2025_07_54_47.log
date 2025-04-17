@@ -1,0 +1,231 @@
+[2025-04-17 07:54:47,785 INFO LoggingUtil.py:72 -> _create_logger()] Logger Initialized...
+[2025-04-17 07:54:47,791 INFO HX52xDioHandler.py:72 -> _get_device_port()] Port: COM16 - USB Serial Device (COM16)
+Port Location: 1-8:x.0
+Hardware ID: USB VID:PID=353F:A105 SER=5&2E8856C4&0&8 LOCATION=1-8:x.0
+Device: COM16
+
+[2025-04-17 07:54:47,816 INFO HX52xDioHandler.py:130 -> _mcu_connection_check()] DIO Interface Found
+[2025-04-17 07:54:47,850 INFO HX52xDioHandler.py:310 -> _construct_command()] Constructed Command b'\x01\xc5\x01 \x00'
+[2025-04-17 07:54:47,862 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b'h', b'\x02', b' ', b'\x00', b'\x01', b'\x07']
+[2025-04-17 07:54:47,877 DEBUG HX52xDioHandler.py:386 -> get_di()] recieved command bytestr b'\x01h\x02 \x00\x01\x07'
+[2025-04-17 07:54:47,877 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 104 : EXISTING 104
+[2025-04-17 07:54:47,877 INFO HX52xDioHandler.py:310 -> _construct_command()] Constructed Command b'\x01\xc2\x01 \x01'
+[2025-04-17 07:54:47,888 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b'}', b'\x02', b' ', b'\x01', b'\x01', b'\x07']
+[2025-04-17 07:54:47,902 DEBUG HX52xDioHandler.py:386 -> get_di()] recieved command bytestr b'\x01}\x02 \x01\x01\x07'
+[2025-04-17 07:54:47,902 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 125 : EXISTING 125
+[2025-04-17 07:54:47,902 INFO HX52xDioHandler.py:310 -> _construct_command()] Constructed Command b'\x01\xcb\x01 \x02'
+[2025-04-17 07:54:47,908 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b'B', b'\x02', b' ', b'\x02', b'\x01', b'\x07']
+[2025-04-17 07:54:47,921 DEBUG HX52xDioHandler.py:386 -> get_di()] recieved command bytestr b'\x01B\x02 \x02\x01\x07'
+[2025-04-17 07:54:47,921 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 66 : EXISTING 66
+[2025-04-17 07:54:47,922 INFO HX52xDioHandler.py:310 -> _construct_command()] Constructed Command b'\x01\xcc\x01 \x03'
+[2025-04-17 07:54:47,933 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b'W', b'\x02', b' ', b'\x03', b'\x01', b'\x07']
+[2025-04-17 07:54:47,943 DEBUG HX52xDioHandler.py:386 -> get_di()] recieved command bytestr b'\x01W\x02 \x03\x01\x07'
+[2025-04-17 07:54:47,943 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 87 : EXISTING 87
+[2025-04-17 07:54:47,943 INFO HX52xDioHandler.py:310 -> _construct_command()] Constructed Command b'\x01\xd9\x01 \x04'
+[2025-04-17 07:54:47,954 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b'<', b'\x02', b' ', b'\x04', b'\x01', b'\x07']
+[2025-04-17 07:54:47,965 DEBUG HX52xDioHandler.py:386 -> get_di()] recieved command bytestr b'\x01<\x02 \x04\x01\x07'
+[2025-04-17 07:54:47,965 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 60 : EXISTING 60
+[2025-04-17 07:54:47,965 INFO HX52xDioHandler.py:310 -> _construct_command()] Constructed Command b'\x01\xde\x01 \x05'
+[2025-04-17 07:54:47,973 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b')', b'\x02', b' ', b'\x05', b'\x01', b'\x07']
+[2025-04-17 07:54:47,982 DEBUG HX52xDioHandler.py:386 -> get_di()] recieved command bytestr b'\x01)\x02 \x05\x01\x07'
+[2025-04-17 07:54:47,982 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 41 : EXISTING 41
+[2025-04-17 07:54:47,982 INFO HX52xDioHandler.py:310 -> _construct_command()] Constructed Command b'\x01\xd7\x01 \x06'
+[2025-04-17 07:54:47,993 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b'\x16', b'\x02', b' ', b'\x06', b'\x01', b'\x07']
+[2025-04-17 07:54:48,006 DEBUG HX52xDioHandler.py:386 -> get_di()] recieved command bytestr b'\x01\x16\x02 \x06\x01\x07'
+[2025-04-17 07:54:48,007 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 22 : EXISTING 22
+[2025-04-17 07:54:48,007 INFO HX52xDioHandler.py:310 -> _construct_command()] Constructed Command b'\x01\xd0\x01 \x07'
+[2025-04-17 07:54:48,017 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b'\x03', b'\x02', b' ', b'\x07', b'\x01', b'\x07']
+[2025-04-17 07:54:48,034 DEBUG HX52xDioHandler.py:386 -> get_di()] recieved command bytestr b'\x01\x03\x02 \x07\x01\x07'
+[2025-04-17 07:54:48,034 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 3 : EXISTING 3
+[2025-04-17 07:54:48,035 INFO HX52xDioHandler.py:310 -> _construct_command()] Constructed Command b'\x01\xef\x01"\x00'
+[2025-04-17 07:54:48,044 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b'\xb9', b'\x02', b'"', b'\x00', b'\x00', b'\x07']
+[2025-04-17 07:54:48,059 DEBUG HX52xDioHandler.py:414 -> get_do()] recieved command bytestr b'\x01\xb9\x02"\x00\x00\x07'
+[2025-04-17 07:54:48,059 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 185 : EXISTING 185
+[2025-04-17 07:54:48,059 INFO HX52xDioHandler.py:310 -> _construct_command()] Constructed Command b'\x01\xe8\x01"\x01'
+[2025-04-17 07:54:48,071 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b'\xab', b'\x02', b'"', b'\x01', b'\x01', b'\x07']
+[2025-04-17 07:54:48,085 DEBUG HX52xDioHandler.py:414 -> get_do()] recieved command bytestr b'\x01\xab\x02"\x01\x01\x07'
+[2025-04-17 07:54:48,085 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 171 : EXISTING 171
+[2025-04-17 07:54:48,086 INFO HX52xDioHandler.py:310 -> _construct_command()] Constructed Command b'\x01\xe1\x01"\x02'
+[2025-04-17 07:54:48,091 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b'\x93', b'\x02', b'"', b'\x02', b'\x00', b'\x07']
+[2025-04-17 07:54:48,106 DEBUG HX52xDioHandler.py:414 -> get_do()] recieved command bytestr b'\x01\x93\x02"\x02\x00\x07'
+[2025-04-17 07:54:48,106 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 147 : EXISTING 147
+[2025-04-17 07:54:48,107 INFO HX52xDioHandler.py:310 -> _construct_command()] Constructed Command b'\x01\xe6\x01"\x03'
+[2025-04-17 07:54:48,114 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b'\x81', b'\x02', b'"', b'\x03', b'\x01', b'\x07']
+[2025-04-17 07:54:48,127 DEBUG HX52xDioHandler.py:414 -> get_do()] recieved command bytestr b'\x01\x81\x02"\x03\x01\x07'
+[2025-04-17 07:54:48,127 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 129 : EXISTING 129
+[2025-04-17 07:54:48,127 INFO HX52xDioHandler.py:310 -> _construct_command()] Constructed Command b'\x01\xf3\x01"\x04'
+[2025-04-17 07:54:48,138 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b'\xed', b'\x02', b'"', b'\x04', b'\x00', b'\x07']
+[2025-04-17 07:54:48,151 DEBUG HX52xDioHandler.py:414 -> get_do()] recieved command bytestr b'\x01\xed\x02"\x04\x00\x07'
+[2025-04-17 07:54:48,151 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 237 : EXISTING 237
+[2025-04-17 07:54:48,151 INFO HX52xDioHandler.py:310 -> _construct_command()] Constructed Command b'\x01\xf4\x01"\x05'
+[2025-04-17 07:54:48,158 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b'\xf8', b'\x02', b'"', b'\x05', b'\x00', b'\x07']
+[2025-04-17 07:54:48,169 DEBUG HX52xDioHandler.py:414 -> get_do()] recieved command bytestr b'\x01\xf8\x02"\x05\x00\x07'
+[2025-04-17 07:54:48,169 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 248 : EXISTING 248
+[2025-04-17 07:54:48,169 INFO HX52xDioHandler.py:310 -> _construct_command()] Constructed Command b'\x01\xfd\x01"\x06'
+[2025-04-17 07:54:48,178 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b'\xc7', b'\x02', b'"', b'\x06', b'\x00', b'\x07']
+[2025-04-17 07:54:48,190 DEBUG HX52xDioHandler.py:414 -> get_do()] recieved command bytestr b'\x01\xc7\x02"\x06\x00\x07'
+[2025-04-17 07:54:48,190 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 199 : EXISTING 199
+[2025-04-17 07:54:48,190 INFO HX52xDioHandler.py:310 -> _construct_command()] Constructed Command b'\x01\xfa\x01"\x07'
+[2025-04-17 07:54:48,196 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b'\xd5', b'\x02', b'"', b'\x07', b'\x01', b'\x07']
+[2025-04-17 07:54:48,209 DEBUG HX52xDioHandler.py:414 -> get_do()] recieved command bytestr b'\x01\xd5\x02"\x07\x01\x07'
+[2025-04-17 07:54:48,209 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 213 : EXISTING 213
+[2025-04-17 07:54:48,209 INFO HX52xDioHandler.py:310 -> _construct_command()] Constructed Command b'\x01\x03\x02!\x00\x01'
+[2025-04-17 07:54:48,219 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b'\x04', b'\x02', b'!', b'\x00', b'\x00', b'\x07']
+[2025-04-17 07:54:48,231 DEBUG HX52xDioHandler.py:444 -> set_do()] recieved command bytestr b'\x01\x04\x02!\x00\x00\x07'
+[2025-04-17 07:54:48,231 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 4 : EXISTING 4
+[2025-04-17 07:54:48,231 INFO HX52xDioHandler.py:310 -> _construct_command()] Constructed Command b'\x01\x16\x02!\x01\x01'
+[2025-04-17 07:54:48,235 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b'\x11', b'\x02', b'!', b'\x01', b'\x00', b'\x07']
+[2025-04-17 07:54:48,250 DEBUG HX52xDioHandler.py:444 -> set_do()] recieved command bytestr b'\x01\x11\x02!\x01\x00\x07'
+[2025-04-17 07:54:48,250 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 17 : EXISTING 17
+[2025-04-17 07:54:48,250 INFO HX52xDioHandler.py:310 -> _construct_command()] Constructed Command b'\x01)\x02!\x02\x01'
+[2025-04-17 07:54:48,257 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b'.', b'\x02', b'!', b'\x02', b'\x00', b'\x07']
+[2025-04-17 07:54:48,272 DEBUG HX52xDioHandler.py:444 -> set_do()] recieved command bytestr b'\x01.\x02!\x02\x00\x07'
+[2025-04-17 07:54:48,272 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 46 : EXISTING 46
+[2025-04-17 07:54:48,272 INFO HX52xDioHandler.py:310 -> _construct_command()] Constructed Command b'\x01<\x02!\x03\x01'
+[2025-04-17 07:54:48,275 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b';', b'\x02', b'!', b'\x03', b'\x00', b'\x07']
+[2025-04-17 07:54:48,291 DEBUG HX52xDioHandler.py:444 -> set_do()] recieved command bytestr b'\x01;\x02!\x03\x00\x07'
+[2025-04-17 07:54:48,291 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 59 : EXISTING 59
+[2025-04-17 07:54:48,291 INFO HX52xDioHandler.py:310 -> _construct_command()] Constructed Command b'\x01W\x02!\x04\x01'
+[2025-04-17 07:54:48,300 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b'P', b'\x02', b'!', b'\x04', b'\x00', b'\x07']
+[2025-04-17 07:54:48,311 DEBUG HX52xDioHandler.py:444 -> set_do()] recieved command bytestr b'\x01P\x02!\x04\x00\x07'
+[2025-04-17 07:54:48,311 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 80 : EXISTING 80
+[2025-04-17 07:54:48,311 INFO HX52xDioHandler.py:310 -> _construct_command()] Constructed Command b'\x01B\x02!\x05\x01'
+[2025-04-17 07:54:48,321 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b'E', b'\x02', b'!', b'\x05', b'\x00', b'\x07']
+[2025-04-17 07:54:48,332 DEBUG HX52xDioHandler.py:444 -> set_do()] recieved command bytestr b'\x01E\x02!\x05\x00\x07'
+[2025-04-17 07:54:48,332 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 69 : EXISTING 69
+[2025-04-17 07:54:48,332 INFO HX52xDioHandler.py:310 -> _construct_command()] Constructed Command b'\x01}\x02!\x06\x01'
+[2025-04-17 07:54:48,338 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b'z', b'\x02', b'!', b'\x06', b'\x00', b'\x07']
+[2025-04-17 07:54:48,351 DEBUG HX52xDioHandler.py:444 -> set_do()] recieved command bytestr b'\x01z\x02!\x06\x00\x07'
+[2025-04-17 07:54:48,351 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 122 : EXISTING 122
+[2025-04-17 07:54:48,351 INFO HX52xDioHandler.py:310 -> _construct_command()] Constructed Command b'\x01h\x02!\x07\x01'
+[2025-04-17 07:54:48,358 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b'o', b'\x02', b'!', b'\x07', b'\x00', b'\x07']
+[2025-04-17 07:54:48,368 DEBUG HX52xDioHandler.py:444 -> set_do()] recieved command bytestr b'\x01o\x02!\x07\x00\x07'
+[2025-04-17 07:54:48,368 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 111 : EXISTING 111
+[2025-04-17 07:54:48,369 INFO HX52xDioHandler.py:310 -> _construct_command()] Constructed Command b'\x01\x04\x02!\x00\x00'
+[2025-04-17 07:54:48,376 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b'\x04', b'\x02', b'!', b'\x00', b'\x00', b'\x07']
+[2025-04-17 07:54:48,388 DEBUG HX52xDioHandler.py:444 -> set_do()] recieved command bytestr b'\x01\x04\x02!\x00\x00\x07'
+[2025-04-17 07:54:48,388 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 4 : EXISTING 4
+[2025-04-17 07:54:48,388 INFO HX52xDioHandler.py:310 -> _construct_command()] Constructed Command b'\x01\x11\x02!\x01\x00'
+[2025-04-17 07:54:48,395 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b'\x11', b'\x02', b'!', b'\x01', b'\x00', b'\x07']
+[2025-04-17 07:54:48,407 DEBUG HX52xDioHandler.py:444 -> set_do()] recieved command bytestr b'\x01\x11\x02!\x01\x00\x07'
+[2025-04-17 07:54:48,407 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 17 : EXISTING 17
+[2025-04-17 07:54:48,407 INFO HX52xDioHandler.py:310 -> _construct_command()] Constructed Command b'\x01.\x02!\x02\x00'
+[2025-04-17 07:54:48,414 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b'.', b'\x02', b'!', b'\x02', b'\x00', b'\x07']
+[2025-04-17 07:54:48,426 DEBUG HX52xDioHandler.py:444 -> set_do()] recieved command bytestr b'\x01.\x02!\x02\x00\x07'
+[2025-04-17 07:54:48,426 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 46 : EXISTING 46
+[2025-04-17 07:54:48,426 INFO HX52xDioHandler.py:310 -> _construct_command()] Constructed Command b'\x01;\x02!\x03\x00'
+[2025-04-17 07:54:48,434 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b';', b'\x02', b'!', b'\x03', b'\x00', b'\x07']
+[2025-04-17 07:54:48,444 DEBUG HX52xDioHandler.py:444 -> set_do()] recieved command bytestr b'\x01;\x02!\x03\x00\x07'
+[2025-04-17 07:54:48,444 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 59 : EXISTING 59
+[2025-04-17 07:54:48,444 INFO HX52xDioHandler.py:310 -> _construct_command()] Constructed Command b'\x01P\x02!\x04\x00'
+[2025-04-17 07:54:48,455 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b'P', b'\x02', b'!', b'\x04', b'\x00', b'\x07']
+[2025-04-17 07:54:48,466 DEBUG HX52xDioHandler.py:444 -> set_do()] recieved command bytestr b'\x01P\x02!\x04\x00\x07'
+[2025-04-17 07:54:48,466 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 80 : EXISTING 80
+[2025-04-17 07:54:48,466 INFO HX52xDioHandler.py:310 -> _construct_command()] Constructed Command b'\x01E\x02!\x05\x00'
+[2025-04-17 07:54:48,473 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b'E', b'\x02', b'!', b'\x05', b'\x00', b'\x07']
+[2025-04-17 07:54:48,486 DEBUG HX52xDioHandler.py:444 -> set_do()] recieved command bytestr b'\x01E\x02!\x05\x00\x07'
+[2025-04-17 07:54:48,486 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 69 : EXISTING 69
+[2025-04-17 07:54:48,486 INFO HX52xDioHandler.py:310 -> _construct_command()] Constructed Command b'\x01z\x02!\x06\x00'
+[2025-04-17 07:54:48,497 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b'z', b'\x02', b'!', b'\x06', b'\x00', b'\x07']
+[2025-04-17 07:54:48,511 DEBUG HX52xDioHandler.py:444 -> set_do()] recieved command bytestr b'\x01z\x02!\x06\x00\x07'
+[2025-04-17 07:54:48,511 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 122 : EXISTING 122
+[2025-04-17 07:54:48,511 INFO HX52xDioHandler.py:310 -> _construct_command()] Constructed Command b'\x01o\x02!\x07\x00'
+[2025-04-17 07:54:48,520 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b'o', b'\x02', b'!', b'\x07', b'\x00', b'\x07']
+[2025-04-17 07:54:48,532 DEBUG HX52xDioHandler.py:444 -> set_do()] recieved command bytestr b'\x01o\x02!\x07\x00\x07'
+[2025-04-17 07:54:48,532 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 111 : EXISTING 111
+[2025-04-17 07:54:48,532 INFO HX52xDioHandler.py:310 -> _construct_command()] Constructed Command b'\x01\xb7\x00P'
+[2025-04-17 07:54:48,539 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b'`', b'\x01', b'P', b'\x01', b'\x07']
+[2025-04-17 07:54:48,554 DEBUG HX52xDioHandler.py:468 -> get_di_contact()] recieved command bytestr b'\x01`\x01P\x01\x07'
+[2025-04-17 07:54:48,554 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 96 : EXISTING 96
+[2025-04-17 07:54:48,555 INFO HX52xDioHandler.py:310 -> _construct_command()] Constructed Command b'\x01\xb0\x00Q'
+[2025-04-17 07:54:48,558 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b'u', b'\x01', b'Q', b'\x01', b'\x07']
+[2025-04-17 07:54:48,580 DEBUG HX52xDioHandler.py:493 -> get_do_contact()] recieved command bytestr b'\x01u\x01Q\x01\x07'
+[2025-04-17 07:54:48,580 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 117 : EXISTING 117
+[2025-04-17 07:54:48,580 INFO HX52xDioHandler.py:310 -> _construct_command()] Constructed Command b'\x01M\x01R\x00'
+[2025-04-17 07:54:48,590 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b'M', b'\x01', b'R', b'\x00', b'\x07']
+[2025-04-17 07:54:48,599 DEBUG HX52xDioHandler.py:521 -> set_di_contact()] recieved command bytestr b'\x01M\x01R\x00\x07'
+[2025-04-17 07:54:48,599 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 77 : EXISTING 77
+[2025-04-17 07:54:48,600 INFO HX52xDioHandler.py:310 -> _construct_command()] Constructed Command b'\x01J\x01R\x01'
+[2025-04-17 07:54:48,605 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b'M', b'\x01', b'R', b'\x00', b'\x07']
+[2025-04-17 07:54:48,618 DEBUG HX52xDioHandler.py:521 -> set_di_contact()] recieved command bytestr b'\x01M\x01R\x00\x07'
+[2025-04-17 07:54:48,618 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 77 : EXISTING 77
+[2025-04-17 07:54:48,619 INFO HX52xDioHandler.py:310 -> _construct_command()] Constructed Command b'\x01X\x01S\x00'
+[2025-04-17 07:54:48,624 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b'X', b'\x01', b'S', b'\x00', b'\x07']
+[2025-04-17 07:54:48,637 DEBUG HX52xDioHandler.py:548 -> set_do_contact()] recieved command bytestr b'\x01X\x01S\x00\x07'
+[2025-04-17 07:54:48,637 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 88 : EXISTING 88
+[2025-04-17 07:54:48,638 INFO HX52xDioHandler.py:310 -> _construct_command()] Constructed Command b'\x01_\x01S\x01'
+[2025-04-17 07:54:48,641 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b'X', b'\x01', b'S', b'\x00', b'\x07']
+[2025-04-17 07:54:48,657 DEBUG HX52xDioHandler.py:548 -> set_do_contact()] recieved command bytestr b'\x01X\x01S\x00\x07'
+[2025-04-17 07:54:48,657 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 88 : EXISTING 88
+[2025-04-17 07:54:48,669 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b'h', b'\x02', b' ', b'\x00', b'\x01', b'\x07']
+[2025-04-17 07:54:48,681 DEBUG HX52xDioHandler.py:386 -> get_di()] recieved command bytestr b'\x01h\x02 \x00\x01\x07'
+[2025-04-17 07:54:48,681 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 104 : EXISTING 104
+[2025-04-17 07:54:48,691 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b'}', b'\x02', b' ', b'\x01', b'\x01', b'\x07']
+[2025-04-17 07:54:48,703 DEBUG HX52xDioHandler.py:386 -> get_di()] recieved command bytestr b'\x01}\x02 \x01\x01\x07'
+[2025-04-17 07:54:48,703 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 125 : EXISTING 125
+[2025-04-17 07:54:48,703 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b'B', b'\x02', b' ', b'\x02', b'\x01', b'\x07']
+[2025-04-17 07:54:48,720 DEBUG HX52xDioHandler.py:386 -> get_di()] recieved command bytestr b'\x01B\x02 \x02\x01\x07'
+[2025-04-17 07:54:48,720 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 66 : EXISTING 66
+[2025-04-17 07:54:48,720 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b'W', b'\x02', b' ', b'\x03', b'\x01', b'\x07']
+[2025-04-17 07:54:48,738 DEBUG HX52xDioHandler.py:386 -> get_di()] recieved command bytestr b'\x01W\x02 \x03\x01\x07'
+[2025-04-17 07:54:48,738 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 87 : EXISTING 87
+[2025-04-17 07:54:48,739 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b'<', b'\x02', b' ', b'\x04', b'\x01', b'\x07']
+[2025-04-17 07:54:48,755 DEBUG HX52xDioHandler.py:386 -> get_di()] recieved command bytestr b'\x01<\x02 \x04\x01\x07'
+[2025-04-17 07:54:48,755 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 60 : EXISTING 60
+[2025-04-17 07:54:48,763 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b')', b'\x02', b' ', b'\x05', b'\x01', b'\x07']
+[2025-04-17 07:54:48,774 DEBUG HX52xDioHandler.py:386 -> get_di()] recieved command bytestr b'\x01)\x02 \x05\x01\x07'
+[2025-04-17 07:54:48,774 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 41 : EXISTING 41
+[2025-04-17 07:54:48,782 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b'\x16', b'\x02', b' ', b'\x06', b'\x01', b'\x07']
+[2025-04-17 07:54:48,793 DEBUG HX52xDioHandler.py:386 -> get_di()] recieved command bytestr b'\x01\x16\x02 \x06\x01\x07'
+[2025-04-17 07:54:48,793 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 22 : EXISTING 22
+[2025-04-17 07:54:48,800 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b'\x03', b'\x02', b' ', b'\x07', b'\x01', b'\x07']
+[2025-04-17 07:54:48,814 DEBUG HX52xDioHandler.py:386 -> get_di()] recieved command bytestr b'\x01\x03\x02 \x07\x01\x07'
+[2025-04-17 07:54:48,814 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 3 : EXISTING 3
+[2025-04-17 07:54:48,815 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b'\xb9', b'\x02', b'"', b'\x00', b'\x00', b'\x07']
+[2025-04-17 07:54:48,833 DEBUG HX52xDioHandler.py:414 -> get_do()] recieved command bytestr b'\x01\xb9\x02"\x00\x00\x07'
+[2025-04-17 07:54:48,833 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 185 : EXISTING 185
+[2025-04-17 07:54:48,841 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b'\xac', b'\x02', b'"', b'\x01', b'\x00', b'\x07']
+[2025-04-17 07:54:48,852 DEBUG HX52xDioHandler.py:414 -> get_do()] recieved command bytestr b'\x01\xac\x02"\x01\x00\x07'
+[2025-04-17 07:54:48,852 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 172 : EXISTING 172
+[2025-04-17 07:54:48,858 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b'\x93', b'\x02', b'"', b'\x02', b'\x00', b'\x07']
+[2025-04-17 07:54:48,872 DEBUG HX52xDioHandler.py:414 -> get_do()] recieved command bytestr b'\x01\x93\x02"\x02\x00\x07'
+[2025-04-17 07:54:48,872 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 147 : EXISTING 147
+[2025-04-17 07:54:48,881 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b'\x86', b'\x02', b'"', b'\x03', b'\x00', b'\x07']
+[2025-04-17 07:54:48,895 DEBUG HX52xDioHandler.py:414 -> get_do()] recieved command bytestr b'\x01\x86\x02"\x03\x00\x07'
+[2025-04-17 07:54:48,895 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 134 : EXISTING 134
+[2025-04-17 07:54:48,907 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b'\xed', b'\x02', b'"', b'\x04', b'\x00', b'\x07']
+[2025-04-17 07:54:48,921 DEBUG HX52xDioHandler.py:414 -> get_do()] recieved command bytestr b'\x01\xed\x02"\x04\x00\x07'
+[2025-04-17 07:54:48,921 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 237 : EXISTING 237
+[2025-04-17 07:54:48,931 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b'\xf8', b'\x02', b'"', b'\x05', b'\x00', b'\x07']
+[2025-04-17 07:54:48,943 DEBUG HX52xDioHandler.py:414 -> get_do()] recieved command bytestr b'\x01\xf8\x02"\x05\x00\x07'
+[2025-04-17 07:54:48,943 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 248 : EXISTING 248
+[2025-04-17 07:54:48,951 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b'\xc7', b'\x02', b'"', b'\x06', b'\x00', b'\x07']
+[2025-04-17 07:54:48,966 DEBUG HX52xDioHandler.py:414 -> get_do()] recieved command bytestr b'\x01\xc7\x02"\x06\x00\x07'
+[2025-04-17 07:54:48,966 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 199 : EXISTING 199
+[2025-04-17 07:54:48,967 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b'\xd2', b'\x02', b'"', b'\x07', b'\x00', b'\x07']
+[2025-04-17 07:54:48,992 DEBUG HX52xDioHandler.py:414 -> get_do()] recieved command bytestr b'\x01\xd2\x02"\x07\x00\x07'
+[2025-04-17 07:54:48,992 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 210 : EXISTING 210
+[2025-04-17 07:54:49,002 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b'\x04', b'\x02', b'!', b'\x00', b'\x00', b'\x07']
+[2025-04-17 07:54:49,011 DEBUG HX52xDioHandler.py:444 -> set_do()] recieved command bytestr b'\x01\x04\x02!\x00\x00\x07'
+[2025-04-17 07:54:49,011 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 4 : EXISTING 4
+[2025-04-17 07:54:49,020 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b'\x11', b'\x02', b'!', b'\x01', b'\x00', b'\x07']
+[2025-04-17 07:54:49,029 DEBUG HX52xDioHandler.py:444 -> set_do()] recieved command bytestr b'\x01\x11\x02!\x01\x00\x07'
+[2025-04-17 07:54:49,029 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 17 : EXISTING 17
+[2025-04-17 07:54:49,036 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b'.', b'\x02', b'!', b'\x02', b'\x00', b'\x07']
+[2025-04-17 07:54:49,050 DEBUG HX52xDioHandler.py:444 -> set_do()] recieved command bytestr b'\x01.\x02!\x02\x00\x07'
+[2025-04-17 07:54:49,050 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 46 : EXISTING 46
+[2025-04-17 07:54:49,054 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b';', b'\x02', b'!', b'\x03', b'\x00', b'\x07']
+[2025-04-17 07:54:49,069 DEBUG HX52xDioHandler.py:444 -> set_do()] recieved command bytestr b'\x01;\x02!\x03\x00\x07'
+[2025-04-17 07:54:49,069 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 59 : EXISTING 59
+[2025-04-17 07:54:49,078 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b'P', b'\x02', b'!', b'\x04', b'\x00', b'\x07']
+[2025-04-17 07:54:49,086 DEBUG HX52xDioHandler.py:444 -> set_do()] recieved command bytestr b'\x01P\x02!\x04\x00\x07'
+[2025-04-17 07:54:49,086 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 80 : EXISTING 80
+[2025-04-17 07:54:49,095 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b'E', b'\x02', b'!', b'\x05', b'\x00', b'\x07']
+[2025-04-17 07:54:49,105 DEBUG HX52xDioHandler.py:444 -> set_do()] recieved command bytestr b'\x01E\x02!\x05\x00\x07'
+[2025-04-17 07:54:49,105 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 69 : EXISTING 69
+[2025-04-17 07:54:49,105 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b'z', b'\x02', b'!', b'\x06', b'\x00', b'\x07']
+[2025-04-17 07:54:49,125 DEBUG HX52xDioHandler.py:444 -> set_do()] recieved command bytestr b'\x01z\x02!\x06\x00\x07'
+[2025-04-17 07:54:49,125 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 122 : EXISTING 122
+[2025-04-17 07:54:49,133 INFO HX52xDioHandler.py:355 -> _receive_command()] Recieved Command List [b'\x01', b'o', b'\x02', b'!', b'\x07', b'\x00', b'\x07']
+[2025-04-17 07:54:49,148 DEBUG HX52xDioHandler.py:444 -> set_do()] recieved command bytestr b'\x01o\x02!\x07\x00\x07'
+[2025-04-17 07:54:49,148 DEBUG HX52xDioHandler.py:219 -> _check_crc()] CALCULATED 111 : EXISTING 111
