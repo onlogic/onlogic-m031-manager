@@ -47,7 +47,7 @@ class OnLogicNuvotonManager():
 
         self.logger_util = LoggingUtil(logger_mode, handler_mode)
         self.logger_util._create_logger()
-    
+
     def __enter__(self):
         pass
 
@@ -171,9 +171,9 @@ class OnLogicNuvotonManager():
                                  log=True,
                                  level=logging.ERROR
                                  )
-                
+
                 raise RuntimeError(ack_error_msg)
-            
+
             # Begin buffer clear feedback loop
             self.port.write(ProtocolConstants.SHELL_ACK.to_bytes(1, byteorder='little'))
             bytes_sent += 1
@@ -182,7 +182,7 @@ class OnLogicNuvotonManager():
             # If received byte is not what was expected, reset counter
             if int.from_bytes(byte_in_port, byteorder='little') == ProtocolConstants.SHELL_NACK:
                 bytes_to_send -= 1
-            else:    
+            else:
                 bytes_to_send = nack_counter
 
     def _validate_input_param(self, dio_input_parameter, valid_input_range:list, input_type:type):
@@ -191,34 +191,34 @@ class OnLogicNuvotonManager():
 
         if type(dio_input_parameter) != input_type:
             type_error_msg = f"ERROR | {type(dio_input_parameter)} was found when {input_type} was expected"
-            
+
             self.logger_util._log_print(type_error_msg,
                             print_to_console=True,
                             color=Fore.RED,
                             log=True,
                             level=logging.ERROR
                             )
-            
+
             raise TypeError(type_error_msg)
 
         if dio_input_parameter < valid_input_range[0] \
                 or dio_input_parameter > valid_input_range[1]:
             value_error_msg = "ERROR | Out of Range Value Provided: " + str(dio_input_parameter) + "." + \
                   " Valid Range " + str(valid_input_range)
-            
+
             self.logger_util._log_print(value_error_msg,
                             print_to_console=True,
                             color=Fore.RED,
                             log=True,
                             level=logging.ERROR
                             )
-            
+
             raise ValueError(value_error_msg)
 
     def _check_crc(self, frame:bytes) -> bool:
         if len(frame) < 4:
             return False
-        
+
         crc_bytes = frame[2:-1]
         crc_val = crc8.smbus(crc_bytes)
 
@@ -303,22 +303,22 @@ class OnLogicNuvotonManager():
     @functools.lru_cache(maxsize=128)
     def _construct_command(self, kind:Kinds, *payload:int) -> bytes:
         # self.validate_message_bytes(kind, payload)
-        
+
         crc_calculation = crc8.smbus(bytes([len(payload), kind, *payload]))
-        
+
         constructed_command = bytes([ProtocolConstants.SHELL_SOF, 
                                      crc_calculation, 
                                      len(payload), 
                                      kind, 
                                      *payload
                                      ])
-        
+
         self.logger_util._log_print(f"Constructed Command {constructed_command}",
                         print_to_console=False,
                         log=True,
                         level=logging.INFO
                         )
-        
+
         return constructed_command
 
     def _send_command(self, command_to_send:bytes) -> bool:
@@ -357,7 +357,7 @@ class OnLogicNuvotonManager():
             byte_in_port = self.port.read(1)
             response_frame.append(byte_in_port)
             self.port.write(ProtocolConstants.SHELL_ACK.to_bytes(1, byteorder='little')) 
-        
+
         self.logger_util._log_print(f"Recieved Command List {response_frame}",
                         print_to_console=False,
                         log=True,
@@ -399,9 +399,9 @@ class OnLogicNuvotonManager():
         ret_val = self._validate_recieved_frame(frame, -2, [0,1])
         if ret_val is not StatusTypes.SUCCESS:
             return ret_val
-        
+
         return frame[-2]
-    
+
     def get_do(self, do_pin:int) -> int:
         self._validate_input_param(do_pin, [0,7], int)
 
@@ -427,7 +427,7 @@ class OnLogicNuvotonManager():
         ret_val = self._validate_recieved_frame(frame, -2, [0,1])
         if ret_val is not StatusTypes.SUCCESS:
             return ret_val
-        
+
         return frame[-2]
 
     def set_do(self, pin:int, value:int) -> int:
@@ -461,11 +461,11 @@ class OnLogicNuvotonManager():
 
     def get_di_contact(self) -> int:
         di_contact_state_cmd = self._construct_command(Kinds.GET_DI_CONTACT)
-        
+
         self._reset(nack_counter=64)
         if not self._send_command(di_contact_state_cmd):
             return StatusTypes.SEND_CMD_FAILURE
-        
+
         frame = self._receive_command(6)
 
         self._reset(nack_counter=64, reset_buffers=False) 
@@ -490,9 +490,9 @@ class OnLogicNuvotonManager():
         self._reset(nack_counter=64)
         if not self._send_command(do_contact_state_cmd):
             return StatusTypes.SEND_CMD_FAILURE
-        
+
         frame = self._receive_command(6)
-        
+
         self._reset(nack_counter=64, reset_buffers=False)
         time.sleep(.004)
 
@@ -510,7 +510,7 @@ class OnLogicNuvotonManager():
 
     def set_di_contact(self, contact_type:int) -> int:
         self._validate_input_param(contact_type, [0,1], int)
-        
+
         set_di_contact_state_cmd = self._construct_command(Kinds.SET_DI_CONTACT, contact_type)
 
         # Enclose each value read with buffer clearances
@@ -547,7 +547,7 @@ class OnLogicNuvotonManager():
             return StatusTypes.SEND_CMD_FAILURE
 
         frame = self._receive_command(6)
-                
+ 
         self._reset(nack_counter=64, reset_buffers=False)
         time.sleep(.004)
 
@@ -572,7 +572,7 @@ class OnLogicNuvotonManager():
 
     def get_all_output_states(self) -> list:
         all_output_states = []
-        
+
         for i in range(0, 8):
             all_output_states.append(self.get_do(i))
 

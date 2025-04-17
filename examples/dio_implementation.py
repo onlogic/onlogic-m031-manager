@@ -155,13 +155,13 @@ def main():
         print(my_dio.set_all_output_states([0, 1, 0, 1, 0, 0, 0, 1]))
         print(f"The time difference [In Seconds] is : {timeit.default_timer() - start_time:.6f}")
 
-        # print("=" * 30)
-        # print("TESTING GET ALL INPUT & OUTPUT STATES")
-        # print("=" * 30)
-        # for i in range(20):
-        #     start_time = timeit.default_timer()
-        #     print(my_dio.get_all_io_states())
-        #     print(f"The time difference [In Seconds] is : {timeit.default_timer() - start_time:.6f}")
+        print("=" * 30)
+        print("TESTING GET ALL INPUT & OUTPUT STATES")
+        print("=" * 30)
+        for i in range(20):
+            start_time = timeit.default_timer()
+            print(my_dio.get_all_io_states())
+            print(f"The time difference [In Seconds] is : {timeit.default_timer() - start_time:.6f}")
     except KeyboardInterrupt:
         print("Operation terminated by user.")
     finally: 
