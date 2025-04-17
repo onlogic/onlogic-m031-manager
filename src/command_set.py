@@ -3,7 +3,8 @@
 class ProtocolConstants:
     MCU_VID_PID = "353F:A105"
     TIME_THRESHOLD = 2.5
-
+    STANDARD_DELAY = .004
+    
     # Hardcoded transmission values
     SHELL_SOF  = 0x01
     SHELL_ACK  = 0x0D # decimal 13, ascii equiv is '\r'

@@ -27,7 +27,7 @@ from command_set import ProtocolConstants, Kinds, StatusTypes
 from fastcrc import crc8
 from colorama import Fore, init
 
-class HX52xDioHandler():
+class OnLogicNuvotonManager():
     '''
     Administers the serial connection with the
     microcontroller embedded in the K/HX-52x DIO-Add in Card.
@@ -47,6 +47,12 @@ class HX52xDioHandler():
 
         self.logger_util = LoggingUtil(logger_mode, handler_mode)
         self.logger_util._create_logger()
+    
+    def __enter__(self):
+        pass
+
+    def __exit__(self):
+        pass
 
     def __del__(self):
         '''Destroy the object and end device communication gracefully.'''
