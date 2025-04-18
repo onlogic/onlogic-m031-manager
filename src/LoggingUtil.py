@@ -9,7 +9,7 @@ class LoggingUtil():
         self.logger_mode = logger_mode
         self.handler_mode = handler_mode
         self.logger = None
-        
+
     @staticmethod
     def _create_filename():
         return f"HX52x_session_{datetime.now().strftime("%m_%d_%Y_%H_%M_%S")}.log"
@@ -22,7 +22,7 @@ class LoggingUtil():
         if self.logger_mode not in ['info', 'debug','error']:
             print("Logger Mode", self.logger_mode)
             raise ValueError("ERROR | Invalid logger_mode")
-    
+
         return self.logger_mode
 
     def _create_handlers(self, filename):
@@ -36,33 +36,33 @@ class LoggingUtil():
             handlers.append(logging.FileHandler(filename))
         else:
             raise ValueError("ERROR | Incorrect Handle Parameter Provided") 
-        
+
         return handlers
-    
+
     def _create_logger(self):# -> logging.RootLogger:
         '''Create Logger with INFO, DEBUG, and ERROR Debugging'''
         result = self._check_logger_mode()
         if result is None:
             return
-        
+
         filename = self._create_filename()
         handlers = self._create_handlers(filename)
-        
+
         self.logger = logging.getLogger()
-    
+
         level_dict = { 
             'info'  : logging.INFO,
             'debug' : logging.DEBUG,
             'error' : logging.ERROR,
             }
-        
+
         level = level_dict.get(self.logger_mode, "Unknown")
 
         if level == 'Unknown' or level is None:
             self.logger_mode = 'off'
             del self.logger
             raise ValueError("ERROR | Invalid logger_mode")
-        
+
         logging.basicConfig (
             format='[%(asctime)s %(levelname)s %(filename)s:%(lineno)d -> %(funcName)s()] %(message)s',
             level=level,
@@ -96,7 +96,7 @@ class LoggingUtil():
 
     def _log_print(self, message:str, print_to_console:bool=True, color:str=None, 
                     log:bool=False, level:Optional[int]=None) -> bool:
-        
+
         self._lprint(message, print_to_console, color)
 
         if log is True \

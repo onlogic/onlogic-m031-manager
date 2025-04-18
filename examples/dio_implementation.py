@@ -27,7 +27,7 @@ from OnLogicNuvotonManager import OnLogicNuvotonManager
 
 def main():
     '''main, implementation of session logic.'''
-    
+
     # Set to None outside exception handling
     # incase of improper class initialization
     my_dio = None
@@ -77,7 +77,7 @@ def main():
             print(f"Setting DO Channel {i} to 0: Status Code = {result}")
             # time.sleep(.1)
         print()
-        
+
         print("=" * 30)
         print("TESTING DIGITAL INPUT CONTACT (get_di_contact)")
         print("=" * 30)
@@ -147,7 +147,7 @@ def main():
         start_time = timeit.default_timer()
         print(my_dio.get_all_output_states())
         print(f"The time difference [In Seconds] is : {timeit.default_timer() - start_time:.6f}")
-        
+
         print("=" * 30)
         print("TESTING SET ALL OUTPUT STATES")
         print("=" * 30)

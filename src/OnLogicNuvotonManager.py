@@ -32,9 +32,9 @@ class OnLogicNuvotonManager():
     Administers the serial connection with the
     microcontroller embedded in the K/HX-52x DIO-Add in Card.
     '''
-    def __init__(self, logger_mode:str=None, handler_mode:str=None):
+    def __init__(self, logger_mode:str=None, handler_mode:str=None, serial_connection_label=None):
         '''Init class by establishing serial connection.'''
-
+        print("poop")
         # Init colorama: Color coding for errors and such
         init(autoreset=True) 
 
@@ -48,11 +48,14 @@ class OnLogicNuvotonManager():
         self.logger_util = LoggingUtil(logger_mode, handler_mode)
         self.logger_util._create_logger()
 
-    def __enter__(self):
-        pass
+        self.serial_connection_label = serial_connection_label
 
-    def __exit__(self):
-        pass
+    def __enter__(self):
+        self.claim()
+        return self
+
+    def __exit__(self, etype, evalue, etraceback):
+        self.close_connection()
 
     def __del__(self):
         '''Destroy the object and end device communication gracefully.'''
@@ -280,9 +283,11 @@ class OnLogicNuvotonManager():
 
         return StatusTypes.SUCCESS
 
-    def claim(self, serial_connection_label:str=None):
+    def claim(self, serial_connection_label=None):
         # Serial device functionality
-        self.serial_connection_label = serial_connection_label
+        if serial_connection_label is not None:
+            self.serial_connection_label = serial_connection_label
+
         self.port = self._init_port()
         self._mcu_connection_check()
         self.is_setup=True
