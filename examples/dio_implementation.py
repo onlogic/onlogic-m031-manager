@@ -23,7 +23,7 @@ NOTE:
 """
 
 import timeit # Optional: measure time taken per sample
-from OnLogicNuvotonManager import OnLogicNuvotonManager
+from DioHandler import DioHandler
 
 def main():
     '''main, implementation of session logic.'''
@@ -34,7 +34,7 @@ def main():
 
     try:
         # Init DIO handler
-        my_dio = OnLogicNuvotonManager(logger_mode="DEBUG", handler_mode="BOTH") #logger_mode="DEBUG", handler_mode="BOTH"
+        my_dio = DioHandler(logger_mode="DEBUG", handler_mode="BOTH") #logger_mode="DEBUG", handler_mode="BOTH"
         my_dio.claim()
 
         print("=" * 30)

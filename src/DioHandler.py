@@ -4,10 +4,12 @@ from OnLogicNuvotonManager import OnLogicNuvotonManager
 import time 
 import logging
 
-
 class DioHandler(OnLogicNuvotonManager):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, logger_mode:str=None, handler_mode:str=None, serial_connection_label=None):
+        super().__init__(logger_mode=logger_mode, 
+                         handler_mode=handler_mode, 
+                         serial_connection_label=serial_connection_label
+                         )
 
     def get_di(self, di_pin:int) -> int:
         """\

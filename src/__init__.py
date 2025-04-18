@@ -1,2 +1,4 @@
 from .OnLogicNuvotonManager import OnLogicNuvotonManager
-__all__ = ["OnLogicNuvotonManager"]
+from .DioHandler import DioHandler
+
+__all__ = ["OnLogicNuvotonManager", "DioHandler"]

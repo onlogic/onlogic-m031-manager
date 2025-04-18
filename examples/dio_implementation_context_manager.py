@@ -23,7 +23,7 @@ NOTE:
 """
 
 import timeit # Optional: measure time taken per sample
-from OnLogicNuvotonManager import OnLogicNuvotonManager
+from DioHandler import DioHandler
 
 def main():
     '''main, implementation of session logic.'''
@@ -33,7 +33,7 @@ def main():
     try:
         # Init DIO handler
         # serial_connection_label="xxx" can be specified when context manager used:
-        with OnLogicNuvotonManager(logger_mode="DEBUG", handler_mode="CONSOLE") as my_dio: 
+        with DioHandler(logger_mode="DEBUG", handler_mode="CONSOLE") as my_dio: 
             print("pee")
             print("=" * 30)
             print("TESTING DIGITAL INPUTS (get_di)")

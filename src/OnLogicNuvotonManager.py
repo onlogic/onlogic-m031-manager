@@ -11,8 +11,7 @@ Contains:
         + private method: _mcu_connection_check
         + private method: _reset
         + private method: _send_command
-        + public method:  get_di
-
+        
 References:
     https://fastcrc.readthedocs.io/en/latest/
 '''
