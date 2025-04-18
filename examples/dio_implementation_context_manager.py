@@ -163,9 +163,7 @@ def main():
     except KeyboardInterrupt:
         print("Operation terminated by user.")
     finally: 
-        print("\033[93mExiting...\033[0m")
-        if my_dio is not None:
-            my_dio.close_connection() 
+        print("\033[93mExiting...\033[0m") 
 
 if __name__ == "__main__":
     main()
