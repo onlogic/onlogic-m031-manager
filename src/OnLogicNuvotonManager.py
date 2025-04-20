@@ -33,7 +33,6 @@ class OnLogicNuvotonManager():
     '''
     def __init__(self, logger_mode:str=None, handler_mode:str=None, serial_connection_label=None):
         '''Init class by establishing serial connection.'''
-        print("poop")
         # Init colorama: Color coding for errors and such
         init(autoreset=True) 
 

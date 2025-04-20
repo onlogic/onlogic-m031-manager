@@ -28,7 +28,7 @@ def main():
     try:
         # Init DIO handler
         my_auto = AutomotiveHandler() #logger_mode="DEBUG", handler_mode="BOTH"
-        my_auto.claim()
+        my_auto.claim("COM17")
 
         print("=" * 30)
         print("TESTING DIGITAL INPUTS (get_di)")
