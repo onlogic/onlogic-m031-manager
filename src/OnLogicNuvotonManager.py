@@ -87,6 +87,9 @@ class OnLogicNuvotonManager():
                     return port.device
         return None
 
+    #TODO: modify this so that it doesnt do 
+    # _get_device_port cdc device descriptor in automotive class (UART)
+    #@abstractmethod
     def _init_port(self) -> serial.Serial:
         '''Init port and establish USB-UART connection.'''
         if self.serial_connection_label is None:
@@ -108,6 +111,9 @@ class OnLogicNuvotonManager():
     def __handle_lconfig_str(input_str:str) -> str | None:
         return input_str.lower().strip() if isinstance(input_str, str) else input_str
 
+    #TODO: make this an abstract method to include 
+    #      command set check per derivative class
+    #@abstractmethod
     def _mcu_connection_check(self) -> None:
         '''\
         Check state of MCU, if it returns '\a' successively
@@ -135,7 +141,7 @@ class OnLogicNuvotonManager():
                     time.sleep(.004)
 
         if nack_count == ProtocolConstants.NACKS_NEEDED:
-            self.logger_util._log_print("DIO Interface Found",
+            self.logger_util._log_print("Interface Found",
                             print_to_console=True,
                             color=Fore.GREEN,
                             log=True,
@@ -369,3 +375,6 @@ class OnLogicNuvotonManager():
                         )
 
         return b''.join(response_frame)
+
+    def version(self):
+        pass

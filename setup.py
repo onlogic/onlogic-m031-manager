@@ -13,7 +13,7 @@ setup(
     install_requires=['pyserial>=3.4', 'colorama>=0.4.5', 'fastcrc==0.3.2'],
     version='0.0.1',
     license='BSD-2.0',
-    description='Tools for Helix 52x and Karbon 5XX interfaces',
+    description='Tools for Helix 52x and Karbon 52X Peripherals',
     # long_description=open('README.rst').read(),
     classifiers=[
         "Programming Language :: Python :: 3.5",

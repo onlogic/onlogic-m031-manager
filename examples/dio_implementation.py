@@ -6,13 +6,6 @@ Title:  K/HX-52x DIO-Add in Card Python Driver
 Description:
     TODO:
 
-Dependencies:
-    1. pyserial: 
-        pip3 install pyserial
-
-    2. colorama 
-        pip3 install colorama
-
 Usage:
     python main.py
 
@@ -34,7 +27,7 @@ def main():
 
     try:
         # Init DIO handler
-        my_dio = DioHandler(logger_mode="DEBUG", handler_mode="BOTH") #logger_mode="DEBUG", handler_mode="BOTH"
+        my_dio = DioHandler() #logger_mode="DEBUG", handler_mode="BOTH"
         my_dio.claim()
 
         print("=" * 30)
