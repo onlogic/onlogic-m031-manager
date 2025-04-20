@@ -4,9 +4,14 @@ import time
 import logging
 
 class AutomotiveHandler(OnLogicNuvotonManager):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, logger_mode:str=None, handler_mode:str=None, serial_connection_label=None):
+        super().__init__(logger_mode=logger_mode, 
+                        handler_mode=handler_mode, 
+                        serial_connection_label=serial_connection_label
+                        )
 
+
+    '''
     def get_do(self, do_pin:int) -> int:
         self._validate_input_param(do_pin, [0,7], int)
 
@@ -57,4 +62,4 @@ class AutomotiveHandler(OnLogicNuvotonManager):
                         log=True,
                         level=logging.DEBUG
                         )
-    
+    '''

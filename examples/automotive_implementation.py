@@ -27,13 +27,13 @@ def main():
 
     try:
         # Init DIO handler
-        my_auto = AutomotiveHandler() #logger_mode="DEBUG", handler_mode="BOTH"
-        my_auto.claim("COM17")
+        my_auto = AutomotiveHandler(logger_mode="DEBUG", handler_mode="CONSOLE") #logger_mode="DEBUG", handler_mode="BOTH"
+        my_auto.claim()
 
         print("=" * 30)
-        print("TESTING DIGITAL INPUTS (get_di)")
+        print("TESTING GET VERSION (GET VERSION)")
+        print(my_auto.get_version())
         print("=" * 30)
-        
         print()
 
        

@@ -246,7 +246,22 @@ class OnLogicNuvotonManager():
 
         return True
 
-    def _validate_recieved_frame(self, return_frame:list, target_index:int=None, target_range:list=None) -> int:
+    def _within_valid_range(self, return_frame:bytes, target_index:int|list, target_range:list) -> bool:
+        if isinstance(target_index, int):
+            if return_frame[target_index] < target_range[0] or \
+                    return_frame[target_index] > target_range[1]:
+                return False
+            
+        elif isinstance(target_index, list):
+            payload_indices_to_check = [p_idx for p_idx in range(target_index[0], target_index[1])]
+            for payload_idx in payload_indices_to_check:
+                if return_frame[payload_idx] < target_range[0] or \
+                        return_frame[payload_idx] > target_range[1]:
+                    return False
+
+        return True
+
+    def _validate_recieved_frame(self, return_frame:list, target_index:int|list=None, target_range:list=None) -> int:
         if return_frame[0] != ProtocolConstants.SHELL_SOF:
             self.logger_util._log_print(f"SOF Frame not found",
                              color=Fore.RED,
@@ -276,14 +291,14 @@ class OnLogicNuvotonManager():
             return StatusTypes.RECV_FRAME_CRC_ERROR
 
         if target_index is not None \
-                and return_frame[target_index] not in target_range:
-            self.logger_util._log_print(f"Value at target index not in target range",
-                             color=Fore.RED,
-                             print_to_console=True,
-                             log=True,
-                             level=logging.ERROR
+                and not self._within_valid_range(return_frame, target_index, target_range): 
+            self.logger_util._log_print(f"Value(s) at idx {target_index} not in target range: {target_range}",
+                            color=Fore.RED,
+                            print_to_console=True,
+                            log=True,
+                            level=logging.ERROR
                             )
-            return StatusTypes.RECV_NONBINARY_DATATYPE_DETECTED
+            return StatusTypes.RECV_UNEXPECTED_PAYLOAD_ERROR
 
         return StatusTypes.SUCCESS
 
@@ -375,5 +390,38 @@ class OnLogicNuvotonManager():
 
         return b''.join(response_frame)
 
-    def version(self):
-        pass
+    def _format_version_string(self, payload_bytes:bytes) -> str:
+        payload_len = len(payload_bytes)
+        return_str = ""
+        for i in range(payload_len):
+            return_str += str(payload_bytes[i])
+            if i < payload_len-1:
+                return_str += '.'
+        return return_str
+
+    def get_version(self) -> str:
+        do_command = self._construct_command(Kinds.GET_FIRMWARE_VERSION)
+
+        # Enclose each value read with buffer clearances
+        self._reset(nack_counter=64)
+        if not self._send_command(do_command):
+            return StatusTypes.SEND_CMD_FAILURE
+
+        frame = self._receive_command(8)
+
+        self._reset(nack_counter=64, reset_buffers=False)
+        time.sleep(.004)
+
+        self.logger_util._log_print(f"recieved command bytestr {frame}",
+                        print_to_console=False,
+                        log=True,
+                        level=logging.DEBUG
+                        )
+
+        ret_val = self._validate_recieved_frame(frame, [4,7], [0,9])
+        if ret_val is not StatusTypes.SUCCESS:
+            return ret_val
+
+        return_str = self._format_version_string(frame[4:7])
+
+        return return_str

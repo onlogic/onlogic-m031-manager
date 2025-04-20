@@ -20,14 +20,12 @@ from DioHandler import DioHandler
 
 def main():
     '''main, implementation of session logic.'''
-    
     # Set to None outside exception handling
     # incase of improper class initialization
     try:
         # Init DIO handler
         # serial_connection_label="xxx" can be specified when context manager used:
         with DioHandler(logger_mode="DEBUG", handler_mode="CONSOLE") as my_dio: 
-            print("pee")
             print("=" * 30)
             print("TESTING DIGITAL INPUTS (get_di)")
             print("=" * 30)
