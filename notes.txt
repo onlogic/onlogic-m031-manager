@@ -1,0 +1,26 @@
+def _init_port(self) -> serial.Serial:
+        '''Init port and establish USB-UART connection.'''
+        if self.serial_connection_label is None:
+            self.serial_connection_label = self._get_device_port(ProtocolConstants.MCU_VID_PID, ".0")
+
+        try:
+            return serial.Serial(self.serial_connection_label, 115200, timeout=1)
+        except serial.SerialException as e:
+            serial_connect_err = f"ERROR | {e}: Are you on the right port?"
+            self.logger_util._log_print(serial_connect_err,
+                             print_to_console=True,
+                             color=Fore.RED,
+                             log=True,
+                             level=logging.ERROR
+                             )
+            raise serial.SerialException(serial_connect_err)
+
+def claim(self, serial_connection_label=None):
+        # Serial device functionality
+        if serial_connection_label is not None:
+            self.serial_connection_label = serial_connection_label
+
+        self.port = self._init_port()
+        self._mcu_connection_check() <- abstractmethod, add check di for dio and get soft off for mcu
+        self.is_setup=True
+        self._reset()

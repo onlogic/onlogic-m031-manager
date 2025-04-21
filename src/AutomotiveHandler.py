@@ -10,7 +10,6 @@ class AutomotiveHandler(OnLogicNuvotonManager):
                         serial_connection_label=serial_connection_label
                         )
 
-
     '''
     def get_do(self, do_pin:int) -> int:
         self._validate_input_param(do_pin, [0,7], int)

@@ -31,7 +31,7 @@ class OnLogicNuvotonManager():
     Administers the serial connection with the
     microcontroller embedded in the K/HX-52x DIO-Add in Card.
     '''
-    def __init__(self, logger_mode:str=None, handler_mode:str=None, serial_connection_label=None):
+    def __init__(self, logger_mode:str=None, handler_mode:str=None, serial_connection_label:str=None):
         '''Init class by establishing serial connection.'''
         # Init colorama: Color coding for errors and such
         init(autoreset=True) 
@@ -70,6 +70,27 @@ class OnLogicNuvotonManager():
 
         return repr_str
 
+    @staticmethod
+    def __handle_lconfig_str(input_str:str) -> str | None:
+        return input_str.lower().strip() if isinstance(input_str, str) else input_str
+
+    def list_all_available_ports(self, verbose:bool=False):
+        all_ports = system_ports.comports()
+        for port in sorted(all_ports):
+            if not verbose:
+                self.logger_util._log_print(port,
+                                            log=True,
+                                            level=logging.INFO
+                                    )
+            elif verbose:
+                self.logger_util._log_print(f"Port: {port}\n"
+                                        f"Port Location: {port.location}\n"
+                                        f"Hardware ID: {port.hwid}\n"
+                                        f"Device: {port.device}\n",
+                                        log=True,
+                                        level=logging.INFO
+                                        )  
+
     def _get_device_port(self, dev_id:str, location:str=None) -> str | None:
         """Scan and return the port of the target device."""
         all_ports = system_ports.comports() 
@@ -105,10 +126,6 @@ class OnLogicNuvotonManager():
                              level=logging.ERROR
                              )
             raise serial.SerialException(serial_connect_err)
-
-    @staticmethod
-    def __handle_lconfig_str(input_str:str) -> str | None:
-        return input_str.lower().strip() if isinstance(input_str, str) else input_str
 
     #TODO: make this an abstract method to include 
     #      command set check per derivative class
@@ -309,7 +326,7 @@ class OnLogicNuvotonManager():
 
         self.port = self._init_port()
         self._mcu_connection_check()
-        self.is_setup=True
+        self.is_setup = True
         self._reset()
 
     def close_connection(self):
@@ -412,7 +429,7 @@ class OnLogicNuvotonManager():
         self._reset(nack_counter=64, reset_buffers=False)
         time.sleep(.004)
 
-        self.logger_util._log_print(f"recieved command bytestr {frame}",
+        self.logger_util._log_print(f"Recieved Command Bytestr {frame}",
                         print_to_console=False,
                         log=True,
                         level=logging.DEBUG

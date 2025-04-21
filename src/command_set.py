@@ -16,6 +16,7 @@ class ProtocolConstants:
     NACKS_NEEDED = 5 
 
 class Kinds:
+    # Automotive Command Classifiers
     ERR_ZERO_KIND = 0x00
     GET_INPUT_VOLTAGE = 0x01
     GET_IGNITION_STATE = 0x02
@@ -37,6 +38,7 @@ class Kinds:
     GET_SHUTDOWN_VOLTAGE = 0x12
     SET_SHUTDOWN_VOLTAGE = 0x13
 
+    # DIO Command Classifiers
     GET_DI = 0x20
     SET_DO = 0x21
     GET_DO = 0x22
