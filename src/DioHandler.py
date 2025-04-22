@@ -1,8 +1,13 @@
 from OnLogicNuvotonManager import OnLogicNuvotonManager
+
+import time
+import serial
+
+from abc import abstractmethod
+from LoggingUtil import logging
+from serial.tools import list_ports as system_ports
 from command_set import ProtocolConstants, Kinds, StatusTypes
-from OnLogicNuvotonManager import OnLogicNuvotonManager
-import time 
-import logging
+from colorama import Fore
 
 class DioHandler(OnLogicNuvotonManager):
     def __init__(self, logger_mode:str=None, handler_mode:str=None, serial_connection_label=None):
@@ -11,6 +16,22 @@ class DioHandler(OnLogicNuvotonManager):
                          serial_connection_label=serial_connection_label
                          )
 
+    def _get_device_port(self, dev_id:str, location:str=None) -> str | None:
+        """Scan and return the port of the target device."""
+        all_ports = system_ports.comports() 
+        for port in sorted(all_ports):
+            if dev_id in port.hwid:
+                if location and location in port.location:
+                    self.logger_util._log_print(f"Port: {port}\n"
+                                     f"Port Location: {port.location}\n"
+                                     f"Hardware ID: {port.hwid}\n"
+                                     f"Device: {port.device}\n",
+                                     log=True,
+                                     level=logging.INFO
+                                    )
+                    return port.device
+        return None
+        
     def get_di(self, di_pin:int) -> int:
         """\
         User-facing method to get state of digital inputs.

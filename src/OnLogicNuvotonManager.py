@@ -87,8 +87,7 @@ class OnLogicNuvotonManager():
                                         f"Port Location: {port.location}\n"
                                         f"Hardware ID: {port.hwid}\n"
                                         f"Device: {port.device}\n",
-                                        log=True,
-                                        level=logging.INFO
+                                        log=True, level=logging.INFO
                                         )  
 
     def _get_device_port(self, dev_id:str, location:str=None) -> str | None:
@@ -107,13 +106,11 @@ class OnLogicNuvotonManager():
                     return port.device
         return None
 
-    #TODO: modify this so that it doesnt do 
     # _get_device_port cdc device descriptor in automotive class (UART)
-    #@abstractmethod
     def _init_port(self) -> serial.Serial:
         '''Init port and establish USB-UART connection.'''
         if self.serial_connection_label is None:
-            self.serial_connection_label = self._get_device_port(ProtocolConstants.MCU_VID_PID, ".0")
+            self.serial_connection_label = self._get_device_port(ProtocolConstants.DIO_MCU_VID_PID_CDC, ".0")
 
         try:
             return serial.Serial(self.serial_connection_label, 115200, timeout=1)
@@ -129,7 +126,7 @@ class OnLogicNuvotonManager():
 
     #TODO: make this an abstract method to include 
     #      command set check per derivative class
-    #@abstractmethod
+    @abstractmethod
     def _mcu_connection_check(self) -> None:
         '''\
         Check state of MCU, if it returns '\a' successively

@@ -24,3 +24,7 @@ def claim(self, serial_connection_label=None):
         self._mcu_connection_check() <- abstractmethod, add check di for dio and get soft off for mcu
         self.is_setup=True
         self._reset()
+
+
+TODO: WE need to make sure that none of the active functions are not usable if port is not claimed
+TODO: MAKE sure to handle None return from _get_mcu_port

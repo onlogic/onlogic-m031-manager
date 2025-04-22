@@ -1,7 +1,7 @@
 ################ Constants #################
 
 class ProtocolConstants:
-    MCU_VID_PID = "353F:A105"
+    DIO_MCU_VID_PID_CDC = "353F:A105"
     TIME_THRESHOLD = 2.5
     STANDARD_DELAY = .004
 
