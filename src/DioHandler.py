@@ -17,7 +17,24 @@ class DioHandler(OnLogicNuvotonManager):
                          )
 
     def _init_port(self) -> None:
-        super()._init_port()
+        '''Init port and establish USB-UART connection.'''
+        if self.serial_connection_label is None:
+            self.serial_connection_label = self._get_cdc_device_port(ProtocolConstants.DIO_MCU_VID_PID_CDC, ".0")
+
+        try:
+            if self.serial_connection_label is not None:
+                return serial.Serial(self.serial_connection_label, 115200, timeout=1)
+            else:
+                type_connect_error = f"ERROR | USB CDC not found, is the DIO card configured right?"
+                self.logger_util._log_print(type_connect_error, print_to_console=True,
+                                            color=Fore.RED, log=True, level=logging.ERROR)
+                raise TypeError(type_connect_error)
+
+        except serial.SerialException as e:
+            serial_connect_err = f"ERROR | {e}: Are you on the right port?"
+            self.logger_util._log_print(serial_connect_err, print_to_console=True,
+                                        color=Fore.RED, log=True, level=logging.ERROR)
+            raise serial.SerialException(serial_connect_err)
 
     def _mcu_connection_check(self) -> None:
         super()._mcu_connection_check()
