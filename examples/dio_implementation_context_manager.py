@@ -26,7 +26,7 @@ def main():
         # Init DIO handler
         # serial_connection_label="xxx" can be specified when context manager used:
         with DioHandler(logger_mode="DEBUG", handler_mode="CONSOLE") as my_dio: 
-            print("=" * 30)
+            print("=" * 30) 
             print("TESTING DIGITAL INPUTS (get_di)")
             print("=" * 30)
             for i in range(8):
