@@ -27,11 +27,9 @@ def main():
 
     try:
         # Init DIO handler
-        my_auto = AutomotiveHandler() #logger_mode="DEBUG", handler_mode="BOTH"
-        my_auto.claim("COM2")
+        my_auto = AutomotiveHandler(logger_mode="DEBUG", handler_mode="BOTH") #logger_mode="DEBUG", handler_mode="BOTH"
+        my_auto.claim("COM4")
         # my_auto.list_all_available_ports()
-
-
         print("=" * 30)
         print("TESTING GET VERSION (GET VERSION)")
         print(my_auto.get_version())

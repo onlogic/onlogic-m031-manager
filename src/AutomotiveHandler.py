@@ -4,6 +4,7 @@ from OnLogicNuvotonManager import OnLogicNuvotonManager
 import time
 import serial
 
+from abc import abstractmethod
 from LoggingUtil import logging
 from command_set import ProtocolConstants, Kinds, StatusTypes
 from colorama import Fore
@@ -12,8 +13,8 @@ from colorama import Fore
 class AutomotiveHandler(OnLogicNuvotonManager):
     def __init__(self, logger_mode:str=None, handler_mode:str=None, serial_connection_label=None):
         super().__init__(logger_mode=logger_mode, 
-                        handler_mode=handler_mode, 
-                        serial_connection_label=serial_connection_label
+                         handler_mode=handler_mode, 
+                         serial_connection_label=serial_connection_label
                         )
 
     def _format_bytes_to_int_str(self):
@@ -35,18 +36,14 @@ class AutomotiveHandler(OnLogicNuvotonManager):
         '''Init port and establish USB-UART connection.'''
         if self.serial_connection_label is None:
             error_msg = "ERROR | You must provide a PORT input string for Automotive Mode"
-            self.logger_util._log_print(error_msg, print_to_console=True, 
-                                        color=Fore.RED, log=True,
-                                        level=logging.ERROR
-                                        )
+            self.logger_util._log_print(error_msg, print_to_console=True, color=Fore.RED, log=True,
+                                        level=logging.ERROR)
             self.list_all_available_ports()
             raise ValueError(error_msg)
-        elif (self.serial_connection_label == self._get_device_port(ProtocolConstants.DIO_MCU_VID_PID_CDC, ".0")):
+        elif (self.serial_connection_label == self._get_cdc_device_port(ProtocolConstants.DIO_MCU_VID_PID_CDC, ".0")):
             error_msg = "Error | DIO COM Port Provided for automotive port entry"
             self.logger_util._log_print(error_msg, print_to_console=True, 
-                                        color=Fore.RED, log=True,
-                                        level=logging.ERROR
-                                        )
+                                        color=Fore.RED, log=True, level=logging.ERROR)
             self.list_all_available_ports()
             raise ValueError("Error | DIO COM Port Provided for automotive port entry")
 
@@ -54,12 +51,8 @@ class AutomotiveHandler(OnLogicNuvotonManager):
             return serial.Serial(self.serial_connection_label, 115200, timeout=1)
         except serial.SerialException as e:
             serial_connect_err = f"ERROR | {e}: Are you on the right port?"
-            self.logger_util._log_print(serial_connect_err,
-                             print_to_console=True,
-                             color=Fore.RED,
-                             log=True,
-                             level=logging.ERROR
-                             )
+            self.logger_util._log_print(serial_connect_err, print_to_console=True, 
+                                        color=Fore.RED, log=True, level=logging.ERROR)
             self.list_all_available_ports()
             raise serial.SerialException(serial_connect_err)
 

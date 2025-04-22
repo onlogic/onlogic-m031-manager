@@ -34,7 +34,6 @@ def main():
         print("TESTING GET VERSION (GET VERSION)")
         print(my_dio.get_version())
         print("=" * 30)
-        exit()
         print("=" * 30)
         print("TESTING DIGITAL INPUTS (get_di)")
         print("=" * 30)

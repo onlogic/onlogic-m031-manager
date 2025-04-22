@@ -20,13 +20,14 @@ import time
 import serial
 import functools
 
+from abc import ABC, abstractmethod
 from LoggingUtil import LoggingUtil, logging
 from serial.tools import list_ports as system_ports
 from command_set import ProtocolConstants, Kinds, StatusTypes
 from fastcrc import crc8
 from colorama import Fore, init
 
-class OnLogicNuvotonManager():
+class OnLogicNuvotonManager(ABC):
     '''
     Administers the serial connection with the
     microcontroller embedded in the K/HX-52x DIO-Add in Card.
@@ -78,19 +79,15 @@ class OnLogicNuvotonManager():
         all_ports = system_ports.comports()
         for port in sorted(all_ports):
             if not verbose:
-                self.logger_util._log_print(port,
-                                            log=True,
-                                            level=logging.INFO
-                                    )
+                self.logger_util._log_print(port, log=True, level=logging.INFO)
             elif verbose:
                 self.logger_util._log_print(f"Port: {port}\n"
                                         f"Port Location: {port.location}\n"
                                         f"Hardware ID: {port.hwid}\n"
                                         f"Device: {port.device}\n",
-                                        log=True, level=logging.INFO
-                                        )  
+                                        log=True, level=logging.INFO)  
 
-    def _get_device_port(self, dev_id:str, location:str=None) -> str | None:
+    def _get_cdc_device_port(self, dev_id:str, location:str=None) -> str | None:
         """Scan and return the port of the target device."""
         all_ports = system_ports.comports() 
         for port in sorted(all_ports):
@@ -100,32 +97,32 @@ class OnLogicNuvotonManager():
                                      f"Port Location: {port.location}\n"
                                      f"Hardware ID: {port.hwid}\n"
                                      f"Device: {port.device}\n",
-                                     log=True,
-                                     level=logging.INFO
-                                    )
+                                     log=True, level=logging.INFO)
                     return port.device
         return None
 
-    # _get_device_port cdc device descriptor in automotive class (UART)
+    # _get_cdc_device_port cdc device descriptor in automotive class (UART)
+    @abstractmethod
     def _init_port(self) -> serial.Serial:
         '''Init port and establish USB-UART connection.'''
         if self.serial_connection_label is None:
-            self.serial_connection_label = self._get_device_port(ProtocolConstants.DIO_MCU_VID_PID_CDC, ".0")
+            self.serial_connection_label = self._get_cdc_device_port(ProtocolConstants.DIO_MCU_VID_PID_CDC, ".0")
 
         try:
-            return serial.Serial(self.serial_connection_label, 115200, timeout=1)
+            if self.serial_connection_label is not None:
+                return serial.Serial(self.serial_connection_label, 115200, timeout=1)
+            else:
+                type_connect_error = f"ERROR | USB CDC not found, is the DIO card configured right?"
+                self.logger_util._log_print(type_connect_error, print_to_console=True,
+                                            color=Fore.RED, log=True, level=logging.ERROR)
+                raise TypeError(type_connect_error)
+
         except serial.SerialException as e:
             serial_connect_err = f"ERROR | {e}: Are you on the right port?"
-            self.logger_util._log_print(serial_connect_err,
-                             print_to_console=True,
-                             color=Fore.RED,
-                             log=True,
-                             level=logging.ERROR
-                             )
+            self.logger_util._log_print(serial_connect_err, print_to_console=True,
+                                        color=Fore.RED, log=True, level=logging.ERROR)
             raise serial.SerialException(serial_connect_err)
 
-    #TODO: make this an abstract method to include 
-    #      command set check per derivative class
     @abstractmethod
     def _mcu_connection_check(self) -> None:
         '''\
@@ -148,28 +145,22 @@ class OnLogicNuvotonManager():
                 # If received byte is not what was expected, reset counter
                 byte_in_port = self.port.read(1)
                 if int.from_bytes(byte_in_port, byteorder='little') == ProtocolConstants.SHELL_NACK:
-                    # print(byte_in_port) # Should be NACKS...
+                    print(byte_in_port) # Should be NACKS...
                     nack_count += 1
                     self.port.write(ProtocolConstants.SHELL_ACK.to_bytes(1, byteorder='little'))
                     time.sleep(.004)
 
         if nack_count == ProtocolConstants.NACKS_NEEDED:
-            self.logger_util._log_print("Interface Found",
-                            print_to_console=True,
-                            color=Fore.GREEN,
-                            log=True,
-                            level=logging.INFO
-                        )
+            self.logger_util._log_print("Interface Found", print_to_console=True, 
+                                        color=Fore.GREEN, log=True, level=logging.INFO)
             return
 
         self.logger_util._log_print(f"ERROR | AKNOWLEDGEMENT ERROR: "\
-                         f"mismatch in number of nacks, check if {self.serial_connection_label} "\
-                         f"is the right port?",
-                         print_to_console=True,
-                         color=Fore.RED,
-                         log=True,
-                         level=logging.ERROR
-                        )
+                                    f"mismatch in number of nacks, check if {self.serial_connection_label} " \
+                                    f"is the right port?", print_to_console=True, 
+                                    color=Fore.RED, log=True, level=logging.ERROR)
+
+        self.list_all_available_ports()
 
         raise ValueError("ERROR | AKNOWLEDGEMENT ERROR")
 
@@ -186,12 +177,9 @@ class OnLogicNuvotonManager():
         while bytes_to_send > 0:
             if bytes_sent > 1024:
                 ack_error_msg = f"ERROR | AKNOWLEDGEMENT ERROR: Cannot recover MCU"
-                self.logger_util._log_print(ack_error_msg,
-                                 print_to_console=True,
-                                 color=Fore.RED,
-                                 log=True,
-                                 level=logging.ERROR
-                                 )
+                self.logger_util._log_print(ack_error_msg, print_to_console=True, 
+                                            color=Fore.RED, log=True, level=logging.ERROR
+                                            )
 
                 raise RuntimeError(ack_error_msg)
 
@@ -213,26 +201,18 @@ class OnLogicNuvotonManager():
         if type(dio_input_parameter) != input_type:
             type_error_msg = f"ERROR | {type(dio_input_parameter)} was found when {input_type} was expected"
 
-            self.logger_util._log_print(type_error_msg,
-                            print_to_console=True,
-                            color=Fore.RED,
-                            log=True,
-                            level=logging.ERROR
-                            )
+            self.logger_util._log_print(type_error_msg, print_to_console=True, 
+                                        color=Fore.RED, log=True, level=logging.ERROR)
 
             raise TypeError(type_error_msg)
 
         if dio_input_parameter < valid_input_range[0] \
                 or dio_input_parameter > valid_input_range[1]:
             value_error_msg = "ERROR | Out of Range Value Provided: " + str(dio_input_parameter) + "." + \
-                  " Valid Range " + str(valid_input_range)
+                              " Valid Range " + str(valid_input_range)
 
-            self.logger_util._log_print(value_error_msg,
-                            print_to_console=True,
-                            color=Fore.RED,
-                            log=True,
-                            level=logging.ERROR
-                            )
+            self.logger_util._log_print(value_error_msg, print_to_console=True, 
+                                        color=Fore.RED, log=True, level=logging.ERROR)
 
             raise ValueError(value_error_msg)
 
@@ -244,10 +224,7 @@ class OnLogicNuvotonManager():
         crc_val = crc8.smbus(crc_bytes)
 
         self.logger_util._log_print(f"CALCULATED {crc_val} : EXISTING {frame[1]}",
-                         print_to_console=False,
-                         log=True,
-                         level=logging.DEBUG
-                        )
+                                    print_to_console=False, log=True, level=logging.DEBUG)
 
         if crc_val != frame[1]:
             self.logger_util._log_print(f"CRC MISMATCH",
@@ -277,41 +254,26 @@ class OnLogicNuvotonManager():
 
     def _validate_recieved_frame(self, return_frame:list, target_index:int|list=None, target_range:list=None) -> int:
         if return_frame[0] != ProtocolConstants.SHELL_SOF:
-            self.logger_util._log_print(f"SOF Frame not found",
-                             color=Fore.RED,
-                             print_to_console=True,
-                             log=True,
-                             level=logging.ERROR
-                            )
+            self.logger_util._log_print(f"SOF Frame not found", color=Fore.RED, print_to_console=True,
+                                        log=True,level=logging.ERROR)
             return StatusTypes.RECV_FRAME_SOF_ERROR
 
         if return_frame[-1] != ProtocolConstants.SHELL_NACK:
-            self.logger_util._log_print(f"NACK not found in desired index",
-                             color=Fore.RED,
-                             print_to_console=True,
-                             log=True,
-                             level=logging.ERROR
-                            )
+            self.logger_util._log_print(f"NACK not found in desired index", color=Fore.RED,
+                                        print_to_console=True, log=True, level=logging.ERROR)
             return StatusTypes.RECV_FRAME_NACK_ERROR
 
         is_crc = self._check_crc(return_frame)
         if not is_crc:
-            self.logger_util._log_print(f"CRC Check fail",
-                             color=Fore.RED,
-                             print_to_console=True,
-                             log=True,
-                             level=logging.ERROR
-                            )
+            self.logger_util._log_print(f"CRC Check fail", color=Fore.RED, print_to_console=True,
+                                        log=True, level=logging.ERROR)
+
             return StatusTypes.RECV_FRAME_CRC_ERROR
 
         if target_index is not None \
                 and not self._within_valid_range(return_frame, target_index, target_range): 
             self.logger_util._log_print(f"Value(s) at idx {target_index} not in target range: {target_range}",
-                            color=Fore.RED,
-                            print_to_console=True,
-                            log=True,
-                            level=logging.ERROR
-                            )
+                                        color=Fore.RED, print_to_console=True, log=True, level=logging.ERROR)
             return StatusTypes.RECV_UNEXPECTED_PAYLOAD_ERROR
 
         return StatusTypes.SUCCESS
@@ -352,10 +314,7 @@ class OnLogicNuvotonManager():
                                      ])
 
         self.logger_util._log_print(f"Constructed Command {constructed_command}",
-                        print_to_console=False,
-                        log=True,
-                        level=logging.INFO
-                        )
+                                    print_to_console=False, log=True, level=logging.INFO)
 
         return constructed_command
 
@@ -375,11 +334,7 @@ class OnLogicNuvotonManager():
 
         self.logger_util._log_print(f"ERROR | AKNOWLEDGEMENT ERROR: "\
                          "mismatch in number of aknowledgements, reduce access speed?",
-                        print_to_console=False,
-                        color=Fore.RED,
-                        log=True,
-                        level=logging.ERROR
-                        )
+                        print_to_console=False, color=Fore.RED, log=True, level=logging.ERROR)
 
         return False
 
@@ -397,10 +352,7 @@ class OnLogicNuvotonManager():
             self.port.write(ProtocolConstants.SHELL_ACK.to_bytes(1, byteorder='little')) 
 
         self.logger_util._log_print(f"Recieved Command List {response_frame}",
-                        print_to_console=False,
-                        log=True,
-                        level=logging.INFO
-                        )
+                                    print_to_console=False, log=True, level=logging.INFO)
 
         return b''.join(response_frame)
 
@@ -426,11 +378,8 @@ class OnLogicNuvotonManager():
         self._reset(nack_counter=64, reset_buffers=False)
         time.sleep(.004)
 
-        self.logger_util._log_print(f"Recieved Command Bytestr {frame}",
-                        print_to_console=False,
-                        log=True,
-                        level=logging.DEBUG
-                        )
+        self.logger_util._log_print(f"Recieved Command Bytestr {frame}", print_to_console=False,
+                                    log=True, level=logging.DEBUG)
 
         ret_val = self._validate_recieved_frame(frame, [4,7], [0,9])
         if ret_val is not StatusTypes.SUCCESS:
