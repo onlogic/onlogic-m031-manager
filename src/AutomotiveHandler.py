@@ -4,7 +4,6 @@ from OnLogicNuvotonManager import OnLogicNuvotonManager
 import time
 import serial
 
-from abc import abstractmethod
 from LoggingUtil import logging
 from command_set import ProtocolConstants, Kinds, StatusTypes
 from colorama import Fore
@@ -16,9 +15,6 @@ class AutomotiveHandler(OnLogicNuvotonManager):
                          handler_mode=handler_mode, 
                          serial_connection_label=serial_connection_label
                         )
-
-    def _format_bytes_to_int_str(self):
-        pass
 
     def _mcu_connection_check(self) -> None:
         '''\
@@ -55,6 +51,58 @@ class AutomotiveHandler(OnLogicNuvotonManager):
                                         color=Fore.RED, log=True, level=logging.ERROR)
             self.list_all_available_ports()
             raise serial.SerialException(serial_connect_err)
+
+    def _format_bytes_to_int_str(self):
+        pass
+
+    def get_automotive_mode(self):
+        Kinds.GET_AUTOMOTIVE_MODE
+
+    def set_automotive_mode(self):
+        Kinds.SET_AUTOMOTIVE_MODE
+
+    def get_low_power_enable(self):
+        Kinds.GET_LOW_POWER_ENABLE
+
+    def set_low_power_enable(self):
+        Kinds.SET_LOW_POWER_ENABLE
+
+    def get_start_up_timer(self):
+        Kinds.GET_START_UP_TIMER
+
+    def set_start_up_timer(self):
+        Kinds.SET_START_UP_TIMER
+
+    def get_soft_off_timer(self):
+        Kinds.GET_SOFT_OFF_TIMER
+    
+    def set_soft_off_timer(self):
+        Kinds.SET_SOFT_OFF_TIMER
+
+    def get_hard_off_timer(self):
+        Kinds.GET_HARD_OFF_TIMER    
+    
+    def set_hard_off_timer(self):
+        Kinds.SET_HARD_OFF_TIMER
+
+    def get_low_voltage_timer(self): 
+        Kinds.GET_LOW_VOLTAGE_TIMER 
+    
+    def set_low_voltage_timer(self):
+        Kinds.SET_LOW_VOLTAGE_TIMER 
+    
+    def get_shutdown_voltage(self):
+        Kinds.GET_SHUTDOWN_VOLTAGE  
+    
+    def set_shutdown_voltage(self):
+        Kinds.SET_SHUTDOWN_VOLTAGE  
+
+
+    # def get_power_state(self):
+    #     Kinds.GET_POWER_STATE       
+
+    # def set_power_state(self):
+    #     Kinds.SET_POWER_STATE
 
     '''
     def get_do(self, do_pin:int) -> int:
