@@ -28,13 +28,21 @@ def main():
     try:
         # Init DIO handler
         my_auto = AutomotiveHandler(logger_mode="DEBUG", handler_mode="BOTH") #logger_mode="DEBUG", handler_mode="BOTH"
-        my_auto.claim("COM4")
-        # my_auto.list_all_available_ports()
+        my_auto.claim("COM18")
+
         print("=" * 30)
-        print("TESTING GET VERSION (GET VERSION)")
+        print("TESTING GET VERSION (get_version)")
         print(my_auto.get_version())
         print("=" * 30)
         print()
+
+        print("=" * 30)
+        print("TESTING GET AUTOMOTIVE MODE (get_automotive_mode)")
+        print("Automotive Mode:", my_auto.get_automotive_mode())
+        print("=" * 30)
+        print()
+
+
 
     except KeyboardInterrupt:
         print("Operation terminated by user.")

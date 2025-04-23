@@ -1,13 +1,9 @@
-
-from OnLogicNuvotonManager import OnLogicNuvotonManager
-
 import time
 import serial
-
+from OnLogicNuvotonManager import OnLogicNuvotonManager
 from LoggingUtil import logging
 from command_set import ProtocolConstants, Kinds, StatusTypes
 from colorama import Fore
-
 
 class AutomotiveHandler(OnLogicNuvotonManager):
     def __init__(self, logger_mode:str=None, handler_mode:str=None, serial_connection_label=None):
@@ -21,10 +17,11 @@ class AutomotiveHandler(OnLogicNuvotonManager):
         Check state of MCU, if it returns '\a' successively
         within a proper time interval, the correct port is found.
         '''
+
         super()._mcu_connection_check()
-        
+
         '''
-        if(not self.in_valid_range(self.get_softoff_timer()):
+        if(not self.in_valid_range(self.get_soft_off_timer()):
             raise ValueError("Error | Issue with verifying connection command")
         '''
 
@@ -37,27 +34,45 @@ class AutomotiveHandler(OnLogicNuvotonManager):
             self.list_all_available_ports()
             raise ValueError(error_msg)
         elif (self.serial_connection_label == self._get_cdc_device_port(ProtocolConstants.DIO_MCU_VID_PID_CDC, ".0")):
-            error_msg = "Error | DIO COM Port Provided for automotive port entry"
+            same_as_dio_error_msg = "Error | DIO COM Port Provided for automotive port entry"
             self.logger_util._log_print(error_msg, print_to_console=True, 
                                         color=Fore.RED, log=True, level=logging.ERROR)
             self.list_all_available_ports()
-            raise ValueError("Error | DIO COM Port Provided for automotive port entry")
-
+            raise ValueError(same_as_dio_error_msg)
         try:
             return serial.Serial(self.serial_connection_label, 115200, timeout=1)
         except serial.SerialException as e:
-            serial_connect_err = f"ERROR | {e}: Are you on the right port?"
+            serial_connect_err = f"ERROR | {e}: Are you on the right port?" \
+                                  "Did you enable correct bios settings []?"
             self.logger_util._log_print(serial_connect_err, print_to_console=True, 
                                         color=Fore.RED, log=True, level=logging.ERROR)
             self.list_all_available_ports()
             raise serial.SerialException(serial_connect_err)
 
-    def _format_bytes_to_int_str(self):
-        pass
+    def get_automotive_mode(self) -> int:
+        automotive_mode = self._construct_command(Kinds.GET_AUTOMOTIVE_MODE)
 
-    def get_automotive_mode(self):
-        Kinds.GET_AUTOMOTIVE_MODE
+        self._reset(nack_counter=64)
+        if not self._send_command(automotive_mode):
+            return StatusTypes.SEND_CMD_FAILURE
 
+        frame = self._receive_command(6)
+
+        self._reset(nack_counter=64, reset_buffers=False) 
+        time.sleep(.004)
+
+        self.logger_util._log_print(f"recieved command bytestr {frame}",
+                        print_to_console=False,
+                        log=True,
+                        level=logging.DEBUG
+                        )
+
+        ret_val = self._validate_recieved_frame(frame, -2, [0,1])
+        if ret_val is not StatusTypes.SUCCESS:
+            return ret_val
+
+        return frame[-2]
+    
     def set_automotive_mode(self):
         Kinds.SET_AUTOMOTIVE_MODE
 

@@ -1,12 +1,12 @@
 '''
-File: DioInputHandler.py
+File: OnLogicNuvotonManager.py
 
 Description:
-    DioInputHandler administers the serial connection with the
+    OnLogicNuvotonManager administers the serial connection with the
     microcontroller embedded in the add on card of the HX/K5xx.
 
 Contains:
-    - class: DioInputHandler
+    - class: OnLogicNuvotonManager
         + private method: _init_port
         + private method: _mcu_connection_check
         + private method: _reset
@@ -19,7 +19,6 @@ References:
 import time
 import serial
 import functools
-
 from abc import ABC, abstractmethod
 from LoggingUtil import LoggingUtil, logging
 from serial.tools import list_ports as system_ports
@@ -101,6 +100,10 @@ class OnLogicNuvotonManager(ABC):
                     return port.device
         return None
 
+    # @abstractmethod
+    # def get_info() -> None:
+    #     pass
+
     # _get_cdc_device_port cdc device descriptor in automotive class (UART)
     @abstractmethod
     def _init_port(self) -> serial.Serial:
@@ -128,7 +131,7 @@ class OnLogicNuvotonManager(ABC):
                 # If received byte is not what was expected, reset counter
                 byte_in_port = self.port.read(1)
                 if int.from_bytes(byte_in_port, byteorder='little') == ProtocolConstants.SHELL_NACK:
-                    print(byte_in_port) # Should be NACKS...
+                    self.logger_util._log_print(f"{byte_in_port}",print_to_console=False, log=True, level=logging.DEBUG)
                     nack_count += 1
                     self.port.write(ProtocolConstants.SHELL_ACK.to_bytes(1, byteorder='little'))
                     time.sleep(.004)
@@ -349,11 +352,11 @@ class OnLogicNuvotonManager(ABC):
         return return_str
 
     def get_version(self) -> str:
-        do_command = self._construct_command(Kinds.GET_FIRMWARE_VERSION)
+        version_command = self._construct_command(Kinds.GET_FIRMWARE_VERSION)
 
         # Enclose each value read with buffer clearances
         self._reset(nack_counter=64)
-        if not self._send_command(do_command):
+        if not self._send_command(version_command):
             return StatusTypes.SEND_CMD_FAILURE
 
         frame = self._receive_command(8)
@@ -364,7 +367,8 @@ class OnLogicNuvotonManager(ABC):
         self.logger_util._log_print(f"Recieved Command Bytestr {frame}", print_to_console=False,
                                     log=True, level=logging.DEBUG)
 
-        ret_val = self._validate_recieved_frame(frame, [4,7], [0,9])
+        # ret_val = self._validate_recieved_frame(frame, [4,7], [0,9])
+        ret_val = self._validate_recieved_frame(frame, [4,7], [0,100])
         if ret_val is not StatusTypes.SUCCESS:
             return ret_val
 

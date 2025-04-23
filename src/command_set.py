@@ -1,7 +1,8 @@
 ################ Constants #################
 
 class ProtocolConstants:
-    DIO_MCU_VID_PID_CDC = "353F:A105"
+    # DIO card Device Descroptior, VID and PID
+    DIO_MCU_VID_PID_CDC = "353F:A105" 
     TIME_THRESHOLD = 2.5
     STANDARD_DELAY = .004
 
@@ -53,6 +54,15 @@ class StatusTypes:
     RECV_FRAME_CRC_ERROR = -4
     RECV_FRAME_ACK_ERROR = -5
     RECV_FRAME_SOF_ERROR = -6
+
+class TargetIndices:
+    PENULTIMATE_IDX = -1
+
+class BoundryTypes:
+    DIGITAL_INPUT_PIN_RANGE = (0, 7)
+    DIGITAL_OUTPUT_PIN_RANGE = (0, 7)
+    BINARY_OUTPUT_PIN_RANGE = (0, 1)
+    DECIMAL_CODED_NUM_RANGE = (0, 9)
 
 ############################################
 # sof, crc, len, kind, data

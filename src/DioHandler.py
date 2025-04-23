@@ -1,11 +1,7 @@
-from OnLogicNuvotonManager import OnLogicNuvotonManager
-
 import time
 import serial
-
-from abc import abstractmethod
+from OnLogicNuvotonManager import OnLogicNuvotonManager
 from LoggingUtil import logging
-from serial.tools import list_ports as system_ports
 from command_set import ProtocolConstants, Kinds, StatusTypes
 from colorama import Fore
 
