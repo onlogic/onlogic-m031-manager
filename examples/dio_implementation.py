@@ -159,6 +159,7 @@ def main():
             start_time = timeit.default_timer()
             print(my_dio.get_all_io_states())
             print(f"The time difference [In Seconds] is : {timeit.default_timer() - start_time:.6f}")
+
     except KeyboardInterrupt:
         print("Operation terminated by user.")
     finally: 

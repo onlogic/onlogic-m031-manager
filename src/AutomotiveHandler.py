@@ -25,28 +25,28 @@ class AutomotiveHandler(OnLogicNuvotonManager):
             raise ValueError("Error | Issue with verifying connection command")
         '''
 
+    def _init_port_error_handling(self, error_msg:str, return_early:bool=False) -> None | ValueError:
+        self.logger_util._log_print(error_msg, print_to_console=True, color=Fore.RED, log=True,
+                                    level=logging.ERROR)
+        self.list_all_available_ports()
+
+        if return_early is True:
+            return
+        
+        raise ValueError(error_msg)
+
     def _init_port(self) -> serial.Serial:
         '''Init port and establish USB-UART connection.'''
         if self.serial_connection_label is None:
-            error_msg = "ERROR | You must provide a PORT input string for Automotive Mode"
-            self.logger_util._log_print(error_msg, print_to_console=True, color=Fore.RED, log=True,
-                                        level=logging.ERROR)
-            self.list_all_available_ports()
-            raise ValueError(error_msg)
+            self._init_port_error_handling("ERROR | You must provide a PORT input string for Automotive Mode")
         elif (self.serial_connection_label == self._get_cdc_device_port(ProtocolConstants.DIO_MCU_VID_PID_CDC, ".0")):
-            same_as_dio_error_msg = "Error | DIO COM Port Provided for automotive port entry"
-            self.logger_util._log_print(error_msg, print_to_console=True, 
-                                        color=Fore.RED, log=True, level=logging.ERROR)
-            self.list_all_available_ports()
-            raise ValueError(same_as_dio_error_msg)
+            self._init_port_error_handling("Error | DIO COM Port Provided for automotive port entry")
         try:
             return serial.Serial(self.serial_connection_label, 115200, timeout=1)
         except serial.SerialException as e:
             serial_connect_err = f"ERROR | {e}: Are you on the right port?" \
                                   "Did you enable correct bios settings []?"
-            self.logger_util._log_print(serial_connect_err, print_to_console=True, 
-                                        color=Fore.RED, log=True, level=logging.ERROR)
-            self.list_all_available_ports()
+            self._init_port_error_handling(serial_connect_err, return_early=True)
             raise serial.SerialException(serial_connect_err)
 
     def get_automotive_mode(self) -> int:
@@ -84,7 +84,7 @@ class AutomotiveHandler(OnLogicNuvotonManager):
         if not self._send_command(set_auto_mode):
             return StatusTypes.SEND_CMD_FAILURE
 
-        frame = self._receive_command()
+        frame = self._receive_command(6)
 
         self._reset(nack_counter=64, reset_buffers=False)
         time.sleep(.004)
@@ -121,9 +121,29 @@ class AutomotiveHandler(OnLogicNuvotonManager):
 
         return frame[-2]
 
-    def set_low_power_enable(self):
-        Kinds.SET_LOW_POWER_ENABLE
+    def set_low_power_enable(self, lpe_mode:int):
+        self._validate_input_param(lpe_mode, [0,1], int)
 
+        set_auto_mode = self._construct_command(Kinds.SET_LOW_POWER_ENABLE, lpe_mode)
+
+        self._reset(nack_counter=64)
+
+        if not self._send_command(set_auto_mode):
+            return StatusTypes.SEND_CMD_FAILURE
+
+        frame = self._receive_command(6)
+
+        self._reset(nack_counter=64, reset_buffers=False)
+        time.sleep(.004)
+
+        self.logger_util._log_print(f"recieved command bytestr {frame}",
+                        print_to_console=False,
+                        log=True,
+                        level=logging.DEBUG
+                        )
+
+        return self._validate_recieved_frame(frame, -2, [0,1])
+        
     def get_start_up_timer(self):
         Kinds.GET_START_UP_TIMER
 

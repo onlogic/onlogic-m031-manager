@@ -81,10 +81,11 @@ class OnLogicNuvotonManager(ABC):
                 self.logger_util._log_print(port, log=True, level=logging.INFO)
             elif verbose:
                 self.logger_util._log_print(f"Port: {port}\n"
-                                        f"Port Location: {port.location}\n"
-                                        f"Hardware ID: {port.hwid}\n"
-                                        f"Device: {port.device}\n",
-                                        log=True, level=logging.INFO)  
+                                            f"Port Location: {port.location}\n"
+                                            f"Hardware ID: {port.hwid}\n"
+                                            f"Device: {port.device}\n",
+                                            print_to_console=False,
+                                            log=True, level=logging.INFO)  
 
     def _get_cdc_device_port(self, dev_id:str, location:str=None) -> str | None:
         """Scan and return the port of the target device."""
@@ -92,11 +93,12 @@ class OnLogicNuvotonManager(ABC):
         for port in sorted(all_ports):
             if dev_id in port.hwid:
                 if location and location in port.location:
-                    self.logger_util._log_print(f"Port: {port}\n"
-                                     f"Port Location: {port.location}\n"
-                                     f"Hardware ID: {port.hwid}\n"
-                                     f"Device: {port.device}\n",
-                                     log=True, level=logging.INFO)
+                    self.logger_util._log_print(f"NOTE | DIO CARD FOUND ON:\n"
+                                                f"Port: {port}\n"
+                                                f"Port Location: {port.location}\n"
+                                                f"Hardware ID: {port.hwid}\n"
+                                                f"Device: {port.device}\n",
+                                                log=True, level=logging.INFO)
                     return port.device
         return None
 
