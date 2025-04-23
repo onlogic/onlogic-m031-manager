@@ -73,11 +73,53 @@ class AutomotiveHandler(OnLogicNuvotonManager):
 
         return frame[-2]
     
-    def set_automotive_mode(self):
-        Kinds.SET_AUTOMOTIVE_MODE
+    def set_automotive_mode(self, mode:int):
+        self._validate_input_param(mode, [0,1], int)
+
+        set_auto_mode = self._construct_command(Kinds.SET_AUTOMOTIVE_MODE, mode)
+
+        # Enclose each value read with buffer clearances
+        self._reset(nack_counter=64)
+
+        if not self._send_command(set_auto_mode):
+            return StatusTypes.SEND_CMD_FAILURE
+
+        frame = self._receive_command()
+
+        self._reset(nack_counter=64, reset_buffers=False)
+        time.sleep(.004)
+
+        self.logger_util._log_print(f"recieved command bytestr {frame}",
+                        print_to_console=False,
+                        log=True,
+                        level=logging.DEBUG
+                        )
+
+        return self._validate_recieved_frame(frame, -2, [0,1])
 
     def get_low_power_enable(self):
-        Kinds.GET_LOW_POWER_ENABLE
+        automotive_mode = self._construct_command(Kinds.GET_LOW_POWER_ENABLE)
+
+        self._reset(nack_counter=64)
+        if not self._send_command(automotive_mode):
+            return StatusTypes.SEND_CMD_FAILURE
+
+        frame = self._receive_command(6)
+
+        self._reset(nack_counter=64, reset_buffers=False) 
+        time.sleep(.004)
+
+        self.logger_util._log_print(f"recieved command bytestr {frame}",
+                        print_to_console=False,
+                        log=True,
+                        level=logging.DEBUG
+                        )
+
+        ret_val = self._validate_recieved_frame(frame, -2, [0,1])
+        if ret_val is not StatusTypes.SUCCESS:
+            return ret_val
+
+        return frame[-2]
 
     def set_low_power_enable(self):
         Kinds.SET_LOW_POWER_ENABLE
@@ -148,26 +190,5 @@ class AutomotiveHandler(OnLogicNuvotonManager):
 
         return frame[-2]
 
-    def set_do(self, pin:int, value:int) -> int:
-        self._validate_input_param(pin, [0,7], int)
-        self._validate_input_param(value, [0,1], int)
-
-        set_do_command = self._construct_command(Kinds.SET_DO, pin, value)
-
-        # Enclose each value read with buffer clearances
-        self._reset(nack_counter=64)
-
-        if not self._send_command(set_do_command):
-            return StatusTypes.SEND_CMD_FAILURE
-
-        frame = self._receive_command()
-
-        self._reset(nack_counter=64, reset_buffers=False)
-        time.sleep(.004)
-
-        self.logger_util._log_print(f"recieved command bytestr {frame}",
-                        print_to_console=False,
-                        log=True,
-                        level=logging.DEBUG
-                        )
+        
     '''

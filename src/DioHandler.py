@@ -125,11 +125,7 @@ class DioHandler(OnLogicNuvotonManager):
                         level=logging.DEBUG
                         )
 
-        ret_val = self._validate_recieved_frame(frame, -2, [0,1])
-        if ret_val is not StatusTypes.SUCCESS:
-            return ret_val
-
-        return StatusTypes.SUCCESS
+        return self._validate_recieved_frame(frame, -2, [0,1])
 
     def get_di_contact(self) -> int:
         di_contact_state_cmd = self._construct_command(Kinds.GET_DI_CONTACT)
@@ -202,11 +198,7 @@ class DioHandler(OnLogicNuvotonManager):
                         level=logging.DEBUG
                         )
 
-        ret_val = self._validate_recieved_frame(frame, -2, [0,1])
-        if ret_val is not StatusTypes.SUCCESS:
-            return ret_val
-
-        return StatusTypes.SUCCESS
+        return self._validate_recieved_frame(frame, -2, [0,1])
 
     def set_do_contact(self, contact_type:int) -> int:
         self._validate_input_param(contact_type, [0,1], int)
@@ -229,11 +221,7 @@ class DioHandler(OnLogicNuvotonManager):
                         level=logging.DEBUG
                         )
 
-        ret_val = self._validate_recieved_frame(frame, -2, [0,1])
-        if ret_val is not StatusTypes.SUCCESS:
-            return ret_val
-
-        return StatusTypes.SUCCESS
+        return self._validate_recieved_frame(frame, -2, [0,1])
 
     def get_all_input_states(self) -> list:
         all_input_states = []

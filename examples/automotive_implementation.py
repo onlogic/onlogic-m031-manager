@@ -27,7 +27,7 @@ def main():
 
     try:
         # Init DIO handler
-        my_auto = AutomotiveHandler(logger_mode="DEBUG", handler_mode="BOTH") #logger_mode="DEBUG", handler_mode="BOTH"
+        my_auto = AutomotiveHandler() #logger_mode="DEBUG", handler_mode="BOTH"
         my_auto.claim("COM18")
 
         print("=" * 30)
@@ -42,7 +42,24 @@ def main():
         print("=" * 30)
         print()
 
+        print("=" * 30)
+        print("TESTING SET AUTOMOTIVE MODE (set_automotive_mode)")
+        print("Set Automotive Mode 1, Error Code:", my_auto.set_automotive_mode(1))
+        print("Set Automotive Mode 0, Error Code:", my_auto.set_automotive_mode(0))
+        print("=" * 30)
+        print()
 
+        print("=" * 30)
+        print("TESTING GET LOW POWER ENABLE (get_low_power_enable)")
+        print("LOW POWER ENABLE VALUE:", my_auto.get_low_power_enable())
+        print("=" * 30)
+        print()
+
+        print("=" * 30)
+        print("TESTING GET LOW POWER ENABLE (get_low_power_enable)")
+        print("LOW POWER ENABLE VALUE:", my_auto.get_low_power_enable())
+        print("=" * 30)
+        print()
 
     except KeyboardInterrupt:
         print("Operation terminated by user.")
