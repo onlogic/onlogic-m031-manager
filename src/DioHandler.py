@@ -59,7 +59,7 @@ class DioHandler(OnLogicNuvotonManager):
         frame = self._receive_command()
 
         self._reset(nack_counter=64, reset_buffers=False)
-        time.sleep(.004)
+        time.sleep(ProtocolConstants.STANDARD_DELAY)
 
         self.logger_util._log_print(f"recieved command bytestr {frame}",
                         print_to_console=False,
@@ -87,7 +87,7 @@ class DioHandler(OnLogicNuvotonManager):
         frame = self._receive_command()
 
         self._reset(nack_counter=64, reset_buffers=False)
-        time.sleep(.004)
+        time.sleep(ProtocolConstants.STANDARD_DELAY)
 
         self.logger_util._log_print(f"recieved command bytestr {frame}",
                         print_to_console=False,
@@ -117,7 +117,7 @@ class DioHandler(OnLogicNuvotonManager):
         frame = self._receive_command()
 
         self._reset(nack_counter=64, reset_buffers=False)
-        time.sleep(.004)
+        time.sleep(ProtocolConstants.STANDARD_DELAY)
 
         self.logger_util._log_print(f"recieved command bytestr {frame}",
                         print_to_console=False,
@@ -137,7 +137,7 @@ class DioHandler(OnLogicNuvotonManager):
         frame = self._receive_command(6)
 
         self._reset(nack_counter=64, reset_buffers=False) 
-        time.sleep(.004)
+        time.sleep(ProtocolConstants.STANDARD_DELAY)
 
         self.logger_util._log_print(f"recieved command bytestr {frame}",
                         print_to_console=False,
@@ -162,7 +162,7 @@ class DioHandler(OnLogicNuvotonManager):
         frame = self._receive_command(6)
 
         self._reset(nack_counter=64, reset_buffers=False)
-        time.sleep(.004)
+        time.sleep(ProtocolConstants.STANDARD_DELAY)
 
         self.logger_util._log_print(f"recieved command bytestr {frame}",
                         print_to_console=False,
@@ -190,7 +190,7 @@ class DioHandler(OnLogicNuvotonManager):
         frame = self._receive_command(6)
 
         self._reset(nack_counter=64, reset_buffers=False)
-        time.sleep(.004)
+        time.sleep(ProtocolConstants.STANDARD_DELAY)
 
         self.logger_util._log_print(f"recieved command bytestr {frame}",
                         print_to_console=False,
@@ -213,7 +213,7 @@ class DioHandler(OnLogicNuvotonManager):
         frame = self._receive_command(6)
  
         self._reset(nack_counter=64, reset_buffers=False)
-        time.sleep(.004)
+        time.sleep(ProtocolConstants.STANDARD_DELAY)
 
         self.logger_util._log_print(f"recieved command bytestr {frame}",
                         print_to_console=False,

@@ -22,7 +22,7 @@ import functools
 from abc import ABC, abstractmethod
 from LoggingUtil import LoggingUtil, logging
 from serial.tools import list_ports as system_ports
-from command_set import ProtocolConstants, Kinds, StatusTypes
+from command_set import ProtocolConstants, Kinds, StatusTypes, TargetIndices
 from fastcrc import crc8
 from colorama import Fore, init
 
@@ -225,7 +225,7 @@ class OnLogicNuvotonManager(ABC):
 
         return True
 
-    def _within_valid_range(self, return_frame:bytes, target_index:int|list, target_range:list) -> bool:
+    def _within_valid_range(self, return_frame:bytes, target_index:int|list, target_range:list) -> bool:        
         if isinstance(target_index, int):
             if return_frame[target_index] < target_range[0] or \
                     return_frame[target_index] > target_range[1]:
@@ -237,7 +237,6 @@ class OnLogicNuvotonManager(ABC):
                 if return_frame[payload_idx] < target_range[0] or \
                         return_frame[payload_idx] > target_range[1]:
                     return False
-
         return True
 
     def _validate_recieved_frame(self, return_frame:list, target_index:int|list=None, target_range:list=None) -> int:
@@ -250,6 +249,11 @@ class OnLogicNuvotonManager(ABC):
             self.logger_util._log_print(f"NACK not found in desired index", color=Fore.RED,
                                         print_to_console=True, log=True, level=logging.ERROR)
             return StatusTypes.RECV_FRAME_NACK_ERROR
+    
+        """
+        we are gonna have to come up with some condition to check len
+        if return_frame[2] ...
+        """
 
         is_crc = self._check_crc(return_frame)
         if not is_crc:
@@ -290,20 +294,31 @@ class OnLogicNuvotonManager(ABC):
 
     @functools.lru_cache(maxsize=128)
     def _construct_command(self, kind:Kinds, *payload:int) -> bytes:
+        # Construct command in the format of [SOF, CRC, LEN, KIND, PAYLOAD]
         # self.validate_message_bytes(kind, payload)
+        if len(payload) > 0 and isinstance(payload[0], bytes):
+            payload_bytes, payload_length = payload[0], payload[1]    
 
-        crc_calculation = crc8.smbus(bytes([len(payload), kind, *payload]))
+            crc_calculation = crc8.smbus(bytes([payload_length, kind]) + payload_bytes)
 
-        constructed_command = bytes([ProtocolConstants.SHELL_SOF, 
-                                     crc_calculation, 
-                                     len(payload), 
-                                     kind, 
-                                     *payload
-                                     ])
+            constructed_command = bytes([ProtocolConstants.SHELL_SOF, 
+                                        crc_calculation, 
+                                        payload_length, 
+                                        kind,
+                                        ]) + payload_bytes
+        else:
+            crc_calculation = crc8.smbus(bytes([len(payload), kind, *payload]))
+
+            constructed_command = bytes([ProtocolConstants.SHELL_SOF, 
+                                        crc_calculation, 
+                                        len(payload), 
+                                        kind, 
+                                        *payload
+                                        ])
 
         self.logger_util._log_print(f"Constructed Command {constructed_command}",
                                     print_to_console=False, log=True, level=logging.INFO)
-
+        
         return constructed_command
 
     def _send_command(self, command_to_send:bytes) -> bool:
@@ -352,6 +367,19 @@ class OnLogicNuvotonManager(ABC):
             if i < payload_len-1:
                 return_str += '.'
         return return_str
+    
+    def _format_response_number(self, payload_bytes:bytes) -> int:
+        return int.from_bytes(payload_bytes, byteorder='little')
+
+    def _isolate_target_indices(self, frame:bytes) -> tuple:
+        '''\
+        Isolate target parameters from the frame.
+        '''
+        payload_len = frame[TargetIndices.RECV_PAYLOAD_LEN]
+        payload_end = TargetIndices.PAYLOAD_START + payload_len
+        target_indices = [TargetIndices.PAYLOAD_START, payload_end] 
+        
+        return payload_len, payload_end, target_indices
 
     def get_version(self) -> str:
         version_command = self._construct_command(Kinds.GET_FIRMWARE_VERSION)
@@ -369,11 +397,10 @@ class OnLogicNuvotonManager(ABC):
         self.logger_util._log_print(f"Recieved Command Bytestr {frame}", print_to_console=False,
                                     log=True, level=logging.DEBUG)
 
-        # ret_val = self._validate_recieved_frame(frame, [4,7], [0,9])
-        ret_val = self._validate_recieved_frame(frame, [4,7], [0,100])
+        _, payload_end, target_indices = self._isolate_target_indices(frame)
+        
+        ret_val = self._validate_recieved_frame(frame, target_indices, [0,128])
         if ret_val is not StatusTypes.SUCCESS:
             return ret_val
 
-        return_str = self._format_version_string(frame[4:7])
-
-        return return_str
+        return self._format_version_string(frame[TargetIndices.PAYLOAD_START:payload_end])

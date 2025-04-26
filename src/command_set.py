@@ -56,9 +56,12 @@ class StatusTypes:
     RECV_FRAME_SOF_ERROR = -6
 
 class TargetIndices:
-    PENULTIMATE_IDX = -1
+    PENULTIMATE = -2
+    RECV_PAYLOAD_LEN = 2
+    PAYLOAD_START = 4
 
 class BoundryTypes:
+    # Numeric boundries for various command parameters
     DIGITAL_INPUT_PIN_RANGE = (0, 7)
     DIGITAL_OUTPUT_PIN_RANGE = (0, 7)
     BINARY_OUTPUT_PIN_RANGE = (0, 1)

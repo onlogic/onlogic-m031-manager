@@ -2,7 +2,7 @@ import time
 import serial
 from OnLogicNuvotonManager import OnLogicNuvotonManager
 from LoggingUtil import logging
-from command_set import ProtocolConstants, Kinds, StatusTypes
+from command_set import ProtocolConstants, Kinds, StatusTypes, TargetIndices
 from colorama import Fore
 
 class AutomotiveHandler(OnLogicNuvotonManager):
@@ -67,11 +67,11 @@ class AutomotiveHandler(OnLogicNuvotonManager):
                         level=logging.DEBUG
                         )
 
-        ret_val = self._validate_recieved_frame(frame, -2, [0,1])
+        ret_val = self._validate_recieved_frame(frame, TargetIndices.PENULTIMATE, [0,1])
         if ret_val is not StatusTypes.SUCCESS:
             return ret_val
 
-        return frame[-2]
+        return frame[TargetIndices.PENULTIMATE]
     
     def set_automotive_mode(self, mode:int):
         self._validate_input_param(mode, [0,1], int)
@@ -95,7 +95,7 @@ class AutomotiveHandler(OnLogicNuvotonManager):
                         level=logging.DEBUG
                         )
 
-        return self._validate_recieved_frame(frame, -2, [0,1])
+        return self._validate_recieved_frame(frame, TargetIndices.PENULTIMATE, [0,1])
 
     def get_low_power_enable(self):
         automotive_mode = self._construct_command(Kinds.GET_LOW_POWER_ENABLE)
@@ -115,23 +115,23 @@ class AutomotiveHandler(OnLogicNuvotonManager):
                         level=logging.DEBUG
                         )
 
-        ret_val = self._validate_recieved_frame(frame, -2, [0,1])
+        ret_val = self._validate_recieved_frame(frame, TargetIndices.PENULTIMATE, [0,1])
         if ret_val is not StatusTypes.SUCCESS:
             return ret_val
 
-        return frame[-2]
+        return frame[TargetIndices.PENULTIMATE]
 
-    def set_low_power_enable(self, lpe_mode:int):
+    def set_low_power_enable(self, lpe_mode:int) -> int:
         self._validate_input_param(lpe_mode, [0,1], int)
 
-        set_auto_mode = self._construct_command(Kinds.SET_LOW_POWER_ENABLE, lpe_mode)
+        set_lpe_cmd = self._construct_command(Kinds.SET_LOW_POWER_ENABLE, lpe_mode)
 
         self._reset(nack_counter=64)
 
-        if not self._send_command(set_auto_mode):
+        if not self._send_command(set_lpe_cmd):
             return StatusTypes.SEND_CMD_FAILURE
 
-        frame = self._receive_command(6)
+        frame = self._receive_command(6) 
 
         self._reset(nack_counter=64, reset_buffers=False)
         time.sleep(.004)
@@ -142,19 +142,82 @@ class AutomotiveHandler(OnLogicNuvotonManager):
                         level=logging.DEBUG
                         )
 
-        return self._validate_recieved_frame(frame, -2, [0,1])
+        return self._validate_recieved_frame(frame, TargetIndices.PENULTIMATE, [0,1])
         
-    def get_start_up_timer(self):
-        Kinds.GET_START_UP_TIMER
+    def get_start_up_timer(self) -> int:
+        start_up_timer_cmd = self._construct_command(Kinds.GET_START_UP_TIMER)
 
-    def set_start_up_timer(self):
-        Kinds.SET_START_UP_TIMER
+        # Enclose each value read with buffer clearances
+        self._reset(nack_counter=64)
+        if not self._send_command(start_up_timer_cmd):
+            return StatusTypes.SEND_CMD_FAILURE
+
+        frame = self._receive_command(4+8+1)
+
+        self._reset(nack_counter=64, reset_buffers=False)
+        time.sleep(.004)
+
+        self.logger_util._log_print(f"Recieved Command Bytestr {frame}", print_to_console=False,
+                                    log=True, level=logging.DEBUG)
+
+        _, payload_end, target_indices = self._isolate_target_indices(frame)
+        
+        ret_val = self._validate_recieved_frame(frame, target_indices, [0,256])
+        if ret_val is not StatusTypes.SUCCESS:
+            return ret_val
+
+        return self._format_response_number(frame[TargetIndices.PAYLOAD_START:payload_end])
+
+    def set_start_up_timer(self, sut:int) -> int:
+        self._validate_input_param(sut, [0, 1_000_000], int) #TODO: check 
+
+        set_sut_cmd = self._construct_command(Kinds.SET_START_UP_TIMER, sut.to_bytes(8, 'little'), 8)
+
+        self._reset(nack_counter=64)
+
+        if not self._send_command(set_sut_cmd):
+            return StatusTypes.SEND_CMD_FAILURE
+
+        frame = self._receive_command(4+8+1) 
+        target_indices = self._isolate_target_indices(frame)
+
+        self._reset(nack_counter=64, reset_buffers=False)
+        time.sleep(.004)
+
+        self.logger_util._log_print(f"recieved command bytestr {frame}",
+                        print_to_console=False,
+                        log=True,
+                        level=logging.DEBUG
+                        )
+
+        return self._validate_recieved_frame(frame, target_indices, [0,256])
 
     def get_soft_off_timer(self):
         Kinds.GET_SOFT_OFF_TIMER
     
-    def set_soft_off_timer(self):
-        Kinds.SET_SOFT_OFF_TIMER
+    def set_soft_off_timer(self, sot:int) -> int:
+        self._validate_input_param(sot, [0, 1_000_000], int) #TODO: check 
+
+        set_sot_cmd = self._construct_command(Kinds.SET_SOFT_OFF_TIMER, sot.to_bytes(8, 'little'), 8)
+
+        self._reset(nack_counter=64)
+
+        if not self._send_command(set_sot_cmd):
+            return StatusTypes.SEND_CMD_FAILURE
+
+        frame = self._receive_command(4+8+1) 
+        target_indices = self._isolate_target_indices(frame)
+
+        self._reset(nack_counter=64, reset_buffers=False)
+        time.sleep(.004)
+
+        self.logger_util._log_print(f"recieved command bytestr {frame}",
+                        print_to_console=False,
+                        log=True,
+                        level=logging.DEBUG
+                        )
+
+        return self._validate_recieved_frame(frame, target_indices, [0,256])
 
     def get_hard_off_timer(self):
         Kinds.GET_HARD_OFF_TIMER    
@@ -173,42 +236,3 @@ class AutomotiveHandler(OnLogicNuvotonManager):
     
     def set_shutdown_voltage(self):
         Kinds.SET_SHUTDOWN_VOLTAGE  
-
-
-    # def get_power_state(self):
-    #     Kinds.GET_POWER_STATE       
-
-    # def set_power_state(self):
-    #     Kinds.SET_POWER_STATE
-
-    '''
-    def get_do(self, do_pin:int) -> int:
-        self._validate_input_param(do_pin, [0,7], int)
-
-        do_command = self._construct_command(Kinds.GET_DO, do_pin)
-
-        # Enclose each value read with buffer clearances
-        self._reset(nack_counter=64)
-        if not self._send_command(do_command):
-            return StatusTypes.SEND_CMD_FAILURE
-
-        frame = self._receive_command()
-
-        self._reset(nack_counter=64, reset_buffers=False)
-        time.sleep(.004)
-
-        self.logger_util._log_print(f"recieved command bytestr {frame}",
-                        print_to_console=False,
-                        log=True,
-                        level=logging.DEBUG
-                        )
-
-        # Retrieve do value located in penultimate idx of frame
-        ret_val = self._validate_recieved_frame(frame, -2, [0,1])
-        if ret_val is not StatusTypes.SUCCESS:
-            return ret_val
-
-        return frame[-2]
-
-        
-    '''

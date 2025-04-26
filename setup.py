@@ -10,7 +10,7 @@ setup(
     author_email='firmwareengineeringteam@onlogic.com',
     packages=find_packages(where="src"),
     package_dir={"":"src"},
-    install_requires=['pyserial>=3.4', 'colorama>=0.4.5', 'fastcrc==0.3.2'],
+    install_requires=['pyserial>=3.4', 'colorama>=0.4.5', 'fastcrc>=0.3.2'],
     version='0.0.1',
     license='BSD-2.0',
     description='Tools for Helix 52x and Karbon 52X Peripherals',
