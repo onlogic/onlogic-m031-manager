@@ -1,10 +1,23 @@
-/.git/
+# Ignore the Git directory itself (usually not needed as it's
+# outside the repo root, but harmless)
+.git/
 *.git
+
+# Ignore various build products and caches
 *.pytest_cache
 *.egg-info
-*__pycache__
-doc/build/*
+__pycache__/
+build/
+dist/
+doc/build/
 doc/source/api/
-/build/
-/dist/
-venv/
+
+# Ignore virtual environment directories (add names you use)
+/venv/
+/.venv/
+/env/
+/.env/
+
+# Ignore general Python byte-code and swap files
+*.pyc
+*.swp
