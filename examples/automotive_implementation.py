@@ -1,7 +1,7 @@
 """
 Author: OnLogic
-For:    K/HX-52x
-Title:  K/HX-52x Automotive Setting Python Utility
+For:    HX-52x
+Title:  HX-52x Automotive Setting Python Utility
 
 Description:
     TODO:
@@ -15,7 +15,6 @@ NOTE:
     - CTRL+C can be used to exit the program.
 """
 
-import timeit # Optional: measure time taken per sample
 from AutomotiveHandler import AutomotiveHandler
 
 def main():
@@ -37,15 +36,15 @@ def main():
         print()
 
         print("=" * 30)
-        print("TESTING GET AUTOMOTIVE MODE (get_automotive_mode)")
-        print("Automotive Mode:", my_auto.get_automotive_mode())
+        print("TESTING SET AUTOMOTIVE MODE (set_automotive_mode)")
+        # print("Set Automotive Mode 1, RETURN CODE:", my_auto.set_automotive_mode(1))
+        print("Set Automotive Mode 0, RETURN CODE:", my_auto.set_automotive_mode(0))
         print("=" * 30)
         print()
 
         print("=" * 30)
-        print("TESTING SET AUTOMOTIVE MODE (set_automotive_mode)")
-        # print("Set Automotive Mode 1, RETURN CODE:", my_auto.set_automotive_mode(1))
-        print("Set Automotive Mode 0, RETURN CODE:", my_auto.set_automotive_mode(0))
+        print("TESTING GET AUTOMOTIVE MODE (get_automotive_mode)")
+        print("Automotive Mode:", my_auto.get_automotive_mode())
         print("=" * 30)
         print()
 
@@ -57,16 +56,36 @@ def main():
         print()
 
         print("=" * 30)
+        print("TESTING SET START UP TIMER (set_start_up_timer)")
+        print("SET START UP RETURN CODE:", my_auto.set_start_up_timer(10))
+        print("=" * 30)
+        print()
+
+        print("=" * 30)
+        print("TESTING SET START UP TIMER (set_start_up_timer)")
+        print("SET START UP RETURN CODE:", my_auto.set_start_up_timer(10))
+        print("=" * 30)
+        print()
+
+        print("=" * 30)
         print("TESTING GET START UP TIMER (get_start_up_timer)")
         print("GET START UP VALUE:", my_auto.get_start_up_timer())
         print("=" * 30)
         print()
 
         print("=" * 30)
-        print("TESTING SET START UP TIMER (set_start_up_timer)")
-        print("SET START UP RETURN CODE:", my_auto.set_start_up_timer(320))
+        print("TESTING SET SOFT OFF TIMER (set_soft_off_timer)")
+        print("SET SOFT OFF RETURN CODE:", my_auto.set_soft_off_timer(50))
         print("=" * 30)
         print()
+
+        print("=" * 30)
+        print("TESTING GET SOFT OFF TIMER (get_soft_off_timer)")
+        print("GET SOFT OFF VALUE:", my_auto.get_soft_off_timer())
+        print("=" * 30)
+        print()
+
+        
 
     except KeyboardInterrupt:
         print("Operation terminated by user.")
