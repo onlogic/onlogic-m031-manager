@@ -102,9 +102,9 @@ class OnLogicNuvotonManager(ABC):
                     return port.device
         return None
 
-    # @abstractmethod
-    # def get_info() -> None:
-    #     pass
+    @abstractmethod
+    def get_info(self) -> None:
+        pass
 
     # _get_cdc_device_port cdc device descriptor in automotive class (UART)
     @abstractmethod
@@ -151,6 +151,9 @@ class OnLogicNuvotonManager(ABC):
         self.list_all_available_ports()
 
         raise ValueError("ERROR | AKNOWLEDGEMENT ERROR")
+
+    def _read_files(self, filename=None) -> None:
+        pass
 
     def _reset(self, nack_counter:int=ProtocolConstants.NUM_NACKS, reset_buffers:bool=True) -> None:
         '''Reset following the LPMCU ACK-NACK pattern.'''
@@ -251,7 +254,7 @@ class OnLogicNuvotonManager(ABC):
             return StatusTypes.RECV_FRAME_NACK_ERROR
     
         """
-        we are gonna have to come up with some condition to check len
+        TODO: come up with some condition to check len
         if return_frame[2] ...
         """
 

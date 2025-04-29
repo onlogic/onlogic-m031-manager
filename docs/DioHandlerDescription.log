@@ -1,0 +1,26 @@
+TODO: FIX the below description
+
+Info: Isolated digital input/ouput. To function properly, dio should be connected to
+external power and ground. The Digital Outputs are "Open Collector", and must be tied
+to VIN with a resitor to source current. The load should not exceed 150 mA.
+
+Pinout:
+---------------------------------------------------------------
+|| 10  |  9  |  8  |  7  |  6  |  5  |  4  |  3  |  2  |  1  ||
+||  ^     ^     ^     ^     ^     ^     ^     ^     ^     ^  ||
+|| |_|   |_|   |_|   |_|   |_|   |_|   |_|   |_|   |_|   |_| ||
+|| GND | DI3 | DI2 | DI1 | DI0 | DO3 | DO2 | DO1 | DO0 | VIN ||
+---------------------------------------------------------------
+
+Dry Contact: Only Ground required
+
+DIn Pulled up
+- DOut external rail defaults to 12V -> Diode Drop to 11.2 V - 11.4 V
+
+Wet Contact: Vin + Gnd required + Pull up (10kOhm acceptable)
+
+
+set-di-contact:  Set digital intput contact type (false:wet, true:dry)
+set-do-contact:  Set digital output contact type (false:wet, true:dry)
+set-di-contact:  Read digital intput contact type (false:wet, true:dry)
+get-do-contact;  Read digital output contact type (false:wet, true:dry)

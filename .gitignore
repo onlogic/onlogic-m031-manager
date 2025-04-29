@@ -1,5 +1,4 @@
-# Ignore the Git directory itself (usually not needed as it's
-# outside the repo root, but harmless)
+# Ignore Git directory itself 
 .git/
 *.git
 
@@ -12,11 +11,16 @@ dist/
 doc/build/
 doc/source/api/
 
-# Ignore virtual environment directories (add names you use)
+# Ignore virtual environment directories
 /venv/
 /.venv/
 /env/
 /.env/
+/bin/
+/include/
+/lib/
+/lib64
+/pyvenv.cfg
 
 # Ignore general Python byte-code and swap files
 *.pyc

@@ -34,7 +34,6 @@ def main():
                 di_val = my_dio.get_di(i)
                 print(f"The time difference [In Seconds] is : {timeit.default_timer() - start_time:.6f}")
                 print(f"DI Channel {i}: {di_val}")
-                # time.sleep(.1)
             print()
 
             print("=" * 30)

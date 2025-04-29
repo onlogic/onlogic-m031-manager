@@ -22,13 +22,13 @@ def main():
 
     # Set to None outside exception handling
     # incase of improper class initialization
-    my_dio = None
+    my_auto = None
 
     try:
         # Init DIO handler
-        my_auto = AutomotiveHandler() #logger_mode="DEBUG", handler_mode="BOTH"
-        my_auto.claim("COM18")
-
+        my_auto = AutomotiveHandler(logger_mode="DEBUG", handler_mode="CONSOLE") #logger_mode="DEBUG", handler_mode="BOTH"
+        my_auto.claim("/dev/ttyS4")
+                      
         print("=" * 30)
         print("TESTING GET VERSION (get_version)")
         print(my_auto.get_version())
@@ -50,14 +50,13 @@ def main():
 
         print("=" * 30)
         print("TESTING SET LOW POWER ENABLE (set_low_power_enable)")
-        print("ENABLE LOW POWER ENABLE RETURN CODE:", my_auto.set_low_power_enable(0))
-        # print("DISABLE LOW POWER ENABLE RETURN CODE:", my_auto.set_low_power_enable(1))
+        print("SET LOW POWER ENABLE RETURN CODE:", my_auto.set_low_power_enable(0))
         print("=" * 30)
         print()
 
         print("=" * 30)
-        print("TESTING SET START UP TIMER (set_start_up_timer)")
-        print("SET START UP RETURN CODE:", my_auto.set_start_up_timer(10))
+        print("TESTING GET LOW POWER ENABLE (get_low_power_enable)")
+        print("GET LOW POWER ENABLE VALUE:", my_auto.get_low_power_enable())
         print("=" * 30)
         print()
 
@@ -85,14 +84,38 @@ def main():
         print("=" * 30)
         print()
 
-        
+        print("=" * 30)
+        print("TESTING SET LOW VOLTAGE TIMER (set_low_voltage_timer)")
+        print("SET LOW VOLTAGE RETURN CODE:", my_auto.set_low_voltage_timer(301))
+        print("=" * 30)
+        print()
+
+        print("=" * 30)
+        print("TESTING GET LOW VOLTAGE TIMER (get_low_voltage_timer)")
+        print("GET LOW VOLTAGE TIMER VALUE:", my_auto.get_low_voltage_timer())
+        print("=" * 30)
+        print()
+
+        ####
+
+        print("=" * 30)
+        print("TESTING SET SHUTDOWN VOLTAGE (set_shutdown_voltage)")
+        print("SET SHUT OFF VOLTAGE RETURN CODE:", my_auto.set_shutdown_voltage(601))
+        print("=" * 30)
+        print()
+
+        print("=" * 30)
+        print("TESTING GET SHUTDOWN VOLTAGE (get_shutdown_voltage)")
+        print("GET LOW VOLTAGE TIMER VALUE:", my_auto.get_shutdown_voltage())
+        print("=" * 30)
+        print()
 
     except KeyboardInterrupt:
         print("Operation terminated by user.")
     finally: 
         print("\033[93mExiting...\033[0m")
-        if my_dio is not None:
-            my_dio.close_connection() 
+        if my_auto is not None:
+            my_auto.close_connection() 
 
 if __name__ == "__main__":
     main()

@@ -32,6 +32,9 @@ class DioHandler(OnLogicNuvotonManager):
                                         color=Fore.RED, log=True, level=logging.ERROR)
             raise serial.SerialException(serial_connect_err)
 
+    def get_info(self) -> None:
+        super()._read_files(filename="DioHandlerDescription.log")
+
     def _mcu_connection_check(self) -> None:
         super()._mcu_connection_check()
         

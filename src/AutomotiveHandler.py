@@ -11,6 +11,9 @@ class AutomotiveHandler(OnLogicNuvotonManager):
                          handler_mode=handler_mode, 
                          serial_connection_label=serial_connection_label
                         )
+        
+    def get_info(self) -> None:
+        super()._read_files(filename="AutomotiveModeDescription.log")
 
     def _mcu_connection_check(self) -> None:
         '''\
@@ -48,6 +51,9 @@ class AutomotiveHandler(OnLogicNuvotonManager):
                                   "Did you enable correct bios settings []?"
             self._init_port_error_handling(serial_connect_err, return_early=True)
             raise serial.SerialException(serial_connect_err)
+        
+    def get_info(self) -> None:
+        super().get_info(filename="AutomotiveModeDescription.log" if filename is None else filename)
 
     def get_automotive_mode(self) -> int:
         automotive_mode = self._construct_command(Kinds.GET_AUTOMOTIVE_MODE)
@@ -98,10 +104,10 @@ class AutomotiveHandler(OnLogicNuvotonManager):
         return self._validate_recieved_frame(frame, TargetIndices.PENULTIMATE, [0,1])
 
     def get_low_power_enable(self):
-        automotive_mode = self._construct_command(Kinds.GET_LOW_POWER_ENABLE)
+        lpe_command = self._construct_command(Kinds.GET_LOW_POWER_ENABLE)
 
         self._reset(nack_counter=64)
-        if not self._send_command(automotive_mode):
+        if not self._send_command(lpe_command):
             return StatusTypes.SEND_CMD_FAILURE
 
         frame = self._receive_command(6)
@@ -118,10 +124,10 @@ class AutomotiveHandler(OnLogicNuvotonManager):
 
         return frame[TargetIndices.PENULTIMATE]
 
-    def set_low_power_enable(self, lpe_mode:int) -> int:
-        self._validate_input_param(lpe_mode, [0,1], int)
+    def set_low_power_enable(self, lpe:int) -> int:
+        self._validate_input_param(lpe, [0,1], int)
 
-        set_lpe_cmd = self._construct_command(Kinds.SET_LOW_POWER_ENABLE, lpe_mode)
+        set_lpe_cmd = self._construct_command(Kinds.SET_LOW_POWER_ENABLE, lpe)
 
         self._reset(nack_counter=64)
 
@@ -142,11 +148,11 @@ class AutomotiveHandler(OnLogicNuvotonManager):
         return self._validate_recieved_frame(frame, TargetIndices.PENULTIMATE, [0,1])
         
     def get_start_up_timer(self) -> int:
-        start_up_timer_cmd = self._construct_command(Kinds.GET_START_UP_TIMER)
+        sut_cmd = self._construct_command(Kinds.GET_START_UP_TIMER)
 
         # Enclose each value read with buffer clearances
         self._reset(nack_counter=64)
-        if not self._send_command(start_up_timer_cmd):
+        if not self._send_command(sut_cmd):
             return StatusTypes.SEND_CMD_FAILURE
 
         frame = self._receive_command(4+8+1)
@@ -281,14 +287,94 @@ class AutomotiveHandler(OnLogicNuvotonManager):
 
         return self._validate_recieved_frame(frame, target_indices, [0,256])
 
-    def get_low_voltage_timer(self): 
-        Kinds.GET_LOW_VOLTAGE_TIMER 
+    def get_low_voltage_timer(self):
+        lvt_timer_cmd = self._construct_command(Kinds.GET_LOW_VOLTAGE_TIMER)
+
+        # Enclose each value read with buffer clearances
+        self._reset(nack_counter=64)
+        if not self._send_command(lvt_timer_cmd):
+            return StatusTypes.SEND_CMD_FAILURE
+
+        frame = self._receive_command(4+8+1)
+
+        self._reset(nack_counter=64, reset_buffers=False)
+        time.sleep(.004)
+
+        self.logger_util._log_print(f"recieved command bytestr {frame}", print_to_console=False,
+                                    log=True, level=logging.DEBUG)
+
+        _, payload_end, target_indices = self._isolate_target_indices(frame)
+
+        ret_val = self._validate_recieved_frame(frame, target_indices, [0,256])
+        if ret_val is not StatusTypes.SUCCESS:
+            return ret_val
+
+        return self._format_response_number(frame[TargetIndices.PAYLOAD_START:payload_end]) 
     
-    def set_low_voltage_timer(self):
-        Kinds.SET_LOW_VOLTAGE_TIMER 
-    
+    def set_low_voltage_timer(self, lvt:int) -> int:
+        self._validate_input_param(lvt, [0, 1_000_000], int)
+
+        set_lvt_cmd = self._construct_command(Kinds.SET_LOW_VOLTAGE_TIMER , lvt.to_bytes(8, 'little'), 8)
+
+        self._reset(nack_counter=64)
+
+        if not self._send_command(set_lvt_cmd):
+            return StatusTypes.SEND_CMD_FAILURE
+
+        frame = self._receive_command(4+8+1) 
+        target_indices = self._isolate_target_indices(frame)
+
+        self._reset(nack_counter=64, reset_buffers=False)
+        time.sleep(.004)
+
+        self.logger_util._log_print(f"recieved command bytestr {frame}",
+                        print_to_console=False, log=True, level=logging.DEBUG
+                        )
+
+        return self._validate_recieved_frame(frame, target_indices, [0,256])
+
     def get_shutdown_voltage(self):
-        Kinds.GET_SHUTDOWN_VOLTAGE  
-    
-    def set_shutdown_voltage(self):
-        Kinds.SET_SHUTDOWN_VOLTAGE  
+        sdv_timer_cmd = self._construct_command(Kinds.GET_SHUTDOWN_VOLTAGE)
+
+        # Enclose each value read with buffer clearances
+        self._reset(nack_counter=64)
+        if not self._send_command(sdv_timer_cmd):
+            return StatusTypes.SEND_CMD_FAILURE
+
+        frame = self._receive_command(4+4+1)
+
+        self._reset(nack_counter=64, reset_buffers=False)
+        time.sleep(.004)
+
+        self.logger_util._log_print(f"recieved command bytestr {frame}", print_to_console=False,
+                                    log=True, level=logging.DEBUG)
+
+        _, payload_end, target_indices = self._isolate_target_indices(frame)
+
+        ret_val = self._validate_recieved_frame(frame, target_indices, [0,256])
+        if ret_val is not StatusTypes.SUCCESS:
+            return ret_val
+
+        return self._format_response_number(frame[TargetIndices.PAYLOAD_START:payload_end]) 
+
+    def set_shutdown_voltage(self, sdv:int) -> int:
+        self._validate_input_param(sdv, [0, 1_000_000], int)
+
+        set_sdv_cmd = self._construct_command(Kinds.SET_SHUTDOWN_VOLTAGE, sdv.to_bytes(8, 'little'), 8)
+
+        self._reset(nack_counter=64)
+
+        if not self._send_command(set_sdv_cmd):
+            return StatusTypes.SEND_CMD_FAILURE
+
+        frame = self._receive_command(4+4+1) 
+        target_indices = self._isolate_target_indices(frame)
+
+        self._reset(nack_counter=64, reset_buffers=False)
+        time.sleep(.004)
+
+        self.logger_util._log_print(f"recieved command bytestr {frame}",
+                        print_to_console=False, log=True, level=logging.DEBUG
+                        )
+
+        return self._validate_recieved_frame(frame, target_indices, [0,256])
