@@ -27,7 +27,7 @@ def main():
     try:
         # Init DIO handler
         my_auto = AutomotiveHandler(logger_mode="DEBUG", handler_mode="CONSOLE") #logger_mode="DEBUG", handler_mode="BOTH"
-        my_auto.claim("/dev/ttyS4")
+        my_auto.claim("/dev/ttyS4") # will be /dev/ttySX" or "COMX" on Windows
                       
         print("=" * 30)
         print("TESTING GET VERSION (get_version)")
