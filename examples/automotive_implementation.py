@@ -106,7 +106,7 @@ def main():
 
         print("=" * 30)
         print("TESTING GET SHUTDOWN VOLTAGE (get_shutdown_voltage)")
-        print("GET LOW VOLTAGE TIMER VALUE:", my_auto.get_shutdown_voltage())
+        print("GET SHUT OFF VOLTAGE VALUE:", my_auto.get_shutdown_voltage())
         print("=" * 30)
         print()
 
