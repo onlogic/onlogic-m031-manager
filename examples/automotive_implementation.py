@@ -26,7 +26,8 @@ def main():
 
     try:
         # Init DIO handler
-        my_auto = AutomotiveHandler(logger_mode="DEBUG", handler_mode="CONSOLE") #logger_mode="DEBUG", handler_mode="BOTH"
+        my_auto = AutomotiveHandler(logger_mode="DEBUG", handler_mode="BOTH") #logger_mode="DEBUG", handler_mode="BOTH"
+        my_auto.list_all_available_ports()
         my_auto.claim("/dev/ttyS4") # will be /dev/ttySX" or "COMX" on Windows
                       
         print("=" * 30)
