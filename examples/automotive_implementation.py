@@ -26,7 +26,7 @@ def main():
 
     try:
         # Init DIO handler
-        my_auto = AutomotiveHandler(logger_mode="DEBUG", handler_mode="BOTH") #logger_mode="DEBUG", handler_mode="BOTH"
+        my_auto = AutomotiveHandler() #logger_mode="DEBUG", handler_mode="BOTH"
         my_auto.list_all_available_ports()
         my_auto.claim("/dev/ttyS4") # will be /dev/ttySX" or "COMX" on Windows
                       
@@ -39,7 +39,7 @@ def main():
         print("=" * 30)
         print("TESTING SET AUTOMOTIVE MODE (set_automotive_mode)")
         # print("Set Automotive Mode 1, RETURN CODE:", my_auto.set_automotive_mode(1))
-        print("Set Automotive Mode 0, RETURN CODE:", my_auto.set_automotive_mode(0))
+        print("SET AUTOMOTIVE MODE 0, RETURN CODE:", my_auto.set_automotive_mode(0))
         print("=" * 30)
         print()
 
@@ -96,8 +96,6 @@ def main():
         print("GET LOW VOLTAGE TIMER VALUE:", my_auto.get_low_voltage_timer())
         print("=" * 30)
         print()
-
-        ####
 
         print("=" * 30)
         print("TESTING SET SHUTDOWN VOLTAGE (set_shutdown_voltage)")

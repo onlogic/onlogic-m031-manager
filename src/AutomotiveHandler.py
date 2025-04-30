@@ -6,12 +6,12 @@ from command_set import ProtocolConstants, Kinds, StatusTypes, TargetIndices, Bo
 from colorama import Fore
 
 class AutomotiveHandler(OnLogicNuvotonManager):
-    def __init__(self, logger_mode:str=None, handler_mode:str=None, serial_connection_label=None):
+    def __init__(self, logger_mode: str = None, handler_mode: str = None, serial_connection_label = None):
         super().__init__(logger_mode=logger_mode, 
                          handler_mode=handler_mode, 
                          serial_connection_label=serial_connection_label
                         )
-        
+
     def get_info(self) -> None:
         super()._read_files(filename="AutomotiveModeDescription.log")
 
@@ -28,7 +28,7 @@ class AutomotiveHandler(OnLogicNuvotonManager):
             raise ValueError("Error | Issue with verifying connection command")
         '''
 
-    def _init_port_error_handling(self, error_msg:str, return_early:bool=False) -> None | ValueError:
+    def _init_port_error_handling(self, error_msg: str, return_early: bool = False) -> None | ValueError:
         self.logger_util._log_print(error_msg, print_to_console=True, color=Fore.RED, log=True,
                                     level=logging.ERROR)
         self.list_all_available_ports()
@@ -73,14 +73,14 @@ class AutomotiveHandler(OnLogicNuvotonManager):
                         level=logging.DEBUG
                         )
 
-        ret_val = self._validate_recieved_frame(frame, TargetIndices.PENULTIMATE, [0,1])
+        ret_val = self._validate_recieved_frame(frame, TargetIndices.PENULTIMATE, BoundaryTypes.BINARY_VALUE_RANGE)
         if ret_val is not StatusTypes.SUCCESS:
             return ret_val
 
         return frame[TargetIndices.PENULTIMATE]
     
     def set_automotive_mode(self, mode:int):
-        self._validate_input_param(mode, [0,1], int)
+        self._validate_input_param(mode, BoundaryTypes.BINARY_VALUE_RANGE, int)
 
         set_auto_mode = self._construct_command(Kinds.SET_AUTOMOTIVE_MODE, mode)
 
@@ -101,7 +101,7 @@ class AutomotiveHandler(OnLogicNuvotonManager):
                         level=logging.DEBUG
                         )
 
-        return self._validate_recieved_frame(frame, TargetIndices.PENULTIMATE, [0,1])
+        return self._validate_recieved_frame(frame, TargetIndices.PENULTIMATE, BoundaryTypes.BINARY_VALUE_RANGE)
 
     def get_low_power_enable(self):
         lpe_command = self._construct_command(Kinds.GET_LOW_POWER_ENABLE)
@@ -118,14 +118,14 @@ class AutomotiveHandler(OnLogicNuvotonManager):
         self.logger_util._log_print(f"recieved command bytestr {frame}",
                         print_to_console=False, log=True, level=logging.DEBUG)
 
-        ret_val = self._validate_recieved_frame(frame, TargetIndices.PENULTIMATE, [0,1])
+        ret_val = self._validate_recieved_frame(frame, TargetIndices.PENULTIMATE, BoundaryTypes.BINARY_VALUE_RANGE)
         if ret_val is not StatusTypes.SUCCESS:
             return ret_val
 
         return frame[TargetIndices.PENULTIMATE]
 
     def set_low_power_enable(self, lpe:int) -> int:
-        self._validate_input_param(lpe, [0,1], int)
+        self._validate_input_param(lpe, BoundaryTypes.BINARY_VALUE_RANGE, int)
 
         set_lpe_cmd = self._construct_command(Kinds.SET_LOW_POWER_ENABLE, lpe)
 
@@ -145,7 +145,7 @@ class AutomotiveHandler(OnLogicNuvotonManager):
                         level=logging.DEBUG
                         )
 
-        return self._validate_recieved_frame(frame, TargetIndices.PENULTIMATE, [0,1])
+        return self._validate_recieved_frame(frame, TargetIndices.PENULTIMATE, BoundaryTypes.BINARY_VALUE_RANGE)
         
     def get_start_up_timer(self) -> int:
         sut_cmd = self._construct_command(Kinds.GET_START_UP_TIMER)
@@ -165,14 +165,14 @@ class AutomotiveHandler(OnLogicNuvotonManager):
 
         _, payload_end, target_indices = self._isolate_target_indices(frame)
         
-        ret_val = self._validate_recieved_frame(frame, target_indices, [0,256])
+        ret_val = self._validate_recieved_frame(frame, target_indices, BoundaryTypes.BYTE_VALUE_RANGE)
         if ret_val is not StatusTypes.SUCCESS:
             return ret_val
 
         return self._format_response_number(frame[TargetIndices.PAYLOAD_START:payload_end])
 
     def set_start_up_timer(self, sut:int) -> int:
-        self._validate_input_param(sut, [0, 1_000_000], int) #TODO: check 
+        self._validate_input_param(sut, BoundaryTypes.AUTOMOTIVE_TIMER_RANGE, int) 
 
         set_sut_cmd = self._construct_command(Kinds.SET_START_UP_TIMER, sut.to_bytes(8, 'little'), 8)
 
@@ -193,7 +193,7 @@ class AutomotiveHandler(OnLogicNuvotonManager):
                         level=logging.DEBUG
                         )
 
-        return self._validate_recieved_frame(frame, target_indices, [0,256])
+        return self._validate_recieved_frame(frame, target_indices, BoundaryTypes.BYTE_VALUE_RANGE)
 
     def get_soft_off_timer(self):
         sot_timer_cmd = self._construct_command(Kinds.GET_SOFT_OFF_TIMER)
@@ -213,14 +213,14 @@ class AutomotiveHandler(OnLogicNuvotonManager):
 
         _, payload_end, target_indices = self._isolate_target_indices(frame)
         
-        ret_val = self._validate_recieved_frame(frame, target_indices, [0,256])
+        ret_val = self._validate_recieved_frame(frame, target_indices, BoundaryTypes.BYTE_VALUE_RANGE)
         if ret_val is not StatusTypes.SUCCESS:
             return ret_val
 
         return self._format_response_number(frame[TargetIndices.PAYLOAD_START:payload_end])
     
     def set_soft_off_timer(self, sot:int) -> int:
-        self._validate_input_param(sot, [0, 1_000_000], int) #TODO: check 
+        self._validate_input_param(sot, BoundaryTypes.AUTOMOTIVE_TIMER_RANGE, int)
 
         set_sot_cmd = self._construct_command(Kinds.SET_SOFT_OFF_TIMER, sot.to_bytes(8, 'little'), 8)
 
@@ -239,7 +239,7 @@ class AutomotiveHandler(OnLogicNuvotonManager):
                         print_to_console=False, log=True, level=logging.DEBUG
                         )
 
-        return self._validate_recieved_frame(frame, target_indices, [0,256])
+        return self._validate_recieved_frame(frame, target_indices, BoundaryTypes.BYTE_VALUE_RANGE)
 
     def get_hard_off_timer(self):
         hot_timer_cmd = self._construct_command(Kinds.GET_HARD_OFF_TIMER)
@@ -259,14 +259,14 @@ class AutomotiveHandler(OnLogicNuvotonManager):
 
         _, payload_end, target_indices = self._isolate_target_indices(frame)
         
-        ret_val = self._validate_recieved_frame(frame, target_indices, [0,256])
+        ret_val = self._validate_recieved_frame(frame, target_indices, BoundaryTypes.BYTE_VALUE_RANGE)
         if ret_val is not StatusTypes.SUCCESS:
             return ret_val
 
         return self._format_response_number(frame[TargetIndices.PAYLOAD_START:payload_end])
     
     def set_hard_off_timer(self, hot:int) -> int:
-        self._validate_input_param(hot, [0, 1_000_000], int) #TODO: check 
+        self._validate_input_param(hot, BoundaryTypes.AUTOMOTIVE_TIMER_RANGE, int)
 
         set_hot_cmd = self._construct_command(Kinds.SET_HARD_OFF_TIMER, hot.to_bytes(8, 'little'), 8)
 
@@ -285,7 +285,7 @@ class AutomotiveHandler(OnLogicNuvotonManager):
                         print_to_console=False, log=True, level=logging.DEBUG
                         )
 
-        return self._validate_recieved_frame(frame, target_indices, [0,256])
+        return self._validate_recieved_frame(frame, target_indices, BoundaryTypes.BYTE_VALUE_RANGE)
 
     def get_low_voltage_timer(self):
         lvt_timer_cmd = self._construct_command(Kinds.GET_LOW_VOLTAGE_TIMER)
@@ -305,14 +305,14 @@ class AutomotiveHandler(OnLogicNuvotonManager):
 
         _, payload_end, target_indices = self._isolate_target_indices(frame)
 
-        ret_val = self._validate_recieved_frame(frame, target_indices, [0,256])
+        ret_val = self._validate_recieved_frame(frame, target_indices, BoundaryTypes.BYTE_VALUE_RANGE)
         if ret_val is not StatusTypes.SUCCESS:
             return ret_val
 
         return self._format_response_number(frame[TargetIndices.PAYLOAD_START:payload_end]) 
     
     def set_low_voltage_timer(self, lvt:int) -> int:
-        self._validate_input_param(lvt, [0, 1_000_000], int)
+        self._validate_input_param(lvt, BoundaryTypes.AUTOMOTIVE_TIMER_RANGE, int)
 
         set_lvt_cmd = self._construct_command(Kinds.SET_LOW_VOLTAGE_TIMER , lvt.to_bytes(8, 'little'), 8)
 
@@ -331,7 +331,7 @@ class AutomotiveHandler(OnLogicNuvotonManager):
                         print_to_console=False, log=True, level=logging.DEBUG
                         )
 
-        return self._validate_recieved_frame(frame, target_indices, [0,256])
+        return self._validate_recieved_frame(frame, target_indices, BoundaryTypes.BYTE_VALUE_RANGE)
 
     def get_shutdown_voltage(self):
         sdv_timer_cmd = self._construct_command(Kinds.GET_SHUTDOWN_VOLTAGE)
@@ -351,14 +351,14 @@ class AutomotiveHandler(OnLogicNuvotonManager):
 
         _, payload_end, target_indices = self._isolate_target_indices(frame)
 
-        ret_val = self._validate_recieved_frame(frame, target_indices, [0,256])
+        ret_val = self._validate_recieved_frame(frame, target_indices, BoundaryTypes.BYTE_VALUE_RANGE)
         if ret_val is not StatusTypes.SUCCESS:
             return ret_val
 
         return self._format_response_number(frame[TargetIndices.PAYLOAD_START:payload_end]) 
 
     def set_shutdown_voltage(self, sdv:int) -> int:
-        self._validate_input_param(sdv, [0, 1_000_000], int)
+        self._validate_input_param(sdv, BoundaryTypes.AUTOMOTIVE_TIMER_RANGE, int)
 
         set_sdv_cmd = self._construct_command(Kinds.SET_SHUTDOWN_VOLTAGE, sdv.to_bytes(8, 'little'), 8)
 
@@ -377,4 +377,4 @@ class AutomotiveHandler(OnLogicNuvotonManager):
                         print_to_console=False, log=True, level=logging.DEBUG
                         )
 
-        return self._validate_recieved_frame(frame, target_indices, [0,256])
+        return self._validate_recieved_frame(frame, target_indices, BoundaryTypes.BYTE_VALUE_RANGE)

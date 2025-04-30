@@ -31,7 +31,7 @@ class OnLogicNuvotonManager(ABC):
     Administers the serial connection with the
     microcontroller embedded in the K/HX-52x DIO-Add in Card.
     '''
-    def __init__(self, logger_mode:str=None, handler_mode:str=None, serial_connection_label:str=None):
+    def __init__(self, logger_mode: str = None, handler_mode: str = None, serial_connection_label: str = None):
         '''Init class by establishing serial connection.'''
         # Init colorama: Color coding for errors and such
         init(autoreset=True) 
@@ -62,19 +62,25 @@ class OnLogicNuvotonManager(ABC):
     def __str__(self):
         '''COM port and command set of DioInputHandler.'''
         # TODO: Add Python utility Version and FW version?
-        repr_str = f"Port: {self.serial_connection_label}\n"   \
-                   f"PySerial Version: {serial.__version__}\n" \
-                   f"Main Functionality Setup {self.is_setup}"
-                #    f"Logger Mode: {self.logger_mode}\n"        \
-                #    f"Handler Mode: {self.handler_mode}\n"      \
-
+        repr_str = f"Port: {self.serial_connection_label}\n"             \
+                   f"PySerial Version: {serial.__version__}\n"           \ 
+                   f"Main Functionality Setup {self.is_setup}"           \
+                   f"\nCommand Set: {Kinds.__name__}\n"                  \
+                   f"Protocol Constants: {ProtocolConstants.__name__}\n" \
+                   f"Status Types: {StatusTypes.__name__}\n"             \
+                   f"Target Indices: {TargetIndices.__name__}\n"         \
+                   f"Boundary Types: {BoundaryTypes.__name__}\n"         \
+                   f"Serial Connection Label: {self.serial_connection_label}\n" \
+                   f"Serial Port: {self.port}\n" if hasattr(self, 'port') else "Serial Port not initialized\n" \
+                   f"Is Setup: {self.is_setup}\n"        
+        
         return repr_str
 
     @staticmethod
-    def __handle_lconfig_str(input_str:str) -> str | None:
+    def __handle_lconfig_str(input_str: str) -> str | None:
         return input_str.lower().strip() if isinstance(input_str, str) else input_str
 
-    def list_all_available_ports(self, verbose:bool=False):
+    def list_all_available_ports(self, verbose: bool = False):
         all_ports = system_ports.comports()
         for port in sorted(all_ports):
             if not verbose:
@@ -87,7 +93,7 @@ class OnLogicNuvotonManager(ABC):
                                             print_to_console=False,
                                             log=True, level=logging.INFO)  
 
-    def _get_cdc_device_port(self, dev_id:str, location:str=None) -> str | None:
+    def _get_cdc_device_port(self, dev_id: str, location: str = None) -> str | None:
         """Scan and return the port of the target device."""
         all_ports = system_ports.comports() 
         for port in sorted(all_ports):
@@ -152,10 +158,10 @@ class OnLogicNuvotonManager(ABC):
 
         raise ValueError("ERROR | AKNOWLEDGEMENT ERROR")
 
-    def _read_files(self, filename=None) -> None:
+    def _read_files(self, filename = None) -> None:
         pass
 
-    def _reset(self, nack_counter:int=ProtocolConstants.NUM_NACKS, reset_buffers:bool=True) -> None:
+    def _reset(self, nack_counter: int = ProtocolConstants.NUM_NACKS, reset_buffers: bool = True) -> None:
         '''Reset following the LPMCU ACK-NACK pattern.'''
         # Expensive operation, shouldn't be done twice per read
         if reset_buffers:
@@ -185,7 +191,7 @@ class OnLogicNuvotonManager(ABC):
             else:
                 bytes_to_send = nack_counter
 
-    def _validate_input_param(self, dio_input_parameter, valid_input_range:tuple, input_type:type):
+    def _validate_input_param(self, dio_input_parameter, valid_input_range: tuple, input_type: type):
         if self.is_setup is False:
             raise serial.SerialException("ERROR | Serial Connection is not set up, did you claim the port?")
 
@@ -207,7 +213,7 @@ class OnLogicNuvotonManager(ABC):
 
             raise ValueError(value_error_msg)
 
-    def _check_crc(self, frame:bytes) -> bool:
+    def _check_crc(self, frame: bytes) -> bool:
         if len(frame) < BoundaryTypes.BASE_FRAME_SIZE:
             return False
 
@@ -228,13 +234,13 @@ class OnLogicNuvotonManager(ABC):
 
         return True
 
-    def _within_valid_range(self, return_frame:bytes, target_index:int|list, target_range:list) -> bool:        
+    def _within_valid_range(self, return_frame: bytes, target_index: int | tuple, target_range: tuple) -> bool:        
         if isinstance(target_index, int):
             if return_frame[target_index] < target_range[0] or \
                     return_frame[target_index] > target_range[1]:
                 return False
             
-        elif isinstance(target_index, list):
+        elif isinstance(target_index, tuple):
             payload_indices_to_check = [p_idx for p_idx in range(target_index[0], target_index[1])]
             for payload_idx in payload_indices_to_check:
                 if return_frame[payload_idx] < target_range[0] or \
@@ -242,7 +248,7 @@ class OnLogicNuvotonManager(ABC):
                     return False
         return True
 
-    def _validate_recieved_frame(self, return_frame:list, target_index:int|list=None, target_range:list=None) -> int:
+    def _validate_recieved_frame(self, return_frame: list, target_index: int | tuple = None, target_range: tuple = None) -> int:
         if return_frame[0] != ProtocolConstants.SHELL_SOF:
             self.logger_util._log_print(f"SOF Value Not Correct", color=Fore.RED, print_to_console=True,
                                         log=True,level=logging.ERROR)
@@ -285,6 +291,7 @@ class OnLogicNuvotonManager(ABC):
 
     def close_connection(self):
         # HX52xDioHandler._construct_command.cache_clear()
+
         # TODO: Figure out why is the sleep function Erroring when lru_cache is enabled 
         # in destructor with time.sleep uncommented 
         # time.sleep(.001)
@@ -296,7 +303,7 @@ class OnLogicNuvotonManager(ABC):
             self.is_setup = False
 
     @functools.lru_cache(maxsize=128)
-    def _construct_command(self, kind:Kinds, *payload:int) -> bytes:
+    def _construct_command(self, kind: Kinds, *payload: int) -> bytes:
         # Construct command in the format of [SOF, CRC, LEN, KIND, PAYLOAD]
         # self.validate_message_bytes(kind, payload)
         if len(payload) > 0 and isinstance(payload[0], bytes):
@@ -324,7 +331,7 @@ class OnLogicNuvotonManager(ABC):
         
         return constructed_command
 
-    def _send_command(self, command_to_send:bytes) -> bool:
+    def _send_command(self, command_to_send: bytes) -> bool:
         # send command byte by byte and validate response
         # print("LEN IS", len(command_to_send), "\n")
         shell_ack_cnt = 0
@@ -344,7 +351,7 @@ class OnLogicNuvotonManager(ABC):
 
         return False
 
-    def _receive_command(self, response_frame_len:int=ProtocolConstants.RESPONSE_FRAME_LEN) -> bytes:
+    def _receive_command(self, response_frame_len: int = ProtocolConstants.RESPONSE_FRAME_LEN) -> bytes:
         '''\
         receive command in expected format that complies with UART Shell.
         The response_frame list should always end with a NACK ['\a'] 
@@ -362,7 +369,7 @@ class OnLogicNuvotonManager(ABC):
 
         return b''.join(response_frame)
 
-    def _format_version_string(self, payload_bytes:bytes) -> str:
+    def _format_version_string(self, payload_bytes: bytes) -> str:
         payload_len = len(payload_bytes)
         return_str = ""
         for i in range(payload_len):
@@ -371,10 +378,10 @@ class OnLogicNuvotonManager(ABC):
                 return_str += '.'
         return return_str
     
-    def _format_response_number(self, payload_bytes:bytes) -> int:
+    def _format_response_number(self, payload_bytes: bytes) -> int:
         return int.from_bytes(payload_bytes, byteorder='little')
 
-    def _isolate_target_indices(self, frame:bytes) -> tuple:
+    def _isolate_target_indices(self, frame: bytes) -> tuple:
         '''\
         Isolate target parameters from the frame.
         '''
@@ -402,7 +409,7 @@ class OnLogicNuvotonManager(ABC):
 
         _, payload_end, target_indices = self._isolate_target_indices(frame)
         
-        ret_val = self._validate_recieved_frame(frame, target_indices, [0,256])  
+        ret_val = self._validate_recieved_frame(frame, target_indices, BoundaryTypes.BYTE_VALUE_RANGE)  
         if ret_val is not StatusTypes.SUCCESS:
             return ret_val
 

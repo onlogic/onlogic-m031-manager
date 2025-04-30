@@ -2,11 +2,11 @@ import time
 import serial
 from OnLogicNuvotonManager import OnLogicNuvotonManager
 from LoggingUtil import logging
-from command_set import TargetIndices, ProtocolConstants, Kinds, StatusTypes
+from command_set import TargetIndices, ProtocolConstants, Kinds, StatusTypes, BoundaryTypes
 from colorama import Fore
 
 class DioHandler(OnLogicNuvotonManager):
-    def __init__(self, logger_mode:str=None, handler_mode:str=None, serial_connection_label=None):
+    def __init__(self, logger_mode: str = None, handler_mode: str = None, serial_connection_label: str = None):
         super().__init__(logger_mode=logger_mode, 
                          handler_mode=handler_mode, 
                          serial_connection_label=serial_connection_label
@@ -38,10 +38,10 @@ class DioHandler(OnLogicNuvotonManager):
     def _mcu_connection_check(self) -> None:
         super()._mcu_connection_check()
         
-        #if self.get_di(0) not in [0,1]:
+        #if self.get_di(0) not in BoundaryTypes.BINARY_VALUE_RANGE:
         #    raise ValueError("Error | Incorrect Value returned, is this the right device?")
 
-    def get_di(self, di_pin:int) -> int:
+    def get_di(self, di_pin: int) -> int:
         """\
         User-facing method to get state of digital inputs.
 
@@ -50,7 +50,7 @@ class DioHandler(OnLogicNuvotonManager):
         :return:        returns 1, indicating on, 0, indicating off, 
                         and -1, indicating an error occured in the sample
         """
-        self._validate_input_param(di_pin, [0,7], int)
+        self._validate_input_param(di_pin, BoundaryTypes.DIGITAL_IO_PIN_RANGE, int)
 
         di_command = self._construct_command(Kinds.GET_DI, di_pin)
 
@@ -71,14 +71,14 @@ class DioHandler(OnLogicNuvotonManager):
                         )
 
         # Retrieve do value located in penultimate idx of frame
-        ret_val = self._validate_recieved_frame(frame, TargetIndices.PENULTIMATE, [0,1])
+        ret_val = self._validate_recieved_frame(frame, TargetIndices.PENULTIMATE, BoundaryTypes.BINARY_VALUE_RANGE)
         if ret_val is not StatusTypes.SUCCESS:
             return ret_val
 
         return frame[TargetIndices.PENULTIMATE]
 
-    def get_do(self, do_pin:int) -> int:
-        self._validate_input_param(do_pin, [0,7], int)
+    def get_do(self, do_pin: int) -> int:
+        self._validate_input_param(do_pin, BoundaryTypes.DIGITAL_IO_PIN_RANGE, int)
 
         do_command = self._construct_command(Kinds.GET_DO, do_pin)
 
@@ -99,15 +99,15 @@ class DioHandler(OnLogicNuvotonManager):
                         )
 
         # Retrieve do value located in penultimate idx of frame
-        ret_val = self._validate_recieved_frame(frame, TargetIndices.PENULTIMATE, [0,1])
+        ret_val = self._validate_recieved_frame(frame, TargetIndices.PENULTIMATE, BoundaryTypes.BINARY_VALUE_RANGE)
         if ret_val is not StatusTypes.SUCCESS:
             return ret_val
 
         return frame[TargetIndices.PENULTIMATE]
 
-    def set_do(self, pin:int, value:int) -> int:
-        self._validate_input_param(pin, [0,7], int)
-        self._validate_input_param(value, [0,1], int)
+    def set_do(self, pin: int, value: int) -> int:
+        self._validate_input_param(pin, BoundaryTypes.DIGITAL_IO_PIN_RANGE, int)
+        self._validate_input_param(value, BoundaryTypes.BINARY_VALUE_RANGE, int)
 
         set_do_command = self._construct_command(Kinds.SET_DO, pin, value)
 
@@ -128,7 +128,7 @@ class DioHandler(OnLogicNuvotonManager):
                         level=logging.DEBUG
                         )
 
-        return self._validate_recieved_frame(frame, TargetIndices.PENULTIMATE, [0,1])
+        return self._validate_recieved_frame(frame, TargetIndices.PENULTIMATE, BoundaryTypes.BINARY_VALUE_RANGE)
 
     def get_di_contact(self) -> int:
         di_contact_state_cmd = self._construct_command(Kinds.GET_DI_CONTACT)
@@ -148,7 +148,7 @@ class DioHandler(OnLogicNuvotonManager):
                         level=logging.DEBUG
                         )
 
-        ret_val = self._validate_recieved_frame(frame, TargetIndices.PENULTIMATE, [0,1])
+        ret_val = self._validate_recieved_frame(frame, TargetIndices.PENULTIMATE, BoundaryTypes.BINARY_VALUE_RANGE)
         if ret_val is not StatusTypes.SUCCESS:
             return ret_val
 
@@ -173,14 +173,14 @@ class DioHandler(OnLogicNuvotonManager):
                         level=logging.DEBUG
                         )
 
-        ret_val = self._validate_recieved_frame(frame, TargetIndices.PENULTIMATE, [0,1])
+        ret_val = self._validate_recieved_frame(frame, TargetIndices.PENULTIMATE, BoundaryTypes.BINARY_VALUE_RANGE)
         if ret_val is not StatusTypes.SUCCESS:
             return ret_val
 
         return frame[TargetIndices.PENULTIMATE]
 
-    def set_di_contact(self, contact_type:int) -> int:
-        self._validate_input_param(contact_type, [0,1], int)
+    def set_di_contact(self, contact_type: int) -> int:
+        self._validate_input_param(contact_type, BoundaryTypes.BINARY_VALUE_RANGE, int)
 
         set_di_contact_state_cmd = self._construct_command(Kinds.SET_DI_CONTACT, contact_type)
 
@@ -201,10 +201,10 @@ class DioHandler(OnLogicNuvotonManager):
                         level=logging.DEBUG
                         )
 
-        return self._validate_recieved_frame(frame, TargetIndices.PENULTIMATE, [0,1])
+        return self._validate_recieved_frame(frame, TargetIndices.PENULTIMATE, BoundaryTypes.BINARY_VALUE_RANGE)
 
-    def set_do_contact(self, contact_type:int) -> int:
-        self._validate_input_param(contact_type, [0,1], int)
+    def set_do_contact(self, contact_type: int) -> int:
+        self._validate_input_param(contact_type, BoundaryTypes.BINARY_VALUE_RANGE, int)
 
         set_di_contact_state_cmd = self._construct_command(Kinds.SET_DO_CONTACT, contact_type)
 
@@ -224,7 +224,7 @@ class DioHandler(OnLogicNuvotonManager):
                         level=logging.DEBUG
                         )
 
-        return self._validate_recieved_frame(frame, TargetIndices.PENULTIMATE, [0,1])
+        return self._validate_recieved_frame(frame, TargetIndices.PENULTIMATE, BoundaryTypes.BINARY_VALUE_RANGE)
 
     def get_all_input_states(self) -> list:
         all_input_states = []

@@ -13,8 +13,9 @@
 # while the BoundaryTypes class specifies numeric boundaries for command parameters,
 # such as binary values, digital I/O pin ranges, decimal values, and byte values.
 # sof, crc, len, kind, data
+
 class ProtocolConstants:
-    BAUDRATE=115200
+    BAUDRATE = 115_200
 
     # DIO card Device Descriptior, VID and PID
     DIO_MCU_VID_PID_CDC = "353F:A105" 
@@ -79,11 +80,13 @@ class TargetIndices:
 
 class BoundaryTypes:
     BASE_FRAME_SIZE = 4
-    
+
     # Numeric boundries for various command parameters)
     BINARY_VALUE_RANGE = (0, 1)
     DIGITAL_IO_PIN_RANGE = (0, 7)
     DECIMAL_VALUE_RANGE = (0, 9)
     BYTE_VALUE_RANGE = (0, 256) # should it be 255?
+
+    AUTOMOTIVE_TIMER_RANGE = (0, 1_000_000)
 
 ############################################
