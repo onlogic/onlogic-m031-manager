@@ -45,7 +45,6 @@ def main():
             di_val = my_dio.get_di(i)
             print(f"The time difference [In Seconds] is : {timeit.default_timer() - start_time:.6f}")
             print(f"DI Channel {i}: {di_val}")
-            # time.sleep(.1)
         print()
 
         print("=" * 30)
@@ -56,7 +55,6 @@ def main():
             do_val = my_dio.get_do(i)
             print(f"The time difference [In Seconds] is : {timeit.default_timer() - start_time:.6f}")
             print(f"DO Channel {i}: {do_val}")
-            # time.sleep(.01)
         print()
 
         print("=" * 30)
@@ -68,14 +66,12 @@ def main():
             result = my_dio.set_do(i, 1)
             print(f"The time difference [In Seconds] is : {timeit.default_timer() - start_time:.6f}")
             print(f"Setting DO Channel {i} to 1: Status Code = {result}")
-            # time.sleep(.1)       
         print("\nSetting DO channels to 0:")
         for i in range(0, 8):
             start_time = timeit.default_timer()
             result = my_dio.set_do(i, 0)
             print(f"The time difference [In Seconds] is : {timeit.default_timer() - start_time:.6f}")
             print(f"Setting DO Channel {i} to 0: Status Code = {result}")
-            # time.sleep(.1)
         print()
 
         print("=" * 30)

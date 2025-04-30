@@ -29,7 +29,7 @@ from colorama import Fore, init
 class OnLogicNuvotonManager(ABC):
     '''
     Administers the serial connection with the
-    microcontroller embedded in the K/HX-52x DIO-Add in Card.
+    microcontroller embedded in the K/HX-52x DIO-Add and Sequence MCU for Automotive Control.
     '''
     def __init__(self, logger_mode: str = None, handler_mode: str = None, serial_connection_label: str = None):
         '''Init class by establishing serial connection.'''
@@ -37,7 +37,7 @@ class OnLogicNuvotonManager(ABC):
         init(autoreset=True) 
 
         # Setup mechanism so deleter does not delete non-existant objects
-        self.is_setup=False   
+        self.is_setup=False
 
         # Set up logger
         logger_mode = self.__handle_lconfig_str(logger_mode)
@@ -65,7 +65,7 @@ class OnLogicNuvotonManager(ABC):
         repr_str = f"Port: {self.serial_connection_label}\n"             \
                    f"PySerial Version: {serial.__version__}\n"           \ 
                    f"Main Functionality Setup {self.is_setup}"           \
-                   f"\nCommand Set: {Kinds.__name__}\n"                  \
+                   f"Command Set: {Kinds.__name__}\n"                    \
                    f"Protocol Constants: {ProtocolConstants.__name__}\n" \
                    f"Status Types: {StatusTypes.__name__}\n"             \
                    f"Target Indices: {TargetIndices.__name__}\n"         \
@@ -73,7 +73,7 @@ class OnLogicNuvotonManager(ABC):
                    f"Serial Connection Label: {self.serial_connection_label}\n" \
                    f"Serial Port: {self.port}\n" if hasattr(self, 'port') else "Serial Port not initialized\n" \
                    f"Is Setup: {self.is_setup}\n"        
-        
+
         return repr_str
 
     @staticmethod
@@ -112,9 +112,17 @@ class OnLogicNuvotonManager(ABC):
     def get_info(self) -> None:
         pass
 
-    # _get_cdc_device_port cdc device descriptor in automotive class (UART)
     @abstractmethod
     def _init_port(self) -> serial.Serial:
+        '''\
+        Initialize the serial port with the given baudrate and device descriptor.
+        If the port is not specified, it will search for the device with the 
+        given VID and PID when used for DIO Utility. Otherwise, it will simply initialize
+        the port with the given serial connection label.
+
+        If the port is not found, it will raise a ValueError.
+        '''
+
         pass
 
     @abstractmethod
