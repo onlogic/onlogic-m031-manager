@@ -39,7 +39,7 @@ def main():
         print("=" * 30)
         print("TESTING SET AUTOMOTIVE MODE (set_automotive_mode)")
         # print("Set Automotive Mode 1, RETURN CODE:", my_auto.set_automotive_mode(1))
-        print("SET AUTOMOTIVE MODE 0, RETURN CODE:", my_auto.set_automotive_mode(0))
+        print("SET AUTOMOTIVE MODE, RETURN CODE:", my_auto.set_automotive_mode(0))
         print("=" * 30)
         print()
 
@@ -114,7 +114,7 @@ def main():
     finally: 
         print("\033[93mExiting...\033[0m")
         if my_auto is not None:
-            my_auto.close_connection() 
+            my_auto.release() 
 
 if __name__ == "__main__":
     main()

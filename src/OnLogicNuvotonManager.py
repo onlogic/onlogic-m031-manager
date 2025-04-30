@@ -53,11 +53,11 @@ class OnLogicNuvotonManager(ABC):
         return self
 
     def __exit__(self, etype, evalue, etraceback):
-        self.close_connection()
+        self.release()
 
     def __del__(self):
         '''Destroy the object and end device communication gracefully.'''
-        self.close_connection()
+        self.release()
 
     def __str__(self):
         '''COM port and command set of DioInputHandler.'''
@@ -297,8 +297,8 @@ class OnLogicNuvotonManager(ABC):
         self.is_setup = True
         self._reset()
 
-    def close_connection(self):
-        # HX52xDioHandler._construct_command.cache_clear()
+    def release(self):
+        # ._construct_command.cache_clear()
 
         # TODO: Figure out why is the sleep function Erroring when lru_cache is enabled 
         # in destructor with time.sleep uncommented 

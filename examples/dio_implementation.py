@@ -164,7 +164,7 @@ def main():
     finally: 
         print("\033[93mExiting...\033[0m")
         if my_dio is not None:
-            my_dio.close_connection() 
+            my_dio.release() 
 
 if __name__ == "__main__":
     main()
