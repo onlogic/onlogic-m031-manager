@@ -12,7 +12,7 @@ class LoggingUtil():
 
     @staticmethod
     def _create_filename():
-        return f"HX52x_session_{datetime.now().strftime("%m_%d_%Y_%H_%M_%S")}.log"
+        return f"log_session_{datetime.now().strftime("%m_%d_%Y_%H_%M_%S")}.log"
 
     def _check_logger_mode(self):
         if self.logger_mode in [None, "off"]:
@@ -75,14 +75,13 @@ class LoggingUtil():
                          level=logging.INFO
                         )
 
-    def _lprint(self, message_info, print_to_console, color):
-        if print_to_console and self.logger_mode != "console":
-            if color == Fore.RED:
-                print(Fore.RED + message_info)
-            elif color == Fore.GREEN:
-                print(Fore.GREEN + message_info)
-            else:
-                print(message_info)
+    def _lprint(self, message_info, color):
+        if color == Fore.RED:
+            print(Fore.RED + message_info)
+        elif color == Fore.GREEN:
+            print(Fore.GREEN + message_info)
+        else:
+            print(message_info)
 
     def _output_log(self, log_msg, level, stacklevel=3):
         if level == logging.INFO:
@@ -95,12 +94,9 @@ class LoggingUtil():
             raise ValueError("ERROR | INCORRECT MODE INPUT INTO LOGGER")
 
     def _log_print(self, message:str, print_to_console:bool=True, color:str=None, 
-                    log:bool=False, level:Optional[int]=None) -> bool:
+                    log:bool=False, level:Optional[int]=None):
+        if print_to_console:
+            self._lprint(message, print_to_console, color)
 
-        self._lprint(message, print_to_console, color)
-
-        if log is True \
-                and level is not None \
-                and self.logger_mode not in ["off", None]:
-
-            self._output_log(message, level)
+        if log and level and self.logger_mode not in ["off", None]:
+            self._output_log(message, level)        

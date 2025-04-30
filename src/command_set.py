@@ -1,10 +1,13 @@
 ################ Constants #################
 
 class ProtocolConstants:
-    # DIO card Device Descroptior, VID and PID
+    BAUDRATE=115200
+
+    # DIO card Device Descriptior, VID and PID
     DIO_MCU_VID_PID_CDC = "353F:A105" 
     TIME_THRESHOLD = 2.5
     STANDARD_DELAY = .004
+    STANDARD_NACK_CLEARANCES = 64
 
     # Hardcoded transmission values
     SHELL_SOF  = 0x01
@@ -61,6 +64,7 @@ class TargetIndices:
     PAYLOAD_START = 4
 
 class BoundryTypes:
+    BASE_FRAME_SIZE = 4 
     # Numeric boundries for various command parameters
     DIGITAL_INPUT_PIN_RANGE = (0, 7)
     DIGITAL_OUTPUT_PIN_RANGE = (0, 7)

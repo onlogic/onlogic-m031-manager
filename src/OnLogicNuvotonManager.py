@@ -22,7 +22,7 @@ import functools
 from abc import ABC, abstractmethod
 from LoggingUtil import LoggingUtil, logging
 from serial.tools import list_ports as system_ports
-from command_set import ProtocolConstants, Kinds, StatusTypes, TargetIndices
+from command_set import ProtocolConstants, Kinds, StatusTypes, TargetIndices, BoundryTypes
 from fastcrc import crc8
 from colorama import Fore, init
 
@@ -136,7 +136,7 @@ class OnLogicNuvotonManager(ABC):
                     self.logger_util._log_print(f"{byte_in_port}",print_to_console=False, log=True, level=logging.DEBUG)
                     nack_count += 1
                     self.port.write(ProtocolConstants.SHELL_ACK.to_bytes(1, byteorder='little'))
-                    time.sleep(.004)
+                    time.sleep(ProtocolConstants.STANDARD_DELAY)
 
         if nack_count == ProtocolConstants.NACKS_NEEDED:
             self.logger_util._log_print("Interface Found", print_to_console=True, 
@@ -185,7 +185,7 @@ class OnLogicNuvotonManager(ABC):
             else:
                 bytes_to_send = nack_counter
 
-    def _validate_input_param(self, dio_input_parameter, valid_input_range:list, input_type:type):
+    def _validate_input_param(self, dio_input_parameter, valid_input_range:tuple, input_type:type):
         if self.is_setup is False:
             raise serial.SerialException("ERROR | Serial Connection is not set up, did you claim the port?")
 
@@ -208,7 +208,7 @@ class OnLogicNuvotonManager(ABC):
             raise ValueError(value_error_msg)
 
     def _check_crc(self, frame:bytes) -> bool:
-        if len(frame) < 4:
+        if len(frame) < BoundryTypes.BASE_FRAME_SIZE:
             return False
 
         crc_bytes = frame[2:-1]
@@ -388,14 +388,14 @@ class OnLogicNuvotonManager(ABC):
         version_command = self._construct_command(Kinds.GET_FIRMWARE_VERSION)
 
         # Enclose each value read with buffer clearances
-        self._reset(nack_counter=64)
+        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES)
         if not self._send_command(version_command):
             return StatusTypes.SEND_CMD_FAILURE
 
         frame = self._receive_command(8)
 
-        self._reset(nack_counter=64, reset_buffers=False)
-        time.sleep(.004)
+        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False)
+        time.sleep(ProtocolConstants.STANDARD_DELAY)
 
         self.logger_util._log_print(f"Recieved Command Bytestr {frame}", print_to_console=False,
                                     log=True, level=logging.DEBUG)

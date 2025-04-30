@@ -2,7 +2,7 @@ import time
 import serial
 from OnLogicNuvotonManager import OnLogicNuvotonManager
 from LoggingUtil import logging
-from command_set import ProtocolConstants, Kinds, StatusTypes, TargetIndices
+from command_set import ProtocolConstants, Kinds, StatusTypes, TargetIndices, BoundryTypes
 from colorama import Fore
 
 class AutomotiveHandler(OnLogicNuvotonManager):
@@ -45,7 +45,7 @@ class AutomotiveHandler(OnLogicNuvotonManager):
         elif (self.serial_connection_label == self._get_cdc_device_port(ProtocolConstants.DIO_MCU_VID_PID_CDC, ".0")):
             self._init_port_error_handling("Error | DIO COM Port Provided for automotive port entry")
         try:
-            return serial.Serial(self.serial_connection_label, 115200, timeout=1)
+            return serial.Serial(self.serial_connection_label, ProtocolConstants.BAUDRATE, timeout=1)
         except serial.SerialException as e:
             serial_connect_err = f"ERROR | {e}: Are you on the right port?" \
                                   "Did you enable correct bios settings []?"
@@ -53,19 +53,19 @@ class AutomotiveHandler(OnLogicNuvotonManager):
             raise serial.SerialException(serial_connect_err)
         
     def get_info(self) -> None:
-        super().get_info(filename="AutomotiveModeDescription.log" if filename is None else filename)
+        super().get_info(filename="AutomotiveModeDescription.log")
 
     def get_automotive_mode(self) -> int:
         automotive_mode = self._construct_command(Kinds.GET_AUTOMOTIVE_MODE)
 
-        self._reset(nack_counter=64)
+        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES)
         if not self._send_command(automotive_mode):
             return StatusTypes.SEND_CMD_FAILURE
 
         frame = self._receive_command(6)
 
-        self._reset(nack_counter=64, reset_buffers=False) 
-        time.sleep(.004)
+        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False) 
+        time.sleep(ProtocolConstants.STANDARD_DELAY)
 
         self.logger_util._log_print(f"recieved command bytestr {frame}",
                         print_to_console=False,
@@ -85,15 +85,15 @@ class AutomotiveHandler(OnLogicNuvotonManager):
         set_auto_mode = self._construct_command(Kinds.SET_AUTOMOTIVE_MODE, mode)
 
         # Enclose each value read with buffer clearances
-        self._reset(nack_counter=64)
+        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES)
 
         if not self._send_command(set_auto_mode):
             return StatusTypes.SEND_CMD_FAILURE
 
         frame = self._receive_command(6)
 
-        self._reset(nack_counter=64, reset_buffers=False)
-        time.sleep(.004)
+        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False)
+        time.sleep(ProtocolConstants.STANDARD_DELAY)
 
         self.logger_util._log_print(f"recieved command bytestr {frame}",
                         print_to_console=False,
@@ -106,14 +106,14 @@ class AutomotiveHandler(OnLogicNuvotonManager):
     def get_low_power_enable(self):
         lpe_command = self._construct_command(Kinds.GET_LOW_POWER_ENABLE)
 
-        self._reset(nack_counter=64)
+        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES)
         if not self._send_command(lpe_command):
             return StatusTypes.SEND_CMD_FAILURE
 
         frame = self._receive_command(6)
 
-        self._reset(nack_counter=64, reset_buffers=False) 
-        time.sleep(.004)
+        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False) 
+        time.sleep(ProtocolConstants.STANDARD_DELAY)
 
         self.logger_util._log_print(f"recieved command bytestr {frame}",
                         print_to_console=False, log=True, level=logging.DEBUG)
@@ -129,15 +129,15 @@ class AutomotiveHandler(OnLogicNuvotonManager):
 
         set_lpe_cmd = self._construct_command(Kinds.SET_LOW_POWER_ENABLE, lpe)
 
-        self._reset(nack_counter=64)
+        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES)
 
         if not self._send_command(set_lpe_cmd):
             return StatusTypes.SEND_CMD_FAILURE
 
         frame = self._receive_command(6) 
 
-        self._reset(nack_counter=64, reset_buffers=False)
-        time.sleep(.004)
+        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False)
+        time.sleep(ProtocolConstants.STANDARD_DELAY)
 
         self.logger_util._log_print(f"recieved command bytestr {frame}",
                         print_to_console=False,
@@ -151,14 +151,14 @@ class AutomotiveHandler(OnLogicNuvotonManager):
         sut_cmd = self._construct_command(Kinds.GET_START_UP_TIMER)
 
         # Enclose each value read with buffer clearances
-        self._reset(nack_counter=64)
+        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES)
         if not self._send_command(sut_cmd):
             return StatusTypes.SEND_CMD_FAILURE
 
         frame = self._receive_command(4+8+1)
 
-        self._reset(nack_counter=64, reset_buffers=False)
-        time.sleep(.004)
+        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False)
+        time.sleep(ProtocolConstants.STANDARD_DELAY)
 
         self.logger_util._log_print(f"recieved command bytestr {frame}", print_to_console=False,
                                     log=True, level=logging.DEBUG)
@@ -176,7 +176,7 @@ class AutomotiveHandler(OnLogicNuvotonManager):
 
         set_sut_cmd = self._construct_command(Kinds.SET_START_UP_TIMER, sut.to_bytes(8, 'little'), 8)
 
-        self._reset(nack_counter=64)
+        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES)
 
         if not self._send_command(set_sut_cmd):
             return StatusTypes.SEND_CMD_FAILURE
@@ -184,8 +184,8 @@ class AutomotiveHandler(OnLogicNuvotonManager):
         frame = self._receive_command(4+8+1) 
         target_indices = self._isolate_target_indices(frame)
 
-        self._reset(nack_counter=64, reset_buffers=False)
-        time.sleep(.004)
+        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False)
+        time.sleep(ProtocolConstants.STANDARD_DELAY)
 
         self.logger_util._log_print(f"recieved command bytestr {frame}",
                         print_to_console=False,
@@ -199,14 +199,14 @@ class AutomotiveHandler(OnLogicNuvotonManager):
         sot_timer_cmd = self._construct_command(Kinds.GET_SOFT_OFF_TIMER)
 
         # Enclose each value read with buffer clearances
-        self._reset(nack_counter=64)
+        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES)
         if not self._send_command(sot_timer_cmd):
             return StatusTypes.SEND_CMD_FAILURE
 
         frame = self._receive_command(4+8+1)
 
-        self._reset(nack_counter=64, reset_buffers=False)
-        time.sleep(.004)
+        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False)
+        time.sleep(ProtocolConstants.STANDARD_DELAY)
 
         self.logger_util._log_print(f"recieved command bytestr {frame}", print_to_console=False,
                                     log=True, level=logging.DEBUG)
@@ -224,7 +224,7 @@ class AutomotiveHandler(OnLogicNuvotonManager):
 
         set_sot_cmd = self._construct_command(Kinds.SET_SOFT_OFF_TIMER, sot.to_bytes(8, 'little'), 8)
 
-        self._reset(nack_counter=64)
+        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES)
 
         if not self._send_command(set_sot_cmd):
             return StatusTypes.SEND_CMD_FAILURE
@@ -232,8 +232,8 @@ class AutomotiveHandler(OnLogicNuvotonManager):
         frame = self._receive_command(4+8+1) 
         target_indices = self._isolate_target_indices(frame)
 
-        self._reset(nack_counter=64, reset_buffers=False)
-        time.sleep(.004)
+        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False)
+        time.sleep(ProtocolConstants.STANDARD_DELAY)
 
         self.logger_util._log_print(f"recieved command bytestr {frame}",
                         print_to_console=False, log=True, level=logging.DEBUG
@@ -245,14 +245,14 @@ class AutomotiveHandler(OnLogicNuvotonManager):
         hot_timer_cmd = self._construct_command(Kinds.GET_HARD_OFF_TIMER)
 
         # Enclose each value read with buffer clearances
-        self._reset(nack_counter=64)
+        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES)
         if not self._send_command(hot_timer_cmd):
             return StatusTypes.SEND_CMD_FAILURE
 
         frame = self._receive_command(4+8+1)
 
-        self._reset(nack_counter=64, reset_buffers=False)
-        time.sleep(.004)
+        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False)
+        time.sleep(ProtocolConstants.STANDARD_DELAY)
 
         self.logger_util._log_print(f"recieved command bytestr {frame}", print_to_console=False,
                                     log=True, level=logging.DEBUG)
@@ -270,7 +270,7 @@ class AutomotiveHandler(OnLogicNuvotonManager):
 
         set_hot_cmd = self._construct_command(Kinds.SET_HARD_OFF_TIMER, hot.to_bytes(8, 'little'), 8)
 
-        self._reset(nack_counter=64)
+        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES)
 
         if not self._send_command(set_hot_cmd):
             return StatusTypes.SEND_CMD_FAILURE
@@ -278,8 +278,8 @@ class AutomotiveHandler(OnLogicNuvotonManager):
         frame = self._receive_command(4+8+1) 
         target_indices = self._isolate_target_indices(frame)
 
-        self._reset(nack_counter=64, reset_buffers=False)
-        time.sleep(.004)
+        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False)
+        time.sleep(ProtocolConstants.STANDARD_DELAY)
 
         self.logger_util._log_print(f"recieved command bytestr {frame}",
                         print_to_console=False, log=True, level=logging.DEBUG
@@ -291,14 +291,14 @@ class AutomotiveHandler(OnLogicNuvotonManager):
         lvt_timer_cmd = self._construct_command(Kinds.GET_LOW_VOLTAGE_TIMER)
 
         # Enclose each value read with buffer clearances
-        self._reset(nack_counter=64)
+        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES)
         if not self._send_command(lvt_timer_cmd):
             return StatusTypes.SEND_CMD_FAILURE
 
         frame = self._receive_command(4+8+1)
 
-        self._reset(nack_counter=64, reset_buffers=False)
-        time.sleep(.004)
+        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False)
+        time.sleep(ProtocolConstants.STANDARD_DELAY)
 
         self.logger_util._log_print(f"recieved command bytestr {frame}", print_to_console=False,
                                     log=True, level=logging.DEBUG)
@@ -316,7 +316,7 @@ class AutomotiveHandler(OnLogicNuvotonManager):
 
         set_lvt_cmd = self._construct_command(Kinds.SET_LOW_VOLTAGE_TIMER , lvt.to_bytes(8, 'little'), 8)
 
-        self._reset(nack_counter=64)
+        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES)
 
         if not self._send_command(set_lvt_cmd):
             return StatusTypes.SEND_CMD_FAILURE
@@ -324,8 +324,8 @@ class AutomotiveHandler(OnLogicNuvotonManager):
         frame = self._receive_command(4+8+1) 
         target_indices = self._isolate_target_indices(frame)
 
-        self._reset(nack_counter=64, reset_buffers=False)
-        time.sleep(.004)
+        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False)
+        time.sleep(ProtocolConstants.STANDARD_DELAY)
 
         self.logger_util._log_print(f"recieved command bytestr {frame}",
                         print_to_console=False, log=True, level=logging.DEBUG
@@ -337,14 +337,14 @@ class AutomotiveHandler(OnLogicNuvotonManager):
         sdv_timer_cmd = self._construct_command(Kinds.GET_SHUTDOWN_VOLTAGE)
 
         # Enclose each value read with buffer clearances
-        self._reset(nack_counter=64)
+        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES)
         if not self._send_command(sdv_timer_cmd):
             return StatusTypes.SEND_CMD_FAILURE
 
         frame = self._receive_command(4+4+1)
 
-        self._reset(nack_counter=64, reset_buffers=False)
-        time.sleep(.004)
+        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False)
+        time.sleep(ProtocolConstants.STANDARD_DELAY)
 
         self.logger_util._log_print(f"recieved command bytestr {frame}", print_to_console=False,
                                     log=True, level=logging.DEBUG)
@@ -362,7 +362,7 @@ class AutomotiveHandler(OnLogicNuvotonManager):
 
         set_sdv_cmd = self._construct_command(Kinds.SET_SHUTDOWN_VOLTAGE, sdv.to_bytes(8, 'little'), 8)
 
-        self._reset(nack_counter=64)
+        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES)
 
         if not self._send_command(set_sdv_cmd):
             return StatusTypes.SEND_CMD_FAILURE
@@ -370,8 +370,8 @@ class AutomotiveHandler(OnLogicNuvotonManager):
         frame = self._receive_command(4+4+1) 
         target_indices = self._isolate_target_indices(frame)
 
-        self._reset(nack_counter=64, reset_buffers=False)
-        time.sleep(.004)
+        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False)
+        time.sleep(ProtocolConstants.STANDARD_DELAY)
 
         self.logger_util._log_print(f"recieved command bytestr {frame}",
                         print_to_console=False, log=True, level=logging.DEBUG

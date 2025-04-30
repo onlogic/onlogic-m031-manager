@@ -2,7 +2,7 @@ import time
 import serial
 from OnLogicNuvotonManager import OnLogicNuvotonManager
 from LoggingUtil import logging
-from command_set import ProtocolConstants, Kinds, StatusTypes
+from command_set import TargetIndices, ProtocolConstants, Kinds, StatusTypes
 from colorama import Fore
 
 class DioHandler(OnLogicNuvotonManager):
@@ -19,7 +19,7 @@ class DioHandler(OnLogicNuvotonManager):
 
         try:
             if self.serial_connection_label is not None:
-                return serial.Serial(self.serial_connection_label, 115200, timeout=1)
+                return serial.Serial(self.serial_connection_label, ProtocolConstants.BAUDRATE, timeout=1)
             else:
                 type_connect_error = f"ERROR | USB CDC not found, is the DIO card configured right?"
                 self.logger_util._log_print(type_connect_error, print_to_console=True,
@@ -55,13 +55,13 @@ class DioHandler(OnLogicNuvotonManager):
         di_command = self._construct_command(Kinds.GET_DI, di_pin)
 
         # Enclose each value read with buffer clearances
-        self._reset(nack_counter=64)
+        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES)
         if not self._send_command(di_command):
             return StatusTypes.SUCCESS
 
         frame = self._receive_command()
 
-        self._reset(nack_counter=64, reset_buffers=False)
+        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False)
         time.sleep(ProtocolConstants.STANDARD_DELAY)
 
         self.logger_util._log_print(f"recieved command bytestr {frame}",
@@ -71,11 +71,11 @@ class DioHandler(OnLogicNuvotonManager):
                         )
 
         # Retrieve do value located in penultimate idx of frame
-        ret_val = self._validate_recieved_frame(frame, -2, [0,1])
+        ret_val = self._validate_recieved_frame(frame, TargetIndices.PENULTIMATE, [0,1])
         if ret_val is not StatusTypes.SUCCESS:
             return ret_val
 
-        return frame[-2]
+        return frame[TargetIndices.PENULTIMATE]
 
     def get_do(self, do_pin:int) -> int:
         self._validate_input_param(do_pin, [0,7], int)
@@ -83,13 +83,13 @@ class DioHandler(OnLogicNuvotonManager):
         do_command = self._construct_command(Kinds.GET_DO, do_pin)
 
         # Enclose each value read with buffer clearances
-        self._reset(nack_counter=64)
+        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES)
         if not self._send_command(do_command):
             return StatusTypes.SEND_CMD_FAILURE
 
         frame = self._receive_command()
 
-        self._reset(nack_counter=64, reset_buffers=False)
+        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False)
         time.sleep(ProtocolConstants.STANDARD_DELAY)
 
         self.logger_util._log_print(f"recieved command bytestr {frame}",
@@ -99,11 +99,11 @@ class DioHandler(OnLogicNuvotonManager):
                         )
 
         # Retrieve do value located in penultimate idx of frame
-        ret_val = self._validate_recieved_frame(frame, -2, [0,1])
+        ret_val = self._validate_recieved_frame(frame, TargetIndices.PENULTIMATE, [0,1])
         if ret_val is not StatusTypes.SUCCESS:
             return ret_val
 
-        return frame[-2]
+        return frame[TargetIndices.PENULTIMATE]
 
     def set_do(self, pin:int, value:int) -> int:
         self._validate_input_param(pin, [0,7], int)
@@ -112,14 +112,14 @@ class DioHandler(OnLogicNuvotonManager):
         set_do_command = self._construct_command(Kinds.SET_DO, pin, value)
 
         # Enclose each value read with buffer clearances
-        self._reset(nack_counter=64)
+        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES)
 
         if not self._send_command(set_do_command):
             return StatusTypes.SEND_CMD_FAILURE
 
         frame = self._receive_command()
 
-        self._reset(nack_counter=64, reset_buffers=False)
+        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False)
         time.sleep(ProtocolConstants.STANDARD_DELAY)
 
         self.logger_util._log_print(f"recieved command bytestr {frame}",
@@ -128,18 +128,18 @@ class DioHandler(OnLogicNuvotonManager):
                         level=logging.DEBUG
                         )
 
-        return self._validate_recieved_frame(frame, -2, [0,1])
+        return self._validate_recieved_frame(frame, TargetIndices.PENULTIMATE, [0,1])
 
     def get_di_contact(self) -> int:
         di_contact_state_cmd = self._construct_command(Kinds.GET_DI_CONTACT)
 
-        self._reset(nack_counter=64)
+        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES)
         if not self._send_command(di_contact_state_cmd):
             return StatusTypes.SEND_CMD_FAILURE
 
         frame = self._receive_command(6)
 
-        self._reset(nack_counter=64, reset_buffers=False) 
+        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False) 
         time.sleep(ProtocolConstants.STANDARD_DELAY)
 
         self.logger_util._log_print(f"recieved command bytestr {frame}",
@@ -148,23 +148,23 @@ class DioHandler(OnLogicNuvotonManager):
                         level=logging.DEBUG
                         )
 
-        ret_val = self._validate_recieved_frame(frame, -2, [0,1])
+        ret_val = self._validate_recieved_frame(frame, TargetIndices.PENULTIMATE, [0,1])
         if ret_val is not StatusTypes.SUCCESS:
             return ret_val
 
-        return frame[-2]
+        return frame[TargetIndices.PENULTIMATE]
 
     def get_do_contact(self) -> int:
         do_contact_state_cmd = self._construct_command(Kinds.GET_DO_CONTACT)
 
         # Enclose each value read with buffer clearances
-        self._reset(nack_counter=64)
+        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES)
         if not self._send_command(do_contact_state_cmd):
             return StatusTypes.SEND_CMD_FAILURE
 
         frame = self._receive_command(6)
 
-        self._reset(nack_counter=64, reset_buffers=False)
+        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False)
         time.sleep(ProtocolConstants.STANDARD_DELAY)
 
         self.logger_util._log_print(f"recieved command bytestr {frame}",
@@ -173,11 +173,11 @@ class DioHandler(OnLogicNuvotonManager):
                         level=logging.DEBUG
                         )
 
-        ret_val = self._validate_recieved_frame(frame, -2, [0,1])
+        ret_val = self._validate_recieved_frame(frame, TargetIndices.PENULTIMATE, [0,1])
         if ret_val is not StatusTypes.SUCCESS:
             return ret_val
 
-        return frame[-2]
+        return frame[TargetIndices.PENULTIMATE]
 
     def set_di_contact(self, contact_type:int) -> int:
         self._validate_input_param(contact_type, [0,1], int)
@@ -185,14 +185,14 @@ class DioHandler(OnLogicNuvotonManager):
         set_di_contact_state_cmd = self._construct_command(Kinds.SET_DI_CONTACT, contact_type)
 
         # Enclose each value read with buffer clearances
-        self._reset(nack_counter=64)
+        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES)
 
         if not self._send_command(set_di_contact_state_cmd):
             return StatusTypes.SEND_CMD_FAILURE
 
         frame = self._receive_command(6)
 
-        self._reset(nack_counter=64, reset_buffers=False)
+        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False)
         time.sleep(ProtocolConstants.STANDARD_DELAY)
 
         self.logger_util._log_print(f"recieved command bytestr {frame}",
@@ -201,7 +201,7 @@ class DioHandler(OnLogicNuvotonManager):
                         level=logging.DEBUG
                         )
 
-        return self._validate_recieved_frame(frame, -2, [0,1])
+        return self._validate_recieved_frame(frame, TargetIndices.PENULTIMATE, [0,1])
 
     def set_do_contact(self, contact_type:int) -> int:
         self._validate_input_param(contact_type, [0,1], int)
@@ -209,13 +209,13 @@ class DioHandler(OnLogicNuvotonManager):
         set_di_contact_state_cmd = self._construct_command(Kinds.SET_DO_CONTACT, contact_type)
 
         # Enclose each value read with buffer clearances
-        self._reset(nack_counter=64)
+        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES)
         if not self._send_command(set_di_contact_state_cmd):
             return StatusTypes.SEND_CMD_FAILURE
 
         frame = self._receive_command(6)
  
-        self._reset(nack_counter=64, reset_buffers=False)
+        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False)
         time.sleep(ProtocolConstants.STANDARD_DELAY)
 
         self.logger_util._log_print(f"recieved command bytestr {frame}",
@@ -224,7 +224,7 @@ class DioHandler(OnLogicNuvotonManager):
                         level=logging.DEBUG
                         )
 
-        return self._validate_recieved_frame(frame, -2, [0,1])
+        return self._validate_recieved_frame(frame, TargetIndices.PENULTIMATE, [0,1])
 
     def get_all_input_states(self) -> list:
         all_input_states = []
