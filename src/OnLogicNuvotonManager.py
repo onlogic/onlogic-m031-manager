@@ -22,7 +22,7 @@ import functools
 from abc import ABC, abstractmethod
 from LoggingUtil import LoggingUtil, logging
 from serial.tools import list_ports as system_ports
-from command_set import ProtocolConstants, Kinds, StatusTypes, TargetIndices, BoundryTypes
+from command_set import ProtocolConstants, Kinds, StatusTypes, TargetIndices, BoundaryTypes
 from fastcrc import crc8
 from colorama import Fore, init
 
@@ -208,7 +208,7 @@ class OnLogicNuvotonManager(ABC):
             raise ValueError(value_error_msg)
 
     def _check_crc(self, frame:bytes) -> bool:
-        if len(frame) < BoundryTypes.BASE_FRAME_SIZE:
+        if len(frame) < BoundaryTypes.BASE_FRAME_SIZE:
             return False
 
         crc_bytes = frame[2:-1]
@@ -244,12 +244,12 @@ class OnLogicNuvotonManager(ABC):
 
     def _validate_recieved_frame(self, return_frame:list, target_index:int|list=None, target_range:list=None) -> int:
         if return_frame[0] != ProtocolConstants.SHELL_SOF:
-            self.logger_util._log_print(f"SOF Frame not found", color=Fore.RED, print_to_console=True,
+            self.logger_util._log_print(f"SOF Value Not Correct", color=Fore.RED, print_to_console=True,
                                         log=True,level=logging.ERROR)
             return StatusTypes.RECV_FRAME_SOF_ERROR
 
         if return_frame[-1] != ProtocolConstants.SHELL_NACK:
-            self.logger_util._log_print(f"NACK not found in desired index", color=Fore.RED,
+            self.logger_util._log_print(f"NACK Not Found in Desired Index", color=Fore.RED,
                                         print_to_console=True, log=True, level=logging.ERROR)
             return StatusTypes.RECV_FRAME_NACK_ERROR
     
@@ -402,7 +402,7 @@ class OnLogicNuvotonManager(ABC):
 
         _, payload_end, target_indices = self._isolate_target_indices(frame)
         
-        ret_val = self._validate_recieved_frame(frame, target_indices, [0,128])
+        ret_val = self._validate_recieved_frame(frame, target_indices, [0,256])  
         if ret_val is not StatusTypes.SUCCESS:
             return ret_val
 

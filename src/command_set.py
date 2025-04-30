@@ -1,5 +1,18 @@
 ################ Constants #################
+# This file contains constants used throughout the OnLogic Nuvoton Manager.
+# It includes protocol constants, command kinds, status types, target indices,
+# and boundary types. 
 
+# The ProtocolConstants class defines the baud rate, device descriptor,
+# transmission values, and serial check values used in the communication protocol.
+# The Kinds class categorizes the command classifiers for automotive and DIO commands,
+# providing a clear mapping of command types to their respective identifiers.
+# The StatusTypes class enumerates the various status codes that can be returned
+# during command execution, indicating success or different types of errors.
+# The TargetIndices class defines indices used to isolate target data within received frames,
+# while the BoundaryTypes class specifies numeric boundaries for command parameters,
+# such as binary values, digital I/O pin ranges, decimal values, and byte values.
+# sof, crc, len, kind, data
 class ProtocolConstants:
     BAUDRATE=115200
 
@@ -29,17 +42,18 @@ class Kinds:
     SET_AUTOMOTIVE_MODE  = 0x07
     GET_LOW_POWER_ENABLE = 0x08
     SET_LOW_POWER_ENABLE = 0x09
+    GET_LOW_VOLTAGE_TIMER = 0x10
+    SET_LOW_VOLTAGE_TIMER = 0x11
+    GET_SHUTDOWN_VOLTAGE = 0x12
+    SET_SHUTDOWN_VOLTAGE = 0x13 
+   
     GET_START_UP_TIMER = 0x0A
     SET_START_UP_TIMER = 0x0B
     GET_SOFT_OFF_TIMER = 0x0C
     SET_SOFT_OFF_TIMER = 0x0D
     GET_HARD_OFF_TIMER = 0x0E
     SET_HARD_OFF_TIMER = 0x0F
-    GET_LOW_VOLTAGE_TIMER = 0x10
-    SET_LOW_VOLTAGE_TIMER = 0x11
-    GET_SHUTDOWN_VOLTAGE = 0x12
-    SET_SHUTDOWN_VOLTAGE = 0x13
-
+    
     # DIO Command Classifiers
     GET_DI = 0x20
     SET_DO = 0x21
@@ -63,13 +77,13 @@ class TargetIndices:
     RECV_PAYLOAD_LEN = 2
     PAYLOAD_START = 4
 
-class BoundryTypes:
-    BASE_FRAME_SIZE = 4 
-    # Numeric boundries for various command parameters
-    DIGITAL_INPUT_PIN_RANGE = (0, 7)
-    DIGITAL_OUTPUT_PIN_RANGE = (0, 7)
-    BINARY_OUTPUT_PIN_RANGE = (0, 1)
-    DECIMAL_CODED_NUM_RANGE = (0, 9)
+class BoundaryTypes:
+    BASE_FRAME_SIZE = 4
+    
+    # Numeric boundries for various command parameters)
+    BINARY_VALUE_RANGE = (0, 1)
+    DIGITAL_IO_PIN_RANGE = (0, 7)
+    DECIMAL_VALUE_RANGE = (0, 9)
+    BYTE_VALUE_RANGE = (0, 256) # should it be 255?
 
 ############################################
-# sof, crc, len, kind, data

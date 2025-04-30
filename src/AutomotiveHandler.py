@@ -2,7 +2,7 @@ import time
 import serial
 from OnLogicNuvotonManager import OnLogicNuvotonManager
 from LoggingUtil import logging
-from command_set import ProtocolConstants, Kinds, StatusTypes, TargetIndices, BoundryTypes
+from command_set import ProtocolConstants, Kinds, StatusTypes, TargetIndices, BoundaryTypes
 from colorama import Fore
 
 class AutomotiveHandler(OnLogicNuvotonManager):

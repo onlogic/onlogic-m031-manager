@@ -96,7 +96,7 @@ class LoggingUtil():
     def _log_print(self, message:str, print_to_console:bool=True, color:str=None, 
                     log:bool=False, level:Optional[int]=None):
         if print_to_console:
-            self._lprint(message, print_to_console, color)
+            self._lprint(message, color)
 
         if log and level and self.logger_mode not in ["off", None]:
             self._output_log(message, level)        
