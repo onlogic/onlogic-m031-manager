@@ -399,6 +399,9 @@ class OnLogicNuvotonManager(ABC):
             return False
 
         if response_frame[TargetIndices.KIND] != response_frame_kind.to_bytes(1, byteorder='little'):
+            self.logger_util._log_print(f"Kind Value Not Correct Got {response_frame[TargetIndices.KIND]},expected {response_frame_kind}", 
+                                        color=Fore.RED, print_to_console=True,
+                                        log=True, level=logging.ERROR)
             return False
 
         return True

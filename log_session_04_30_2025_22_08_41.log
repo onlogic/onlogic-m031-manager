@@ -1,0 +1,45 @@
+[2025-04-30 22:08:41,171 INFO LoggingUtil.py:72 -> _create_logger()] Logger Initialized...
+[2025-04-30 22:08:41,174 INFO OnLogicNuvotonManager.py:104 -> _get_cdc_device_port()] NOTE | DIO CARD FOUND ON:
+Port: /dev/ttyACM0 - HX52x USB
+Port Location: 3-8:1.0
+Hardware ID: USB VID:PID=353F:A105 LOCATION=3-8:1.0
+Device: /dev/ttyACM0
+
+[2025-04-30 22:08:41,175 DEBUG OnLogicNuvotonManager.py:152 -> _mcu_connection_check()] b'\x07'
+[2025-04-30 22:08:41,178 DEBUG OnLogicNuvotonManager.py:152 -> _mcu_connection_check()] b'\x07'
+[2025-04-30 22:08:41,182 DEBUG OnLogicNuvotonManager.py:152 -> _mcu_connection_check()] b'\x07'
+[2025-04-30 22:08:41,185 DEBUG OnLogicNuvotonManager.py:152 -> _mcu_connection_check()] b'\x07'
+[2025-04-30 22:08:41,189 DEBUG OnLogicNuvotonManager.py:152 -> _mcu_connection_check()] b'\x07'
+[2025-04-30 22:08:41,193 INFO OnLogicNuvotonManager.py:158 -> _mcu_connection_check()] Interface Found
+[2025-04-30 22:08:41,221 INFO OnLogicNuvotonManager.py:341 -> _construct_command()] Constructed Command b'\x01\xc5\x01 \x00'
+[2025-04-30 22:08:41,229 INFO OnLogicNuvotonManager.py:440 -> _receive_command()] Recieved Command List [b'\x01', b'h', b'\x02', b' ', b'\x00', b'\x01', b'\x07']
+[2025-04-30 22:08:41,237 DEBUG DioHandler.py:71 -> get_di()] recieved command bytestr b'\x01h\x02 \x00\x01\x07'
+[2025-04-30 22:08:41,237 DEBUG OnLogicNuvotonManager.py:235 -> _check_crc()] CALCULATED 104 : EXISTING 104
+[2025-04-30 22:08:41,237 INFO OnLogicNuvotonManager.py:341 -> _construct_command()] Constructed Command b'\x01\xc2\x01 \x01'
+[2025-04-30 22:08:41,245 INFO OnLogicNuvotonManager.py:440 -> _receive_command()] Recieved Command List [b'\x01', b'}', b'\x02', b' ', b'\x01', b'\x01', b'\x07']
+[2025-04-30 22:08:41,251 DEBUG DioHandler.py:71 -> get_di()] recieved command bytestr b'\x01}\x02 \x01\x01\x07'
+[2025-04-30 22:08:41,252 DEBUG OnLogicNuvotonManager.py:235 -> _check_crc()] CALCULATED 125 : EXISTING 125
+[2025-04-30 22:08:41,252 INFO OnLogicNuvotonManager.py:341 -> _construct_command()] Constructed Command b'\x01\xcb\x01 \x02'
+[2025-04-30 22:08:41,258 INFO OnLogicNuvotonManager.py:440 -> _receive_command()] Recieved Command List [b'\x01', b'B', b'\x02', b' ', b'\x02', b'\x01', b'\x07']
+[2025-04-30 22:08:41,266 DEBUG DioHandler.py:71 -> get_di()] recieved command bytestr b'\x01B\x02 \x02\x01\x07'
+[2025-04-30 22:08:41,266 DEBUG OnLogicNuvotonManager.py:235 -> _check_crc()] CALCULATED 66 : EXISTING 66
+[2025-04-30 22:08:41,266 INFO OnLogicNuvotonManager.py:341 -> _construct_command()] Constructed Command b'\x01\xcc\x01 \x03'
+[2025-04-30 22:08:41,273 INFO OnLogicNuvotonManager.py:440 -> _receive_command()] Recieved Command List [b'\x01', b'W', b'\x02', b' ', b'\x03', b'\x01', b'\x07']
+[2025-04-30 22:08:41,281 DEBUG DioHandler.py:71 -> get_di()] recieved command bytestr b'\x01W\x02 \x03\x01\x07'
+[2025-04-30 22:08:41,281 DEBUG OnLogicNuvotonManager.py:235 -> _check_crc()] CALCULATED 87 : EXISTING 87
+[2025-04-30 22:08:41,282 INFO OnLogicNuvotonManager.py:341 -> _construct_command()] Constructed Command b'\x01\xd9\x01 \x04'
+[2025-04-30 22:08:41,288 INFO OnLogicNuvotonManager.py:440 -> _receive_command()] Recieved Command List [b'\x01', b'<', b'\x02', b' ', b'\x04', b'\x01', b'\x07']
+[2025-04-30 22:08:41,296 DEBUG DioHandler.py:71 -> get_di()] recieved command bytestr b'\x01<\x02 \x04\x01\x07'
+[2025-04-30 22:08:41,296 DEBUG OnLogicNuvotonManager.py:235 -> _check_crc()] CALCULATED 60 : EXISTING 60
+[2025-04-30 22:08:41,296 INFO OnLogicNuvotonManager.py:341 -> _construct_command()] Constructed Command b'\x01\xde\x01 \x05'
+[2025-04-30 22:08:41,304 INFO OnLogicNuvotonManager.py:440 -> _receive_command()] Recieved Command List [b'\x01', b')', b'\x02', b' ', b'\x05', b'\x01', b'\x07']
+[2025-04-30 22:08:41,311 DEBUG DioHandler.py:71 -> get_di()] recieved command bytestr b'\x01)\x02 \x05\x01\x07'
+[2025-04-30 22:08:41,311 DEBUG OnLogicNuvotonManager.py:235 -> _check_crc()] CALCULATED 41 : EXISTING 41
+[2025-04-30 22:08:41,311 INFO OnLogicNuvotonManager.py:341 -> _construct_command()] Constructed Command b'\x01\xd7\x01 \x06'
+[2025-04-30 22:08:41,318 INFO OnLogicNuvotonManager.py:440 -> _receive_command()] Recieved Command List [b'\x01', b'\x16', b'\x02', b' ', b'\x06', b'\x01', b'\x07']
+[2025-04-30 22:08:41,325 DEBUG DioHandler.py:71 -> get_di()] recieved command bytestr b'\x01\x16\x02 \x06\x01\x07'
+[2025-04-30 22:08:41,325 DEBUG OnLogicNuvotonManager.py:235 -> _check_crc()] CALCULATED 22 : EXISTING 22
+[2025-04-30 22:08:41,325 INFO OnLogicNuvotonManager.py:341 -> _construct_command()] Constructed Command b'\x01\xd0\x01 \x07'
+[2025-04-30 22:08:41,331 INFO OnLogicNuvotonManager.py:440 -> _receive_command()] Recieved Command List [b'\x01', b'\x03', b'\x02', b' ', b'\x07', b'\x01', b'\x07']
+[2025-04-30 22:08:41,340 DEBUG DioHandler.py:71 -> get_di()] recieved command bytestr b'\x01\x03\x02 \x07\x01\x07'
+[2025-04-30 22:08:41,340 DEBUG OnLogicNuvotonManager.py:235 -> _check_crc()] CALCULATED 3 : EXISTING 3

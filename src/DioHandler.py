@@ -58,8 +58,9 @@ class DioHandler(OnLogicNuvotonManager):
 
         # Enclose each value read with buffer clearances
         self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES)
+        
         if not self._send_command(di_command):
-            return StatusTypes.SUCCESS
+            return StatusTypes.SEND_CMD_FAILURE
 
         # frame = self._receive_command()
         frame = self._receive_command(Kinds.GET_DI)
