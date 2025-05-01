@@ -27,15 +27,15 @@ def main():
 
     try:
         # Init DIO handler
-        my_dio = DioHandler() #logger_mode="DEBUG", handler_mode="BOTH"
+        my_dio = DioHandler(logger_mode="DEBUG", handler_mode="BOTH") #logger_mode="DEBUG", handler_mode="BOTH"
         my_dio.claim()
 
-        print()
-        print("=" * 30)
-        print("TESTING GET VERSION (GET VERSION)")
-        print(my_dio.get_version())
-        print("=" * 30)
-        print()
+        # print()
+        # print("=" * 30)
+        # print("TESTING GET VERSION (GET VERSION)")
+        # print(my_dio.get_version())
+        # print("=" * 30)
+        # print()
 
         print("=" * 30)
         print("TESTING DIGITAL INPUTS (get_di)")
@@ -46,6 +46,8 @@ def main():
             print(f"The time difference [In Seconds] is : {timeit.default_timer() - start_time:.6f}")
             print(f"DI Channel {i}: {di_val}")
         print()
+
+        exit()
 
         print("=" * 30)
         print("TESTING DIGITAL OUTPUTS (get_do)")

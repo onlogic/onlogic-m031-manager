@@ -62,17 +62,19 @@ class OnLogicNuvotonManager(ABC):
     def __str__(self):
         '''COM port and command set of DioInputHandler.'''
         # TODO: Add Python utility Version and FW version?
-        repr_str = f"Port: {self.serial_connection_label}\n"             \
-                   f"PySerial Version: {serial.__version__}\n"           \ 
-                   f"Main Functionality Setup {self.is_setup}"           \
-                   f"Command Set: {Kinds.__name__}\n"                    \
-                   f"Protocol Constants: {ProtocolConstants.__name__}\n" \
-                   f"Status Types: {StatusTypes.__name__}\n"             \
-                   f"Target Indices: {TargetIndices.__name__}\n"         \
-                   f"Boundary Types: {BoundaryTypes.__name__}\n"         \
-                   f"Serial Connection Label: {self.serial_connection_label}\n" \
-                   f"Serial Port: {self.port}\n" if hasattr(self, 'port') else "Serial Port not initialized\n" \
-                   f"Is Setup: {self.is_setup}\n"        
+        repr_str = (
+            f"Port: {self.serial_connection_label}\n"
+            f"PySerial Version: {serial.__version__}\n"
+            f"Main Functionality Setup: {self.is_setup}\n"
+            f"Command Set: {Kinds.__name__}\n"
+            f"Protocol Constants: {ProtocolConstants.__name__}\n"
+            f"Status Types: {StatusTypes.__name__}\n"
+            f"Target Indices: {TargetIndices.__name__}\n"
+            f"Boundary Types: {BoundaryTypes.__name__}\n"
+            f"Serial Connection Label: {self.serial_connection_label}\n"
+            f"Serial Port: {self.port if hasattr(self, 'port') else 'Serial Port not initialized'}\n"
+            f"Is Setup: {self.is_setup}\n"
+        )
 
         return repr_str
 
@@ -225,13 +227,15 @@ class OnLogicNuvotonManager(ABC):
         if len(frame) < BoundaryTypes.BASE_FRAME_SIZE:
             return False
 
-        crc_bytes = frame[2:-1]
+        # add 1 make penultimate index the last value in slice
+        crc_bytes = frame[TargetIndices.RECV_PAYLOAD_LEN: TargetIndices.PENULTIMATE+1] 
+        
         crc_val = crc8.smbus(crc_bytes)
 
-        self.logger_util._log_print(f"CALCULATED {crc_val} : EXISTING {frame[1]}",
+        self.logger_util._log_print(f"CALCULATED {crc_val} : EXISTING {frame[TargetIndices.CRC]}",
                                     print_to_console=False, log=True, level=logging.DEBUG)
 
-        if crc_val != frame[1]:
+        if crc_val != frame[TargetIndices.CRC]:
             self.logger_util._log_print(f"CRC MISMATCH",
                              color=Fore.RED,
                              print_to_console=True,
@@ -257,12 +261,12 @@ class OnLogicNuvotonManager(ABC):
         return True
 
     def _validate_recieved_frame(self, return_frame: list, target_index: int | tuple = None, target_range: tuple = None) -> int:
-        if return_frame[0] != ProtocolConstants.SHELL_SOF:
+        if return_frame[TargetIndices.SOF] != ProtocolConstants.SHELL_SOF:
             self.logger_util._log_print(f"SOF Value Not Correct", color=Fore.RED, print_to_console=True,
                                         log=True,level=logging.ERROR)
             return StatusTypes.RECV_FRAME_SOF_ERROR
 
-        if return_frame[-1] != ProtocolConstants.SHELL_NACK:
+        if return_frame[TargetIndices.NACK] != ProtocolConstants.SHELL_NACK:
             self.logger_util._log_print(f"NACK Not Found in Desired Index", color=Fore.RED,
                                         print_to_console=True, log=True, level=logging.ERROR)
             return StatusTypes.RECV_FRAME_NACK_ERROR
@@ -315,7 +319,7 @@ class OnLogicNuvotonManager(ABC):
         # Construct command in the format of [SOF, CRC, LEN, KIND, PAYLOAD]
         # self.validate_message_bytes(kind, payload)
         if len(payload) > 0 and isinstance(payload[0], bytes):
-            payload_bytes, payload_length = payload[0], payload[1]    
+            payload_bytes, payload_length = payload[0], payload[1]
 
             crc_calculation = crc8.smbus(bytes([payload_length, kind]) + payload_bytes)
 
@@ -359,18 +363,76 @@ class OnLogicNuvotonManager(ABC):
 
         return False
 
+    '''
     def _receive_command(self, response_frame_len: int = ProtocolConstants.RESPONSE_FRAME_LEN) -> bytes:
-        '''\
+        
         receive command in expected format that complies with UART Shell.
         The response_frame list should always end with a NACK ['\a'] 
         command indicating the end of the received payload.
-        '''
+        
         response_frame = []
         self.port.write(ProtocolConstants.SHELL_ACK.to_bytes(1, byteorder='little')) 
         for _ in range(response_frame_len): 
             byte_in_port = self.port.read(1)
             response_frame.append(byte_in_port)
             self.port.write(ProtocolConstants.SHELL_ACK.to_bytes(1, byteorder='little')) 
+
+        self.logger_util._log_print(f"Recieved Command List {response_frame}",
+                                    print_to_console=False, log=True, level=logging.INFO)
+
+        return b''.join(response_frame)
+    '''
+
+    def _validate_partial_frame(self, response_frame: list, response_frame_kind: int) -> bool:
+        '''\
+        Validate the partial frame (first four bytes) received from the MCU UT.
+        '''
+        response_frame_size = len(response_frame)
+        if response_frame_size != BoundaryTypes.BASE_FRAME_SIZE:
+            self.logger_util._log_print(f"Base Frame Length Incorrect,{response_frame_size} should be 4", color=Fore.RED, print_to_console=True,
+                                        log=True, level=logging.ERROR)
+            return False
+
+        if response_frame[TargetIndices.SOF] != ProtocolConstants.SHELL_SOF.to_bytes(1, byteorder='little'):
+            self.logger_util._log_print(f"SOF Value Not Correct Got {response_frame[TargetIndices.SOF]}, expected {TargetIndices.SOF}", color=Fore.RED, print_to_console=True,
+                                        log=True, level=logging.ERROR)
+            return False
+
+        if response_frame[TargetIndices.KIND] != response_frame_kind.to_bytes(1, byteorder='little'):
+            return False
+
+        return True
+
+    def _receive_command(self, response_frame_kind: int) -> bytes:
+        '''\
+        receive command in expected format that complies with UART Shell.
+        The response_frame list should always end with a NACK ['\a'] 
+        command indicating the end of the received payload.
+        '''
+        response_frame = []
+        default_frame_responses = 4 + 1  # +1 for the NACK byte at the end
+        is_partial_response_validated = False
+        i = 0
+
+        self.port.write(ProtocolConstants.SHELL_ACK.to_bytes(1, byteorder='little'))
+        while i < default_frame_responses:
+            byte_in_port = self.port.read(1)
+            response_frame.append(byte_in_port)
+            self.port.write(ProtocolConstants.SHELL_ACK.to_bytes(1, byteorder='little')) 
+
+            # We want this to skip the second time it is validated, 
+            # meaning we are at the end of the Frame
+            if not is_partial_response_validated \
+                and i == default_frame_responses - 2: # account for initial NACK offset
+
+                is_pf_valid = self._validate_partial_frame(response_frame, response_frame_kind) 
+                if is_pf_valid:
+                    is_partial_response_validated = True
+                    default_frame_responses += int.from_bytes(response_frame[TargetIndices.RECV_PAYLOAD_LEN], byteorder='little')
+                else:
+                    return StatusTypes.RECV_PARTIAL_FRAME_VALIDATION_ERROR
+                
+            i += 1
 
         self.logger_util._log_print(f"Recieved Command List {response_frame}",
                                     print_to_console=False, log=True, level=logging.INFO)
@@ -421,4 +483,4 @@ class OnLogicNuvotonManager(ABC):
         if ret_val is not StatusTypes.SUCCESS:
             return ret_val
 
-        return self._format_version_string(frame[TargetIndices.PAYLOAD_START:payload_end])
+        return self._format_version_string(frame[TargetIndices.PAYLOAD_START: payload_end])

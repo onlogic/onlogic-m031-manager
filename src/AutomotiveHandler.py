@@ -35,7 +35,7 @@ class AutomotiveHandler(OnLogicNuvotonManager):
 
         if return_early is True:
             return
-        
+
         raise ValueError(error_msg)
 
     def _init_port(self) -> serial.Serial:
@@ -79,7 +79,7 @@ class AutomotiveHandler(OnLogicNuvotonManager):
 
         return frame[TargetIndices.PENULTIMATE]
     
-    def set_automotive_mode(self, mode:int):
+    def set_automotive_mode(self, mode: int):
         self._validate_input_param(mode, BoundaryTypes.BINARY_VALUE_RANGE, int)
 
         set_auto_mode = self._construct_command(Kinds.SET_AUTOMOTIVE_MODE, mode)
@@ -169,9 +169,9 @@ class AutomotiveHandler(OnLogicNuvotonManager):
         if ret_val is not StatusTypes.SUCCESS:
             return ret_val
 
-        return self._format_response_number(frame[TargetIndices.PAYLOAD_START:payload_end])
+        return self._format_response_number(frame[TargetIndices.PAYLOAD_START: payload_end])
 
-    def set_start_up_timer(self, sut:int) -> int:
+    def set_start_up_timer(self, sut: int) -> int:
         self._validate_input_param(sut, BoundaryTypes.AUTOMOTIVE_TIMER_RANGE, int) 
 
         set_sut_cmd = self._construct_command(Kinds.SET_START_UP_TIMER, sut.to_bytes(8, 'little'), 8)
@@ -217,9 +217,9 @@ class AutomotiveHandler(OnLogicNuvotonManager):
         if ret_val is not StatusTypes.SUCCESS:
             return ret_val
 
-        return self._format_response_number(frame[TargetIndices.PAYLOAD_START:payload_end])
+        return self._format_response_number(frame[TargetIndices.PAYLOAD_START: payload_end])
     
-    def set_soft_off_timer(self, sot:int) -> int:
+    def set_soft_off_timer(self, sot: int) -> int:
         self._validate_input_param(sot, BoundaryTypes.AUTOMOTIVE_TIMER_RANGE, int)
 
         set_sot_cmd = self._construct_command(Kinds.SET_SOFT_OFF_TIMER, sot.to_bytes(8, 'little'), 8)
@@ -263,9 +263,9 @@ class AutomotiveHandler(OnLogicNuvotonManager):
         if ret_val is not StatusTypes.SUCCESS:
             return ret_val
 
-        return self._format_response_number(frame[TargetIndices.PAYLOAD_START:payload_end])
+        return self._format_response_number(frame[TargetIndices.PAYLOAD_START: payload_end])
     
-    def set_hard_off_timer(self, hot:int) -> int:
+    def set_hard_off_timer(self, hot: int) -> int:
         self._validate_input_param(hot, BoundaryTypes.AUTOMOTIVE_TIMER_RANGE, int)
 
         set_hot_cmd = self._construct_command(Kinds.SET_HARD_OFF_TIMER, hot.to_bytes(8, 'little'), 8)
@@ -309,7 +309,7 @@ class AutomotiveHandler(OnLogicNuvotonManager):
         if ret_val is not StatusTypes.SUCCESS:
             return ret_val
 
-        return self._format_response_number(frame[TargetIndices.PAYLOAD_START:payload_end]) 
+        return self._format_response_number(frame[TargetIndices.PAYLOAD_START: payload_end]) 
     
     def set_low_voltage_timer(self, lvt:int) -> int:
         self._validate_input_param(lvt, BoundaryTypes.AUTOMOTIVE_TIMER_RANGE, int)
@@ -355,9 +355,9 @@ class AutomotiveHandler(OnLogicNuvotonManager):
         if ret_val is not StatusTypes.SUCCESS:
             return ret_val
 
-        return self._format_response_number(frame[TargetIndices.PAYLOAD_START:payload_end]) 
+        return self._format_response_number(frame[TargetIndices.PAYLOAD_START: payload_end]) 
 
-    def set_shutdown_voltage(self, sdv:int) -> int:
+    def set_shutdown_voltage(self, sdv: int) -> int:
         self._validate_input_param(sdv, BoundaryTypes.AUTOMOTIVE_TIMER_RANGE, int)
 
         set_sdv_cmd = self._construct_command(Kinds.SET_SHUTDOWN_VOLTAGE, sdv.to_bytes(8, 'little'), 8)

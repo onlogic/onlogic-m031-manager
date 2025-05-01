@@ -1,0 +1,21 @@
+[2025-04-30 21:03:25,260 INFO LoggingUtil.py:72 -> _create_logger()] Logger Initialized...
+[2025-04-30 21:03:25,263 INFO OnLogicNuvotonManager.py:104 -> _get_cdc_device_port()] NOTE | DIO CARD FOUND ON:
+Port: /dev/ttyACM0 - HX52x USB
+Port Location: 3-8:1.0
+Hardware ID: USB VID:PID=353F:A105 LOCATION=3-8:1.0
+Device: /dev/ttyACM0
+
+[2025-04-30 21:03:25,264 DEBUG OnLogicNuvotonManager.py:152 -> _mcu_connection_check()] b'\x07'
+[2025-04-30 21:03:25,268 DEBUG OnLogicNuvotonManager.py:152 -> _mcu_connection_check()] b'\x07'
+[2025-04-30 21:03:25,273 DEBUG OnLogicNuvotonManager.py:152 -> _mcu_connection_check()] b'\x07'
+[2025-04-30 21:03:25,278 DEBUG OnLogicNuvotonManager.py:152 -> _mcu_connection_check()] b'\x07'
+[2025-04-30 21:03:25,282 DEBUG OnLogicNuvotonManager.py:152 -> _mcu_connection_check()] b'\x07'
+[2025-04-30 21:03:25,286 INFO OnLogicNuvotonManager.py:158 -> _mcu_connection_check()] Interface Found
+[2025-04-30 21:03:25,314 INFO OnLogicNuvotonManager.py:341 -> _construct_command()] Constructed Command b'\x01\t\x00\x03'
+[2025-04-30 21:03:25,320 ERROR OnLogicNuvotonManager.py:391 -> _validate_partial_frame()] SOF Value Not Correct
+[2025-04-30 21:03:25,320 INFO OnLogicNuvotonManager.py:428 -> _receive_command()] Recieved Command List [b'\x01', b'\xa3', b'\x03', b'\x03', b'\x00', b'\x03', b'\x00', b'\x07', b'\x07']
+[2025-04-30 21:03:25,327 DEBUG OnLogicNuvotonManager.py:468 -> get_version()] Recieved Command Bytestr b'\x01\xa3\x03\x03\x00\x03\x00\x07\x07'
+[2025-04-30 21:03:25,328 DEBUG OnLogicNuvotonManager.py:235 -> _check_crc()] CALCULATED 117 : EXISTING 163
+[2025-04-30 21:03:25,328 ERROR OnLogicNuvotonManager.py:239 -> _check_crc()] CRC MISMATCH
+[2025-04-30 21:03:25,328 ERROR OnLogicNuvotonManager.py:281 -> _validate_recieved_frame()] CRC Check fail
+[2025-04-30 21:03:25,328 INFO OnLogicNuvotonManager.py:341 -> _construct_command()] Constructed Command b'\x01\xc5\x01 \x00'

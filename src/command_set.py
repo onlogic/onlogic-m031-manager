@@ -12,6 +12,7 @@
 # The TargetIndices class defines indices used to isolate target data within received frames,
 # while the BoundaryTypes class specifies numeric boundaries for command parameters,
 # such as binary values, digital I/O pin ranges, decimal values, and byte values.
+
 # sof, crc, len, kind, data
 
 class ProtocolConstants:
@@ -20,7 +21,7 @@ class ProtocolConstants:
     # DIO card Device Descriptior, VID and PID
     DIO_MCU_VID_PID_CDC = "353F:A105" 
     TIME_THRESHOLD = 2.5
-    STANDARD_DELAY = .004
+    STANDARD_DELAY = .003
     STANDARD_NACK_CLEARANCES = 64
 
     # Hardcoded transmission values
@@ -31,7 +32,8 @@ class ProtocolConstants:
     # Serial Check Values    
     NUM_NACKS  = 255 + 4
     RESPONSE_FRAME_LEN = 7
-    NACKS_NEEDED = 5 
+    NACKS_NEEDED = 5
+
 
 class Kinds:
     # Automotive Command Classifiers
@@ -72,11 +74,18 @@ class StatusTypes:
     RECV_FRAME_CRC_ERROR = -4
     RECV_FRAME_ACK_ERROR = -5
     RECV_FRAME_SOF_ERROR = -6
+    RECV_PARTIAL_FRAME_VALIDATION_ERROR = -7
 
 class TargetIndices:
     PENULTIMATE = -2
     RECV_PAYLOAD_LEN = 2
     PAYLOAD_START = 4
+
+    SOF = 0
+    CRC = 1
+    LEN = 2
+    KIND = 3
+    NACK = -1  # NACK is the last byte in the frame
 
 class BoundaryTypes:
     BASE_FRAME_SIZE = 4

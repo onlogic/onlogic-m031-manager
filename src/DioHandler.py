@@ -47,8 +47,10 @@ class DioHandler(OnLogicNuvotonManager):
 
         :param self:    instance of the class
         :param di_pin:  digital input pin with range [0-7]
-        :return:        returns 1, indicating on, 0, indicating off, 
-                        and -1, indicating an error occured in the sample
+        :return:        returns 0, indicating on, 1, indicating off, 
+                        and StatusTypes.SEND_CMD_FAILURE if command send failed.
+        :rtype:         int
+        :raises ValueError: if di_pin is not in the range of 0-7
         """
         self._validate_input_param(di_pin, BoundaryTypes.DIGITAL_IO_PIN_RANGE, int)
 
@@ -59,7 +61,8 @@ class DioHandler(OnLogicNuvotonManager):
         if not self._send_command(di_command):
             return StatusTypes.SUCCESS
 
-        frame = self._receive_command()
+        # frame = self._receive_command()
+        frame = self._receive_command(Kinds.GET_DI)
 
         self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False)
         time.sleep(ProtocolConstants.STANDARD_DELAY)
