@@ -260,6 +260,7 @@ class OnLogicNuvotonManager(ABC):
             
             return StatusTypes.RECV_UNEXPECTED_PAYLOAD_ERROR
 
+        logger.debug(f"Validated frame successfully: {return_frame}")
         return StatusTypes.SUCCESS
 
     def claim(self, serial_connection_label=None):
@@ -372,6 +373,7 @@ class OnLogicNuvotonManager(ABC):
             logger.error(f"Kind Value Not Correct, Got {response_frame[TargetIndices.KIND]},expected {response_frame_kind}")
             return False
 
+        
         return True
 
     def _receive_command(self, response_frame_kind: int) -> bytes | int:

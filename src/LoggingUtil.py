@@ -86,7 +86,6 @@ class LoggingUtil():
         for handler in handlers:
             handler.setFormatter(formatter)
             logger.addHandler(handler)
-
         # Add NullHandler if user requested mode resulted in no actual handlers
         if not handlers and self.handler_mode not in [None, "off"]:
             logger.addHandler(logging.NullHandler())

@@ -3,7 +3,6 @@ import serial
 import logging
 from OnLogicNuvotonManager import OnLogicNuvotonManager
 from command_set import TargetIndices, ProtocolConstants, Kinds, StatusTypes, BoundaryTypes
-from colorama import Fore
 
 logger = logging.getLogger(__name__)
 
@@ -223,8 +222,8 @@ class DioHandler(OnLogicNuvotonManager):
 
         return all_input_states
         '''
-        DI_MIN, DI_MAX = 0, 8
-        return [self.get_di(state) for state in range(DI_MIN, DI_MAX)]
+        DI_PIN_MIN, DI_PIN_MAX = BoundaryTypes.DIGITAL_IO_PIN_RANGE
+        return [self.get_di(state) for state in range(DI_PIN_MIN, DI_PIN_MAX + 1)]
 
 
     def get_all_output_states(self) -> list:
@@ -236,8 +235,8 @@ class DioHandler(OnLogicNuvotonManager):
 
         return all_output_states
         '''
-        DO_MIN, DO_MAX = 0, 8
-        return [self.get_do(state) for state in range(DO_MIN, DO_MAX)]
+        DO_PIN_MIN, DO_PIN_MAX = BoundaryTypes.DIGITAL_IO_PIN_RANGE
+        return [self.get_do(state) for state in range(DO_PIN_MIN, DO_PIN_MAX + 1)]
 
 
     def get_all_io_states(self) -> list:
@@ -252,8 +251,9 @@ class DioHandler(OnLogicNuvotonManager):
         for do_lst_idx, do_lst_val in enumerate(do_lst):
             status_codes.append(self.set_do(do_lst_idx, do_lst_val))
         '''
-        DO_LIST_LEN = 8
-        if len(do_lst) != DO_LIST_LEN:
+        _, DO_PIN_MAX = BoundaryTypes.DIGITAL_IO_PIN_RANGE
+
+        if len(do_lst) != DO_PIN_MAX + 1:
             do_list_len_err = "ERROR | do_list must contain exactly 8 values, one for each available output pin" 
             logger.error(do_list_len_err)
             raise ValueError(do_list_len_err)
