@@ -66,7 +66,7 @@ class LoggingUtil():
     def config_logger_elements(self) -> Optional[logging.Logger]: 
         level = self._get_logger_level()
         if level is None:
-            # Optionally get the logger but ensure it's disabled or has no handlers
+            # Get logger, ensure it's disabled or has no handlers
             logger = logging.getLogger(self.logger_name)
             logger.disabled = True 
             self.logger = logger
@@ -86,12 +86,13 @@ class LoggingUtil():
         for handler in handlers:
             handler.setFormatter(formatter)
             logger.addHandler(handler)
+
         # Add NullHandler if user requested mode resulted in no actual handlers
         if not handlers and self.handler_mode not in [None, "off"]:
             logger.addHandler(logging.NullHandler())
             print(f"Warning: No handlers for mode '{self.handler_mode}', added NullHandler to '{self.logger_name}'")
 
-        # Consider setting propagate = False after adding handlers
+        # Set propagate = False after adding handlers
         logger.propagate = False
 
         self.logger = logger
