@@ -154,7 +154,7 @@ def main():
     except KeyboardInterrupt:
         print("Operation terminated by user.")
     finally: 
-        print("\033[93mExiting...\033[0m") 
+        print("Exiting...") 
 
 if __name__ == "__main__":
     main()

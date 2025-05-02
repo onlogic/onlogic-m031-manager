@@ -136,7 +136,7 @@ def main():
     except KeyboardInterrupt:
         print("Operation terminated by user.")
     finally: 
-        print("\033[93mExiting...\033[0m")
+        print("Exiting...") 
         if my_auto is not None:
             my_auto.release() 
 

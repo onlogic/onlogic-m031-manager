@@ -17,6 +17,7 @@ NOTE:
 
 import timeit # Optional: measure time taken per sample
 from DioHandler import DioHandler
+from LoggingUtil import LoggingUtil
 
 def main():
     '''main, implementation of session logic.'''
@@ -162,7 +163,7 @@ def main():
     except KeyboardInterrupt:
         print("Operation terminated by user.")
     finally: 
-        print("\033[93mExiting...\033[0m")
+        print("Exiting...")
         if my_dio is not None:
             my_dio.release() 
 
