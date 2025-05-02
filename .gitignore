@@ -1,6 +1,7 @@
 # Ignore Git directory itself 
 .git/
 *.git
+.vscode/
 
 # Ignore various build products and caches
 *.pytest_cache
