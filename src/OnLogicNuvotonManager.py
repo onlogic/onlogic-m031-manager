@@ -64,6 +64,7 @@ class OnLogicNuvotonManager(ABC):
         # TODO: Add Python utility Version and FW version?
         repr_str = (
             f"Port: {self.serial_connection_label}\n"
+            #f"FW Version: {self.get_version()}\n"
             f"PySerial Version: {serial.__version__}\n"
             f"Main Functionality Setup: {self.is_setup}\n"
             f"Command Set: {Kinds.__name__}\n"
@@ -406,38 +407,51 @@ class OnLogicNuvotonManager(ABC):
 
         return True
 
-    def _receive_command(self, response_frame_kind: int) -> bytes:
-        '''\
-        receive command in expected format that complies with UART Shell.
+    def _receive_command(self, response_frame_kind: int) -> bytes | int:
+        '''
+        Receive command in expected format that complies with UART Shell.
         The response_frame list should always end with a NACK ['\a'] 
         command indicating the end of the received payload.
         '''
         response_frame = []
-        default_frame_responses = 4 + 1  # +1 for the NACK byte at the end
         is_partial_response_validated = False
-        i = 0
+        
+        max_byte_requests = 4 + 1  # +1 for the NACK byte at the end
+        requests = 0
 
         self.port.write(ProtocolConstants.SHELL_ACK.to_bytes(1, byteorder='little'))
-        while i < default_frame_responses:
+        while requests < max_byte_requests:
             byte_in_port = self.port.read(1)
             response_frame.append(byte_in_port)
             self.port.write(ProtocolConstants.SHELL_ACK.to_bytes(1, byteorder='little')) 
+            self.logger_util._log_print(f"Received Byte: {byte_in_port}", 
+                                        print_to_console=False, log=True, level=logging.DEBUG)
 
-            # We want this to skip the second time it is validated, 
-            # meaning we are at the end of the Frame
-            if not is_partial_response_validated \
-                and i == default_frame_responses - 2: # account for initial NACK offset
+            # Validate partial frame
+            if not is_partial_response_validated and requests == max_byte_requests - 2:
+                self.logger_util._log_print(f"Validating Partial Frame {response_frame}",
+                                            print_to_console=False, log=True, level=logging.DEBUG)
 
                 is_pf_valid = self._validate_partial_frame(response_frame, response_frame_kind) 
                 if is_pf_valid:
                     is_partial_response_validated = True
-                    default_frame_responses += int.from_bytes(response_frame[TargetIndices.RECV_PAYLOAD_LEN], byteorder='little')
-                else:
-                    return StatusTypes.RECV_PARTIAL_FRAME_VALIDATION_ERROR
-                
-            i += 1
 
-        self.logger_util._log_print(f"Recieved Command List {response_frame}",
+                    # Add payload length to determine remaining byte requests
+                    try:
+                        payload_length = int.from_bytes(response_frame[TargetIndices.RECV_PAYLOAD_LEN], byteorder='little')
+                        max_byte_requests += payload_length
+                    except (ValueError, IndexError) as e:
+                        self.logger_util._log_print(f"Error parsing payload length: {e}",
+                                                    color=Fore.RED, print_to_console=True, log=True, level=logging.ERROR)
+                        return StatusTypes.RECV_UNEXPECTED_PAYLOAD_ERROR
+                else:
+                    self.logger_util._log_print("Partial frame validation failed.",
+                                                color=Fore.RED, print_to_console=True, log=True, level=logging.ERROR)
+                    return StatusTypes.RECV_PARTIAL_FRAME_VALIDATION_ERROR
+
+            requests += 1
+
+        self.logger_util._log_print(f"Received Command List {response_frame}",
                                     print_to_console=False, log=True, level=logging.INFO)
 
         return b''.join(response_frame)
@@ -447,7 +461,7 @@ class OnLogicNuvotonManager(ABC):
         return_str = ""
         for i in range(payload_len):
             return_str += str(payload_bytes[i])
-            if i < payload_len-1:
+            if i < payload_len - 1:
                 return_str += '.'
         return return_str
     
@@ -472,7 +486,7 @@ class OnLogicNuvotonManager(ABC):
         if not self._send_command(version_command):
             return StatusTypes.SEND_CMD_FAILURE
 
-        frame = self._receive_command(8)
+        frame = self._receive_command(Kinds.GET_FIRMWARE_VERSION)
 
         self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False)
         time.sleep(ProtocolConstants.STANDARD_DELAY)

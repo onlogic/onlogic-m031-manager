@@ -15,8 +15,8 @@ NOTE:
     - CTRL+C can be used to exit the program.
 """
 
-import timeit # Optional: measure time taken per sample
 from DioHandler import DioHandler
+from AutomotiveHandler import AutomotiveHandler
 
 def main():
     try:

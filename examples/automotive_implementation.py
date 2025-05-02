@@ -63,7 +63,7 @@ def main():
 
         print("=" * 30)
         print("TESTING SET START UP TIMER (set_start_up_timer)")
-        print("SET START UP RETURN CODE:", my_auto.set_start_up_timer(10))
+        print("SET START UP RETURN CODE:", my_auto.set_start_up_timer(11))
         print("=" * 30)
         print()
 
@@ -75,7 +75,7 @@ def main():
 
         print("=" * 30)
         print("TESTING SET SOFT OFF TIMER (set_soft_off_timer)")
-        print("SET SOFT OFF RETURN CODE:", my_auto.set_soft_off_timer(50))
+        print("SET SOFT OFF RETURN CODE:", my_auto.set_soft_off_timer(51))
         print("=" * 30)
         print()
 
@@ -106,6 +106,30 @@ def main():
         print("=" * 30)
         print("TESTING GET SHUTDOWN VOLTAGE (get_shutdown_voltage)")
         print("GET SHUT OFF VOLTAGE VALUE:", my_auto.get_shutdown_voltage())
+        print("=" * 30)
+        print()
+
+        print("=" * 30)
+        print("TESTING SET SHUTDOWN VOLTAGE (set_all_automotive_settings)")
+        print(
+            "[amd, lpe, sut, sot, hot, sdv]",
+            my_auto.set_all_automotive_settings(setting_input = [
+                    0,  # amd 
+                    0,  # lpe 
+                    10, # sut 
+                    50, # sot 
+                    30, # hot 
+                    600 # sdv
+                ]
+            ),
+            sep = '\n'
+        )
+        print("=" * 30)
+        print()
+
+        print("=" * 30)
+        print("TESTING GET ALL AUTOMOTIVE SETTINGS (get_all_automotive_settings)")
+        my_auto.get_all_automotive_settings(output_to_console=True)
         print("=" * 30)
         print()
 

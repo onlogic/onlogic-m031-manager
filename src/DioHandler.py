@@ -62,8 +62,9 @@ class DioHandler(OnLogicNuvotonManager):
         if not self._send_command(di_command):
             return StatusTypes.SEND_CMD_FAILURE
 
-        # frame = self._receive_command()
         frame = self._receive_command(Kinds.GET_DI)
+        if not isinstance(frame, bytes):
+            return frame
 
         self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False)
         time.sleep(ProtocolConstants.STANDARD_DELAY)
@@ -91,7 +92,9 @@ class DioHandler(OnLogicNuvotonManager):
         if not self._send_command(do_command):
             return StatusTypes.SEND_CMD_FAILURE
 
-        frame = self._receive_command()
+        frame = self._receive_command(Kinds.GET_DO)
+        if not isinstance(frame, bytes):
+            return frame
 
         self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False)
         time.sleep(ProtocolConstants.STANDARD_DELAY)
@@ -121,7 +124,9 @@ class DioHandler(OnLogicNuvotonManager):
         if not self._send_command(set_do_command):
             return StatusTypes.SEND_CMD_FAILURE
 
-        frame = self._receive_command()
+        frame = self._receive_command(Kinds.SET_DO)
+        if not isinstance(frame, bytes):
+            return frame
 
         self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False)
         time.sleep(ProtocolConstants.STANDARD_DELAY)
@@ -141,7 +146,9 @@ class DioHandler(OnLogicNuvotonManager):
         if not self._send_command(di_contact_state_cmd):
             return StatusTypes.SEND_CMD_FAILURE
 
-        frame = self._receive_command(6)
+        frame = self._receive_command(Kinds.GET_DI_CONTACT)
+        if not isinstance(frame, bytes):
+            return frame
 
         self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False) 
         time.sleep(ProtocolConstants.STANDARD_DELAY)
@@ -166,7 +173,9 @@ class DioHandler(OnLogicNuvotonManager):
         if not self._send_command(do_contact_state_cmd):
             return StatusTypes.SEND_CMD_FAILURE
 
-        frame = self._receive_command(6)
+        frame = self._receive_command(Kinds.GET_DO_CONTACT)
+        if not isinstance(frame, bytes):
+            return frame
 
         self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False)
         time.sleep(ProtocolConstants.STANDARD_DELAY)
@@ -190,11 +199,13 @@ class DioHandler(OnLogicNuvotonManager):
 
         # Enclose each value read with buffer clearances
         self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES)
-
+    
         if not self._send_command(set_di_contact_state_cmd):
             return StatusTypes.SEND_CMD_FAILURE
 
-        frame = self._receive_command(6)
+        frame = self._receive_command(Kinds.SET_DI_CONTACT)
+        if not isinstance(frame, bytes):
+            return frame
 
         self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False)
         time.sleep(ProtocolConstants.STANDARD_DELAY)
@@ -217,8 +228,10 @@ class DioHandler(OnLogicNuvotonManager):
         if not self._send_command(set_di_contact_state_cmd):
             return StatusTypes.SEND_CMD_FAILURE
 
-        frame = self._receive_command(6)
- 
+        frame = self._receive_command(Kinds.SET_DO_CONTACT)
+        if not isinstance(frame, bytes):
+            return frame
+        
         self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False)
         time.sleep(ProtocolConstants.STANDARD_DELAY)
 
@@ -231,29 +244,40 @@ class DioHandler(OnLogicNuvotonManager):
         return self._validate_recieved_frame(frame, TargetIndices.PENULTIMATE, BoundaryTypes.BINARY_VALUE_RANGE)
 
     def get_all_input_states(self) -> list:
+        '''
         all_input_states = []
+        
         for i in range(0, 8):
-            all_input_states.append(self.get_di(i))
+            all_input_states.append()
 
         return all_input_states
+        '''
+
+        return [self.get_di(state) for state in range(0, 8)]
+
 
     def get_all_output_states(self) -> list:
+        '''
         all_output_states = []
 
         for i in range(0, 8):
             all_output_states.append(self.get_do(i))
 
         return all_output_states
+        '''
+        return [self.get_do(state) for state in range(0, 8)]
+
 
     def get_all_io_states(self) -> list:
         return [self.get_all_input_states(), self.get_all_output_states()]
 
     def set_all_output_states(self, do_lst:list) -> list:
+        '''
         if len(do_lst) < 8:
             raise ValueError("ERROR | Incorrect amount of inputs specified.")
 
         status_codes = []
         for do_lst_idx, do_lst_val in enumerate(do_lst):
             status_codes.append(self.set_do(do_lst_idx, do_lst_val))
-
-        return status_codes
+        '''
+        return [self.set_do(do_lst_idx, do_lst_val) for do_lst_idx, do_lst_val in enumerate(do_lst)]

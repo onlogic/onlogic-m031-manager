@@ -25,7 +25,7 @@ def main():
     try:
         # Init DIO handler
         # serial_connection_label="xxx" can be specified when context manager used:
-        with DioHandler(logger_mode="DEBUG", handler_mode="CONSOLE") as my_dio: 
+        with DioHandler() as my_dio: 
             print("=" * 30) 
             print("TESTING DIGITAL INPUTS (get_di)")
             print("=" * 30)
@@ -150,6 +150,7 @@ def main():
                 start_time = timeit.default_timer()
                 print(my_dio.get_all_io_states())
                 print(f"The time difference [In Seconds] is : {timeit.default_timer() - start_time:.6f}")
+    
     except KeyboardInterrupt:
         print("Operation terminated by user.")
     finally: 
