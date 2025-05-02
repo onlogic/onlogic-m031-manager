@@ -252,7 +252,6 @@ class DioHandler(OnLogicNuvotonManager):
 
         return all_input_states
         '''
-
         return [self.get_di(state) for state in range(0, 8)]
 
 
@@ -280,4 +279,10 @@ class DioHandler(OnLogicNuvotonManager):
         for do_lst_idx, do_lst_val in enumerate(do_lst):
             status_codes.append(self.set_do(do_lst_idx, do_lst_val))
         '''
+        if len(do_lst) != 8:
+            raise ValueError("ERROR | do_list must contain exactly 8 values, one for each available output pin")
+
+        for do in do_lst:
+            self._validate_input_param(do, BoundaryTypes.BINARY_VALUE_RANGE, int)
+
         return [self.set_do(do_lst_idx, do_lst_val) for do_lst_idx, do_lst_val in enumerate(do_lst)]
