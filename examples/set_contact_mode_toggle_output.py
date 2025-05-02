@@ -41,7 +41,7 @@ def main():
 
     try:
         # Init DIO handler
-        my_dio = DioHandler() #logger_mode="DEBUG", handler_mode="BOTH"
+        my_dio = DioHandler()
         my_dio.claim()
 
         my_dio.set_do_contact(1)

@@ -16,9 +16,23 @@ NOTE:
 """
 
 from AutomotiveHandler import AutomotiveHandler
+from LoggingUtil import LoggingUtil
 
 def main():
     '''main, implementation of session logic.'''
+
+    # Initialize logging configuration
+    try:
+        config_logger = LoggingUtil(
+            logger_name='root',
+            logger_level="DEBUG",
+            handler_mode="FILE"
+        )
+        config_logger.config_logger_elements()
+    except FileNotFoundError as e:
+        print(f"Error configuring logger: {e}")
+    except ValueError as e:
+        print(f"Error configuring logger: {e}")
 
     # Set to None outside exception handling
     # incase of improper class initialization
