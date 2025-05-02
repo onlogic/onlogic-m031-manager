@@ -26,7 +26,7 @@ def main():
         config_logger = LoggingUtil(
             logger_name='root',
             logger_level="DEBUG",
-            handler_mode="FILE"
+            handler_mode="CONSOLE"
         )
         config_logger.config_logger_elements()
     except FileNotFoundError as e:
