@@ -1,14 +1,14 @@
 import time
 import serial
+import logging
 from OnLogicNuvotonManager import OnLogicNuvotonManager
-from LoggingUtil import logging
 from command_set import ProtocolConstants, Kinds, StatusTypes, TargetIndices, BoundaryTypes
-from colorama import Fore
+
+logger = logging.getLogger(__name__)
 
 class AutomotiveHandler(OnLogicNuvotonManager):
-    def __init__(self, logger_mode: str = None, handler_mode: str = None, serial_connection_label = None):
-        super().__init__(logger_mode=logger_mode, 
-                         handler_mode=handler_mode, 
+    def __init__(self, serial_connection_label = None):
+        super().__init__(
                          serial_connection_label=serial_connection_label
                         )
 
@@ -29,8 +29,7 @@ class AutomotiveHandler(OnLogicNuvotonManager):
         '''
 
     def _init_port_error_handling(self, error_msg: str, return_early: bool = False) -> None | ValueError:
-        self.logger_util._log_print(error_msg, print_to_console=True, color=Fore.RED, log=True,
-                                    level=logging.ERROR)
+        logger.error(error_msg, level=logging.ERROR)
         self.list_all_available_ports()
 
         if return_early is True:
@@ -69,11 +68,7 @@ class AutomotiveHandler(OnLogicNuvotonManager):
         self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False) 
         time.sleep(ProtocolConstants.STANDARD_DELAY)
 
-        self.logger_util._log_print(f"recieved command bytestr {frame}",
-                        print_to_console=False,
-                        log=True,
-                        level=logging.DEBUG
-                        )
+        logger.debug(f"Recieved Command Bytes: {frame}")
 
         ret_val = self._validate_recieved_frame(frame, TargetIndices.PENULTIMATE, BoundaryTypes.BINARY_VALUE_RANGE)
         if ret_val is not StatusTypes.SUCCESS:
@@ -99,11 +94,7 @@ class AutomotiveHandler(OnLogicNuvotonManager):
         self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False)
         time.sleep(ProtocolConstants.STANDARD_DELAY)
 
-        self.logger_util._log_print(f"recieved command bytestr {frame}",
-                        print_to_console=False,
-                        log=True,
-                        level=logging.DEBUG
-                        )
+        logger.debug(f"Recieved Command Bytes: {frame}")
 
         return self._validate_recieved_frame(frame, TargetIndices.PENULTIMATE, BoundaryTypes.BINARY_VALUE_RANGE)
 
@@ -121,8 +112,7 @@ class AutomotiveHandler(OnLogicNuvotonManager):
         self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False) 
         time.sleep(ProtocolConstants.STANDARD_DELAY)
 
-        self.logger_util._log_print(f"recieved command bytestr {frame}",
-                        print_to_console=False, log=True, level=logging.DEBUG)
+        logger.debug(f"Recieved Command Bytes: {frame}")
 
         ret_val = self._validate_recieved_frame(frame, TargetIndices.PENULTIMATE, BoundaryTypes.BINARY_VALUE_RANGE)
         if ret_val is not StatusTypes.SUCCESS:
@@ -147,11 +137,7 @@ class AutomotiveHandler(OnLogicNuvotonManager):
         self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False)
         time.sleep(ProtocolConstants.STANDARD_DELAY)
 
-        self.logger_util._log_print(f"recieved command bytestr {frame}",
-                        print_to_console=False,
-                        log=True,
-                        level=logging.DEBUG
-                        )
+        logger.debug(f"Recieved Command Bytes: {frame}")
 
         return self._validate_recieved_frame(frame, TargetIndices.PENULTIMATE, BoundaryTypes.BINARY_VALUE_RANGE)
         
@@ -170,8 +156,7 @@ class AutomotiveHandler(OnLogicNuvotonManager):
         self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False)
         time.sleep(ProtocolConstants.STANDARD_DELAY)
 
-        self.logger_util._log_print(f"recieved command bytestr {frame}", print_to_console=False,
-                                    log=True, level=logging.DEBUG)
+        logger.debug(f"Recieved Command Bytes: {frame}")
 
         _, payload_end, target_indices = self._isolate_target_indices(frame)
         
@@ -200,11 +185,7 @@ class AutomotiveHandler(OnLogicNuvotonManager):
         self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False)
         time.sleep(ProtocolConstants.STANDARD_DELAY)
 
-        self.logger_util._log_print(f"recieved command bytestr {frame}",
-                        print_to_console=False,
-                        log=True,
-                        level=logging.DEBUG
-                        )
+        logger.debug(f"Recieved Command Bytes: {frame}")
 
         return self._validate_recieved_frame(frame, target_indices, BoundaryTypes.BYTE_VALUE_RANGE)
 
@@ -223,8 +204,7 @@ class AutomotiveHandler(OnLogicNuvotonManager):
         self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False)
         time.sleep(ProtocolConstants.STANDARD_DELAY)
 
-        self.logger_util._log_print(f"recieved command bytestr {frame}", print_to_console=False,
-                                    log=True, level=logging.DEBUG)
+        logger.debug(f"Recieved Command Bytes: {frame}")
 
         _, payload_end, target_indices = self._isolate_target_indices(frame)
         
@@ -253,9 +233,7 @@ class AutomotiveHandler(OnLogicNuvotonManager):
         self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False)
         time.sleep(ProtocolConstants.STANDARD_DELAY)
 
-        self.logger_util._log_print(f"recieved command bytestr {frame}",
-                        print_to_console=False, log=True, level=logging.DEBUG
-                        )
+        logger.debug(f"Recieved Command Bytes: {frame}")
 
         return self._validate_recieved_frame(frame, target_indices, BoundaryTypes.BYTE_VALUE_RANGE)
 
@@ -274,8 +252,7 @@ class AutomotiveHandler(OnLogicNuvotonManager):
         self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False)
         time.sleep(ProtocolConstants.STANDARD_DELAY)
 
-        self.logger_util._log_print(f"recieved command bytestr {frame}", print_to_console=False,
-                                    log=True, level=logging.DEBUG)
+        logger.debug(f"Recieved Command Bytes: {frame}")
 
         _, payload_end, target_indices = self._isolate_target_indices(frame)
         
@@ -304,9 +281,7 @@ class AutomotiveHandler(OnLogicNuvotonManager):
         self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False)
         time.sleep(ProtocolConstants.STANDARD_DELAY)
 
-        self.logger_util._log_print(f"recieved command bytestr {frame}",
-                        print_to_console=False, log=True, level=logging.DEBUG
-                        )
+        logger.debug(f"Recieved Command Bytes: {frame}")
 
         return self._validate_recieved_frame(frame, target_indices, BoundaryTypes.BYTE_VALUE_RANGE)
 
@@ -325,8 +300,7 @@ class AutomotiveHandler(OnLogicNuvotonManager):
         self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False)
         time.sleep(ProtocolConstants.STANDARD_DELAY)
 
-        self.logger_util._log_print(f"recieved command bytestr {frame}", print_to_console=False,
-                                    log=True, level=logging.DEBUG)
+        logger.debug(f"Recieved Command Bytes: {frame}")
 
         _, payload_end, target_indices = self._isolate_target_indices(frame)
 
@@ -355,9 +329,7 @@ class AutomotiveHandler(OnLogicNuvotonManager):
         self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False)
         time.sleep(ProtocolConstants.STANDARD_DELAY)
 
-        self.logger_util._log_print(f"recieved command bytestr {frame}",
-                        print_to_console=False, log=True, level=logging.DEBUG
-                        )
+        logger.debug(f"Recieved Command Bytes: {frame}")
 
         return self._validate_recieved_frame(frame, target_indices, BoundaryTypes.BYTE_VALUE_RANGE)
 
@@ -376,8 +348,7 @@ class AutomotiveHandler(OnLogicNuvotonManager):
         self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False)
         time.sleep(ProtocolConstants.STANDARD_DELAY)
 
-        self.logger_util._log_print(f"recieved command bytestr {frame}", print_to_console=False,
-                                    log=True, level=logging.DEBUG)
+        logger.debug(f"Recieved Command Bytes: {frame}")
 
         _, payload_end, target_indices = self._isolate_target_indices(frame)
 
@@ -406,9 +377,7 @@ class AutomotiveHandler(OnLogicNuvotonManager):
         self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False)
         time.sleep(ProtocolConstants.STANDARD_DELAY)
 
-        self.logger_util._log_print(f"recieved command bytestr {frame}",
-                        print_to_console=False, log=True, level=logging.DEBUG
-                        )
+        logger.debug(f"Recieved Command Bytes: {frame}")
 
         return self._validate_recieved_frame(frame, target_indices, BoundaryTypes.BYTE_VALUE_RANGE)
 
@@ -437,8 +406,17 @@ class AutomotiveHandler(OnLogicNuvotonManager):
                 [amd, lpe, sut, sot, hot, sdv].
 
         Returns:
-            list: A list of results from each `set_*` method.
+            list: A list of results from each `set_*` method, particularly:
+
+            + set_automotive_mode
+            + set_low_power_enable
+            + set_start_up_timer
+            + set_soft_off_timer
+            + setting_input
+            + set_shutdown_voltage
+
         """
+
         if len(setting_input) != 6:
             raise ValueError("ERROR | setting_input must contain exactly 6 values: [amd, lpe, sut, sot, hot, sdv]")
 

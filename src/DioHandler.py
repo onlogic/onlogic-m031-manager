@@ -1,16 +1,17 @@
 import time
 import serial
+import logging
 from OnLogicNuvotonManager import OnLogicNuvotonManager
-from LoggingUtil import logging
 from command_set import TargetIndices, ProtocolConstants, Kinds, StatusTypes, BoundaryTypes
 from colorama import Fore
 
+logger = logging.getLogger(__name__)
+
 class DioHandler(OnLogicNuvotonManager):
-    def __init__(self, logger_mode: str = None, handler_mode: str = None, serial_connection_label: str = None):
-        super().__init__(logger_mode=logger_mode, 
-                         handler_mode=handler_mode, 
-                         serial_connection_label=serial_connection_label
-                         )
+    def __init__(self, serial_connection_label: str = None):
+        super().__init__(
+                          serial_connection_label=serial_connection_label
+                        )
 
     def _init_port(self) -> None:
         '''Init port and establish USB-UART connection.'''
@@ -22,14 +23,12 @@ class DioHandler(OnLogicNuvotonManager):
                 return serial.Serial(self.serial_connection_label, ProtocolConstants.BAUDRATE, timeout=1)
             else:
                 type_connect_error = f"ERROR | USB CDC not found, is the DIO card configured right?"
-                self.logger_util._log_print(type_connect_error, print_to_console=True,
-                                            color=Fore.RED, log=True, level=logging.ERROR)
+                logger.error(type_connect_error)
                 raise TypeError(type_connect_error)
 
         except serial.SerialException as e:
             serial_connect_err = f"ERROR | {e}: Are you on the right port?"
-            self.logger_util._log_print(serial_connect_err, print_to_console=True,
-                                        color=Fore.RED, log=True, level=logging.ERROR)
+            logger.error(serial_connect_err)
             raise serial.SerialException(serial_connect_err)
 
     def get_info(self) -> None:
@@ -69,11 +68,7 @@ class DioHandler(OnLogicNuvotonManager):
         self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False)
         time.sleep(ProtocolConstants.STANDARD_DELAY)
 
-        self.logger_util._log_print(f"recieved command bytestr {frame}",
-                        print_to_console=False,
-                        log=True,
-                        level=logging.DEBUG
-                        )
+        logger.debug(f"Recieved Command Bytes: {frame}")
 
         # Retrieve do value located in penultimate idx of frame
         ret_val = self._validate_recieved_frame(frame, TargetIndices.PENULTIMATE, BoundaryTypes.BINARY_VALUE_RANGE)
@@ -99,11 +94,7 @@ class DioHandler(OnLogicNuvotonManager):
         self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False)
         time.sleep(ProtocolConstants.STANDARD_DELAY)
 
-        self.logger_util._log_print(f"recieved command bytestr {frame}",
-                        print_to_console=False,
-                        log=True,
-                        level=logging.DEBUG
-                        )
+        logger.debug(f"Recieved Command Bytes: {frame}")
 
         # Retrieve do value located in penultimate idx of frame
         ret_val = self._validate_recieved_frame(frame, TargetIndices.PENULTIMATE, BoundaryTypes.BINARY_VALUE_RANGE)
@@ -131,11 +122,7 @@ class DioHandler(OnLogicNuvotonManager):
         self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False)
         time.sleep(ProtocolConstants.STANDARD_DELAY)
 
-        self.logger_util._log_print(f"recieved command bytestr {frame}",
-                        print_to_console=False,
-                        log=True,
-                        level=logging.DEBUG
-                        )
+        logger.debug(f"Recieved Command Bytes: {frame}")
 
         return self._validate_recieved_frame(frame, TargetIndices.PENULTIMATE, BoundaryTypes.BINARY_VALUE_RANGE)
 
@@ -153,11 +140,7 @@ class DioHandler(OnLogicNuvotonManager):
         self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False) 
         time.sleep(ProtocolConstants.STANDARD_DELAY)
 
-        self.logger_util._log_print(f"recieved command bytestr {frame}",
-                        print_to_console=False,
-                        log=True,
-                        level=logging.DEBUG
-                        )
+        logger.debug(f"Recieved Command Bytes: {frame}")
 
         ret_val = self._validate_recieved_frame(frame, TargetIndices.PENULTIMATE, BoundaryTypes.BINARY_VALUE_RANGE)
         if ret_val is not StatusTypes.SUCCESS:
@@ -180,11 +163,7 @@ class DioHandler(OnLogicNuvotonManager):
         self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False)
         time.sleep(ProtocolConstants.STANDARD_DELAY)
 
-        self.logger_util._log_print(f"recieved command bytestr {frame}",
-                        print_to_console=False,
-                        log=True,
-                        level=logging.DEBUG
-                        )
+        logger.debug(f"Recieved Command Bytes: {frame}")
 
         ret_val = self._validate_recieved_frame(frame, TargetIndices.PENULTIMATE, BoundaryTypes.BINARY_VALUE_RANGE)
         if ret_val is not StatusTypes.SUCCESS:
@@ -210,11 +189,7 @@ class DioHandler(OnLogicNuvotonManager):
         self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False)
         time.sleep(ProtocolConstants.STANDARD_DELAY)
 
-        self.logger_util._log_print(f"recieved command bytestr {frame}",
-                        print_to_console=False,
-                        log=True,
-                        level=logging.DEBUG
-                        )
+        logger.debug(f"Recieved Command Bytes: {frame}")
 
         return self._validate_recieved_frame(frame, TargetIndices.PENULTIMATE, BoundaryTypes.BINARY_VALUE_RANGE)
 
@@ -235,11 +210,7 @@ class DioHandler(OnLogicNuvotonManager):
         self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False)
         time.sleep(ProtocolConstants.STANDARD_DELAY)
 
-        self.logger_util._log_print(f"recieved command bytestr {frame}",
-                        print_to_console=False,
-                        log=True,
-                        level=logging.DEBUG
-                        )
+        logger.debug(f"Recieved Command Bytes: {frame}")
 
         return self._validate_recieved_frame(frame, TargetIndices.PENULTIMATE, BoundaryTypes.BINARY_VALUE_RANGE)
 
@@ -252,7 +223,8 @@ class DioHandler(OnLogicNuvotonManager):
 
         return all_input_states
         '''
-        return [self.get_di(state) for state in range(0, 8)]
+        DI_MIN, DI_MAX = 0, 8
+        return [self.get_di(state) for state in range(DI_MIN, DI_MAX)]
 
 
     def get_all_output_states(self) -> list:
@@ -264,7 +236,8 @@ class DioHandler(OnLogicNuvotonManager):
 
         return all_output_states
         '''
-        return [self.get_do(state) for state in range(0, 8)]
+        DO_MIN, DO_MAX = 0, 8
+        return [self.get_do(state) for state in range(DO_MIN, DO_MAX)]
 
 
     def get_all_io_states(self) -> list:
@@ -279,8 +252,11 @@ class DioHandler(OnLogicNuvotonManager):
         for do_lst_idx, do_lst_val in enumerate(do_lst):
             status_codes.append(self.set_do(do_lst_idx, do_lst_val))
         '''
-        if len(do_lst) != 8:
-            raise ValueError("ERROR | do_list must contain exactly 8 values, one for each available output pin")
+        DO_LIST_LEN = 8
+        if len(do_lst) != DO_LIST_LEN:
+            do_list_len_err = "ERROR | do_list must contain exactly 8 values, one for each available output pin" 
+            logger.error(do_list_len_err)
+            raise ValueError(do_list_len_err)
 
         for do in do_lst:
             self._validate_input_param(do, BoundaryTypes.BINARY_VALUE_RANGE, int)

@@ -1,31 +1,55 @@
+'''
+
+
+logging.basicConfig (
+    format='[%(asctime)s %(levelname)s %(filename)s:%(lineno)d -> %(funcName)s()] %(message)s',
+    level=level,
+    handlers=handlers  
+)
+'''
 import sys
 import logging
 from datetime import datetime
 from typing import Optional
-from colorama import Fore
 
 class LoggingUtil():
-    def __init__(self, logger_mode, handler_mode):
-        self.logger_mode = logger_mode
-        self.handler_mode = handler_mode
+    def __init__(self, logger_name, logger_level, handler_mode):
+        # Init colorama: Color coding for errors and such - Not quite sure where to but this
+        # init(autoreset=True) 
+        self.logger_name  = self.__handle_lconfig_str(logger_name)
+        self.logger_level  = self.__handle_lconfig_str(logger_level)
+        self.handler_mode = self.__handle_lconfig_str(handler_mode)
         self.logger = None
+        self.format = '[%(asctime)s %(levelname)s %(filename)s:%(lineno)d -> %(funcName)s()] %(message)s'
+    
+    @staticmethod
+    def __handle_lconfig_str(input_str: str) -> str | None:
+        return input_str.lower().strip() if isinstance(input_str, str) else input_str
 
     @staticmethod
     def _create_filename():
         return f"log_session_{datetime.now().strftime("%m_%d_%Y_%H_%M_%S")}.log"
 
-    def _check_logger_mode(self):
-        if self.logger_mode in [None, "off"]:
+    def _get_logger_level(self):
+        if self.logger_level in [None, "off"]:
             print("Logger Mode off, ignoring")
             return None
 
-        if self.logger_mode not in ['info', 'debug','error']:
-            print("Logger Mode", self.logger_mode)
-            raise ValueError("ERROR | Invalid logger_mode")
+        if self.logger_level not in ['info', 'debug','error']:
+            print("Logger Mode", self.logger_level)
+            raise ValueError("ERROR | Invalid logger_level")
 
-        return self.logger_mode
+        level_dict = { 
+            'info'  : logging.INFO,
+            'debug' : logging.DEBUG,
+            'error' : logging.ERROR,
+            }
 
-    def _create_handlers(self, filename):
+        level = level_dict.get(self.logger_level, "Unknown")
+
+        return level
+
+    def _config_handlers(self, filename):
         handlers = []
         if self.handler_mode == "both":
             handlers.extend([logging.FileHandler(filename), 
@@ -39,64 +63,42 @@ class LoggingUtil():
 
         return handlers
 
-    def _create_logger(self):# -> logging.RootLogger:
-        '''Create Logger with INFO, DEBUG, and ERROR Debugging'''
-        result = self._check_logger_mode()
-        if result is None:
-            return
+    def config_logger_elements(self) -> Optional[logging.Logger]: 
+        level = self._get_logger_level()
+        if level is None:
+            # Optionally get the logger but ensure it's disabled or has no handlers
+            logger = logging.getLogger(self.logger_name)
+            logger.disabled = True 
+            self.logger = logger
+            return None # Return None if setup didn't happen
 
-        filename = self._create_filename()
-        handlers = self._create_handlers(filename)
+        logger = logging.getLogger(self.logger_name)
+        logger.disabled = False # Ensure enabled if previously off
 
-        self.logger = logging.getLogger()
+        logger.handlers.clear()
 
-        level_dict = { 
-            'info'  : logging.INFO,
-            'debug' : logging.DEBUG,
-            'error' : logging.ERROR,
-            }
+        filename = self._create_filename() if self.handler_mode in ['file', 'both'] else None
+        handlers = self._config_handlers(filename)
 
-        level = level_dict.get(self.logger_mode, "Unknown")
+        logger.setLevel(level)
 
-        if level == 'Unknown' or level is None:
-            self.logger_mode = 'off'
-            del self.logger
-            raise ValueError("ERROR | Invalid logger_mode")
+        formatter = logging.Formatter(self.format)
+        for handler in handlers:
+            handler.setFormatter(formatter)
+            logger.addHandler(handler)
 
-        logging.basicConfig (
-            format='[%(asctime)s %(levelname)s %(filename)s:%(lineno)d -> %(funcName)s()] %(message)s',
-            level=level,
-            handlers=handlers  
-        )
+        # Add NullHandler if user requested mode resulted in no actual handlers
+        if not handlers and self.handler_mode not in [None, "off"]:
+            logger.addHandler(logging.NullHandler())
+            print(f"Warning: No handlers for mode '{self.handler_mode}', added NullHandler to '{self.logger_name}'")
 
-        self._log_print(f"Logger Initialized...",
-                         print_to_console=False,
-                         log=True,
-                         level=logging.INFO
-                        )
+        # Consider setting propagate = False after adding handlers
+        logger.propagate = False
 
-    def _lprint(self, message_info, color):
-        if color == Fore.RED:
-            print(Fore.RED + message_info)
-        elif color == Fore.GREEN:
-            print(Fore.GREEN + message_info)
-        else:
-            print(message_info)
-
-    def _output_log(self, log_msg, level, stacklevel=3):
-        if level == logging.INFO:
-            self.logger.info(log_msg, stacklevel=stacklevel)
-        elif level == logging.DEBUG:
-            self.logger.debug(log_msg, stacklevel=stacklevel)
-        elif level == logging.ERROR:
-            self.logger.error(log_msg, stacklevel=stacklevel)
-        else:
-            raise ValueError("ERROR | INCORRECT MODE INPUT INTO LOGGER")
-
-    def _log_print(self, message:str, print_to_console:bool=True, color:str=None, 
-                    log:bool=False, level:Optional[int]=None):
-        if print_to_console:
-            self._lprint(message, color)
-
-        if log and level and self.logger_mode not in ["off", None]:
-            self._output_log(message, level)        
+        self.logger = logger
+        print(f"Configured logger '{self.logger_name}'"
+              f"(Level: {self.logger_level.upper()}," 
+              f"Handlers: {[h.__class__.__name__ for h in logger.handlers]}," 
+              f"Propagate: {logger.propagate})")
+        
+        return logger

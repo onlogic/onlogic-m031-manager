@@ -3,8 +3,8 @@
 # It includes protocol constants, command kinds, status types, target indices,
 # and boundary types. 
 
-# The ProtocolConstants class defines the baud rate, device descriptor,
-# transmission values, and serial check values used in the communication protocol.
+# The ProtocolConstants class defines the baud-rate, DIO card device descriptor,
+# transmission values, and serial check values used in the communication protocol with the DIO Card.
 # The Kinds class categorizes the command classifiers for automotive and DIO commands,
 # providing a clear mapping of command types to their respective identifiers.
 # The StatusTypes class enumerates the various status codes that can be returned
