@@ -1,21 +1,19 @@
-################ Constants #################
-# This file contains constants used throughout the OnLogic Nuvoton Manager.
-# It includes protocol constants, command kinds, status types, target indices,
-# and boundary types. 
+'''
+    OnLogic Nuvoton Manager Constants
+    
+    This file contains constants used throughout the OnLogic Nuvoton Manager.
+    It includes protocol constants, command kinds, status types, target indices,
+    and boundary types.
 
-# The ProtocolConstants class defines the baud-rate, DIO card device descriptor,
-# transmission values, and serial check values used in the communication protocol with the DIO Card.
-# The Kinds class categorizes the command classifiers for automotive and DIO commands,
-# providing a clear mapping of command types to their respective identifiers.
-# The StatusTypes class enumerates the various status codes that can be returned
-# during command execution, indicating success or different types of errors.
-# The TargetIndices class defines indices used to isolate target data within received frames,
-# while the BoundaryTypes class specifies numeric boundaries for command parameters,
-# such as binary values, digital I/O pin ranges, decimal values, and byte values.
+    Frame format is as follows: 
 
-# sof, crc, len, kind, data
-
+        sof (1 Byte), crc (1 Byte), len (1 Byte), kind (1 Byte), data (O-8 Bytes), NACK (1 Byte) 
+'''
 class ProtocolConstants:
+    '''
+    The ProtocolConstants class defines the baud-rate, DIO card device descriptor,
+    transmission values, and serial check values used in the communication protocol with the DIO Card.
+    '''
     BAUDRATE = 115_200
 
     # DIO card Device Descriptior, VID and PID
@@ -36,6 +34,10 @@ class ProtocolConstants:
 
 
 class Kinds:
+    '''
+    The Kinds class categorizes the command classifiers for automotive and DIO commands,
+    providing a clear mapping of command types to their respective identifiers.
+    '''
     # Automotive Command Classifiers
     ERR_ZERO_KIND = 0x00
     GET_INPUT_VOLTAGE = 0x01
@@ -67,6 +69,11 @@ class Kinds:
     GET_DI_CONTACT = 0x50
 
 class StatusTypes:
+    '''
+    The StatusTypes class enumerates the various status codes that can be returned
+    during the lifespan of the communication process, indicating success (0) 
+    or different types of errors (< 0).
+    '''
     SUCCESS = 0
     SEND_CMD_FAILURE = -1
     RECV_UNEXPECTED_PAYLOAD_ERROR = -2
@@ -75,8 +82,13 @@ class StatusTypes:
     RECV_FRAME_ACK_ERROR = -5
     RECV_FRAME_SOF_ERROR = -6
     RECV_PARTIAL_FRAME_VALIDATION_ERROR = -7
+    RECV_FRAME_VALUE_ERROR = -8
+    FORMAT_NONE_ERROR = -9
 
 class TargetIndices:
+    '''    
+    The TargetIndices class defines indices used to isolate target data within received frames,
+    '''
     PENULTIMATE = -2
     RECV_PAYLOAD_LEN = 2
     PAYLOAD_START = 4
@@ -88,6 +100,10 @@ class TargetIndices:
     NACK = -1  # NACK is the last byte in the frame
 
 class BoundaryTypes:
+    '''
+    The BoundaryTypes class specifies numeric boundaries for command parameters,
+    such as binary values, digital I/O pin ranges, decimal values, and byte values
+    '''
     BASE_FRAME_SIZE = 4
 
     # Numeric boundries for various command parameters)

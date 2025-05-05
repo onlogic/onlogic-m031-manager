@@ -28,6 +28,7 @@ class DioHandler(OnLogicNuvotonManager):
         except serial.SerialException as e:
             serial_connect_err = f"ERROR | {e}: Are you on the right port?"
             logger.error(serial_connect_err)
+            self.serial_connection_label = None # Revisit if is worth setting up like this
             raise serial.SerialException(serial_connect_err)
 
     def get_info(self) -> None:
@@ -35,8 +36,8 @@ class DioHandler(OnLogicNuvotonManager):
 
     def _mcu_connection_check(self) -> None:
         super()._mcu_connection_check()
-        
-        #if self.get_di(0) not in BoundaryTypes.BINARY_VALUE_RANGE:
+
+        # if self.get_di(0) not in BoundaryTypes.BINARY_VALUE_RANGE:
         #    raise ValueError("Error | Incorrect Value returned, is this the right device?")
 
     def get_di(self, di_pin: int) -> int:

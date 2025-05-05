@@ -240,6 +240,17 @@ class OnLogicNuvotonManager(ABC):
         return True
 
     def _validate_recieved_frame(self, return_frame: list, target_index: int | tuple = None, target_range: tuple = None) -> int:
+        '''\
+        Validate the received frame from the microcontroller.
+        Checks for SOF, NACK, CRC and if the target index is within the valid range.
+        If the target index is not provided, it will not check for the target range.
+        Returns StatusTypes.SUCCESS if the frame is valid, otherwise returns the appropriate error code.
+        '''
+        if return_frame is None or isinstance(return_frame, list) \
+              or len(return_frame) < BoundaryTypes.BASE_FRAME_SIZE:
+            logging.error(f"Received Frame {return_frame} is None, not a list, or too short")
+            return StatusTypes.RECV_FRAME_VALUE_ERROR
+        
         if return_frame[TargetIndices.SOF] != ProtocolConstants.SHELL_SOF:
             logging.error(f"SOF Value Not Correct")
             return StatusTypes.RECV_FRAME_SOF_ERROR
@@ -263,7 +274,28 @@ class OnLogicNuvotonManager(ABC):
         logger.debug(f"Validated frame successfully: {return_frame}")
         return StatusTypes.SUCCESS
 
-    def claim(self, serial_connection_label=None):
+    def _validate_partial_frame(self, response_frame: list, response_frame_kind: int) -> bool:
+        '''\
+        Validate the partial frame (first four bytes) received from the MCU being used.
+        This function is important as it ensures whether we can use the len field 
+        to determine the length of the payload that follows.
+        '''
+        response_frame_size = len(response_frame)
+        if response_frame_size != BoundaryTypes.BASE_FRAME_SIZE:
+            logger.error(f"Base Frame Length Incorrect,{response_frame_size} should be 4")
+            return False
+
+        if response_frame[TargetIndices.SOF] != ProtocolConstants.SHELL_SOF.to_bytes(1, byteorder='little'):
+            logger.error(f"SOF Value Not Correct, Got {response_frame[TargetIndices.SOF]}, expected {TargetIndices.SOF}")
+            return False
+
+        if response_frame[TargetIndices.KIND] != response_frame_kind.to_bytes(1, byteorder='little'):
+            logger.error(f"Kind Value Not Correct, Got {response_frame[TargetIndices.KIND]},expected {response_frame_kind}")
+            return False
+
+        return True
+
+    def claim(self, serial_connection_label=None) -> None:
         # Serial device functionality
         if serial_connection_label is not None:
             self.serial_connection_label = serial_connection_label
@@ -336,49 +368,9 @@ class OnLogicNuvotonManager(ABC):
 
         return False
 
-    '''
-    def _receive_command(self, response_frame_len: int = ProtocolConstants.RESPONSE_FRAME_LEN) -> bytes:
-        
-        receive command in expected format that complies with UART Shell.
-        The response_frame list should always end with a NACK ['\a'] 
-        command indicating the end of the received payload.
-        
-        response_frame = []
-        self.port.write(ProtocolConstants.SHELL_ACK.to_bytes(1, byteorder='little')) 
-        for _ in range(response_frame_len): 
-            byte_in_port = self.port.read(1)
-            response_frame.append(byte_in_port)
-            self.port.write(ProtocolConstants.SHELL_ACK.to_bytes(1, byteorder='little')) 
-
-        self.logger_util._log_print(f"Recieved Command List {response_frame}",
-                                    print_to_console=False, log=True, level=logging.INFO)
-
-        return b''.join(response_frame)
-    '''
-
-    def _validate_partial_frame(self, response_frame: list, response_frame_kind: int) -> bool:
-        '''\
-        Validate the partial frame (first four bytes) received from the MCU UT.
-        '''
-        response_frame_size = len(response_frame)
-        if response_frame_size != BoundaryTypes.BASE_FRAME_SIZE:
-            logger.error(f"Base Frame Length Incorrect,{response_frame_size} should be 4")
-            return False
-
-        if response_frame[TargetIndices.SOF] != ProtocolConstants.SHELL_SOF.to_bytes(1, byteorder='little'):
-            logger.error(f"SOF Value Not Correct, Got {response_frame[TargetIndices.SOF]}, expected {TargetIndices.SOF}")
-            return False
-
-        if response_frame[TargetIndices.KIND] != response_frame_kind.to_bytes(1, byteorder='little'):
-            logger.error(f"Kind Value Not Correct, Got {response_frame[TargetIndices.KIND]},expected {response_frame_kind}")
-            return False
-
-        
-        return True
-
     def _receive_command(self, response_frame_kind: int) -> bytes | int:
         '''
-        Receive command in expected format that complies with UART Shell.
+        Receive command in expected format that complies with UART Shell interface.
         The response_frame list should always end with a NACK ['\a'] 
         command indicating the end of the received payload.
         '''
@@ -424,16 +416,28 @@ class OnLogicNuvotonManager(ABC):
         return b''.join(response_frame)
 
     def _format_version_string(self, payload_bytes: bytes) -> str:
+        '''\
+            Format the payload byte to a string representation, 
+            in the format Byte1.Byte2.Byte3, where each byte is a coverted byte value to string
+
+            Example: b'\x01\x02\x03' -> '1.2.3'
+        '''
         payload_len = len(payload_bytes)
         return_str = ""
         for i in range(payload_len):
             return_str += str(payload_bytes[i])
-            if i < payload_len - 1:
+            if i < payload_len - 1: 
                 return_str += '.'
         return return_str
     
     def _format_response_number(self, payload_bytes: bytes) -> int:
-        return int.from_bytes(payload_bytes, byteorder='little')
+        '''\
+            A simple method that formats the payload bytes to an integer representation with an additional None check.
+            Example: b'\x00\x00\x00\x01' -> 1
+            If the payload is empty, it returns StatusTypes.FORMAT_NONE_ERROR.
+        '''
+
+        return int.from_bytes(payload_bytes, byteorder='little') if payload_bytes else StatusTypes.FORMAT_NONE_ERROR
 
     def _isolate_target_indices(self, frame: bytes) -> tuple:
         '''\

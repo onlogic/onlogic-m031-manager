@@ -23,10 +23,9 @@ class AutomotiveHandler(OnLogicNuvotonManager):
 
         super()._mcu_connection_check()
 
-        '''
-        if(not self.in_valid_range(self.get_soft_off_timer()):
-            raise ValueError("Error | Issue with verifying connection command")
-        '''
+        # if(not self.get_soft_off_timer()):
+        #     raise ValueError("Error | Issue with verifying connection command")
+        
 
     def _init_port_error_handling(self, error_msg: str, return_early: bool = False) -> None | ValueError:
         logger.error(error_msg, level=logging.ERROR)
@@ -50,7 +49,7 @@ class AutomotiveHandler(OnLogicNuvotonManager):
                                   "Did you enable correct bios settings []?"
             self._init_port_error_handling(serial_connect_err, return_early=True)
             raise serial.SerialException(serial_connect_err)
-        
+
     def get_info(self) -> None:
         super().get_info(filename="AutomotiveModeDescription.log")
 
@@ -189,7 +188,7 @@ class AutomotiveHandler(OnLogicNuvotonManager):
 
         return self._validate_recieved_frame(frame, target_indices, BoundaryTypes.BYTE_VALUE_RANGE)
 
-    def get_soft_off_timer(self):
+    def get_soft_off_timer(self) -> int:
         sot_timer_cmd = self._construct_command(Kinds.GET_SOFT_OFF_TIMER)
 
         # Enclose each value read with buffer clearances
@@ -237,7 +236,7 @@ class AutomotiveHandler(OnLogicNuvotonManager):
 
         return self._validate_recieved_frame(frame, target_indices, BoundaryTypes.BYTE_VALUE_RANGE)
 
-    def get_hard_off_timer(self):
+    def get_hard_off_timer(self) -> int:
         hot_timer_cmd = self._construct_command(Kinds.GET_HARD_OFF_TIMER)
 
         # Enclose each value read with buffer clearances
@@ -285,7 +284,7 @@ class AutomotiveHandler(OnLogicNuvotonManager):
 
         return self._validate_recieved_frame(frame, target_indices, BoundaryTypes.BYTE_VALUE_RANGE)
 
-    def get_low_voltage_timer(self):
+    def get_low_voltage_timer(self) -> int:
         lvt_timer_cmd = self._construct_command(Kinds.GET_LOW_VOLTAGE_TIMER)
 
         # Enclose each value read with buffer clearances
@@ -333,7 +332,7 @@ class AutomotiveHandler(OnLogicNuvotonManager):
 
         return self._validate_recieved_frame(frame, target_indices, BoundaryTypes.BYTE_VALUE_RANGE)
 
-    def get_shutdown_voltage(self):
+    def get_shutdown_voltage(self) -> int:
         sdv_timer_cmd = self._construct_command(Kinds.GET_SHUTDOWN_VOLTAGE)
 
         # Enclose each value read with buffer clearances

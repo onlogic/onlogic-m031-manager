@@ -77,7 +77,11 @@ class LoggingUtil():
 
         logger.handlers.clear()
 
-        filename = self._create_filename() if self.handler_mode in ['file', 'both'] else None
+        if self.handler_mode in ['file', 'both']:
+            filename = self._create_filename()
+        else:
+            filename = None
+        
         handlers = self._config_handlers(filename)
 
         logger.setLevel(level)
