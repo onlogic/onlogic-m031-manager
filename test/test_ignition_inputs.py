@@ -54,6 +54,37 @@ def test_crank_values(auto_handler):
 
         collective_automotive_setting = (collective_automotive_setting << 1)
 
+def test_edge_case_values(auto_handler):
+    
+    edge_case = [
+        0, # set_automotive_mode
+        0, # set_low_power_enable
+        254, # set_start_up_timer
+        254, # set_soft_off_timer
+        254, # setting_input
+        254, # set_shutdown_voltage
+    ]
+
+    for i in range(1, 4):
+        return_codes = auto_handler.set_all_automotive_settings(edge_case)
+
+        if any( i != 0 for i in return_codes ):
+            pytest.fail("Initial set_all_output_states did not successfully execute")
+    
+        automitive_setting_dict = auto_handler.get_all_automotive_settings()
+        print(automitive_setting_dict)
+        assert automitive_setting_dict["amd"] == 0
+        assert automitive_setting_dict["lpe"] == 0
+        assert automitive_setting_dict["sut"] == edge_case[2]
+        assert automitive_setting_dict["sot"] == edge_case[3]
+        assert automitive_setting_dict["hot"] == edge_case[4]
+        assert automitive_setting_dict["sdv"] == edge_case[5]
+
+        edge_case[2] = edge_case[2] + 1
+        edge_case[3] = edge_case[3] + 1
+        edge_case[4] = edge_case[4] + 1
+        edge_case[5] = edge_case[5] + 1
+
 def edge_case_assertions(func):
     with pytest.raises((TypeError, ValueError)) as e:
         func(-1)
@@ -99,3 +130,10 @@ def test_get_version(auto_handler):
     assert len(version) > 0
     assert re.match(r"\d.\d.\d", version)
     print(version)
+
+@pytest.mark.order(-1) # execute last
+def test_dio_handler_release(auto_handler):
+    try:
+        auto_handler.release()
+    except Exception as e:
+        pytest.fail(f"An error Occurred: {e}")

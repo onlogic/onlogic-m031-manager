@@ -82,6 +82,7 @@ def test_get_version(dio_handler):
     version = dio_handler.get_version()
     assert isinstance(version, str)
     assert len(version) > 0
+
     assert re.match(r"\d.\d.\d", version)
     print(version)
 
@@ -99,3 +100,10 @@ def test_set_all_output_states():
     check_for_error(my_dio.set_all_output_states, ValueError, ([2 for i in range(8)]))
 
     my_dio.is_setup = False
+
+@pytest.mark.order(-1) # execute last
+def test_dio_handler_release(dio_handler):
+    try:
+        dio_handler.release()
+    except Exception as e:
+        pytest.fail(f"An error Occurred {e}")

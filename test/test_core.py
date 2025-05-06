@@ -70,7 +70,6 @@ def test_validate_input_param():
     my_dio.is_setup = False
 
 def test_context_manager():
-    
     my_dio = DioHandler()
     my_dio.claim()
     assert my_dio.is_setup == True
@@ -78,4 +77,15 @@ def test_context_manager():
         assert my_dio.is_setup == True
     assert my_dio.is_setup == False
     my_dio.release()
-    my_dio.is_setup = False
+    assert my_dio.is_setup == False
+
+def test_context_manager_both():
+    with DioHandler() as my_dio:
+        with AutomotiveHandler("/dev/ttyS4") as my_auto:
+            assert my_dio.is_setup == True
+            assert my_auto.is_setup == True
+        
+            print(my_auto.get_all_automotive_settings())
+            print(my_dio.get_all_input_states())
+    assert my_dio.is_setup == False
+    assert my_auto.is_setup == False

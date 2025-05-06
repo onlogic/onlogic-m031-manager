@@ -110,7 +110,7 @@ class BoundaryTypes:
     BINARY_VALUE_RANGE = (0, 1)
     DIGITAL_IO_PIN_RANGE = (0, 7)
     DECIMAL_VALUE_RANGE = (0, 9)
-    BYTE_VALUE_RANGE = (0, 256) # should it be 255?
+    BYTE_VALUE_RANGE = (0, 255) # should it be 255?
 
     AUTOMOTIVE_TIMER_RANGE = (0, 1 << 20) #1_000_000)
 
