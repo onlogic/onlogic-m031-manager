@@ -226,6 +226,13 @@ class OnLogicNuvotonManager(ABC):
         return True
 
     def _within_valid_range(self, return_frame: bytes, target_index: int | tuple, target_range: tuple) -> bool:        
+        '''
+        target_index (int | tuple):
+            Specifies the index or range of indices in the return_frame to check.
+            If int: A single index in the return_frame to validate.
+            If tuple: A range of indices (start, stop) to validate. The range is inclusive of start and exclusive of stop.        
+        '''
+        
         if isinstance(target_index, int):
             if return_frame[target_index] < target_range[0] or \
                     return_frame[target_index] > target_range[1]:

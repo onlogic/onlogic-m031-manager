@@ -69,6 +69,17 @@ def test_validate_input_param():
     check_for_error(my_dio._validate_input_param, TypeError, 5.5, valid_input_range, input_type)
     my_dio.is_setup = False
 
+def test_within_valid_range():
+    my_dio = DioHandler()
+    my_dio.is_setup = True
+    frame = b'\x01\x02\x03\x04\x05'
+    index_range = (1, 4)
+    value_range = (0, 4)
+
+
+    my_dio.is_setup = False
+
+
 def test_context_manager():
     my_dio = DioHandler()
     my_dio.claim()
