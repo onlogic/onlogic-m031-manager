@@ -1,0 +1,631 @@
+[2025-05-06 19:54:56,543 INFO OnLogicNuvotonManager.py:78 -> list_all_available_ports()] /dev/ttyACM0 - HX52x USB
+[2025-05-06 19:54:56,543 INFO OnLogicNuvotonManager.py:78 -> list_all_available_ports()] /dev/ttyS0 - n/a
+[2025-05-06 19:54:56,543 INFO OnLogicNuvotonManager.py:78 -> list_all_available_ports()] /dev/ttyS1 - n/a
+[2025-05-06 19:54:56,543 INFO OnLogicNuvotonManager.py:78 -> list_all_available_ports()] /dev/ttyS2 - n/a
+[2025-05-06 19:54:56,543 INFO OnLogicNuvotonManager.py:78 -> list_all_available_ports()] /dev/ttyS3 - n/a
+[2025-05-06 19:54:56,543 INFO OnLogicNuvotonManager.py:78 -> list_all_available_ports()] /dev/ttyS4 - n/a
+[2025-05-06 19:54:56,543 INFO OnLogicNuvotonManager.py:78 -> list_all_available_ports()] /dev/ttyS5 - n/a
+[2025-05-06 19:54:56,543 INFO OnLogicNuvotonManager.py:78 -> list_all_available_ports()] /dev/ttyS6 - n/a
+[2025-05-06 19:54:56,543 INFO OnLogicNuvotonManager.py:78 -> list_all_available_ports()] /dev/ttyS7 - n/a
+[2025-05-06 19:54:56,543 INFO OnLogicNuvotonManager.py:78 -> list_all_available_ports()] /dev/ttyS8 - n/a
+[2025-05-06 19:54:56,543 INFO OnLogicNuvotonManager.py:78 -> list_all_available_ports()] /dev/ttyS9 - n/a
+[2025-05-06 19:54:56,543 INFO OnLogicNuvotonManager.py:78 -> list_all_available_ports()] /dev/ttyS10 - n/a
+[2025-05-06 19:54:56,543 INFO OnLogicNuvotonManager.py:78 -> list_all_available_ports()] /dev/ttyS11 - n/a
+[2025-05-06 19:54:56,543 INFO OnLogicNuvotonManager.py:78 -> list_all_available_ports()] /dev/ttyS12 - n/a
+[2025-05-06 19:54:56,543 INFO OnLogicNuvotonManager.py:78 -> list_all_available_ports()] /dev/ttyS13 - n/a
+[2025-05-06 19:54:56,543 INFO OnLogicNuvotonManager.py:78 -> list_all_available_ports()] /dev/ttyS14 - n/a
+[2025-05-06 19:54:56,543 INFO OnLogicNuvotonManager.py:78 -> list_all_available_ports()] /dev/ttyS15 - n/a
+[2025-05-06 19:54:56,543 INFO OnLogicNuvotonManager.py:78 -> list_all_available_ports()] /dev/ttyS16 - n/a
+[2025-05-06 19:54:56,543 INFO OnLogicNuvotonManager.py:78 -> list_all_available_ports()] /dev/ttyS17 - n/a
+[2025-05-06 19:54:56,543 INFO OnLogicNuvotonManager.py:78 -> list_all_available_ports()] /dev/ttyS18 - n/a
+[2025-05-06 19:54:56,543 INFO OnLogicNuvotonManager.py:78 -> list_all_available_ports()] /dev/ttyS19 - n/a
+[2025-05-06 19:54:56,543 INFO OnLogicNuvotonManager.py:78 -> list_all_available_ports()] /dev/ttyS20 - n/a
+[2025-05-06 19:54:56,543 INFO OnLogicNuvotonManager.py:78 -> list_all_available_ports()] /dev/ttyS21 - n/a
+[2025-05-06 19:54:56,543 INFO OnLogicNuvotonManager.py:78 -> list_all_available_ports()] /dev/ttyS22 - n/a
+[2025-05-06 19:54:56,543 INFO OnLogicNuvotonManager.py:78 -> list_all_available_ports()] /dev/ttyS23 - n/a
+[2025-05-06 19:54:56,543 INFO OnLogicNuvotonManager.py:78 -> list_all_available_ports()] /dev/ttyS24 - n/a
+[2025-05-06 19:54:56,543 INFO OnLogicNuvotonManager.py:78 -> list_all_available_ports()] /dev/ttyS25 - n/a
+[2025-05-06 19:54:56,543 INFO OnLogicNuvotonManager.py:78 -> list_all_available_ports()] /dev/ttyS26 - n/a
+[2025-05-06 19:54:56,543 INFO OnLogicNuvotonManager.py:78 -> list_all_available_ports()] /dev/ttyS27 - n/a
+[2025-05-06 19:54:56,543 INFO OnLogicNuvotonManager.py:78 -> list_all_available_ports()] /dev/ttyS28 - n/a
+[2025-05-06 19:54:56,543 INFO OnLogicNuvotonManager.py:78 -> list_all_available_ports()] /dev/ttyS29 - n/a
+[2025-05-06 19:54:56,543 INFO OnLogicNuvotonManager.py:78 -> list_all_available_ports()] /dev/ttyS30 - n/a
+[2025-05-06 19:54:56,543 INFO OnLogicNuvotonManager.py:78 -> list_all_available_ports()] /dev/ttyS31 - n/a
+[2025-05-06 19:54:56,546 INFO OnLogicNuvotonManager.py:95 -> _get_cdc_device_port()] NOTE | DIO CARD FOUND ON:
+Port: /dev/ttyACM0 - HX52x USB
+Port Location: 3-8:1.0
+Hardware ID: USB VID:PID=353F:A105 LOCATION=3-8:1.0
+Device: /dev/ttyACM0
+
+[2025-05-06 19:54:56,547 DEBUG OnLogicNuvotonManager.py:142 -> _mcu_connection_check()] b'\x07'
+[2025-05-06 19:54:56,550 DEBUG OnLogicNuvotonManager.py:142 -> _mcu_connection_check()] b'\x07'
+[2025-05-06 19:54:56,553 DEBUG OnLogicNuvotonManager.py:142 -> _mcu_connection_check()] b'\x07'
+[2025-05-06 19:54:56,556 DEBUG OnLogicNuvotonManager.py:142 -> _mcu_connection_check()] b'\x07'
+[2025-05-06 19:54:56,559 DEBUG OnLogicNuvotonManager.py:142 -> _mcu_connection_check()] b'\x07'
+[2025-05-06 19:54:56,563 INFO OnLogicNuvotonManager.py:148 -> _mcu_connection_check()] Interface Found
+[2025-05-06 19:54:56,732 INFO OnLogicNuvotonManager.py:314 -> claim()] Serial Port Claimed
+[2025-05-06 19:54:56,732 INFO OnLogicNuvotonManager.py:354 -> _construct_command()] Constructed Command b'\x01\t\x00\x03'
+[2025-05-06 19:54:56,772 DEBUG OnLogicNuvotonManager.py:360 -> _send_command()] Length of Command to send: 4
+[2025-05-06 19:54:56,772 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 1
+[2025-05-06 19:54:56,773 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 9
+[2025-05-06 19:54:56,773 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:56,774 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 3
+[2025-05-06 19:54:56,775 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-06 19:54:56,776 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\xaa'
+[2025-05-06 19:54:56,776 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x03'
+[2025-05-06 19:54:56,776 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x03'
+[2025-05-06 19:54:56,777 DEBUG OnLogicNuvotonManager.py:401 -> _receive_command()] Validating Partial Frame [b'\x01', b'\xaa', b'\x03', b'\x03']
+[2025-05-06 19:54:56,777 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:56,777 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x03'
+[2025-05-06 19:54:56,777 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x03'
+[2025-05-06 19:54:56,778 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x07'
+[2025-05-06 19:54:56,778 INFO OnLogicNuvotonManager.py:420 -> _receive_command()] Received Command List [b'\x01', b'\xaa', b'\x03', b'\x03', b'\x00', b'\x03', b'\x03', b'\x07']
+[2025-05-06 19:54:56,804 DEBUG OnLogicNuvotonManager.py:471 -> get_version()] Recieved Command Bytes b'\x01\xaa\x03\x03\x00\x03\x03\x07'
+[2025-05-06 19:54:56,804 DEBUG OnLogicNuvotonManager.py:220 -> _check_crc()] CALCULATED 170 : EXISTING 170
+[2025-05-06 19:54:56,804 DEBUG OnLogicNuvotonManager.py:281 -> _validate_recieved_frame()] Validated frame successfully: b'\x01\xaa\x03\x03\x00\x03\x03\x07'
+[2025-05-06 19:54:56,804 INFO OnLogicNuvotonManager.py:354 -> _construct_command()] Constructed Command b'\x01\x00\x01\x07\x00'
+[2025-05-06 19:54:56,844 DEBUG OnLogicNuvotonManager.py:360 -> _send_command()] Length of Command to send: 5
+[2025-05-06 19:54:56,844 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 1
+[2025-05-06 19:54:56,845 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:56,846 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 1
+[2025-05-06 19:54:56,846 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 7
+[2025-05-06 19:54:56,847 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:56,869 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-06 19:54:56,869 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:56,870 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-06 19:54:56,870 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x07'
+[2025-05-06 19:54:56,870 DEBUG OnLogicNuvotonManager.py:401 -> _receive_command()] Validating Partial Frame [b'\x01', b'\x00', b'\x01', b'\x07']
+[2025-05-06 19:54:56,870 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:56,871 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x07'
+[2025-05-06 19:54:56,871 INFO OnLogicNuvotonManager.py:420 -> _receive_command()] Received Command List [b'\x01', b'\x00', b'\x01', b'\x07', b'\x00', b'\x07']
+[2025-05-06 19:54:56,896 DEBUG AutomotiveHandler.py:96 -> set_automotive_mode()] Recieved Command Bytes: b'\x01\x00\x01\x07\x00\x07'
+[2025-05-06 19:54:56,896 DEBUG OnLogicNuvotonManager.py:220 -> _check_crc()] CALCULATED 0 : EXISTING 0
+[2025-05-06 19:54:56,897 DEBUG OnLogicNuvotonManager.py:281 -> _validate_recieved_frame()] Validated frame successfully: b'\x01\x00\x01\x07\x00\x07'
+[2025-05-06 19:54:56,897 INFO OnLogicNuvotonManager.py:354 -> _construct_command()] Constructed Command b'\x01\x12\x00\x06'
+[2025-05-06 19:54:56,938 DEBUG OnLogicNuvotonManager.py:360 -> _send_command()] Length of Command to send: 4
+[2025-05-06 19:54:56,939 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 1
+[2025-05-06 19:54:56,939 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 18
+[2025-05-06 19:54:56,940 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:56,940 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 6
+[2025-05-06 19:54:56,941 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-06 19:54:56,942 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x15'
+[2025-05-06 19:54:56,942 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-06 19:54:56,943 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x06'
+[2025-05-06 19:54:56,943 DEBUG OnLogicNuvotonManager.py:401 -> _receive_command()] Validating Partial Frame [b'\x01', b'\x15', b'\x01', b'\x06']
+[2025-05-06 19:54:56,943 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:56,943 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x07'
+[2025-05-06 19:54:56,943 INFO OnLogicNuvotonManager.py:420 -> _receive_command()] Received Command List [b'\x01', b'\x15', b'\x01', b'\x06', b'\x00', b'\x07']
+[2025-05-06 19:54:56,969 DEBUG AutomotiveHandler.py:70 -> get_automotive_mode()] Recieved Command Bytes: b'\x01\x15\x01\x06\x00\x07'
+[2025-05-06 19:54:56,969 DEBUG OnLogicNuvotonManager.py:220 -> _check_crc()] CALCULATED 21 : EXISTING 21
+[2025-05-06 19:54:56,969 DEBUG OnLogicNuvotonManager.py:281 -> _validate_recieved_frame()] Validated frame successfully: b'\x01\x15\x01\x06\x00\x07'
+[2025-05-06 19:54:56,969 INFO OnLogicNuvotonManager.py:354 -> _construct_command()] Constructed Command b'\x01\xd6\x01\t\x00'
+[2025-05-06 19:54:57,011 DEBUG OnLogicNuvotonManager.py:360 -> _send_command()] Length of Command to send: 5
+[2025-05-06 19:54:57,011 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 1
+[2025-05-06 19:54:57,012 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 214
+[2025-05-06 19:54:57,012 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 1
+[2025-05-06 19:54:57,013 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 9
+[2025-05-06 19:54:57,013 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:57,036 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-06 19:54:57,036 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\xd6'
+[2025-05-06 19:54:57,036 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-06 19:54:57,036 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\t'
+[2025-05-06 19:54:57,036 DEBUG OnLogicNuvotonManager.py:401 -> _receive_command()] Validating Partial Frame [b'\x01', b'\xd6', b'\x01', b'\t']
+[2025-05-06 19:54:57,037 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:57,037 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x07'
+[2025-05-06 19:54:57,038 INFO OnLogicNuvotonManager.py:420 -> _receive_command()] Received Command List [b'\x01', b'\xd6', b'\x01', b'\t', b'\x00', b'\x07']
+[2025-05-06 19:54:57,063 DEBUG AutomotiveHandler.py:139 -> set_low_power_enable()] Recieved Command Bytes: b'\x01\xd6\x01\t\x00\x07'
+[2025-05-06 19:54:57,064 DEBUG OnLogicNuvotonManager.py:220 -> _check_crc()] CALCULATED 214 : EXISTING 214
+[2025-05-06 19:54:57,064 DEBUG OnLogicNuvotonManager.py:281 -> _validate_recieved_frame()] Validated frame successfully: b'\x01\xd6\x01\t\x00\x07'
+[2025-05-06 19:54:57,064 INFO OnLogicNuvotonManager.py:354 -> _construct_command()] Constructed Command b'\x018\x00\x08'
+[2025-05-06 19:54:57,103 DEBUG OnLogicNuvotonManager.py:360 -> _send_command()] Length of Command to send: 4
+[2025-05-06 19:54:57,103 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 1
+[2025-05-06 19:54:57,103 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 56
+[2025-05-06 19:54:57,104 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:57,105 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 8
+[2025-05-06 19:54:57,105 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-06 19:54:57,106 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\xc3'
+[2025-05-06 19:54:57,106 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-06 19:54:57,107 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x08'
+[2025-05-06 19:54:57,107 DEBUG OnLogicNuvotonManager.py:401 -> _receive_command()] Validating Partial Frame [b'\x01', b'\xc3', b'\x01', b'\x08']
+[2025-05-06 19:54:57,107 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:57,107 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x07'
+[2025-05-06 19:54:57,107 INFO OnLogicNuvotonManager.py:420 -> _receive_command()] Received Command List [b'\x01', b'\xc3', b'\x01', b'\x08', b'\x00', b'\x07']
+[2025-05-06 19:54:57,133 DEBUG AutomotiveHandler.py:114 -> get_low_power_enable()] Recieved Command Bytes: b'\x01\xc3\x01\x08\x00\x07'
+[2025-05-06 19:54:57,133 DEBUG OnLogicNuvotonManager.py:220 -> _check_crc()] CALCULATED 195 : EXISTING 195
+[2025-05-06 19:54:57,133 DEBUG OnLogicNuvotonManager.py:281 -> _validate_recieved_frame()] Validated frame successfully: b'\x01\xc3\x01\x08\x00\x07'
+[2025-05-06 19:54:57,133 INFO OnLogicNuvotonManager.py:354 -> _construct_command()] Constructed Command b'\x01\xae\x08\x0b\x0b\x00\x00\x00\x00\x00\x00\x00'
+[2025-05-06 19:54:57,174 DEBUG OnLogicNuvotonManager.py:360 -> _send_command()] Length of Command to send: 12
+[2025-05-06 19:54:57,174 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 1
+[2025-05-06 19:54:57,175 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 174
+[2025-05-06 19:54:57,176 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 8
+[2025-05-06 19:54:57,176 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 11
+[2025-05-06 19:54:57,177 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 11
+[2025-05-06 19:54:57,178 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:57,178 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:57,179 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:57,179 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:57,180 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:57,181 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:57,181 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:57,203 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-06 19:54:57,203 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\xae'
+[2025-05-06 19:54:57,204 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x08'
+[2025-05-06 19:54:57,204 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x0b'
+[2025-05-06 19:54:57,204 DEBUG OnLogicNuvotonManager.py:401 -> _receive_command()] Validating Partial Frame [b'\x01', b'\xae', b'\x08', b'\x0b']
+[2025-05-06 19:54:57,205 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x0b'
+[2025-05-06 19:54:57,205 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:57,206 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:57,206 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:57,206 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:57,206 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:57,207 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:57,207 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:57,208 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x07'
+[2025-05-06 19:54:57,208 INFO OnLogicNuvotonManager.py:420 -> _receive_command()] Received Command List [b'\x01', b'\xae', b'\x08', b'\x0b', b'\x0b', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x07']
+[2025-05-06 19:54:57,235 DEBUG AutomotiveHandler.py:187 -> set_start_up_timer()] Recieved Command Bytes: b'\x01\xae\x08\x0b\x0b\x00\x00\x00\x00\x00\x00\x00\x07'
+[2025-05-06 19:54:57,235 DEBUG OnLogicNuvotonManager.py:220 -> _check_crc()] CALCULATED 174 : EXISTING 174
+[2025-05-06 19:54:57,235 DEBUG OnLogicNuvotonManager.py:281 -> _validate_recieved_frame()] Validated frame successfully: b'\x01\xae\x08\x0b\x0b\x00\x00\x00\x00\x00\x00\x00\x07'
+[2025-05-06 19:54:57,235 INFO OnLogicNuvotonManager.py:354 -> _construct_command()] Constructed Command b'\x016\x00\n'
+[2025-05-06 19:54:57,275 DEBUG OnLogicNuvotonManager.py:360 -> _send_command()] Length of Command to send: 4
+[2025-05-06 19:54:57,275 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 1
+[2025-05-06 19:54:57,276 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 54
+[2025-05-06 19:54:57,276 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:57,277 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 10
+[2025-05-06 19:54:57,278 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-06 19:54:57,278 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\xd7'
+[2025-05-06 19:54:57,278 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x08'
+[2025-05-06 19:54:57,279 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\n'
+[2025-05-06 19:54:57,279 DEBUG OnLogicNuvotonManager.py:401 -> _receive_command()] Validating Partial Frame [b'\x01', b'\xd7', b'\x08', b'\n']
+[2025-05-06 19:54:57,279 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x0b'
+[2025-05-06 19:54:57,280 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:57,280 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:57,281 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:57,281 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:57,281 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:57,281 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:57,282 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:57,283 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x07'
+[2025-05-06 19:54:57,283 INFO OnLogicNuvotonManager.py:420 -> _receive_command()] Received Command List [b'\x01', b'\xd7', b'\x08', b'\n', b'\x0b', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x07']
+[2025-05-06 19:54:57,308 DEBUG AutomotiveHandler.py:158 -> get_start_up_timer()] Recieved Command Bytes: b'\x01\xd7\x08\n\x0b\x00\x00\x00\x00\x00\x00\x00\x07'
+[2025-05-06 19:54:57,308 DEBUG OnLogicNuvotonManager.py:220 -> _check_crc()] CALCULATED 215 : EXISTING 215
+[2025-05-06 19:54:57,308 DEBUG OnLogicNuvotonManager.py:281 -> _validate_recieved_frame()] Validated frame successfully: b'\x01\xd7\x08\n\x0b\x00\x00\x00\x00\x00\x00\x00\x07'
+[2025-05-06 19:54:57,308 INFO OnLogicNuvotonManager.py:354 -> _construct_command()] Constructed Command b'\x01~\x08\r3\x00\x00\x00\x00\x00\x00\x00'
+[2025-05-06 19:54:57,348 DEBUG OnLogicNuvotonManager.py:360 -> _send_command()] Length of Command to send: 12
+[2025-05-06 19:54:57,348 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 1
+[2025-05-06 19:54:57,349 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 126
+[2025-05-06 19:54:57,349 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 8
+[2025-05-06 19:54:57,350 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 13
+[2025-05-06 19:54:57,350 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 51
+[2025-05-06 19:54:57,351 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:57,352 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:57,352 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:57,353 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:57,353 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:57,354 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:57,355 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:57,377 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-06 19:54:57,377 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'~'
+[2025-05-06 19:54:57,378 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x08'
+[2025-05-06 19:54:57,378 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\r'
+[2025-05-06 19:54:57,378 DEBUG OnLogicNuvotonManager.py:401 -> _receive_command()] Validating Partial Frame [b'\x01', b'~', b'\x08', b'\r']
+[2025-05-06 19:54:57,379 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'3'
+[2025-05-06 19:54:57,379 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:57,380 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:57,380 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:57,380 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:57,380 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:57,381 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:57,381 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:57,382 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x07'
+[2025-05-06 19:54:57,382 INFO OnLogicNuvotonManager.py:420 -> _receive_command()] Received Command List [b'\x01', b'~', b'\x08', b'\r', b'3', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x07']
+[2025-05-06 19:54:57,410 DEBUG AutomotiveHandler.py:235 -> set_soft_off_timer()] Recieved Command Bytes: b'\x01~\x08\r3\x00\x00\x00\x00\x00\x00\x00\x07'
+[2025-05-06 19:54:57,410 DEBUG OnLogicNuvotonManager.py:220 -> _check_crc()] CALCULATED 126 : EXISTING 126
+[2025-05-06 19:54:57,410 DEBUG OnLogicNuvotonManager.py:281 -> _validate_recieved_frame()] Validated frame successfully: b'\x01~\x08\r3\x00\x00\x00\x00\x00\x00\x00\x07'
+[2025-05-06 19:54:57,410 INFO OnLogicNuvotonManager.py:354 -> _construct_command()] Constructed Command b'\x01$\x00\x0c'
+[2025-05-06 19:54:57,451 DEBUG OnLogicNuvotonManager.py:360 -> _send_command()] Length of Command to send: 4
+[2025-05-06 19:54:57,452 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 1
+[2025-05-06 19:54:57,452 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 36
+[2025-05-06 19:54:57,453 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:57,454 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 12
+[2025-05-06 19:54:57,455 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-06 19:54:57,455 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x07'
+[2025-05-06 19:54:57,456 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x08'
+[2025-05-06 19:54:57,456 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x0c'
+[2025-05-06 19:54:57,456 DEBUG OnLogicNuvotonManager.py:401 -> _receive_command()] Validating Partial Frame [b'\x01', b'\x07', b'\x08', b'\x0c']
+[2025-05-06 19:54:57,456 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'3'
+[2025-05-06 19:54:57,457 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:57,457 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:57,458 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:57,458 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:57,459 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:57,459 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:57,459 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:57,460 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x07'
+[2025-05-06 19:54:57,460 INFO OnLogicNuvotonManager.py:420 -> _receive_command()] Received Command List [b'\x01', b'\x07', b'\x08', b'\x0c', b'3', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x07']
+[2025-05-06 19:54:57,486 DEBUG AutomotiveHandler.py:206 -> get_soft_off_timer()] Recieved Command Bytes: b'\x01\x07\x08\x0c3\x00\x00\x00\x00\x00\x00\x00\x07'
+[2025-05-06 19:54:57,486 DEBUG OnLogicNuvotonManager.py:220 -> _check_crc()] CALCULATED 7 : EXISTING 7
+[2025-05-06 19:54:57,486 DEBUG OnLogicNuvotonManager.py:281 -> _validate_recieved_frame()] Validated frame successfully: b'\x01\x07\x08\x0c3\x00\x00\x00\x00\x00\x00\x00\x07'
+[2025-05-06 19:54:57,486 INFO OnLogicNuvotonManager.py:354 -> _construct_command()] Constructed Command b'\x01\xc3\x08\x11-\x01\x00\x00\x00\x00\x00\x00'
+[2025-05-06 19:54:57,527 DEBUG OnLogicNuvotonManager.py:360 -> _send_command()] Length of Command to send: 12
+[2025-05-06 19:54:57,527 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 1
+[2025-05-06 19:54:57,528 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 195
+[2025-05-06 19:54:57,528 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 8
+[2025-05-06 19:54:57,529 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 17
+[2025-05-06 19:54:57,529 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 45
+[2025-05-06 19:54:57,530 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 1
+[2025-05-06 19:54:57,531 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:57,531 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:57,532 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:57,533 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:57,534 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:57,535 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:57,557 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-06 19:54:57,557 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\xc3'
+[2025-05-06 19:54:57,558 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x08'
+[2025-05-06 19:54:57,558 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x11'
+[2025-05-06 19:54:57,558 DEBUG OnLogicNuvotonManager.py:401 -> _receive_command()] Validating Partial Frame [b'\x01', b'\xc3', b'\x08', b'\x11']
+[2025-05-06 19:54:57,558 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'-'
+[2025-05-06 19:54:57,558 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-06 19:54:57,559 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:57,559 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:57,560 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:57,560 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:57,561 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:57,561 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:57,562 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x07'
+[2025-05-06 19:54:57,562 INFO OnLogicNuvotonManager.py:420 -> _receive_command()] Received Command List [b'\x01', b'\xc3', b'\x08', b'\x11', b'-', b'\x01', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x07']
+[2025-05-06 19:54:57,587 DEBUG AutomotiveHandler.py:331 -> set_low_voltage_timer()] Recieved Command Bytes: b'\x01\xc3\x08\x11-\x01\x00\x00\x00\x00\x00\x00\x07'
+[2025-05-06 19:54:57,587 DEBUG OnLogicNuvotonManager.py:220 -> _check_crc()] CALCULATED 195 : EXISTING 195
+[2025-05-06 19:54:57,587 DEBUG OnLogicNuvotonManager.py:281 -> _validate_recieved_frame()] Validated frame successfully: b'\x01\xc3\x08\x11-\x01\x00\x00\x00\x00\x00\x00\x07'
+[2025-05-06 19:54:57,587 INFO OnLogicNuvotonManager.py:354 -> _construct_command()] Constructed Command b'\x01p\x00\x10'
+[2025-05-06 19:54:57,630 DEBUG OnLogicNuvotonManager.py:360 -> _send_command()] Length of Command to send: 4
+[2025-05-06 19:54:57,630 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 1
+[2025-05-06 19:54:57,631 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 112
+[2025-05-06 19:54:57,631 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:57,632 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 16
+[2025-05-06 19:54:57,633 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-06 19:54:57,633 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\xba'
+[2025-05-06 19:54:57,633 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x08'
+[2025-05-06 19:54:57,634 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x10'
+[2025-05-06 19:54:57,634 DEBUG OnLogicNuvotonManager.py:401 -> _receive_command()] Validating Partial Frame [b'\x01', b'\xba', b'\x08', b'\x10']
+[2025-05-06 19:54:57,634 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'-'
+[2025-05-06 19:54:57,635 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-06 19:54:57,635 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:57,636 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:57,636 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:57,636 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:57,636 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:57,637 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:57,638 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x07'
+[2025-05-06 19:54:57,638 INFO OnLogicNuvotonManager.py:420 -> _receive_command()] Received Command List [b'\x01', b'\xba', b'\x08', b'\x10', b'-', b'\x01', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x07']
+[2025-05-06 19:54:57,666 DEBUG AutomotiveHandler.py:302 -> get_low_voltage_timer()] Recieved Command Bytes: b'\x01\xba\x08\x10-\x01\x00\x00\x00\x00\x00\x00\x07'
+[2025-05-06 19:54:57,666 DEBUG OnLogicNuvotonManager.py:220 -> _check_crc()] CALCULATED 186 : EXISTING 186
+[2025-05-06 19:54:57,666 DEBUG OnLogicNuvotonManager.py:281 -> _validate_recieved_frame()] Validated frame successfully: b'\x01\xba\x08\x10-\x01\x00\x00\x00\x00\x00\x00\x07'
+[2025-05-06 19:54:57,666 INFO OnLogicNuvotonManager.py:354 -> _construct_command()] Constructed Command b'\x01\x9e\x08\x13Y\x02\x00\x00\x00\x00\x00\x00'
+[2025-05-06 19:54:57,710 DEBUG OnLogicNuvotonManager.py:360 -> _send_command()] Length of Command to send: 12
+[2025-05-06 19:54:57,710 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 1
+[2025-05-06 19:54:57,710 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 158
+[2025-05-06 19:54:57,711 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 8
+[2025-05-06 19:54:57,712 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 19
+[2025-05-06 19:54:57,712 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 89
+[2025-05-06 19:54:57,713 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 2
+[2025-05-06 19:54:57,714 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:57,714 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:57,715 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:57,715 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:57,716 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:57,717 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:57,739 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-06 19:54:57,739 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\xbc'
+[2025-05-06 19:54:57,740 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x04'
+[2025-05-06 19:54:57,740 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x13'
+[2025-05-06 19:54:57,740 DEBUG OnLogicNuvotonManager.py:401 -> _receive_command()] Validating Partial Frame [b'\x01', b'\xbc', b'\x04', b'\x13']
+[2025-05-06 19:54:57,740 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'Y'
+[2025-05-06 19:54:57,740 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x02'
+[2025-05-06 19:54:57,741 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:57,741 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:57,742 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x07'
+[2025-05-06 19:54:57,742 INFO OnLogicNuvotonManager.py:420 -> _receive_command()] Received Command List [b'\x01', b'\xbc', b'\x04', b'\x13', b'Y', b'\x02', b'\x00', b'\x00', b'\x07']
+[2025-05-06 19:54:57,767 DEBUG AutomotiveHandler.py:379 -> set_shutdown_voltage()] Recieved Command Bytes: b'\x01\xbc\x04\x13Y\x02\x00\x00\x07'
+[2025-05-06 19:54:57,767 DEBUG OnLogicNuvotonManager.py:220 -> _check_crc()] CALCULATED 188 : EXISTING 188
+[2025-05-06 19:54:57,767 DEBUG OnLogicNuvotonManager.py:281 -> _validate_recieved_frame()] Validated frame successfully: b'\x01\xbc\x04\x13Y\x02\x00\x00\x07'
+[2025-05-06 19:54:57,767 INFO OnLogicNuvotonManager.py:354 -> _construct_command()] Constructed Command b'\x01~\x00\x12'
+[2025-05-06 19:54:57,807 DEBUG OnLogicNuvotonManager.py:360 -> _send_command()] Length of Command to send: 4
+[2025-05-06 19:54:57,807 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 1
+[2025-05-06 19:54:57,808 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 126
+[2025-05-06 19:54:57,808 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:57,809 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 18
+[2025-05-06 19:54:57,809 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-06 19:54:57,810 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\xde'
+[2025-05-06 19:54:57,810 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x04'
+[2025-05-06 19:54:57,811 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x12'
+[2025-05-06 19:54:57,811 DEBUG OnLogicNuvotonManager.py:401 -> _receive_command()] Validating Partial Frame [b'\x01', b'\xde', b'\x04', b'\x12']
+[2025-05-06 19:54:57,811 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'Y'
+[2025-05-06 19:54:57,812 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x02'
+[2025-05-06 19:54:57,812 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:57,812 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:57,813 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x07'
+[2025-05-06 19:54:57,813 INFO OnLogicNuvotonManager.py:420 -> _receive_command()] Received Command List [b'\x01', b'\xde', b'\x04', b'\x12', b'Y', b'\x02', b'\x00', b'\x00', b'\x07']
+[2025-05-06 19:54:57,840 DEBUG AutomotiveHandler.py:350 -> get_shutdown_voltage()] Recieved Command Bytes: b'\x01\xde\x04\x12Y\x02\x00\x00\x07'
+[2025-05-06 19:54:57,840 DEBUG OnLogicNuvotonManager.py:220 -> _check_crc()] CALCULATED 222 : EXISTING 222
+[2025-05-06 19:54:57,840 DEBUG OnLogicNuvotonManager.py:281 -> _validate_recieved_frame()] Validated frame successfully: b'\x01\xde\x04\x12Y\x02\x00\x00\x07'
+[2025-05-06 19:54:57,882 DEBUG OnLogicNuvotonManager.py:360 -> _send_command()] Length of Command to send: 5
+[2025-05-06 19:54:57,882 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 1
+[2025-05-06 19:54:57,883 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:57,884 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 1
+[2025-05-06 19:54:57,884 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 7
+[2025-05-06 19:54:57,885 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:57,907 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-06 19:54:57,907 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:57,908 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-06 19:54:57,908 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x07'
+[2025-05-06 19:54:57,908 DEBUG OnLogicNuvotonManager.py:401 -> _receive_command()] Validating Partial Frame [b'\x01', b'\x00', b'\x01', b'\x07']
+[2025-05-06 19:54:57,908 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:57,909 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x07'
+[2025-05-06 19:54:57,909 INFO OnLogicNuvotonManager.py:420 -> _receive_command()] Received Command List [b'\x01', b'\x00', b'\x01', b'\x07', b'\x00', b'\x07']
+[2025-05-06 19:54:57,935 DEBUG AutomotiveHandler.py:96 -> set_automotive_mode()] Recieved Command Bytes: b'\x01\x00\x01\x07\x00\x07'
+[2025-05-06 19:54:57,935 DEBUG OnLogicNuvotonManager.py:220 -> _check_crc()] CALCULATED 0 : EXISTING 0
+[2025-05-06 19:54:57,935 DEBUG OnLogicNuvotonManager.py:281 -> _validate_recieved_frame()] Validated frame successfully: b'\x01\x00\x01\x07\x00\x07'
+[2025-05-06 19:54:57,974 DEBUG OnLogicNuvotonManager.py:360 -> _send_command()] Length of Command to send: 5
+[2025-05-06 19:54:57,974 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 1
+[2025-05-06 19:54:57,975 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 214
+[2025-05-06 19:54:57,976 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 1
+[2025-05-06 19:54:57,976 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 9
+[2025-05-06 19:54:57,977 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:57,999 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-06 19:54:57,999 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\xd6'
+[2025-05-06 19:54:58,000 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-06 19:54:58,000 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\t'
+[2025-05-06 19:54:58,000 DEBUG OnLogicNuvotonManager.py:401 -> _receive_command()] Validating Partial Frame [b'\x01', b'\xd6', b'\x01', b'\t']
+[2025-05-06 19:54:58,000 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:58,001 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x07'
+[2025-05-06 19:54:58,001 INFO OnLogicNuvotonManager.py:420 -> _receive_command()] Received Command List [b'\x01', b'\xd6', b'\x01', b'\t', b'\x00', b'\x07']
+[2025-05-06 19:54:58,026 DEBUG AutomotiveHandler.py:139 -> set_low_power_enable()] Recieved Command Bytes: b'\x01\xd6\x01\t\x00\x07'
+[2025-05-06 19:54:58,026 DEBUG OnLogicNuvotonManager.py:220 -> _check_crc()] CALCULATED 214 : EXISTING 214
+[2025-05-06 19:54:58,026 DEBUG OnLogicNuvotonManager.py:281 -> _validate_recieved_frame()] Validated frame successfully: b'\x01\xd6\x01\t\x00\x07'
+[2025-05-06 19:54:58,026 INFO OnLogicNuvotonManager.py:354 -> _construct_command()] Constructed Command b'\x01\xbd\x08\x0b\n\x00\x00\x00\x00\x00\x00\x00'
+[2025-05-06 19:54:58,066 DEBUG OnLogicNuvotonManager.py:360 -> _send_command()] Length of Command to send: 12
+[2025-05-06 19:54:58,066 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 1
+[2025-05-06 19:54:58,067 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 189
+[2025-05-06 19:54:58,068 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 8
+[2025-05-06 19:54:58,068 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 11
+[2025-05-06 19:54:58,069 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 10
+[2025-05-06 19:54:58,069 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:58,070 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:58,071 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:58,071 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:58,072 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:58,072 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:58,073 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:58,095 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-06 19:54:58,095 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\xbd'
+[2025-05-06 19:54:58,096 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x08'
+[2025-05-06 19:54:58,096 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x0b'
+[2025-05-06 19:54:58,096 DEBUG OnLogicNuvotonManager.py:401 -> _receive_command()] Validating Partial Frame [b'\x01', b'\xbd', b'\x08', b'\x0b']
+[2025-05-06 19:54:58,097 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\n'
+[2025-05-06 19:54:58,097 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:58,098 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:58,098 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:58,098 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:58,098 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:58,099 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:58,099 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:58,100 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x07'
+[2025-05-06 19:54:58,100 INFO OnLogicNuvotonManager.py:420 -> _receive_command()] Received Command List [b'\x01', b'\xbd', b'\x08', b'\x0b', b'\n', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x07']
+[2025-05-06 19:54:58,125 DEBUG AutomotiveHandler.py:187 -> set_start_up_timer()] Recieved Command Bytes: b'\x01\xbd\x08\x0b\n\x00\x00\x00\x00\x00\x00\x00\x07'
+[2025-05-06 19:54:58,125 DEBUG OnLogicNuvotonManager.py:220 -> _check_crc()] CALCULATED 189 : EXISTING 189
+[2025-05-06 19:54:58,125 DEBUG OnLogicNuvotonManager.py:281 -> _validate_recieved_frame()] Validated frame successfully: b'\x01\xbd\x08\x0b\n\x00\x00\x00\x00\x00\x00\x00\x07'
+[2025-05-06 19:54:58,125 INFO OnLogicNuvotonManager.py:354 -> _construct_command()] Constructed Command b'\x01m\x08\r2\x00\x00\x00\x00\x00\x00\x00'
+[2025-05-06 19:54:58,164 DEBUG OnLogicNuvotonManager.py:360 -> _send_command()] Length of Command to send: 12
+[2025-05-06 19:54:58,164 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 1
+[2025-05-06 19:54:58,165 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 109
+[2025-05-06 19:54:58,165 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 8
+[2025-05-06 19:54:58,166 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 13
+[2025-05-06 19:54:58,167 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 50
+[2025-05-06 19:54:58,167 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:58,168 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:58,168 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:58,169 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:58,170 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:58,170 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:58,171 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:58,193 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-06 19:54:58,193 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'm'
+[2025-05-06 19:54:58,194 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x08'
+[2025-05-06 19:54:58,194 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\r'
+[2025-05-06 19:54:58,194 DEBUG OnLogicNuvotonManager.py:401 -> _receive_command()] Validating Partial Frame [b'\x01', b'm', b'\x08', b'\r']
+[2025-05-06 19:54:58,194 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'2'
+[2025-05-06 19:54:58,194 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:58,195 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:58,195 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:58,196 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:58,196 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:58,197 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:58,197 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:58,197 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x07'
+[2025-05-06 19:54:58,197 INFO OnLogicNuvotonManager.py:420 -> _receive_command()] Received Command List [b'\x01', b'm', b'\x08', b'\r', b'2', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x07']
+[2025-05-06 19:54:58,223 DEBUG AutomotiveHandler.py:235 -> set_soft_off_timer()] Recieved Command Bytes: b'\x01m\x08\r2\x00\x00\x00\x00\x00\x00\x00\x07'
+[2025-05-06 19:54:58,223 DEBUG OnLogicNuvotonManager.py:220 -> _check_crc()] CALCULATED 109 : EXISTING 109
+[2025-05-06 19:54:58,223 DEBUG OnLogicNuvotonManager.py:281 -> _validate_recieved_frame()] Validated frame successfully: b'\x01m\x08\r2\x00\x00\x00\x00\x00\x00\x00\x07'
+[2025-05-06 19:54:58,223 INFO OnLogicNuvotonManager.py:354 -> _construct_command()] Constructed Command b'\x01%\x08\x0f\x1e\x00\x00\x00\x00\x00\x00\x00'
+[2025-05-06 19:54:58,261 DEBUG OnLogicNuvotonManager.py:360 -> _send_command()] Length of Command to send: 12
+[2025-05-06 19:54:58,262 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 1
+[2025-05-06 19:54:58,262 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 37
+[2025-05-06 19:54:58,263 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 8
+[2025-05-06 19:54:58,263 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 15
+[2025-05-06 19:54:58,264 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 30
+[2025-05-06 19:54:58,265 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:58,265 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:58,266 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:58,266 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:58,267 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:58,268 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:58,268 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:58,290 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-06 19:54:58,290 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'%'
+[2025-05-06 19:54:58,291 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x08'
+[2025-05-06 19:54:58,291 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x0f'
+[2025-05-06 19:54:58,291 DEBUG OnLogicNuvotonManager.py:401 -> _receive_command()] Validating Partial Frame [b'\x01', b'%', b'\x08', b'\x0f']
+[2025-05-06 19:54:58,292 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x1e'
+[2025-05-06 19:54:58,292 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:58,293 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:58,293 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:58,293 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:58,293 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:58,294 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:58,294 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:58,295 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x07'
+[2025-05-06 19:54:58,295 INFO OnLogicNuvotonManager.py:420 -> _receive_command()] Received Command List [b'\x01', b'%', b'\x08', b'\x0f', b'\x1e', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x07']
+[2025-05-06 19:54:58,320 DEBUG AutomotiveHandler.py:283 -> set_hard_off_timer()] Recieved Command Bytes: b'\x01%\x08\x0f\x1e\x00\x00\x00\x00\x00\x00\x00\x07'
+[2025-05-06 19:54:58,320 DEBUG OnLogicNuvotonManager.py:220 -> _check_crc()] CALCULATED 37 : EXISTING 37
+[2025-05-06 19:54:58,320 DEBUG OnLogicNuvotonManager.py:281 -> _validate_recieved_frame()] Validated frame successfully: b'\x01%\x08\x0f\x1e\x00\x00\x00\x00\x00\x00\x00\x07'
+[2025-05-06 19:54:58,320 INFO OnLogicNuvotonManager.py:354 -> _construct_command()] Constructed Command b'\x01\x8d\x08\x13X\x02\x00\x00\x00\x00\x00\x00'
+[2025-05-06 19:54:58,359 DEBUG OnLogicNuvotonManager.py:360 -> _send_command()] Length of Command to send: 12
+[2025-05-06 19:54:58,359 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 1
+[2025-05-06 19:54:58,360 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 141
+[2025-05-06 19:54:58,360 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 8
+[2025-05-06 19:54:58,361 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 19
+[2025-05-06 19:54:58,361 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 88
+[2025-05-06 19:54:58,362 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 2
+[2025-05-06 19:54:58,363 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:58,363 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:58,364 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:58,364 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:58,365 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:58,366 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:58,388 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-06 19:54:58,388 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\xaa'
+[2025-05-06 19:54:58,388 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x04'
+[2025-05-06 19:54:58,388 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x13'
+[2025-05-06 19:54:58,388 DEBUG OnLogicNuvotonManager.py:401 -> _receive_command()] Validating Partial Frame [b'\x01', b'\xaa', b'\x04', b'\x13']
+[2025-05-06 19:54:58,389 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'X'
+[2025-05-06 19:54:58,389 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x02'
+[2025-05-06 19:54:58,390 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:58,390 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:58,391 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x07'
+[2025-05-06 19:54:58,391 INFO OnLogicNuvotonManager.py:420 -> _receive_command()] Received Command List [b'\x01', b'\xaa', b'\x04', b'\x13', b'X', b'\x02', b'\x00', b'\x00', b'\x07']
+[2025-05-06 19:54:58,416 DEBUG AutomotiveHandler.py:379 -> set_shutdown_voltage()] Recieved Command Bytes: b'\x01\xaa\x04\x13X\x02\x00\x00\x07'
+[2025-05-06 19:54:58,416 DEBUG OnLogicNuvotonManager.py:220 -> _check_crc()] CALCULATED 170 : EXISTING 170
+[2025-05-06 19:54:58,416 DEBUG OnLogicNuvotonManager.py:281 -> _validate_recieved_frame()] Validated frame successfully: b'\x01\xaa\x04\x13X\x02\x00\x00\x07'
+[2025-05-06 19:54:58,458 DEBUG OnLogicNuvotonManager.py:360 -> _send_command()] Length of Command to send: 4
+[2025-05-06 19:54:58,458 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 1
+[2025-05-06 19:54:58,458 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 18
+[2025-05-06 19:54:58,459 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:58,460 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 6
+[2025-05-06 19:54:58,460 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-06 19:54:58,461 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x15'
+[2025-05-06 19:54:58,461 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-06 19:54:58,462 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x06'
+[2025-05-06 19:54:58,462 DEBUG OnLogicNuvotonManager.py:401 -> _receive_command()] Validating Partial Frame [b'\x01', b'\x15', b'\x01', b'\x06']
+[2025-05-06 19:54:58,462 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:58,462 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x07'
+[2025-05-06 19:54:58,462 INFO OnLogicNuvotonManager.py:420 -> _receive_command()] Received Command List [b'\x01', b'\x15', b'\x01', b'\x06', b'\x00', b'\x07']
+[2025-05-06 19:54:58,488 DEBUG AutomotiveHandler.py:70 -> get_automotive_mode()] Recieved Command Bytes: b'\x01\x15\x01\x06\x00\x07'
+[2025-05-06 19:54:58,488 DEBUG OnLogicNuvotonManager.py:220 -> _check_crc()] CALCULATED 21 : EXISTING 21
+[2025-05-06 19:54:58,488 DEBUG OnLogicNuvotonManager.py:281 -> _validate_recieved_frame()] Validated frame successfully: b'\x01\x15\x01\x06\x00\x07'
+[2025-05-06 19:54:58,527 DEBUG OnLogicNuvotonManager.py:360 -> _send_command()] Length of Command to send: 4
+[2025-05-06 19:54:58,527 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 1
+[2025-05-06 19:54:58,527 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 56
+[2025-05-06 19:54:58,528 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:58,529 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 8
+[2025-05-06 19:54:58,529 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-06 19:54:58,530 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\xc3'
+[2025-05-06 19:54:58,530 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-06 19:54:58,531 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x08'
+[2025-05-06 19:54:58,531 DEBUG OnLogicNuvotonManager.py:401 -> _receive_command()] Validating Partial Frame [b'\x01', b'\xc3', b'\x01', b'\x08']
+[2025-05-06 19:54:58,531 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:58,531 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x07'
+[2025-05-06 19:54:58,531 INFO OnLogicNuvotonManager.py:420 -> _receive_command()] Received Command List [b'\x01', b'\xc3', b'\x01', b'\x08', b'\x00', b'\x07']
+[2025-05-06 19:54:58,562 DEBUG AutomotiveHandler.py:114 -> get_low_power_enable()] Recieved Command Bytes: b'\x01\xc3\x01\x08\x00\x07'
+[2025-05-06 19:54:58,563 DEBUG OnLogicNuvotonManager.py:220 -> _check_crc()] CALCULATED 195 : EXISTING 195
+[2025-05-06 19:54:58,563 DEBUG OnLogicNuvotonManager.py:281 -> _validate_recieved_frame()] Validated frame successfully: b'\x01\xc3\x01\x08\x00\x07'
+[2025-05-06 19:54:58,610 DEBUG OnLogicNuvotonManager.py:360 -> _send_command()] Length of Command to send: 4
+[2025-05-06 19:54:58,610 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 1
+[2025-05-06 19:54:58,611 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 54
+[2025-05-06 19:54:58,611 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:58,612 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 10
+[2025-05-06 19:54:58,613 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-06 19:54:58,614 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\xc4'
+[2025-05-06 19:54:58,614 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x08'
+[2025-05-06 19:54:58,615 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\n'
+[2025-05-06 19:54:58,615 DEBUG OnLogicNuvotonManager.py:401 -> _receive_command()] Validating Partial Frame [b'\x01', b'\xc4', b'\x08', b'\n']
+[2025-05-06 19:54:58,615 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\n'
+[2025-05-06 19:54:58,616 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:58,616 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:58,616 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:58,616 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:58,617 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:58,617 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:58,618 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:58,619 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x07'
+[2025-05-06 19:54:58,619 INFO OnLogicNuvotonManager.py:420 -> _receive_command()] Received Command List [b'\x01', b'\xc4', b'\x08', b'\n', b'\n', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x07']
+[2025-05-06 19:54:58,647 DEBUG AutomotiveHandler.py:158 -> get_start_up_timer()] Recieved Command Bytes: b'\x01\xc4\x08\n\n\x00\x00\x00\x00\x00\x00\x00\x07'
+[2025-05-06 19:54:58,647 DEBUG OnLogicNuvotonManager.py:220 -> _check_crc()] CALCULATED 196 : EXISTING 196
+[2025-05-06 19:54:58,647 DEBUG OnLogicNuvotonManager.py:281 -> _validate_recieved_frame()] Validated frame successfully: b'\x01\xc4\x08\n\n\x00\x00\x00\x00\x00\x00\x00\x07'
+[2025-05-06 19:54:58,692 DEBUG OnLogicNuvotonManager.py:360 -> _send_command()] Length of Command to send: 4
+[2025-05-06 19:54:58,692 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 1
+[2025-05-06 19:54:58,692 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 36
+[2025-05-06 19:54:58,693 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:58,694 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 12
+[2025-05-06 19:54:58,695 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-06 19:54:58,696 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x14'
+[2025-05-06 19:54:58,696 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x08'
+[2025-05-06 19:54:58,697 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x0c'
+[2025-05-06 19:54:58,697 DEBUG OnLogicNuvotonManager.py:401 -> _receive_command()] Validating Partial Frame [b'\x01', b'\x14', b'\x08', b'\x0c']
+[2025-05-06 19:54:58,697 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'2'
+[2025-05-06 19:54:58,697 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:58,697 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:58,698 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:58,698 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:58,699 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:58,699 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:58,700 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:58,700 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x07'
+[2025-05-06 19:54:58,701 INFO OnLogicNuvotonManager.py:420 -> _receive_command()] Received Command List [b'\x01', b'\x14', b'\x08', b'\x0c', b'2', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x07']
+[2025-05-06 19:54:58,726 DEBUG AutomotiveHandler.py:206 -> get_soft_off_timer()] Recieved Command Bytes: b'\x01\x14\x08\x0c2\x00\x00\x00\x00\x00\x00\x00\x07'
+[2025-05-06 19:54:58,726 DEBUG OnLogicNuvotonManager.py:220 -> _check_crc()] CALCULATED 20 : EXISTING 20
+[2025-05-06 19:54:58,726 DEBUG OnLogicNuvotonManager.py:281 -> _validate_recieved_frame()] Validated frame successfully: b'\x01\x14\x08\x0c2\x00\x00\x00\x00\x00\x00\x00\x07'
+[2025-05-06 19:54:58,726 INFO OnLogicNuvotonManager.py:354 -> _construct_command()] Constructed Command b'\x01*\x00\x0e'
+[2025-05-06 19:54:58,765 DEBUG OnLogicNuvotonManager.py:360 -> _send_command()] Length of Command to send: 4
+[2025-05-06 19:54:58,765 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 1
+[2025-05-06 19:54:58,766 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 42
+[2025-05-06 19:54:58,767 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:58,767 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 14
+[2025-05-06 19:54:58,768 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-06 19:54:58,769 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\\'
+[2025-05-06 19:54:58,769 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x08'
+[2025-05-06 19:54:58,770 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x0e'
+[2025-05-06 19:54:58,770 DEBUG OnLogicNuvotonManager.py:401 -> _receive_command()] Validating Partial Frame [b'\x01', b'\\', b'\x08', b'\x0e']
+[2025-05-06 19:54:58,770 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x1e'
+[2025-05-06 19:54:58,770 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:58,770 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:58,771 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:58,771 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:58,772 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:58,772 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:58,773 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:58,774 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x07'
+[2025-05-06 19:54:58,774 INFO OnLogicNuvotonManager.py:420 -> _receive_command()] Received Command List [b'\x01', b'\\', b'\x08', b'\x0e', b'\x1e', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x07']
+[2025-05-06 19:54:58,800 DEBUG AutomotiveHandler.py:254 -> get_hard_off_timer()] Recieved Command Bytes: b'\x01\\\x08\x0e\x1e\x00\x00\x00\x00\x00\x00\x00\x07'
+[2025-05-06 19:54:58,800 DEBUG OnLogicNuvotonManager.py:220 -> _check_crc()] CALCULATED 92 : EXISTING 92
+[2025-05-06 19:54:58,800 DEBUG OnLogicNuvotonManager.py:281 -> _validate_recieved_frame()] Validated frame successfully: b'\x01\\\x08\x0e\x1e\x00\x00\x00\x00\x00\x00\x00\x07'
+[2025-05-06 19:54:58,839 DEBUG OnLogicNuvotonManager.py:360 -> _send_command()] Length of Command to send: 4
+[2025-05-06 19:54:58,839 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 1
+[2025-05-06 19:54:58,839 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 126
+[2025-05-06 19:54:58,840 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 0
+[2025-05-06 19:54:58,841 DEBUG OnLogicNuvotonManager.py:363 -> _send_command()] Sending 18
+[2025-05-06 19:54:58,841 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-06 19:54:58,842 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\xc8'
+[2025-05-06 19:54:58,842 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x04'
+[2025-05-06 19:54:58,843 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x12'
+[2025-05-06 19:54:58,843 DEBUG OnLogicNuvotonManager.py:401 -> _receive_command()] Validating Partial Frame [b'\x01', b'\xc8', b'\x04', b'\x12']
+[2025-05-06 19:54:58,843 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'X'
+[2025-05-06 19:54:58,844 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x02'
+[2025-05-06 19:54:58,844 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:58,844 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-06 19:54:58,845 DEBUG OnLogicNuvotonManager.py:396 -> _receive_command()] Received Byte: b'\x07'
+[2025-05-06 19:54:58,845 INFO OnLogicNuvotonManager.py:420 -> _receive_command()] Received Command List [b'\x01', b'\xc8', b'\x04', b'\x12', b'X', b'\x02', b'\x00', b'\x00', b'\x07']
+[2025-05-06 19:54:58,870 DEBUG AutomotiveHandler.py:350 -> get_shutdown_voltage()] Recieved Command Bytes: b'\x01\xc8\x04\x12X\x02\x00\x00\x07'
+[2025-05-06 19:54:58,870 DEBUG OnLogicNuvotonManager.py:220 -> _check_crc()] CALCULATED 200 : EXISTING 200
+[2025-05-06 19:54:58,870 DEBUG OnLogicNuvotonManager.py:281 -> _validate_recieved_frame()] Validated frame successfully: b'\x01\xc8\x04\x12X\x02\x00\x00\x07'
+[2025-05-06 19:54:59,031 INFO OnLogicNuvotonManager.py:328 -> release()] Serial Port Successfully Released
