@@ -1,6 +1,6 @@
 '''
 pip install pytest pytest-order
-sudo /home/password/Desktop/titanium-dio-python-driver/bin/py.test -s -v -x test_dio.py
+sudo /home/password/Desktop/titanium-dio-python-driver/bin/py.test -s -v -x test_dio_no_loopback.py
 '''
 from DioHandler import DioHandler
 import pytest
@@ -12,7 +12,7 @@ def dio_handler():
 
 @pytest.mark.order(0)
 def test_dio_handler_initialization(dio_handler):
-
+    # light claim test, more of this _.py
     with pytest.raises(Exception) as exception_info:
         dio_handler.claim("")
 
@@ -53,13 +53,29 @@ def test_get_do(dio_handler):
     edge_case_assertions(dio_handler.get_do)
 
 def test_set_do(dio_handler):
+    # test generic error inputs
     edge_case_assertions(dio_handler.set_do)
-    
-    for i in range(-1,8):
+
+    for i in range(-1, 9):
         edge_case_assertions(dio_handler.set_do, i)
+
+    # clear output states
+    err_codes = dio_handler.set_all_output_states([0 for i in range(8)])
+    print(err_codes)
+    if any( i != 0 for i in err_codes ):
+        pytest.fail("Initial set_all_output_states did not successfully execute")
+
+    target_val = 1
+    for pin in range(0, 8):
+        error_code = dio_handler.set_do(pin, target_val)
+        assert error_code == 0
+
+        do_result = dio_handler.get_do(pin)
+        assert do_result == target_val
 
 def test_get_version(dio_handler):
     version = dio_handler.get_version()
     assert isinstance(version, str)
     assert len(version) > 0
     assert re.match(r"\d.\d.\d", version)
+    print(version)
