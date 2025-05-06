@@ -95,7 +95,7 @@ def test_set_all_output_states():
     check_for_error(my_dio.set_all_output_states, TypeError, ([None for i in range(8)]))
     check_for_error(my_dio.set_all_output_states, ValueError, [i for i in range(0, 9)])
     check_for_error(my_dio.set_all_output_states, ValueError, [i for i in range(0, 6)])
-    check_for_error(my_dio.set_all_output_stcheck_for_error(my_dio.set_all_output_states, TypeError, ([None for i in range(8)]))ates, ValueError, ([-1 for i in range(8)]))
+    check_for_error(my_dio.set_all_output_states, ValueError, ([-1 for i in range(8)]))
     check_for_error(my_dio.set_all_output_states, ValueError, ([2 for i in range(8)]))
 
     my_dio.is_setup = False
