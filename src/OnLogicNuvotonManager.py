@@ -188,20 +188,20 @@ class OnLogicNuvotonManager(ABC):
             else:
                 bytes_to_send = nack_counter
 
-    def _validate_input_param(self, dio_input_parameter, valid_input_range: tuple, input_type: type):
+    def _validate_input_param(self, input_value, valid_input_range: tuple, input_type: type):
         if self.is_setup is False:
             raise serial.SerialException("ERROR | Serial Connection is not set up, did you claim the port?")
 
-        if type(dio_input_parameter) != input_type:
-            type_error_msg = f"ERROR | {type(dio_input_parameter)} was found when {input_type} was expected"
+        if type(input_value) != input_type:
+            type_error_msg = f"ERROR | {type(input_value)} was found when {input_type} was expected"
 
             logging.error(type_error_msg)
 
             raise TypeError(type_error_msg)
 
-        if dio_input_parameter < valid_input_range[0] \
-                or dio_input_parameter > valid_input_range[1]:
-            value_error_msg = "ERROR | Out of Range Value Provided: " + str(dio_input_parameter) + "." + \
+        if input_value < valid_input_range[0] \
+                or input_value > valid_input_range[1]:
+            value_error_msg = "ERROR | Out of Range Value Provided: " + str(input_value) + "." + \
                               " Valid Range " + str(valid_input_range)
 
             logging.error(value_error_msg)
@@ -318,8 +318,7 @@ class OnLogicNuvotonManager(ABC):
             self.port.reset_output_buffer()
             self.port.close()
             self.is_setup = False
-
-        logging.info("Serial Port Successfully Released")
+            logging.info("Serial Port Successfully Released")
 
     @functools.lru_cache(maxsize=128)
     def _construct_command(self, kind: Kinds, *payload: int) -> bytes:

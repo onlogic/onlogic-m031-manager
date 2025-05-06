@@ -28,7 +28,7 @@ class AutomotiveHandler(OnLogicNuvotonManager):
         
 
     def _init_port_error_handling(self, error_msg: str, return_early: bool = False) -> None | ValueError:
-        logger.error(error_msg, level=logging.ERROR)
+        logger.error(error_msg)
         self.list_all_available_ports()
 
         if return_early is True:
@@ -411,7 +411,7 @@ class AutomotiveHandler(OnLogicNuvotonManager):
             + set_low_power_enable
             + set_start_up_timer
             + set_soft_off_timer
-            + setting_input
+            + set_hard_off_timer 
             + set_shutdown_voltage
 
         """

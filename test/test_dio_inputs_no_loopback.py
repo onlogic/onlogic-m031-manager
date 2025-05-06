@@ -21,6 +21,11 @@ def test_dio_handler_initialization(dio_handler):
     except Exception as e:
         pytest.fail(f"ERROR, AUTO-LOCK Failed with exception {e}")
 
+def check_for_error(func, error_type, *args):
+    with pytest.raises(error_type) as e:
+        func(*args)
+        print(e)
+
 def edge_case_assertions(func, *args):
     with pytest.raises((TypeError, ValueError)) as e:
         func(-1, *args)
@@ -79,3 +84,18 @@ def test_get_version(dio_handler):
     assert len(version) > 0
     assert re.match(r"\d.\d.\d", version)
     print(version)
+
+def test_set_all_output_states():
+    my_dio = DioHandler()
+    my_dio.is_setup = True
+
+    # Test for ValueError
+    check_for_error(my_dio.set_all_output_states, TypeError, -1)
+    check_for_error(my_dio.set_all_output_states, TypeError, None)
+    check_for_error(my_dio.set_all_output_states, TypeError, ([None for i in range(8)]))
+    check_for_error(my_dio.set_all_output_states, ValueError, [i for i in range(0, 9)])
+    check_for_error(my_dio.set_all_output_states, ValueError, [i for i in range(0, 6)])
+    check_for_error(my_dio.set_all_output_stcheck_for_error(my_dio.set_all_output_states, TypeError, ([None for i in range(8)]))ates, ValueError, ([-1 for i in range(8)]))
+    check_for_error(my_dio.set_all_output_states, ValueError, ([2 for i in range(8)]))
+
+    my_dio.is_setup = False

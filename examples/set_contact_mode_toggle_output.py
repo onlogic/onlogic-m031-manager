@@ -41,7 +41,8 @@ def main():
 
     try:
         # Init DIO handler
-        my_dio = DioHandler()
+        # Serial port will default to the CDC descriptor of the DIO card if present
+        my_dio = DioHandler() 
         my_dio.claim()
 
         my_dio.set_do_contact(1)

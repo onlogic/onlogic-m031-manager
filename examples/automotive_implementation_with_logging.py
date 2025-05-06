@@ -42,7 +42,7 @@ def main():
         # Init DIO handler
         my_auto = AutomotiveHandler()
         my_auto.list_all_available_ports()
-        my_auto.claim("/dev/ttyS4") # will be /dev/ttySX" or "COMX" on Windows
+        my_auto.claim("/dev/ttyS4") # will be "/dev/ttySX" on Linux or "COMX" on Windows
                       
         print("=" * 30)
         print("TESTING GET VERSION (get_version)")

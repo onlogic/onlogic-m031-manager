@@ -244,15 +244,20 @@ class DioHandler(OnLogicNuvotonManager):
         return [self.get_all_input_states(), self.get_all_output_states()]
 
     def set_all_output_states(self, do_lst:list) -> list:
-        '''
-        if len(do_lst) < 8:
-            raise ValueError("ERROR | Incorrect amount of inputs specified.")
+        """
+        Sets the states of all digital output pins.
 
-        status_codes = []
-        for do_lst_idx, do_lst_val in enumerate(do_lst):
-            status_codes.append(self.set_do(do_lst_idx, do_lst_val))
-        '''
+        :param do_lst: A list of 8 values (0 or 1), one for each output pin.
+        :return: A list of status codes for each pin operation.
+        :raises TypeError: If do_lst is not a list or is None.
+        :raises ValueError: If do_lst does not contain exactly 8 values or contains invalid values.
+        """
         _, DO_PIN_MAX = BoundaryTypes.DIGITAL_IO_PIN_RANGE
+
+        if not isinstance(do_lst, list):
+            do_list_type_err = "ERROR | do_list must be a list of 8 values, one for each available output pin"
+            logger.error(do_list_type_err)
+            raise TypeError(do_list_type_err)
 
         if len(do_lst) != DO_PIN_MAX + 1:
             do_list_len_err = "ERROR | do_list must contain exactly 8 values, one for each available output pin" 

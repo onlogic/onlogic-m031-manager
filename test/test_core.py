@@ -30,7 +30,7 @@ def test_multiple_releases_automotive():
     my_auto.claim("/dev/ttyS4")
     my_auto.release()
     my_auto.release()
-
+    
 def test_multiple_claims_automotive():
     my_auto = AutomotiveHandler()
     check_for_error(my_auto.claim, ValueError)
@@ -67,3 +67,15 @@ def test_validate_input_param():
     check_for_error(my_dio._validate_input_param, TypeError, input_parameter, valid_input_range, None)
     check_for_error(my_dio._validate_input_param, TypeError, 7.5, valid_input_range, input_type)
     check_for_error(my_dio._validate_input_param, TypeError, 5.5, valid_input_range, input_type)
+    my_dio.is_setup = False
+
+def test_context_manager():
+    
+    my_dio = DioHandler()
+    my_dio.claim()
+    assert my_dio.is_setup == True
+    with my_dio:
+        assert my_dio.is_setup == True
+    assert my_dio.is_setup == False
+    my_dio.release()
+    my_dio.is_setup = False

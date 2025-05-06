@@ -112,6 +112,6 @@ class BoundaryTypes:
     DECIMAL_VALUE_RANGE = (0, 9)
     BYTE_VALUE_RANGE = (0, 256) # should it be 255?
 
-    AUTOMOTIVE_TIMER_RANGE = (0, 1_000_000)
+    AUTOMOTIVE_TIMER_RANGE = (0, 1 << 20) #1_000_000)
 
 ############################################
