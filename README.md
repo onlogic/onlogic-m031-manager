@@ -1,6 +1,6 @@
 # OnLogicNuvotonManager
 
-The OnLogic Nuvoton Module Provides a set of tools to interface with peripherals on Onlogic K/HX-52x series computers.
+The OnLogicNuvotonManager Provides a set of tools to interface with peripherals on Onlogic K/HX-52x series computers.
 
 On the K52x it can send commands to the DIO Add in card and the Sequence Micro to control automotive timings.
 On the HX52x it can send commands to the DIO Add in card.
