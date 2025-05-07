@@ -1,30 +1,25 @@
 """
 Author: OnLogic
 For:    K/HX-52x
-Title:  K/HX-52x DIO-Add in Card Python Driver
+Title:  K/HX-52x DIO-add in Card set_contact_mode demonstration
 
 Description:
-    TODO:
-
-Dependencies:
-    1. pyserial: 
-        pip3 install pyserial
-
-    2. colorama 
-        pip3 install colorama
+    A simple demonstration of how to use do concat mode to set the state of digital outputs and then toggle them.
 
 Usage:
-    python main.py
+    Windows: python set_contact_mode_toggle_output.py
+
+    Linux in venv:
+        sudo source/bin/python3 set_contact_mode_toggle_output.py
 
 NOTE: 
-    - This program was tested on Python 3.13.0 and Python 3.12.4
-    
-    - CTRL+C can be used to exit the program.
+    - DIO card must be installed and recognized by the system.
 
-    set-di-contact  Set digital intput contact type (false:wet, true:dry)
-    set-do-contact  Set digital output contact type (false:wet, true:dry)
-    set-di-contact  Read digital intput contact type (false:wet, true:dry)
-    get-do-contact  Read digital output contact type (false:wet, true:dry)
+    - If in Linux, please follow instructions in README to set up the virtual environment
+
+    - Press CTRL+C to exit the program.
+
+    - Be sure to run this program with the correct electrical connections.
 """
 
 import time

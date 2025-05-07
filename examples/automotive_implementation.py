@@ -10,12 +10,17 @@ Usage:
     python main.py
 
 NOTE: 
-    - This program was tested on Python 3.13.0 and Python 3.12.4
-    
     - CTRL+C can be used to exit the program.
+
+    - Be ware of adjusting the automotive values, as they may cause the system to shut down or behave unexpectedly 
+      if the poper electrical connections are not made.
+
+    - Please replace "/dev/ttyS4" with the appropriate serial port configured on your system.
 """
 
 from AutomotiveHandler import AutomotiveHandler
+
+SEPARATOR = "=" * 30
 
 def main():
     '''main, implementation of session logic.'''
@@ -30,86 +35,74 @@ def main():
         my_auto.list_all_available_ports()
         my_auto.claim("/dev/ttyS4") # will be "/dev/ttySX" on Linux or "COMX" on Windows
                       
-        print("=" * 30)
+        print(SEPARATOR)
         print("TESTING GET VERSION (get_version)")
         print(my_auto.get_version())
-        print("=" * 30)
+        print(SEPARATOR)
         print()
 
-        print("=" * 30)
+        print(SEPARATOR)
         print("TESTING SET AUTOMOTIVE MODE (set_automotive_mode)")
         # print("Set Automotive Mode 1, RETURN CODE:", my_auto.set_automotive_mode(1))
         print("SET AUTOMOTIVE MODE, RETURN CODE:", my_auto.set_automotive_mode(0))
-        print("=" * 30)
+        print(SEPARATOR)
         print()
 
-        print("=" * 30)
+        print(SEPARATOR)
         print("TESTING GET AUTOMOTIVE MODE (get_automotive_mode)")
         print("Automotive Mode:", my_auto.get_automotive_mode())
-        print("=" * 30)
+        print(SEPARATOR)
         print()
 
-        print("=" * 30)
+        print(SEPARATOR)
         print("TESTING SET LOW POWER ENABLE (set_low_power_enable)")
         print("SET LOW POWER ENABLE RETURN CODE:", my_auto.set_low_power_enable(0))
-        print("=" * 30)
+        print(SEPARATOR)
         print()
 
-        print("=" * 30)
+        print(SEPARATOR)
         print("TESTING GET LOW POWER ENABLE (get_low_power_enable)")
         print("GET LOW POWER ENABLE VALUE:", my_auto.get_low_power_enable())
-        print("=" * 30)
+        print(SEPARATOR)
         print()
 
-        print("=" * 30)
+        print(SEPARATOR)
         print("TESTING SET START UP TIMER (set_start_up_timer)")
         print("SET START UP RETURN CODE:", my_auto.set_start_up_timer(11))
-        print("=" * 30)
+        print(SEPARATOR)
         print()
 
-        print("=" * 30)
+        print(SEPARATOR)
         print("TESTING GET START UP TIMER (get_start_up_timer)")
         print("GET START UP VALUE:", my_auto.get_start_up_timer())
-        print("=" * 30)
+        print(SEPARATOR)
         print()
 
-        print("=" * 30)
+        print(SEPARATOR)
         print("TESTING SET SOFT OFF TIMER (set_soft_off_timer)")
         print("SET SOFT OFF RETURN CODE:", my_auto.set_soft_off_timer(51))
-        print("=" * 30)
+        print(SEPARATOR)
         print()
 
-        print("=" * 30)
+        print(SEPARATOR)
         print("TESTING GET SOFT OFF TIMER (get_soft_off_timer)")
         print("GET SOFT OFF VALUE:", my_auto.get_soft_off_timer())
-        print("=" * 30)
+        print(SEPARATOR)
         print()
 
-        print("=" * 30)
+        print(SEPARATOR)
         print("TESTING SET LOW VOLTAGE TIMER (set_low_voltage_timer)")
         print("SET LOW VOLTAGE RETURN CODE:", my_auto.set_low_voltage_timer(301))
-        print("=" * 30)
+        print(SEPARATOR)
         print()
 
-        print("=" * 30)
-        print("TESTING GET LOW VOLTAGE TIMER (get_low_voltage_timer)")
-        print("GET LOW VOLTAGE TIMER VALUE:", my_auto.get_low_voltage_timer())
-        print("=" * 30)
-        print()
-
-        print("=" * 30)
-        print("TESTING SET SHUTDOWN VOLTAGE (set_shutdown_voltage)")
-        print("SET SHUT OFF VOLTAGE RETURN CODE:", my_auto.set_shutdown_voltage(601))
-        print("=" * 30)
-        print()
-
-        print("=" * 30)
+        print(SEPARATOR)
         print("TESTING GET SHUTDOWN VOLTAGE (get_shutdown_voltage)")
         print("GET SHUT OFF VOLTAGE VALUE:", my_auto.get_shutdown_voltage())
-        print("=" * 30)
+        print(SEPARATOR)
         print()
 
-        print("=" * 30)
+        print(SEPARATOR)
         print("TESTING SET SHUTDOWN VOLTAGE (set_all_automotive_settings)")
         print(
             "[amd, lpe, sut, sot, hot, sdv]",
@@ -124,13 +117,13 @@ def main():
             ),
             sep = '\n'
         )
-        print("=" * 30)
+        print(SEPARATOR)
         print()
 
-        print("=" * 30)
+        print(SEPARATOR)
         print("TESTING GET ALL AUTOMOTIVE SETTINGS (get_all_automotive_settings)")
         my_auto.get_all_automotive_settings(output_to_console=True)
-        print("=" * 30)
+        print(SEPARATOR)
         print()
 
     except KeyboardInterrupt:
