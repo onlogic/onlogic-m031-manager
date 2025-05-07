@@ -1,19 +1,16 @@
-=====================
-OnLogicNuvotonManager
-=====================
+# OnLogicNuvotonManager
 
 The OnLogic Nuvoton Module Provides a set of tools to interface with peripherals on Onlogic K/HX-52x series computers.
 
 On the K52x it can send commands to the DIO Add in card and the Sequence Micro to control automotive timings.
 On the HX52x it can send commands to the DIO Add in card.
 
---------------
-Setup Required
---------------
+## Setup Required
+
 
 You will need to install Python 3 prior to following this guide. You can download Python from python.org. Ensure Python and pip are added to your system's PATH during installation.
 
-# Setting up OnLogicNuvotonManager on Windows (Native Install)
+### Setting up OnLogicNuvotonManager on Windows (Native Install)
 
 These steps guide you through installing the OnLogicNuvotonManager directly into your system's Python environment.
 
@@ -40,7 +37,7 @@ These steps guide you through installing the OnLogicNuvotonManager directly into
 6. Running Scripts Requiring Elevated Privileges:
    For operations that require direct hardware access (like interacting with serial ports), you might need to run your Python scripts from a Command Prompt or PowerShell that has been opened "As Administrator". To do this, right-click on the Command Prompt/PowerShell icon and select "Run as administrator".
 
-# Setting up OnLogicNuvotonManager in a Python3 venv on Ubuntu 24.04 LTS
+### Setting up OnLogicNuvotonManager in a Python3 venv on Ubuntu 24.04 LTS
 Linux Ubuntu has enforced a stricter package management scheme in the new 24.04 LTS distribution to avoid interfering with global package dependencies used by the OS. While this is a more stable way to administer Python on a system, it is also more complex to program in user environments. To run the package OnLogicNuvotonManager in Ubuntu, it's best practice to use a venv.
 
 * Creating a venv:
@@ -63,9 +60,7 @@ After, set up required packages in venv:
 * pip install -e .
 * Double Check With: 'pip freeze' within local directory
 
-------------------------
-Shell Transport Protocol
-------------------------
+## Shell Transport Protocol
 
 A protocol is used for transferring commands. By convention, the CPU
 issues commands, and the MCU listens and responds to them. Each valid command
