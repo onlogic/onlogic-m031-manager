@@ -16,9 +16,9 @@ NOTE:
     - DIO card must be installed and recognized by the system.
 
     - If in Linux, please follow instructions in README to set up the virtual environment
-    
+
     - Press CTRL+C to exit the program.
-    
+
     - Be sure to run this program with the correct electrical connections.
 """
 

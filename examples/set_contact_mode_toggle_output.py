@@ -25,7 +25,6 @@ NOTE:
 import time
 
 from DioHandler import DioHandler
-from LoggingUtil import LoggingUtil
 
 def main():
     '''main, implementation of session logic.'''
