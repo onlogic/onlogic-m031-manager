@@ -228,29 +228,35 @@ class DioHandler(OnLogicNuvotonManager):
 
 
     def get_all_output_states(self) -> list:
-        '''
-        all_output_states = []
+        """
+        Sets the states of all digital output pins given an input list of binary inputs.
+        Indices 0-7 correspond to output pins 0-7 respectively.
 
-        for i in range(0, 8):
-            all_output_states.append(self.get_do(i))
+        :param do_lst: A list of 8 values (0 or 1), one for each output pin.
+        :return: A list of status codes for each pin operation, there should be 7 in total. 
+                 0 indicates success; < 0 indicates failure.
+        :raises TypeError:  If do_lst is not a list or is None.
+        :raises ValueError: If do_lst does not contain exactly 8 values or contains invalid values, i.e.
+                            if any value in do_lst is not a binary valued integer in the range of 0-1.
 
-        return all_output_states
-        '''
+        """
         DO_PIN_MIN, DO_PIN_MAX = BoundaryTypes.DIGITAL_IO_PIN_RANGE
         return [self.get_do(state) for state in range(DO_PIN_MIN, DO_PIN_MAX + 1)]
-
 
     def get_all_io_states(self) -> list:
         return [self.get_all_input_states(), self.get_all_output_states()]
 
-    def set_all_output_states(self, do_lst:list) -> list:
+    def set_all_output_states(self, do_lst: list) -> list:
         """
-        Sets the states of all digital output pins.
+        Sets the states of all digital output pins given an input list of binary inputs.
+        Indices 0-7 correspond to output pins 0-7 respectively.
 
         :param do_lst: A list of 8 values (0 or 1), one for each output pin.
-        :return: A list of status codes for each pin operation.
+        :return: A list of status codes for each pin operation, there should be 7 in total. 
+                 0 indicates success; < 0 indicates failure.
         :raises TypeError: If do_lst is not a list or is None.
-        :raises ValueError: If do_lst does not contain exactly 8 values or contains invalid values.
+        :raises ValueError: If do_lst does not contain exactly 8 values or contains invalid values, i.e.
+                            if any value in do_lst is not a binary valued integer in the range of 0-1.
         """
         _, DO_PIN_MAX = BoundaryTypes.DIGITAL_IO_PIN_RANGE
 

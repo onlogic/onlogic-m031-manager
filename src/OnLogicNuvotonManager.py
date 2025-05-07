@@ -96,7 +96,7 @@ class OnLogicNuvotonManager(ABC):
                                 f"Port: {port}\n"
                                 f"Port Location: {port.location}\n"
                                 f"Hardware ID: {port.hwid}\n"
-                                f"Device: {port.device}\n",
+                                f"Device: {port.device}",
                                 )
                     return port.device
         return None
@@ -227,7 +227,8 @@ class OnLogicNuvotonManager(ABC):
 
     def _within_valid_range(self, return_frame: bytes, target_index: int | tuple, target_range: tuple) -> bool:        
         '''
-        target_index (int | tuple):
+
+        :target_index (int | tuple):
             Specifies the index or range of indices in the return_frame to check.
             If int: A single index in the return_frame to validate.
             If tuple: A range of indices (start, stop) to validate. The range is inclusive of start and exclusive of stop.        

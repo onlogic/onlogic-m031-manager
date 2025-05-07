@@ -3,7 +3,6 @@ Port: /dev/ttyACM0 - HX52x USB
 Port Location: 3-8:1.0
 Hardware ID: USB VID:PID=353F:A105 LOCATION=3-8:1.0
 Device: /dev/ttyACM0
-
 [2025-05-06 19:53:12,037 DEBUG OnLogicNuvotonManager.py:142 -> _mcu_connection_check()] b'\x07'
 [2025-05-06 19:53:12,040 DEBUG OnLogicNuvotonManager.py:142 -> _mcu_connection_check()] b'\x07'
 [2025-05-06 19:53:12,044 DEBUG OnLogicNuvotonManager.py:142 -> _mcu_connection_check()] b'\x07'

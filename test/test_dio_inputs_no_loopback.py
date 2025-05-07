@@ -82,7 +82,6 @@ def test_get_version(dio_handler):
     version = dio_handler.get_version()
     assert isinstance(version, str)
     assert len(version) > 0
-
     assert re.match(r"\d.\d.\d", version)
     print(version)
 

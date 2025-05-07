@@ -72,13 +72,20 @@ def test_validate_input_param():
 def test_within_valid_range():
     my_dio = DioHandler()
     my_dio.is_setup = True
+
     frame = b'\x01\x02\x03\x04\x05'
-    index_range = (1, 4)
+    index_range = [i for i in range(0, 4)]
     value_range = (0, 4)
 
+    # first test several individual indices
+    for frame_idx in index_range:
+        print(f"\nFrame idx {frame_idx} : Value {frame[frame_idx]}, valid range {value_range}")
+        my_dio._within_valid_range(frame, frame_idx, value_range)
+        assert my_dio._within_valid_range(frame, frame_idx, value_range) == True
+    assert my_dio._within_valid_range(frame, 4, value_range) == False
+    assert my_dio._within_valid_range(frame, -1, value_range) == False
 
     my_dio.is_setup = False
-
 
 def test_context_manager():
     my_dio = DioHandler()
@@ -95,7 +102,8 @@ def test_context_manager_both():
         with AutomotiveHandler("/dev/ttyS4") as my_auto:
             assert my_dio.is_setup == True
             assert my_auto.is_setup == True
-        
+            print(my_auto.set_all_automotive_settings([0, 0, 5, 5, 10, 600]))
+
             print(my_auto.get_all_automotive_settings())
             print(my_dio.get_all_input_states())
     assert my_dio.is_setup == False
