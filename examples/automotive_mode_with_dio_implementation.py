@@ -15,7 +15,7 @@ NOTE:
     - CTRL+C can be used to exit the program.
 
     - Be ware of adjusting the automotive values, as they may cause the system to shut down or behave unexpectedly 
-      if the poper electrical connections are not made.
+      if the proper electrical connections are not made.
 
     - Please replace "/dev/ttyS4" with the appropriate serial port configured on your system.
 
