@@ -406,14 +406,12 @@ class AutomotiveHandler(OnLogicNuvotonManager):
 
         Returns:
             list: A list of results from each `set_*` method, particularly:
-
             + set_automotive_mode
             + set_low_power_enable
             + set_start_up_timer
             + set_soft_off_timer
             + set_hard_off_timer 
             + set_shutdown_voltage
-
         """
 
         if len(setting_input) != 6:

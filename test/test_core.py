@@ -85,6 +85,11 @@ def test_within_valid_range():
     assert my_dio._within_valid_range(frame, 4, value_range) == False
     assert my_dio._within_valid_range(frame, -1, value_range) == False
 
+    # now test for tuple index
+    index_range = (2, 4)
+    my_dio._within_valid_range(frame, index_range, value_range)
+    assert my_dio._within_valid_range(frame, index_range, value_range) == True    
+
     my_dio.is_setup = False
 
 def test_context_manager():

@@ -77,7 +77,7 @@ def main():
 
         print("=" * 30)
         print("TESTING SET START UP TIMER (set_start_up_timer)")
-        print("SET START UP RETURN CODE:", my_auto.set_start_up_timer(11))
+        print("SET START UP RETURN CODE:", my_auto.set_start_up_timer(12))
         print("=" * 30)
         print()
 
@@ -124,7 +124,7 @@ def main():
         print()
 
         print("=" * 30)
-        print("TESTING SET SHUTDOWN VOLTAGE (set_all_automotive_settings)")
+        print("TESTING SET ALL AUTOMOTIVE SETTINGS (set_all_automotive_settings)")
         print(
             "[amd, lpe, sut, sot, hot, sdv]",
             my_auto.set_all_automotive_settings(setting_input = [

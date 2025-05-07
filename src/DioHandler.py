@@ -42,14 +42,23 @@ class DioHandler(OnLogicNuvotonManager):
 
     def get_di(self, di_pin: int) -> int:
         """\
-        User-facing method to get state of digital inputs.
+        User-facing method to get the state of active-low digital inputs on the DIO card. 
 
-        :param self:    instance of the class
-        :param di_pin:  digital input pin with range [0-7]
-        :return:        returns 0, indicating on, 1, indicating off, 
-                        and StatusTypes.SEND_CMD_FAILURE if command send failed.
-        :rtype:         int
-        :raises ValueError: if di_pin is not in the range of 0-7
+        Args:
+            di_pin (int): digital input pin with range [0-7]
+        
+        Returns:
+            int: 0, indicating on, 1, indicating off,
+                 StatusTypes.SEND_CMD_FAILURE if command send failed,
+                 or any other negative value indicating failure.
+        
+        Raises:
+            ValueError: if di_pin is not in the range of 0-7
+        
+        Example:
+            >>> with DioHandler() as dio_handler:
+            ...     dio_handler.get_di(0)
+            1
         """
         self._validate_input_param(di_pin, BoundaryTypes.DIGITAL_IO_PIN_RANGE, int)
 
@@ -229,16 +238,15 @@ class DioHandler(OnLogicNuvotonManager):
 
     def get_all_output_states(self) -> list:
         """
-        Sets the states of all digital output pins given an input list of binary inputs.
+        Gets the states of all digital output pins.
         Indices 0-7 correspond to output pins 0-7 respectively.
 
-        :param do_lst: A list of 8 values (0 or 1), one for each output pin.
-        :return: A list of status codes for each pin operation, there should be 7 in total. 
-                 0 indicates success; < 0 indicates failure.
-        :raises TypeError:  If do_lst is not a list or is None.
-        :raises ValueError: If do_lst does not contain exactly 8 values or contains invalid values, i.e.
-                            if any value in do_lst is not a binary valued integer in the range of 0-1.
-
+        Args:
+            None
+        
+        Returns:
+            list[int]: A list of 8 binary-valued pin states, if successful, all values should be between 0 and 1. 
+                        values < 0 indicate failure.
         """
         DO_PIN_MIN, DO_PIN_MAX = BoundaryTypes.DIGITAL_IO_PIN_RANGE
         return [self.get_do(state) for state in range(DO_PIN_MIN, DO_PIN_MAX + 1)]
@@ -250,13 +258,18 @@ class DioHandler(OnLogicNuvotonManager):
         """
         Sets the states of all digital output pins given an input list of binary inputs.
         Indices 0-7 correspond to output pins 0-7 respectively.
-
-        :param do_lst: A list of 8 values (0 or 1), one for each output pin.
-        :return: A list of status codes for each pin operation, there should be 7 in total. 
-                 0 indicates success; < 0 indicates failure.
-        :raises TypeError: If do_lst is not a list or is None.
-        :raises ValueError: If do_lst does not contain exactly 8 values or contains invalid values, i.e.
-                            if any value in do_lst is not a binary valued integer in the range of 0-1.
+        
+        Args:
+            do_lst (list[int]): A list of 8 values (0 or 1), one for each output pin.
+            
+        Returns:
+            list[int]: A list of status codes for each pin operation, there should be 7 in total. 
+                       0 indicates success; < 0 indicates failure.
+        
+        Raises:
+            TypeError: If do_lst is not a list or is None.
+            ValueError: If do_lst does not contain exactly 8 values or contains invalid values, i.e.
+                        if any value in do_lst is not a binary valued integer in the range of 0-1.
         """
         _, DO_PIN_MAX = BoundaryTypes.DIGITAL_IO_PIN_RANGE
 

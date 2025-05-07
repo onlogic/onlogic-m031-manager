@@ -144,7 +144,7 @@ def main():
         print(f"The time difference [In Seconds] is : {timeit.default_timer() - start_time:.6f}")
         print("Set DO Contact to 1")
         print()
-
+        exit()
         print("=" * 30)
         print("TESTING GET ALL INPUT STATES")
         print("=" * 30)

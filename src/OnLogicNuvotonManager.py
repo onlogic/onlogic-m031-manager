@@ -226,12 +226,14 @@ class OnLogicNuvotonManager(ABC):
         return True
 
     def _within_valid_range(self, return_frame: bytes, target_index: int | tuple, target_range: tuple) -> bool:        
-        '''
-
-        :target_index (int | tuple):
-            Specifies the index or range of indices in the return_frame to check.
-            If int: A single index in the return_frame to validate.
-            If tuple: A range of indices (start, stop) to validate. The range is inclusive of start and exclusive of stop.        
+        '''\        
+        
+        Args:
+            target_index (int | tuple): Specifies the index or range of indices in the return_frame to check.
+                                        If int: A single index in the return_frame to validate.
+                                        If tuple: A range of indices (start, stop) to validate. 
+                                        The range is inclusive of start and exclusive of stop.        
+        
         '''
         
         if isinstance(target_index, int):
@@ -241,6 +243,7 @@ class OnLogicNuvotonManager(ABC):
             
         elif isinstance(target_index, tuple):
             payload_indices_to_check = [p_idx for p_idx in range(target_index[0], target_index[1])]
+            logger.debug(f"Indices to check {payload_indices_to_check}")
             for payload_idx in payload_indices_to_check:
                 if return_frame[payload_idx] < target_range[0] or \
                         return_frame[payload_idx] > target_range[1]:
@@ -424,10 +427,10 @@ class OnLogicNuvotonManager(ABC):
 
     def _format_version_string(self, payload_bytes: bytes) -> str:
         '''\
-            Format the payload byte to a string representation, 
-            in the format Byte1.Byte2.Byte3, where each byte is a coverted byte value to string
+        Format the payload byte to a string representation, 
+        in the format Byte1.Byte2.Byte3, where each byte is a coverted byte value to string
 
-            Example: b'\x01\x02\x03' -> '1.2.3'
+        Example: b'\x01\x02\x03' -> '1.2.3'
         '''
         payload_len = len(payload_bytes)
         return_str = ""
@@ -438,21 +441,39 @@ class OnLogicNuvotonManager(ABC):
         return return_str
     
     def _format_response_number(self, payload_bytes: bytes) -> int:
-        '''\
-            A simple method that formats the payload bytes to an integer representation with an additional None check.
-            Example: b'\x00\x00\x00\x01' -> 1
-            If the payload is empty, it returns StatusTypes.FORMAT_NONE_ERROR.
-        '''
-
+        """
+        A simple method that formats the payload bytes to an integer representation with an additional None check.
+        Example: b'\x00\x00\x00\x01' -> 1
+        If the payload is empty, it returns StatusTypes.FORMAT_NONE_ERROR.
+        
+        Args:
+        
+        """
         return int.from_bytes(payload_bytes, byteorder='little') if payload_bytes else StatusTypes.FORMAT_NONE_ERROR
 
     def _isolate_target_indices(self, frame: bytes) -> tuple:
-        '''\
-        Isolate target parameters from the frame.
-        '''
+        """Isolate target indices from the frame. 
+        
+        It operates on the assumption that 
+        1) input is a bytes object type and 2) there is at least 1 payload value indicated
+        by the len field of the returned frame.
+        
+        ATTENTION: The payload_end value is exclusive to follow Python list slicing.
+        The start index is inclusive, while the end index is exclusive.
+        This means that the target indices are from start to end-1.
+
+        Args:
+            frame (bytes): The formetted bytestring frame received from microcontroller
+        
+        Returns:
+            payload_len (int): The length of the payload
+            payload_end (int): The end index of the payload + 1.
+            target_indices (tuple[int, int]): A tuple containing the start and end indices of the payload. The end value is excusive to align with Python's 
+                                              list slicing and range functions. So, it's beginning to end-1 as the actual target indices.
+        """
         payload_len = frame[TargetIndices.RECV_PAYLOAD_LEN]
         payload_end = TargetIndices.PAYLOAD_START + payload_len
-        target_indices = [TargetIndices.PAYLOAD_START, payload_end] 
+        target_indices = (TargetIndices.PAYLOAD_START, payload_end)
         
         return payload_len, payload_end, target_indices
 
