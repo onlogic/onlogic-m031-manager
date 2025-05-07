@@ -1,5 +1,22 @@
-# Use of a Python venv in Ubuntu 24.04 LTS 
+===============
+OnLogicNuvoton Module
+===============
 
+The OnLogic Nuvoton Mmdule Provides a set of tools to interface with peripherals on Onlogic K/HX-52x series computers.
+
+On the K52x it can send commands to the DIO Add in card and the Sequence Micro to control automotive timings.
+On the HX52x it can send commands to the DIO Add in card.
+
+--------------
+Setup Required
+--------------
+
+You will need to install Python3 prior to following this guide.
+
+# Setting up OnLogicNuvotonManager on Windows
+
+
+# Setting up OnLogicNuvotonManager in a Python3 venv on Ubuntu 24.04 LTS 
 Linux Ubuntu has enforced a stricter package management scheme in the new 24.04 LTS distribution to avoid interfering with global package dependencies used by the OS. While this is a more stable way to administer Python on a system, it is also more complex to program in user environments. To run the package OnLogicNuvotonManager in Ubuntu, it's best practice to use a venv.
 
 * Creating a venv: 	$ python3 -m venv <path/to/venv> 
@@ -13,12 +30,13 @@ $ sudo <path/to/venv>/bin/python somescript.py
 
 We have to use whole path because we need to sudo in, and we can't access IO without sudo privaleges 
 
-# Set up required packages in venv
+After, set up required packages in venv
 * pip install -e .
 * Double Check With: 'pip freeze' within local directory
 
-# Shell Transport Protocol
------------------------
+------------------------
+Shell Transport Protocol
+------------------------
 
 A protocol is used for transferring commands.  By convention, the CPU
 issues commands, and the MCU listens and responds to them.  Each valid command
@@ -60,3 +78,13 @@ CPU                                          MCU
 This sequence shows the CPU sending a `kGet_LowPowerEnable` message with no
 additional data and the MCU responding with a `kGet_LowPowerEnable` response
 with one byte of additional data.
+
+This Python Module administers this protocol in communication with both DIO and Sequence microcontrollers.
+It makes native Python datatypes, converts them to byte compatable communication, and administers this process
+with additional type and value checking.  
+
+**Note** the CPU uses two distinct communication protocols to talk with the DIO and Sequence Microcontrollers.
+1. CDC-USB with the DIO Card
+2. UART with the Sequence Micro
+
+For this reason, the user must manually specify the serial port name for the sequence micro .claim() method in the AutomotiveManager class, whereas for the DioHandler, the .claim() method can be left blank and the program will autolock on the serial connection label. 
