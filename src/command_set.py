@@ -1,4 +1,4 @@
-'''
+"""
     OnLogic Nuvoton Manager Constants
     
     This file contains constants used throughout the OnLogic Nuvoton Manager.
@@ -8,12 +8,13 @@
     Frame format is as follows: 
 
         sof (1 Byte), crc (1 Byte), len (1 Byte), kind (1 Byte), data (O-8 Bytes), NACK (1 Byte) 
-'''
+"""
+
 class ProtocolConstants:
-    '''
+    """
     The ProtocolConstants class defines the baud-rate, DIO card device descriptor,
     transmission values, and serial check values used in the communication protocol with the DIO Card.
-    '''
+    """
     BAUDRATE = 115_200
 
     # DIO card Device Descriptior, VID and PID
@@ -34,10 +35,14 @@ class ProtocolConstants:
 
 
 class Kinds:
-    '''
+    """
     The Kinds class categorizes the command classifiers for automotive and DIO commands,
     providing a clear mapping of command types to their respective identifiers.
-    '''
+
+    The message kind can indicate:
+        1. That a message was an error
+        2. How to decode the incoming body data
+    """
     # Automotive Command Classifiers
     ERR_ZERO_KIND = 0x00
     GET_INPUT_VOLTAGE = 0x01
@@ -112,6 +117,6 @@ class BoundaryTypes:
     DECIMAL_VALUE_RANGE = (0, 9)
     BYTE_VALUE_RANGE = (0, 255) # should it be 255?
 
-    AUTOMOTIVE_TIMER_RANGE = (0, 1 << 20) #1_000_000)
+    AUTOMOTIVE_TIMER_RANGE = (0, 1 << 20)
 
 ############################################

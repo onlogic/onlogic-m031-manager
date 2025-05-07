@@ -41,7 +41,7 @@ class DioHandler(OnLogicNuvotonManager):
         #    raise ValueError("Error | Incorrect Value returned, is this the right device?")
 
     def get_di(self, di_pin: int) -> int:
-        """\
+        """
         User-facing method to get the state of active-low digital inputs on the DIO card. 
 
         Args:

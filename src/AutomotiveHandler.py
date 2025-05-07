@@ -37,7 +37,23 @@ class AutomotiveHandler(OnLogicNuvotonManager):
         raise ValueError(error_msg)
 
     def _init_port(self) -> serial.Serial:
-        '''Init port and establish USB-UART connection.'''
+        """Init port and establish USB-UART connection.
+        
+        This is an internal method that initializes the serial port for communication on 
+        the sequence microcontroller over UART. It checks if the port is provided and available,
+        and then attempts to establish a serial connection. If the same serial port that the 
+        DIO card is connected to is provided, an error is raised.
+
+        Args:
+            None
+
+        Returns:
+            serial.Serial: Serial connection object.
+
+        Raises:
+            ValueError: If the port is not provided or if the port is not available.
+            SerialException: If the serial connection cannot be established.
+        """
         if self.serial_connection_label is None:
             self._init_port_error_handling("ERROR | You must provide a PORT input string for Automotive Mode")
         elif (self.serial_connection_label == self._get_cdc_device_port(ProtocolConstants.DIO_MCU_VID_PID_CDC, ".0")):
@@ -54,6 +70,26 @@ class AutomotiveHandler(OnLogicNuvotonManager):
         super().get_info(filename="AutomotiveModeDescription.log")
 
     def get_automotive_mode(self) -> int:
+        """Get the automotive mode of the device.
+
+        Automotive-mode enables or disables system automotive features
+
+        This method uses the LPMCU protocol discussed in the README 
+        to get the automotive mode from the Sequence MCU.
+
+        Args:
+            None
+        
+        Returns:
+            int: The automotive mode of the device. 0 indicates that the device is not in automotive mode,
+                1 indicates that the device is in automotive mode.
+
+                A value < 0 indicates an error in the command or response.    
+        Example:
+            >>> auto_mode = get_automotive_mode()
+            >>> print(f"Automotive Mode: {auto_mode}")
+            Automotive Mode: 1
+        """
         amd = self._construct_command(Kinds.GET_AUTOMOTIVE_MODE)
 
         self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES)
@@ -76,11 +112,30 @@ class AutomotiveHandler(OnLogicNuvotonManager):
         return frame[TargetIndices.PENULTIMATE]
     
     def set_automotive_mode(self, amd: int):
+        """Set the automotive mode of the device.
+        
+        Automotive-mode enables or disables system automotive features.This method uses the
+        LPMCU protocol discussed in the README to set the set whether the device is in automotive mode or not.
+        
+        Args:
+            amd (int): The automotive mode to set. 0 turn automotive mode off, 1 turn automotive mode on.
+        
+        Returns:
+            int: The status of the command. 0 indicates success, < 0 indicates an error in the command or response.
+        
+        Raises:
+            ValueError: If the input parameter is not a valid integer or is out of range.
+            TypeError: If the input parameter is not of type int.
+        
+        Example:
+            >>> auto_mode = set_automotive_mode(1)
+            >>> print(f"Automotive Mode Set to: {auto_mode}")
+            Automotive Mode Set to: 0
+        """
         self._validate_input_param(amd, BoundaryTypes.BINARY_VALUE_RANGE, int)
 
         set_auto_mode = self._construct_command(Kinds.SET_AUTOMOTIVE_MODE, amd)
 
-        # Enclose each value read with buffer clearances
         self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES)
 
         if not self._send_command(set_auto_mode):
@@ -98,6 +153,21 @@ class AutomotiveHandler(OnLogicNuvotonManager):
         return self._validate_recieved_frame(frame, TargetIndices.PENULTIMATE, BoundaryTypes.BINARY_VALUE_RANGE)
 
     def get_low_power_enable(self):
+        """Get the low power enable status value from the MCU.
+
+        Low Power Enable enables entering a very low power state when the system powers off. 
+        The system can only wake from the power-button and the ignition switch 
+        when in this power state.This method uses the LPMCU protocol discussed in the README 
+        to get the low power enable status from the Sequence MCU.
+        
+        Args:
+            None
+        
+        Returns:
+            int: The low power enable status of the device. 0 indicates that low power mode is disabled,
+                1 indicates that low power mode is enabled.
+                A value < 0 indicates an error in the command or response.
+        """
         lpe_command = self._construct_command(Kinds.GET_LOW_POWER_ENABLE)
 
         self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES)
@@ -120,6 +190,19 @@ class AutomotiveHandler(OnLogicNuvotonManager):
         return frame[TargetIndices.PENULTIMATE]
 
     def set_low_power_enable(self, lpe: int) -> int:
+        """Set the low power enable status in the sequence MCU.
+
+        Low Power Enable enables entering a very low power state when the system powers off. 
+        The system can only wake from the power-button and the ignition switch when in this power state.
+        This method uses the LPMCU protocol discussed in the README to set the low power enable status
+        of the sequence MCU.
+        
+        Args:
+            lpe (int): The low power enable status to set. 0 turn low power mode off, 1 turn low power mode on.
+        
+        Returns:
+            int: The status of the command. 0 indicates success, < 0 indicates an error in the command or response.
+        """
         self._validate_input_param(lpe, BoundaryTypes.BINARY_VALUE_RANGE, int)
 
         set_lpe_cmd = self._construct_command(Kinds.SET_LOW_POWER_ENABLE, lpe)
@@ -141,6 +224,25 @@ class AutomotiveHandler(OnLogicNuvotonManager):
         return self._validate_recieved_frame(frame, TargetIndices.PENULTIMATE, BoundaryTypes.BINARY_VALUE_RANGE)
         
     def get_start_up_timer(self) -> int:
+        """Get the start up timer value from the MCU.
+
+        The start up timer controls the number of seconds that the 
+        ignition input must be stable before the system will power on
+        
+        This method uses the LPMCU protocol discussed in the README to get the start up timer
+
+        Args:
+            None
+
+        Returns:
+            int: the start up timer of the device in seconds.  
+                 Start up timer can be configured between 1 - 1048575 seconds
+                 A value < 0 indicates an error in the command or response.
+        Example:
+            >>> start_up_timer = get_start_up_timer()
+            >>> print(f"Start Up Timer: {start_up_timer}")
+            Start Up Timer: 10
+        """
         sut_cmd = self._construct_command(Kinds.GET_START_UP_TIMER)
 
         # Enclose each value read with buffer clearances
@@ -166,6 +268,27 @@ class AutomotiveHandler(OnLogicNuvotonManager):
         return self._format_response_number(frame[TargetIndices.PAYLOAD_START: payload_end])
 
     def set_start_up_timer(self, sut: int) -> int:
+        """Set the start up timer value in the sequence MCU.
+        
+        The start up timer controls the number of seconds that the ignition input
+        must be stable before the system will power on.
+        This method uses the LPMCU protocol discussed in the README to set the start up timer of the sequence MCU.
+        
+        Args:
+            sut (int): The start up timer to set. 1 - 1048575 seconds.
+
+        Returns:
+            int: The status of the command. 0 indicates success, < 0 indicates an error in the command or response.
+
+        Raises:
+            ValueError: If the input parameter is not a valid integer or is out of range.
+            TypeError: If the input parameter is not of type int.
+
+        Example:
+            >>> start_up_timer_status = set_start_up_timer(10)
+            >>> print(f"Success" if start_up_timer_status == 0 else f"Error: {start_up_timer_status}")
+            Success
+        """ 
         self._validate_input_param(sut, BoundaryTypes.AUTOMOTIVE_TIMER_RANGE, int) 
 
         set_sut_cmd = self._construct_command(Kinds.SET_START_UP_TIMER, sut.to_bytes(8, 'little'), 8)
@@ -189,6 +312,8 @@ class AutomotiveHandler(OnLogicNuvotonManager):
         return self._validate_recieved_frame(frame, target_indices, BoundaryTypes.BYTE_VALUE_RANGE)
 
     def get_soft_off_timer(self) -> int:
+        """Get the existing soft off timer value from the MCU.
+        """
         sot_timer_cmd = self._construct_command(Kinds.GET_SOFT_OFF_TIMER)
 
         # Enclose each value read with buffer clearances

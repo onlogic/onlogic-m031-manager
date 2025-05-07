@@ -226,16 +226,19 @@ class OnLogicNuvotonManager(ABC):
         return True
 
     def _within_valid_range(self, return_frame: bytes, target_index: int | tuple, target_range: tuple) -> bool:        
-        '''\        
-        
+        """
         Args:
+            return_frame (bytes): The frame received from the microcontroller.
+
             target_index (int | tuple): Specifies the index or range of indices in the return_frame to check.
                                         If int: A single index in the return_frame to validate.
                                         If tuple: A range of indices (start, stop) to validate. 
                                         The range is inclusive of start and exclusive of stop.        
-        
-        '''
-        
+            
+            target_range (tuple): The range of valid values for the target index.
+                                        The range is inclusive of the first value and exclusive of the second value.
+                                        Example: (0, 4) means valid values are 0, 1, 2, 3.
+        """
         if isinstance(target_index, int):
             if return_frame[target_index] < target_range[0] or \
                     return_frame[target_index] > target_range[1]:
