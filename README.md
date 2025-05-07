@@ -1,6 +1,6 @@
-===============
+=====================
 OnLogicNuvoton Module
-===============
+=====================
 
 The OnLogic Nuvoton Mmdule Provides a set of tools to interface with peripherals on Onlogic K/HX-52x series computers.
 
