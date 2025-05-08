@@ -1,17 +1,12 @@
+# -*- coding: utf-8 -*-
 '''
 File: OnLogicNuvotonManager.py
 
-Description:
-    OnLogicNuvotonManager administers the serial connection with the
-    microcontroller embedded in the add on card of the HX/K5xx.
 
-Contains:
-    - class: OnLogicNuvotonManager
-        + private method: _init_port
-        + private method: _mcu_connection_check
-        + private method: _reset
-        + private method: _send_command
-        
+OnLogicNuvotonManager contains methods which, when used in conjunction with eachother, can 
+control and communicate with the Nuvoton microcontrollers embedded in OnLogic HX/K5xx
+products. Many are inherited from the base class to be used in Automotive and DIO controller classes.
+       
 References:
     https://fastcrc.readthedocs.io/en/latest/
 '''
@@ -51,7 +46,7 @@ class OnLogicNuvotonManager(ABC):
         self.release()
 
     def __str__(self):
-        '''COM port and command set of DioInputHandler.'''
+        '''String representation.'''
         # TODO: Add Python utility Version and FW version?
         repr_str = (
             f"Port: {self.serial_connection_label}\n"
@@ -70,7 +65,22 @@ class OnLogicNuvotonManager(ABC):
 
         return repr_str
 
-    def list_all_available_ports(self, verbose: bool = False):
+    def list_all_available_ports(self, verbose: bool = False) -> None:
+        """List all available serial ports.
+        
+        A convenient method provided to list all available serial ports on the system.
+        The user should be able to the DIO card by it's Identifier if plugged in, but 
+        unfortunately, the device descriptor is not available for the Sequence MCU for
+        Automotive control. It is inheritable from the base class and can be called from
+        both the Automotive and DIO classes.
+
+        Args:
+            verbose (bool): If True, prints detailed information about each port.
+                            If False, prints only the port names.
+            
+        Returns:
+            None: This method does not return anything. It prints the available ports to the console.        
+        """
         all_ports = system_ports.comports()
         for port in sorted(all_ports):
             if not verbose:
@@ -87,7 +97,7 @@ class OnLogicNuvotonManager(ABC):
                 logging.info(comport_info)  
 
     def _get_cdc_device_port(self, dev_id: str, location: str = None) -> str | None:
-        """Scan and return the port of the target device."""
+        '''Scan and return the port of the target device.'''
         all_ports = system_ports.comports() 
         for port in sorted(all_ports):
             if dev_id in port.hwid:
@@ -107,22 +117,34 @@ class OnLogicNuvotonManager(ABC):
 
     @abstractmethod
     def _init_port(self) -> serial.Serial:
-        '''\
+        """
         Initialize the serial port with the given baudrate and device descriptor.
         If the port is not specified, it will search for the device with the 
         given VID and PID when used for DIO Utility. Otherwise, it will simply initialize
-        the port with the given serial connection label.
+        the port with the given serial connection label. 
 
         If the port is not found, it will raise a ValueError.
-        '''
+        """
         pass
 
     @abstractmethod
     def _mcu_connection_check(self) -> None:
-        '''\
+        """
         Check state of MCU, if it returns '\a' successively
-        within a proper time interval, the correct port is found.
-        '''
+        within a proper time interval, the correct port is found. 
+        If not, the port is not correct or the MCU is not connected.
+        It is an inheritable method provided to the base class.
+
+        Args:
+            None
+
+        Returns:
+            None
+
+        Raises:
+            ValueError: If an the aknowledgement pattern is not received in the
+            expected time and order.
+        """
         # Local MCU response count
         nack_count = 0
 
@@ -144,6 +166,8 @@ class OnLogicNuvotonManager(ABC):
                     self.port.write(ProtocolConstants.SHELL_ACK.to_bytes(1, byteorder='little'))
                     time.sleep(ProtocolConstants.STANDARD_DELAY)
 
+        # If the number of nacks received is equal to the expected number of nacks
+        # a potential interface is found, return
         if nack_count == ProtocolConstants.NACKS_NEEDED:
             logger.info("Interface Found")
             return
@@ -209,6 +233,18 @@ class OnLogicNuvotonManager(ABC):
             raise ValueError(value_error_msg)
 
     def _check_crc(self, frame: bytes) -> bool:
+        """Check the CRC of the received frame.
+
+        This method calculates the CRC of the received frame and 
+        compares it with the existing CRC in the frame.
+
+        Args:
+            frame (bytes): The frame received from the microcontroller.
+        
+        Returns:
+            bool: True if the CRC is valid, False otherwise.
+        """
+        # Check the len of the frame and make sure it is at least the base frame size
         if len(frame) < BoundaryTypes.BASE_FRAME_SIZE:
             return False
 
@@ -254,12 +290,35 @@ class OnLogicNuvotonManager(ABC):
         return True
 
     def _validate_recieved_frame(self, return_frame: list, target_index: int | tuple = None, target_range: tuple = None) -> int:
-        '''\
-        Validate the received frame from the microcontroller.
+        """Validate the received frame from the microcontroller.
+
         Checks for SOF, NACK, CRC and if the target index is within the valid range.
         If the target index is not provided, it will not check for the target range.
         Returns StatusTypes.SUCCESS if the frame is valid, otherwise returns the appropriate error code.
-        '''
+        
+        Args:
+            return_frame (list): The frame received from the microcontroller.
+            target_index (int | tuple): Specifies the index or range of indices in the return_frame to check.
+                                        If int: A single index in the return_frame to validate.
+                                        If tuple: A range of indices (start, stop) to validate.
+                                        The range is inclusive of start and exclusive of stop.
+                                        Example: (0, 4) means valid values are 0, 1, 2, 3.
+            target_range (tuple): The range of valid values for the target index.
+                                        The range is inclusive of the first value and exclusive of the second value.
+                                        Example: (0, 4) means valid values are 0, 1, 2, 3.
+        
+        Returns:
+            int: Status code indicating the result of the validation.
+                - StatusTypes.SUCCESS: Frame is valid.
+                - StatusTypes.RECV_FRAME_VALUE_ERROR: Frame is None, not a list, or too short.
+                - StatusTypes.RECV_FRAME_SOF_ERROR: SOF value is not correct.
+                - StatusTypes.RECV_FRAME_NACK_ERROR: NACK not found in desired index.
+                - StatusTypes.RECV_FRAME_CRC_ERROR: CRC check failed.
+                - StatusTypes.RECV_UNEXPECTED_PAYLOAD_ERROR: Value(s) at idx not in target range.
+        
+        Raises:
+            None: Designed specifically to not end and return an error code if the frame is not valid.
+        """
         if return_frame is None or isinstance(return_frame, list) \
               or len(return_frame) < BoundaryTypes.BASE_FRAME_SIZE:
             logging.error(f"Received Frame {return_frame} is None, not a list, or too short")
@@ -291,7 +350,7 @@ class OnLogicNuvotonManager(ABC):
     def _validate_partial_frame(self, response_frame: list, response_frame_kind: int) -> bool:
         '''\
         Validate the partial frame (first four bytes) received from the MCU being used.
-        This function is important as it ensures whether we can use the len field 
+        This method is important as it ensures whether we can use the len field 
         to determine the length of the payload that follows.
         '''
         response_frame_size = len(response_frame)
@@ -321,11 +380,6 @@ class OnLogicNuvotonManager(ABC):
         logging.info("Serial Port Claimed")
 
     def release(self):
-        # ._construct_command.cache_clear()
-
-        # TODO: Figure out why is the sleep function Erroring when lru_cache is enabled 
-        # in destructor with time.sleep uncommented 
-        # time.sleep(.001)
         if self.is_setup:
             self._reset()
             self.port.reset_input_buffer()
@@ -382,7 +436,8 @@ class OnLogicNuvotonManager(ABC):
         return False
 
     def _receive_command(self, response_frame_kind: int) -> bytes | int:
-        '''
+        '''Recieves pertinent response from the microcontroller.
+
         Receive command in expected format that complies with UART Shell interface.
         The response_frame list should always end with a NACK ['\a'] 
         command indicating the end of the received payload.
@@ -429,12 +484,19 @@ class OnLogicNuvotonManager(ABC):
         return b''.join(response_frame)
 
     def _format_version_string(self, payload_bytes: bytes) -> str:
-        '''\
-        Format the payload byte to a string representation, 
-        in the format Byte1.Byte2.Byte3, where each byte is a coverted byte value to string
+        """Format bytes type payload to a string representation.
+
+        Format the payload byte to a string representation in the format Byte1.Byte2.Byte3, 
+        where each byte is a coverted byte value to string
 
         Example: b'\x01\x02\x03' -> '1.2.3'
-        '''
+
+        Args:
+            payload_bytes (bytes): The payload bytes to be formatted.
+        
+        Returns:
+            str: The formatted string representation of the payload bytes.
+        """
         payload_len = len(payload_bytes)
         return_str = ""
         for i in range(payload_len):
@@ -444,13 +506,18 @@ class OnLogicNuvotonManager(ABC):
         return return_str
     
     def _format_response_number(self, payload_bytes: bytes) -> int:
-        """
+        """Simple shorthand method to format the payload bytes to an integer representation.
+
         A simple method that formats the payload bytes to an integer representation with an additional None check.
         Example: b'\x00\x00\x00\x01' -> 1
         If the payload is empty, it returns StatusTypes.FORMAT_NONE_ERROR.
         
         Args:
+            payload_bytes (bytes): The payload bytes to be formatted.
         
+        Returns:
+            int: The formatted integer value of the payload bytes.
+                 If the payload is empty, it returns StatusTypes.FORMAT_NONE_ERROR.
         """
         return int.from_bytes(payload_bytes, byteorder='little') if payload_bytes else StatusTypes.FORMAT_NONE_ERROR
 
@@ -480,7 +547,21 @@ class OnLogicNuvotonManager(ABC):
         
         return payload_len, payload_end, target_indices
 
-    def get_version(self) -> str:
+    def get_version(self) -> str | int:
+        """Get the firmware version of the microcontroller.
+        
+        Retrieves the firmware of the microcontroller by using the GET_FIRMWARE_VERSION command
+        and the LPMCU protocol discussed in the documentation and README. 
+        The version is returned as a string in the format "X.X.X",
+        
+        Params:
+            None
+
+        Returns:
+            str: The firmware version of the microcontroller in the format "X.X.X".
+                  If the version cannot be retrieved, it returns StatusTypes.SEND_CMD_FAILURE.
+                  If the payload is empty, it returns StatusTypes.FORMAT_NONE_ERROR.
+        """
         version_command = self._construct_command(Kinds.GET_FIRMWARE_VERSION)
 
         # Enclose each value read with buffer clearances

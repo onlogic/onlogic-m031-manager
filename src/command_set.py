@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
     OnLogic Nuvoton Manager Constants
     
@@ -117,6 +118,6 @@ class BoundaryTypes:
     DECIMAL_VALUE_RANGE = (0, 9)
     BYTE_VALUE_RANGE = (0, 255) # should it be 255?
 
-    AUTOMOTIVE_TIMER_RANGE = (0, 1 << 20)
+    AUTOMOTIVE_TIMER_RANGE = (1, 1 << 20)
 
 ############################################

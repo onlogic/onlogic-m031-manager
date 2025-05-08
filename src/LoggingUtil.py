@@ -1,9 +1,5 @@
+# -*- coding: utf-8 -*-
 '''
-logging.basicConfig (
-    format='[%(asctime)s %(levelname)s %(filename)s:%(lineno)d -> %(funcName)s()] %(message)s',
-    level=level,
-    handlers=handlers  
-)
 '''
 import sys
 import logging

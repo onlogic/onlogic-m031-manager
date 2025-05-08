@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import time
 import serial
 import logging
@@ -91,7 +92,6 @@ class DioHandler(OnLogicNuvotonManager):
 
         do_command = self._construct_command(Kinds.GET_DO, do_pin)
 
-        # Enclose each value read with buffer clearances
         self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES)
         if not self._send_command(do_command):
             return StatusTypes.SEND_CMD_FAILURE
@@ -118,7 +118,6 @@ class DioHandler(OnLogicNuvotonManager):
 
         set_do_command = self._construct_command(Kinds.SET_DO, pin, value)
 
-        # Enclose each value read with buffer clearances
         self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES)
 
         if not self._send_command(set_do_command):
@@ -160,7 +159,6 @@ class DioHandler(OnLogicNuvotonManager):
     def get_do_contact(self) -> int:
         do_contact_state_cmd = self._construct_command(Kinds.GET_DO_CONTACT)
 
-        # Enclose each value read with buffer clearances
         self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES)
         if not self._send_command(do_contact_state_cmd):
             return StatusTypes.SEND_CMD_FAILURE
@@ -185,7 +183,6 @@ class DioHandler(OnLogicNuvotonManager):
 
         set_di_contact_state_cmd = self._construct_command(Kinds.SET_DI_CONTACT, contact_type)
 
-        # Enclose each value read with buffer clearances
         self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES)
     
         if not self._send_command(set_di_contact_state_cmd):
@@ -237,8 +234,10 @@ class DioHandler(OnLogicNuvotonManager):
 
 
     def get_all_output_states(self) -> list:
-        """
-        Gets the states of all digital output pins.
+        """Gets the states of all digital output pins.
+        
+        This is a wrapper method that calls get_do for each pin in the range of 0-7.
+        The method returns a list of 8 binary values, one for each output pin.
         Indices 0-7 correspond to output pins 0-7 respectively.
 
         Args:
@@ -255,7 +254,9 @@ class DioHandler(OnLogicNuvotonManager):
         return [self.get_all_input_states(), self.get_all_output_states()]
 
     def set_all_output_states(self, do_lst: list) -> list:
-        """
+        """Sets the states of all digital output pins given an input list of binary inputs.
+
+        This is a wrapper method that calls set_do for each pin in the range of 0-7.
         Sets the states of all digital output pins given an input list of binary inputs.
         Indices 0-7 correspond to output pins 0-7 respectively.
         
