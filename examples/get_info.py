@@ -31,8 +31,8 @@ NOTE:
     - Be sure to run this program with the correct electrical connections.
 """
 
-from DioHandler import DioHandler
-from AutomotiveHandler import AutomotiveHandler
+from OnLogicNuvotonManager import DioHandler
+from OnLogicNuvotonManager import AutomotiveHandler
 
 def main():
     try:

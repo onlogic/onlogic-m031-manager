@@ -24,8 +24,8 @@ NOTE:
 """
 
 import timeit # Optional: measure time taken per sample
-from DioHandler import DioHandler
-from LoggingUtil import LoggingUtil
+from OnLogicNuvotonManager import DioHandler
+from OnLogicNuvotonManager import LoggingUtil
 
 def main():
     '''main, implementation of session logic.'''

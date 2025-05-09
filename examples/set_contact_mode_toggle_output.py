@@ -24,7 +24,7 @@ NOTE:
 
 import time
 
-from DioHandler import DioHandler
+from OnLogicNuvotonManager import DioHandler
 
 def main():
     '''main, implementation of session logic.'''

@@ -19,8 +19,8 @@ NOTE:
     - Please replace "/dev/ttyS4" with the appropriate serial port configured on your system.
 """
 
-from AutomotiveHandler import AutomotiveHandler
-from LoggingUtil import LoggingUtil
+from OnLogicNuvotonManager import AutomotiveHandler
+from OnLogicNuvotonManager import LoggingUtil
 
 def main():
     '''main, implementation of session logic.'''
