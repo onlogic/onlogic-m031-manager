@@ -19,7 +19,7 @@ import logging
 
 from abc import ABC, abstractmethod
 from serial.tools import list_ports as system_ports
-from command_set import ProtocolConstants, Kinds, StatusTypes, TargetIndices, BoundaryTypes
+from .command_set import ProtocolConstants, Kinds, StatusTypes, TargetIndices, BoundaryTypes
 from fastcrc import crc8
 
 logger = logging.getLogger(__name__)
@@ -113,7 +113,7 @@ class OnLogicNuvotonManager(ABC):
         return None
 
     @abstractmethod
-    def get_info(self) -> None:
+    def show_info(self) -> None:
         pass
 
     @abstractmethod
@@ -182,7 +182,22 @@ class OnLogicNuvotonManager(ABC):
         raise ValueError("ERROR | AKNOWLEDGEMENT ERROR")
 
     def _read_files(self, filename = None) -> None:
-        pass
+
+        try:
+            
+
+            with open(filename, 'r') as file:
+                lines = file.readlines()
+                for line in lines:
+                    print(line.strip())
+        except FileNotFoundError:
+            print(f"File {filename} not found.")
+        except IOError:
+            print(f"Error reading file {filename}.")
+        except Exception as e:
+            print(f"An error occurred: {e}")
+        finally:
+            print("Finished reading file.")
 
     def _reset(self, nack_counter: int = ProtocolConstants.NUM_NACKS, reset_buffers: bool = True) -> None:
         '''Reset following the LPMCU ACK-NACK pattern.'''

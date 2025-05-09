@@ -2,8 +2,8 @@
 import time
 import serial
 import logging
-from OnLogicNuvotonManager import OnLogicNuvotonManager
-from command_set import TargetIndices, ProtocolConstants, Kinds, StatusTypes, BoundaryTypes
+from .onlogic_nuvoton_manager import OnLogicNuvotonManager
+from .command_set import TargetIndices, ProtocolConstants, Kinds, StatusTypes, BoundaryTypes
 
 logger = logging.getLogger(__name__)
 
@@ -32,8 +32,8 @@ class DioHandler(OnLogicNuvotonManager):
             self.serial_connection_label = None # Revisit if is worth setting up like this
             raise serial.SerialException(serial_connect_err)
 
-    def get_info(self) -> None:
-        super()._read_files(filename="DioHandlerDescription.log")
+    def show_info(self) -> None:
+        super()._read_files(filename="docs/ShowInfo/DioHandlerDescription.rst")
 
     def _mcu_connection_check(self) -> None:
         super()._mcu_connection_check()
@@ -176,7 +176,8 @@ class DioHandler(OnLogicNuvotonManager):
         """Gets the contact state of the digital input pins on the DIO card.
 
         0 indicates that DI is in Wet Contact mode and 1 Indicates that DI is in Dry Contact Mode.
-        Reminder: Wet contact mode 
+        Reminder: Wet contact mode means that Voltage is supplied by the system at ~11.2 V.
+        Dry 
         
 
         """

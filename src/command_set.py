@@ -7,7 +7,6 @@
     and boundary types.
 
     Frame format is as follows: 
-
         sof (1 Byte), crc (1 Byte), len (1 Byte), kind (1 Byte), data (O-8 Bytes), NACK (1 Byte) 
 """
 

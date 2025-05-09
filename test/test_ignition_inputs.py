@@ -5,7 +5,7 @@ sudo <path/to/venv>/bin/py.test -s -v -x test_ignition.py
 python3 
 '''
 
-from AutomotiveHandler import AutomotiveHandler
+from OnLogicNuvotonManager import AutomotiveHandler
 import pytest
 import re
 

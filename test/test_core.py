@@ -3,8 +3,8 @@ Assumes the DIO card is connected to the computer
 and the correct  is specified.
 '''
 
-from DioHandler import DioHandler
-from AutomotiveHandler import AutomotiveHandler
+from OnLogicNuvotonManager import DioHandler
+from OnLogicNuvotonManager import AutomotiveHandler
 import pytest
 import serial
 

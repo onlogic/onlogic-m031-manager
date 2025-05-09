@@ -2,7 +2,7 @@
 pip install pytest pytest-order
 sudo /home/password/Desktop/titanium-dio-python-driver/bin/py.test -s -v -x test_dio_no_loopback.py
 '''
-from DioHandler import DioHandler
+from OnLogicNuvotonManager import DioHandler
 import pytest
 import re
 
