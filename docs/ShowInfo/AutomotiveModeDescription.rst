@@ -1,6 +1,8 @@
 
-**Terminal Block Diagram of K-52x - Ignition pin is on leftmost side** 
+**Terminal Block Diagram of K-52x - Ignition pin is on leftmost side**
+
 .. code-block:: text
+
     ---------------------------------
     ||  _     _     _     _     _  ||
     || |_|   |_|   |_|   |_|   |_| ||  
@@ -8,7 +10,9 @@
     ---------------------------------
 
 **Terminal Block Diagram of HX-52x**
+
 .. code-block:: text
+
     ---------------------------
     ||  _     _     _     _  ||
     || |_|   |_|   |_|   |_| || 
