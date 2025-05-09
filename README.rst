@@ -152,29 +152,29 @@ do not all report the status types in the same way.
 +----------------------------------------------+-------+---------------------------------------------------+
 | Status Type                                  | Value | Description                                       |
 +==============================================+=======+===================================================+
-| `SUCCESS`                                    |   0   | The LPMCU protocol completed successfully.       |
+| `SUCCESS`                                    |   0   | The LPMCU protocol completed successfully.        |
 +----------------------------------------------+-------+---------------------------------------------------+
-| `SEND_CMD_FAILURE`                           |  -1   | Failed to send the command during the initial    |
-|                                              |       | transmission process.                            |
+| `SEND_CMD_FAILURE`                           |  -1   | Failed to send the command during the initial     |
+|                                              |       | transmission process.                             |
 +----------------------------------------------+-------+---------------------------------------------------+
-| `RECV_UNEXPECTED_PAYLOAD_ERROR`              |  -2   | The received payload did not match the expected  |
-|                                              |       | format or structure during validation.           |
+| `RECV_UNEXPECTED_PAYLOAD_ERROR`              |  -2   | The received payload did not match the expected   |
+|                                              |       | format or structure during validation.            |
 +----------------------------------------------+-------+---------------------------------------------------+
-| `RECV_FRAME_CRC_ERROR`                       |  -3   | The CRC value of the received frame did not      |
-|                                              |       | match the expected value, indicating corruption. |
+| `RECV_FRAME_CRC_ERROR`                       |  -3   | The CRC value of the received frame did not       |
+|                                              |       | match the expected value, indicating corruption.  |
 +----------------------------------------------+-------+---------------------------------------------------+
-| `RECV_FRAME_ACK_ERROR`                       |  -4   | The acknowledgment frame validation failed,      |
-|                                              |       | indicating an issue with the tail frame.         |
+| `RECV_FRAME_ACK_ERROR`                       |  -4   | The acknowledgment frame validation failed,       |
+|                                              |       | indicating an issue with the tail frame.          |
 +----------------------------------------------+-------+---------------------------------------------------+
-| `RECV_FRAME_SOF_ERROR`                       |  -5   | The start-of-frame (SOF) byte `0x01` was not     |
-|                                              |       | found in the received frame.                     |
+| `RECV_FRAME_SOF_ERROR`                       |  -5   | The start-of-frame (SOF) byte `0x01` was not      |
+|                                              |       | found in the received frame.                      |
 +----------------------------------------------+-------+---------------------------------------------------+
-| `RECV_PARTIAL_FRAME_VALIDATION_ERROR`        |  -6   | Validation of a partially received frame failed, |
-|                                              |       | indicating incomplete or corrupted data.         |
+| `RECV_PARTIAL_FRAME_VALIDATION_ERROR`        |  -6   | Validation of a partially received frame failed,  |
+|                                              |       | indicating incomplete or corrupted data.          |
 +----------------------------------------------+-------+---------------------------------------------------+
-| `RECV_FRAME_VALUE_ERROR`                     |  -7   | The received payload contained unexpected or     |
-|                                              |       | invalid values.                                  |
+| `RECV_FRAME_VALUE_ERROR`                     |  -7   | The received payload contained unexpected or      |
+|                                              |       | invalid values.                                   |
 +----------------------------------------------+-------+---------------------------------------------------+
-| `FORMAT_NONE_ERROR`                          |  -8   | A `None` value was encountered during type       |
-|                                              |       | formatting, indicating a missing or invalid type.|
+| `FORMAT_NONE_ERROR`                          |  -8   | A `None` value was encountered during type        |
+|                                              |       | formatting, indicating a missing or invalid type. |
 +----------------------------------------------+-------+---------------------------------------------------+
