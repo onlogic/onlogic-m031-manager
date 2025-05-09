@@ -1,6 +1,4 @@
-.. note::
-
-    Info: Digital input/output. The DIO module can be configured in two modes:
+Digital input/output. The DIO module can be configured in two modes:
 
 1. Wet contact mode:
     To function properly, dio should be connected to external power and ground. 
@@ -23,17 +21,15 @@
 
 .. code-block:: text
 
-    ---------------------------------------------------------------------
-    ||  _     _     _     _     _     _     _     _     _     _     _  ||
-    || |_|   |_|   |_|   |_|   |_|   |_|   |_|   |_|   |_|   |_|   |_| || Digital Input
-    || INT | DI8 | DI7 | DI6 | DI5 | DI4 | DI3 | DI2 | DI1 | DI0 |  -  ||
-    ---------------------------------------------------------------------
-    ||  _     _     _     _     _     _     _     _     _     _     _  ||
-    || |_|   |_|   |_|   |_|   |_|   |_|   |_|   |_|   |_|   |_|   |_| || Digital Output
-    || GND | DO8 | DO7 | DO6 | DO5 | DO4 | DO3 | DO2 | DO1 | DO0 |  +  ||
-    ---------------------------------------------------------------------
-
-**Command Summary**
+    ---------------------------------------------------------------
+    ||  _     _     _     _     _     _     _     _     _     _  ||
+    || |_|   |_|   |_|   |_|   |_|   |_|   |_|   |_|   |_|   |_| || Digital Input
+    || INT | DI7 | DI6 | DI5 | DI4 | DI3 | DI2 | DI1 | DI0 |  -  ||
+    ---------------------------------------------------------------
+    ||  _     _     _     _     _     _     _     _     _     _  ||
+    || |_|   |_|   |_|   |_|   |_|   |_|   |_|   |_|   |_|   |_| || Digital Output
+    || GND | DO7 | DO6 | DO5 | DO4 | DO3 | DO2 | DO1 | DO0 |  +  ||
+    ---------------------------------------------------------------
 
 **Command Summary**
 
