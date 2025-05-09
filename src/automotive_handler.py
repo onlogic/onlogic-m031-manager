@@ -255,7 +255,7 @@ class AutomotiveHandler(OnLogicNuvotonManager):
         """Get the start-up timer value from the MCU.
 
         The start-up timer controls the number of seconds that the 
-        ignition input must be stable before the system will power on
+        ignition input must be stable before the system will power on.
         This method uses the LPMCU protocol discussed in the README and documentation
         to get the start up timer
 

@@ -217,6 +217,8 @@ class OnLogicNuvotonManager(ABC):
             with open(filename, 'r') as file:
                 lines = file.readlines()
                 for line in lines:
+                    if '.. code-block' in line:
+                        continue
                     print(line.strip())
         except FileNotFoundError:
             print(f"File {filename} not found.")

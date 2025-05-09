@@ -1,3 +1,5 @@
+**Digital Input/Output Module (DIO) Functionality**
+
 Digital input/output. The DIO module can be configured in two modes:
 
 1. Wet contact mode:
