@@ -4,7 +4,7 @@ For:    HX-52x
 Title:  HX-52x Automotive Setting Python Utility
 
 Description:
-    TODO:
+    A simple demonstration of how to use the AutomotiveHandler class to interact with automotive settings.
 
 Usage:
     python main.py

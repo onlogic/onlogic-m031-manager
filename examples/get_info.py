@@ -39,8 +39,8 @@ def main():
         with DioHandler() as my_dio:
             # Serial Port must be specified as Class Parameter when using context manager
             with AutomotiveHandler("/dev/ttyS4") as my_auto: 
-                print(my_auto.get_all_automotive_settings())
-                print(my_dio.get_all_input_states())
+                my_auto.show_info()
+                my_dio.show_info()
     except KeyboardInterrupt:
         print("Operation terminated by user.")
     finally: 

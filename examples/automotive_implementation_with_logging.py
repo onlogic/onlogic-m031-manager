@@ -1,10 +1,11 @@
 """
 Author: OnLogic
-For:    HX-52x
-Title:  HX-52x Automotive Setting Python Utility
+For:    HX-52x/K-52x
+Title:  HX-52x/K-52x Automotive Driver Example with Logging
 
 Description:
-    TODO:
+    A simple demonstration of how to use the AutomotiveHandler class to interact with automotive settings.
+    This example includes logging functionality to track the operations performed.
 
 Usage:
     python main.py
