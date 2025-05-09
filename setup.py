@@ -12,11 +12,11 @@ setup(
     # package_dir={"":"src"},
     packages=['OnLogicNuvotonManager'],
     package_dir={'OnLogicNuvotonManager': 'src'},
-    install_requires=['pyserial>=3.4', 'colorama>=0.4.5', 'fastcrc>=0.3.2'],
+    install_requires=['pyserial>=3.4', 'fastcrc>=0.3.2'],
     version='0.0.1',
     license='BSD-2.0',
     description='Tools for Helix 52x and Karbon 52x Peripherals',
-    # long_description=open('README.rst').read(),
+    long_description=open('README.rst').read(),
     classifiers=[
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",

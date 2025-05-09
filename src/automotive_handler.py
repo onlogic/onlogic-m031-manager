@@ -45,6 +45,7 @@ class AutomotiveHandler(OnLogicNuvotonManager):
         #     raise ValueError("Error | Issue with verifying connection command")
         
     def _init_port_error_handling(self, error_msg: str, return_early: bool = False) -> None | ValueError:
+        """Light error handling assistance for the init port method."""
         logger.error(error_msg)
         self.list_all_available_ports()
 

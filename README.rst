@@ -64,6 +64,12 @@ After, set up required packages in venv:
 * pip install -e .
 * Verify with: 'pip freeze' within local directory
 
+## Examples
+   There are several examples in the examples directory.  The examples
+   are designed to run from the command line and follow the setup seen above.
+   Make sure, however, that for Automotive settings, you enable the COM visibility in 
+   the BIOS.  This is done by ...
+
 ## Shell Transport Protocol
 
 A protocol is used for transferring commands.  By convention, the CPU

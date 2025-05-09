@@ -23,7 +23,6 @@ NOTE:
 """
 
 import time
-
 from OnLogicNuvotonManager import DioHandler
 
 def main():

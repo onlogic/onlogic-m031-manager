@@ -25,10 +25,10 @@ from fastcrc import crc8
 logger = logging.getLogger(__name__)
 
 class OnLogicNuvotonManager(ABC):
-    '''
-    Administers the serial connection with the
+    """
+    Administers the serial connection and communication protocol with the
     microcontroller embedded in the K/HX-52x DIO-Add and Sequence MCU for Automotive Control.
-    '''
+    """
     def __init__(self, serial_connection_label: str = None):
         '''Init class by establishing serial connection.''' 
         # Setup mechanism so deleter does not delete non-existant objects
@@ -68,7 +68,7 @@ class OnLogicNuvotonManager(ABC):
 
     def list_all_available_ports(self, verbose: bool = False) -> None:
         """List all available serial ports.
-        
+
         A convenient method provided to list all available serial ports on the system.
         The user should be able to the DIO card by it's Identifier if plugged in, but 
         unfortunately, the device descriptor is not available for the Sequence MCU for
@@ -78,7 +78,7 @@ class OnLogicNuvotonManager(ABC):
         Args:
             verbose (bool): If True, prints detailed information about each port.
                             If False, prints only the port names.
-            
+
         Returns:
             None: This method does not return anything. It prints the available ports to the console.        
         """
@@ -98,7 +98,22 @@ class OnLogicNuvotonManager(ABC):
                 logging.info(comport_info)  
 
     def _get_cdc_device_port(self, dev_id: str, location: str = None) -> str | None:
-        '''Scan and return the port of the target device.'''
+        """Scan and return the port of the target device.
+
+        This method scans all available serial ports and returns the port of the target device
+        based on the provided device ID and location. It is used to find the DIO card in the system.
+
+        Args:
+            dev_id (str): The device ID to search for.
+            location (str): The location of the device. If None, it will not filter by location.
+
+        Returns:
+            str | None: The port of the target device if found, otherwise None.
+
+        Note:
+            For printable, user facing version of this method, see list_all_available_ports.
+            It is inherited from the base class and can be called from both the Automotive and DIO classes.
+        """
         all_ports = system_ports.comports() 
         for port in sorted(all_ports):
             if dev_id in port.hwid:
@@ -114,24 +129,40 @@ class OnLogicNuvotonManager(ABC):
 
     @abstractmethod
     def show_info(self) -> None:
+        """User """
         pass
 
     @abstractmethod
     def _init_port(self) -> serial.Serial:
-        """
-        Initialize the serial port with the given baudrate and device descriptor.
+        """Initialize the serial port with the given baudrate and device descriptor.
+
         If the port is not specified, it will search for the device with the 
         given VID and PID when used for DIO Utility. Otherwise, it will simply initialize
         the port with the given serial connection label. 
 
         If the port is not found, it will raise a ValueError.
+
+        Args:
+            None
+
+        Returns:
+            serial.Serial: The initialized serial port object.
+
+            
+        Raises:
+            ValueError: If the port is not found or cannot be opened.
+            serial.SerialException: If the port cannot be opened or configured.
+            serial.SerialTimeoutException: If the port cannot be opened within the timeout period.
+
+        Note: Each child class has a different implementation of this method.
         """
         pass
 
     @abstractmethod
     def _mcu_connection_check(self) -> None:
-        """
-        Check state of MCU, if it returns '\a' successively
+        """Check state of MCU
+
+        If it returns '\a' successively
         within a proper time interval, the correct port is found. 
         If not, the port is not correct or the MCU is not connected.
         It is an inheritable method provided to the base class.
@@ -144,7 +175,7 @@ class OnLogicNuvotonManager(ABC):
 
         Raises:
             ValueError: If an the aknowledgement pattern is not received in the
-            expected time and order.
+            expected time and order. On failure it will list all available ports.
         """
         # Local MCU response count
         nack_count = 0
@@ -182,10 +213,7 @@ class OnLogicNuvotonManager(ABC):
         raise ValueError("ERROR | AKNOWLEDGEMENT ERROR")
 
     def _read_files(self, filename = None) -> None:
-
         try:
-            
-
             with open(filename, 'r') as file:
                 lines = file.readlines()
                 for line in lines:
@@ -200,7 +228,12 @@ class OnLogicNuvotonManager(ABC):
             print("Finished reading file.")
 
     def _reset(self, nack_counter: int = ProtocolConstants.NUM_NACKS, reset_buffers: bool = True) -> None:
-        '''Reset following the LPMCU ACK-NACK pattern.'''
+        """Reset following the LPMCU ACK-NACK pattern.
+        
+        
+        
+        """
+
         # Expensive operation, shouldn't be done twice per read
         if reset_buffers:
             self.port.reset_output_buffer()
@@ -364,20 +397,32 @@ class OnLogicNuvotonManager(ABC):
         return StatusTypes.SUCCESS
 
     def _validate_partial_frame(self, response_frame: list, response_frame_kind: int) -> bool:
-        '''
+        """ Validates partial frame recieved from microcontroller, it's used in the recieve_command method.
+
         Validate the partial frame (first four bytes) received from the MCU being used.
-        This method is important as it ensures whether we can use the len field 
+        This method is important as it ensures whether we can use the len field
         to determine the length of the payload that follows.
-        '''
+
+        Args:
+            response_frame (list): The frame received from the microcontroller.
+            response_frame_kind (int): The kind of the response frame.
+        
+        Returns:
+            bool: True if the SOF, Kind field and len of the partial frame are valid. False otherwise.
+        """
+
+        # make sure that the partial frame is indeed a partial frame with 4 bytes
         response_frame_size = len(response_frame)
         if response_frame_size != BoundaryTypes.BASE_FRAME_SIZE:
             logger.error(f"Base Frame Length Incorrect,{response_frame_size} should be 4")
             return False
 
+        # Check if the SOF is indeed 0x01
         if response_frame[TargetIndices.SOF] != ProtocolConstants.SHELL_SOF.to_bytes(1, byteorder='little'):
             logger.error(f"SOF Value Not Correct, Got {response_frame[TargetIndices.SOF]}, expected {TargetIndices.SOF}")
             return False
 
+        # Make sure that the Kinds between the response frame and the type of message sent is correct.
         if response_frame[TargetIndices.KIND] != response_frame_kind.to_bytes(1, byteorder='little'):
             logger.error(f"Kind Value Not Correct, Got {response_frame[TargetIndices.KIND]},expected {response_frame_kind}")
             return False
@@ -452,7 +497,7 @@ class OnLogicNuvotonManager(ABC):
         return False
 
     def _receive_command(self, response_frame_kind: int) -> bytes | int:
-        '''Recieves pertinent response from the microcontroller.
+        '''Recieves pertinent response frames from the microcontroller.
 
         Receive command in expected format that complies with UART Shell interface.
         The response_frame list should always end with a NACK ['\a'] 

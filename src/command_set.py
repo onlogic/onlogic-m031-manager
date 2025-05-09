@@ -14,6 +14,14 @@ class ProtocolConstants:
     """
     The ProtocolConstants class defines the baud-rate, DIO card device descriptor,
     transmission values, and serial check values used in the communication protocol with the DIO Card.
+
+
+    Note:
+        NUM_NACKS number isn't magic.  In the worst possible case, the MCU may have an
+        entire maximum-length frame buffered containing only SHELL_NACK.  To be
+        confident that we've received the entire frame and the MCU is ready to accept
+        our next command, we need to receive 4 bytes (header) + 255 bytes (payload) of
+        NACKs. This said, we have yet to implement the the worst-case scenario in Python Package.
     """
     BAUDRATE = 115_200
 
@@ -32,7 +40,6 @@ class ProtocolConstants:
     NUM_NACKS  = 255 + 4
     RESPONSE_FRAME_LEN = 7
     NACKS_NEEDED = 5
-
 
 class Kinds:
     """

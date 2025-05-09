@@ -16,28 +16,38 @@ Info: Digital input/ouput. The DIO module can be configured in two modes:
         Shared GND
 
 Pinout:
+
+```
 ---------------------------------------------------------------------
 ||  _     _     _     _     _     _     _     _     _     _     _  ||
-|| |_|   |_|   |_|   |_|   |_|   |_|   |_|   |_|   |_|   |_|   |_| ||
-|| INT | DI8 | DI7 | DI6 | DI5 | DI4 | DI3 | DI2 | DI1 | DI0 |  +  ||
+|| |_|   |_|   |_|   |_|   |_|   |_|   |_|   |_|   |_|   |_|   |_| || Digital Input
+|| INT | DI8 | DI7 | DI6 | DI5 | DI4 | DI3 | DI2 | DI1 | DI0 |  -  ||
 ---------------------------------------------------------------------
 ||  _     _     _     _     _     _     _     _     _     _     _  ||
-|| |_|   |_|   |_|   |_|   |_|   |_|   |_|   |_|   |_|   |_|   |_| ||
-|| GND | DO8 | DO7 | DO6 | DO5 | DO4 | DO3 | DO2 | DO1 | DO0 |  -  ||
+|| |_|   |_|   |_|   |_|   |_|   |_|   |_|   |_|   |_|   |_|   |_| || Digital Output
+|| GND | DO8 | DO7 | DO6 | DO5 | DO4 | DO3 | DO2 | DO1 | DO0 |  +  ||
 ---------------------------------------------------------------------
+```
 
-Command Summary:
-get_di:          Read digital input state - pass pin val (0-7) - returns (0:low, 1:high)
-get_do:          Read digital output state - pass pin val (0-7) - returns (0:low, 1:high)
-set_di:          Set digital input state - pass pin val (0-7) | state (0:low, 1:high) - returns status
-set_do:          Set digital output state - pass pin val (0-7) | state (0:low, 1:high) - returns status
-set_all_do:       Set all digital output state - pass list of desired pin states - returns status list
-get_all_do:       Read all digital output state - returns list of pin states
-get_all_di:       Read all digital input state - returns list of pin states
-get_all_dio:      Read all digital input/output state - returns list of pin states
 
-Paramater Summary For Contact Modes:
-set_di_contact:  Set digital intput contact type  (0:wet, 1:dry)
-set_do_contact:  Set digital output contact type  (0:wet, 1:dry)
-set_di_contact:  Read digital intput contact type (0:wet, 1:dry)
-get_do_contact;  Read digital output contact type (0:wet, 1:dry)
+**Command Summary**
+
+| Command      | Description                                  | Parameters                                       | Returns                     |
+|--------------|----------------------------------------------|--------------------------------------------------|-----------------------------|
+| `get_di`     | Read digital input state                     | pin val (0-7)                                    | (0:low, 1:high)             |
+| `get_do`     | Read digital output state                    | pin val (0-7)                                    | (0:low, 1:high)             |
+| `set_di`     | Set digital input state                      | pin val (0-7) \| state (0:low, 1:high)           | status                      |
+| `set_do`     | Set digital output state                     | pin val (0-7) \| state (0:low, 1:high)           | status                      |
+| `set_all_do` | Set all digital output state                 | list of desired pin states                       | status list                 |
+| `get_all_do` | Read all digital output state                |                                                  | list of pin states          |
+| `get_all_di` | Read all digital input state                 |                                                  | list of pin states          |
+| `get_all_dio`| Read all digital input/output state          |                                                  | list of pin states          |
+
+**Parameter Summary For Contact Modes**
+
+| Command          | Description                         | Parameters          | Returns          |
+|------------------|-------------------------------------|---------------------|------------------|
+| `set_di_contact` | Set digital input contact type    | (0:wet, 1:dry)      |                  |
+| `set_do_contact` | Set digital output contact type   | (0:wet, 1:dry)      |                  |
+| `get_di_contact` | Read digital input contact type   |                     | (0:wet, 1:dry)   |
+| `get_do_contact` | Read digital output contact type  |                     | (0:wet, 1:dry)   |
