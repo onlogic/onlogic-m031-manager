@@ -1,15 +1,16 @@
 # -*- coding: utf-8 -*-
-'''
+"""
 File: OnLogicNuvotonManager.py
 
+Author: OnLogic - nick.hanna@onlogic.com, 
 
 OnLogicNuvotonManager contains methods which, when used in conjunction with eachother, can 
 control and communicate with the Nuvoton microcontrollers embedded in OnLogic HX/K5xx
-products. Many are inherited from the base class to be used in Automotive and DIO controller classes.
-       
+products. Many are designed to be inherited and used in the Automotive and DIO controller classes
+
 References:
     https://fastcrc.readthedocs.io/en/latest/
-'''
+"""
 
 import time
 import serial
@@ -348,7 +349,7 @@ class OnLogicNuvotonManager(ABC):
         return StatusTypes.SUCCESS
 
     def _validate_partial_frame(self, response_frame: list, response_frame_kind: int) -> bool:
-        '''\
+        '''
         Validate the partial frame (first four bytes) received from the MCU being used.
         This method is important as it ensures whether we can use the len field 
         to determine the length of the payload that follows.

@@ -42,8 +42,7 @@ class DioHandler(OnLogicNuvotonManager):
         #    raise ValueError("Error | Incorrect Value returned, is this the right device?")
 
     def get_di(self, di_pin: int) -> int:
-        """
-        User-facing method to get the state of active-low digital inputs on the DIO card. 
+        """Gets the state of active-low digital inputs on the DIO card.
 
         Args:
             di_pin (int): digital input pin with range [0-7]
@@ -55,7 +54,8 @@ class DioHandler(OnLogicNuvotonManager):
         
         Raises:
             ValueError: if di_pin is not in the range of 0-7
-        
+            TypeError: if di_pin is not an integer
+
         Example:
             >>> with DioHandler() as dio_handler:
             ...     dio_handler.get_di(0)
@@ -88,6 +88,25 @@ class DioHandler(OnLogicNuvotonManager):
         return frame[TargetIndices.PENULTIMATE]
 
     def get_do(self, do_pin: int) -> int:
+        """Gets the state of active-high digital outputs on the DIO card.
+
+        Args:
+            do_pin (int): digital output pin with range [0-7]
+
+        Returns:
+            int: 0, indicating off, 1, indicating on,
+                 StatusTypes.SEND_CMD_FAILURE if command send failed,
+                 or any other negative value indicating failure.
+
+        Raises:
+            ValueError: if do_pin is not in the range of 0-7
+            TypeError: if do_pin is not an integer
+
+        Example:
+            >>> with DioHandler() as dio_handler:
+            ...     dio_handler.get_do(0)
+            1
+        """
         self._validate_input_param(do_pin, BoundaryTypes.DIGITAL_IO_PIN_RANGE, int)
 
         do_command = self._construct_command(Kinds.GET_DO, do_pin)
@@ -113,6 +132,25 @@ class DioHandler(OnLogicNuvotonManager):
         return frame[TargetIndices.PENULTIMATE]
 
     def set_do(self, pin: int, value: int) -> int:
+        """Sets the state of active-high digital outputs on the DIO card.
+
+        Args:
+            pin (int): digital output pin with range [0-7]
+            value (int): binary value to set the pin to, either 0 or 1
+        Returns:
+            int: 0, indicating success,
+                 StatusTypes.SEND_CMD_FAILURE if command send failed,
+                 or any other negative value indicating failure.
+
+        Raises:
+            ValueError: if pin is not in the range of 0-7
+            TypeError: if pin or value is not an integer
+
+        Example:
+            >>> with DioHandler() as dio_handler:
+            ...     dio_handler.set_do(0, 1)
+            0
+        """
         self._validate_input_param(pin, BoundaryTypes.DIGITAL_IO_PIN_RANGE, int)
         self._validate_input_param(value, BoundaryTypes.BINARY_VALUE_RANGE, int)
 
@@ -135,6 +173,13 @@ class DioHandler(OnLogicNuvotonManager):
         return self._validate_recieved_frame(frame, TargetIndices.PENULTIMATE, BoundaryTypes.BINARY_VALUE_RANGE)
 
     def get_di_contact(self) -> int:
+        """Gets the contact state of the digital input pins on the DIO card.
+
+        0 indicates that DI is in Wet Contact mode and 1 Indicates that DI is in Dry Contact Mode.
+        Reminder: Wet contact mode 
+        
+
+        """
         di_contact_state_cmd = self._construct_command(Kinds.GET_DI_CONTACT)
 
         self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES)

@@ -39,6 +39,7 @@ def main():
         my_dio = DioHandler() 
         my_dio.claim()
 
+        # Set to dry contact mode
         my_dio.set_do_contact(1)
         
         print("DO contact state:", my_dio.get_do_contact())
