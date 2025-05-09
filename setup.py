@@ -8,8 +8,6 @@ setup(
     # url='https://github.com/onlogic',
     author='OnLogic',
     author_email='firmwareengineeringteam@onlogic.com',
-    # packages=find_packages(where="src"),
-    # package_dir={"":"src"},
     packages=['OnLogicNuvotonManager'],
     package_dir={'OnLogicNuvotonManager': 'src'},
     install_requires=['pyserial>=3.4', 'fastcrc>=0.3.2'],
