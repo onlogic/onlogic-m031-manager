@@ -41,7 +41,9 @@ These steps guide you through installing the OnLogicNuvotonManager directly into
      pip freeze
 
 6. Running Scripts Requiring Elevated Privileges:
-   For operations that require direct hardware access (like interacting with serial ports), you might need to run your Python scripts from a Command Prompt or PowerShell that has been opened "As Administrator". To do this, right-click on the Command Prompt/PowerShell icon and select "Run as administrator".
+   For operations that require direct hardware access (like interacting with serial ports), you might need to run your Python scripts 
+   from a Command Prompt or PowerShell that has been opened "As Administrator". To do this, right-click on the Command Prompt/PowerShell 
+   icon and select "Run as administrator".
 
 Setting up OnLogicNuvotonManager in a Python3 venv on Ubuntu 24.04 LTS
 -----------------------------------------------------------------------
@@ -135,6 +137,36 @@ with additional type and value checking.
 1. CDC-USB with the DIO Card
 2. UART with the Sequence Micro
 
-For this reason, the user must manually specify the serial port name for the sequence micro ``.claim()`` method in the ``AutomotiveManager`` class, whereas for the ``DioHandler``, the ``.claim()`` method can be left blank and the program will autolock on the serial connection label.
+For this reason, the user must manually specify the serial port name for the sequence micro ``.claim()`` method in the ``AutomotiveManager`` class, 
+whereas for the ``DioHandler``, the ``.claim()`` method can be left blank and the program will autolock on the serial connection label.
 
-Error Codes:
+Status Types:
+------------
+
+The status types are defined in src/command_set.py and are used to mark and indicate failures during 
+different stages of the LPMCU protocol, including command construction, sending, 
+
+The table below is a summary of the status types, but note that method class member
+do not all report the status types in the same way. 
+
++--------------------------------------+----------------------------------------+
+| Status Type                          |Value|         Description              |
++======================================+========================================+
+| `SUCCESS`                            |  0  |   LPMCU Protocol Succeeded       |
++--------------------------------------+-----+----------------------------------+
+| `SEND_CMD_FAILURE`                   | -1  |   Issue initial send process     |
++--------------------------------------+-----+----------------------------------+
+| `RECV_UNEXPECTED_PAYLOAD_ERROR`      | -2  | Validation on reception failure  |
++--------------------------------------+-----+----------------------------------+
+| `RECV_FRAME_CRC_ERROR`               | -3  |  CRC expected value mismatch     |
++--------------------------------------+-----+----------------------------------+
+| `RECV_FRAME_ACK_ERROR`               | -4  | Error in tail frame validation   |
++--------------------------------------+-----+----------------------------------+
+| `RECV_FRAME_SOF_ERROR`               | -5  | 0x01 not found in recv frame     |
++--------------------------------------+-----+----------------------------------+
+| `RECV_PARTIAL_FRAME_VALIDATION_ERROR`| -6  | Partial frame vld failure on recv| 
++--------------------------------------+-----+----------------------------------+
+| `RECV_FRAME_VALUE_ERROR`             | -7  | Unexpected payload value on recv |
++--------------------------------------+-----+----------------------------------+
+| `FORMAT_NONE_ERROR`                  | -8  | None found during type formatting|
++--------------------------------------+----------------------------------------+
