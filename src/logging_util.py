@@ -9,8 +9,6 @@ from typing import Optional
 
 class LoggingUtil():
     def __init__(self, logger_name, logger_level, handler_mode):
-        # Init colorama: Color coding for errors and such - Not quite sure where to but this
-        # init(autoreset=True) 
         self.logger_name  = self.__handle_lconfig_str(logger_name)
         self.logger_level  = self.__handle_lconfig_str(logger_level)
         self.handler_mode = self.__handle_lconfig_str(handler_mode)

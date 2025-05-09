@@ -176,11 +176,29 @@ class DioHandler(OnLogicNuvotonManager):
         """Gets the contact state of the digital input pins on the DIO card.
 
         0 indicates that DI is in Wet Contact mode and 1 Indicates that DI is in Dry Contact Mode.
-        Reminder: Wet contact mode means that Voltage is supplied by the system at ~11.2 V.
-        Dry 
         
+        Args:
+            None
+        
+        
+        Returns:
+            int: 0, indicating Wet Contact, 1, indicating Dry Contact,
+                 StatusTypes.SEND_CMD_FAILURE if command send failed,
+                 or any other negative value indicating failure.
+        Raises:
+            TypeError: if contact_type is not an integer
+            ValueError: if contact_type is not in the range of 0-1
+        
+        Note:
+            Consult DIO description section of the data sheet for more details on 
+            the specification of contact types.
 
+        Example:
+            >>> with DioHandler() as dio_handler:
+            ...     dio_handler.get_di_contact()
+            0
         """
+         
         di_contact_state_cmd = self._construct_command(Kinds.GET_DI_CONTACT)
 
         self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES)
@@ -203,6 +221,32 @@ class DioHandler(OnLogicNuvotonManager):
         return frame[TargetIndices.PENULTIMATE]
 
     def get_do_contact(self) -> int:
+        """Gets the contact state of the digital output pins on the DIO card.
+        
+        0 indicates that DO is in Wet Contact mode and 1 Indicates that DO is in Dry Contact Mode.
+        
+        Args:
+            None
+        
+        Returns:
+            int: 0, indicating Wet Contact, 1, indicating Dry Contact,
+                 StatusTypes.SEND_CMD_FAILURE if command send failed,
+                 or any other negative value indicating failure.
+        
+        Raises:
+            TypeError: if contact_type is not an integer
+            ValueError: if contact_type is not in the range of 0-1
+        
+        Note:
+            Consult DIO description section of the data sheet for more details on 
+            the specification of contact types.
+        
+        Example:
+            >>> with DioHandler() as dio_handler:
+            ...     dio_handler.get_do_contact()
+            0
+        """
+
         do_contact_state_cmd = self._construct_command(Kinds.GET_DO_CONTACT)
 
         self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES)
@@ -225,6 +269,26 @@ class DioHandler(OnLogicNuvotonManager):
         return frame[TargetIndices.PENULTIMATE]
 
     def set_di_contact(self, contact_type: int) -> int:
+        """Sets the contact state of the digital input pins on the DIO card.
+        
+        0 indicates that DI is in Wet Contact mode and 1 Indicates that DI is in Dry Contact Mode.
+
+        Args:
+            contact_type (int): 0 for Wet Contact, 1 for Dry Contact
+
+        Returns:
+            int: 0, indicating success,
+                 StatusTypes.SEND_CMD_FAILURE if command send failed,
+                 or any other negative value indicating failure.
+
+        Raises:
+            TypeError: if contact_type is not an integer
+            ValueError: if contact_type is not in the range of 0-1
+
+        Note:
+            Consult DIO description section of the data sheet for more details on 
+            the specification of contact types.
+        """
         self._validate_input_param(contact_type, BoundaryTypes.BINARY_VALUE_RANGE, int)
 
         set_di_contact_state_cmd = self._construct_command(Kinds.SET_DI_CONTACT, contact_type)
@@ -246,6 +310,26 @@ class DioHandler(OnLogicNuvotonManager):
         return self._validate_recieved_frame(frame, TargetIndices.PENULTIMATE, BoundaryTypes.BINARY_VALUE_RANGE)
 
     def set_do_contact(self, contact_type: int) -> int:
+        """Sets the contact state of the digital output pins on the DIO card.
+
+        0 indicates that DO is in Wet Contact mode and 1 Indicates that DO is in Dry Contact Mode.
+        
+        Args:
+            contact_type (int): 0 for Wet Contact, 1 for Dry Contact
+        
+        Returns:
+            int: 0, indicating success,
+                 StatusTypes.SEND_CMD_FAILURE if command send failed,
+                 or any other negative value indicating failure.
+        
+        Raises:
+            TypeError: if contact_type is not an integer
+            ValueError: if contact_type is not in the range of 0-1
+        
+        Note:
+            Consult DIO description section of the data sheet for more details on 
+            the specification of contact types.
+        """
         self._validate_input_param(contact_type, BoundaryTypes.BINARY_VALUE_RANGE, int)
 
         set_di_contact_state_cmd = self._construct_command(Kinds.SET_DO_CONTACT, contact_type)
