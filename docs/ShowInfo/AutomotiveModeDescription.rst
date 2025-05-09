@@ -100,7 +100,7 @@ Note: The HX-52x does not have and ignition pin. So Automotive mode is not suppo
 |                       | in the MCU. The threshold         | in millivolts.                |                   |
 |                       | voltage for triggering low-       |                               |                   |
 |                       | voltage shutdown events.          |                               |                   |
-+-------------------------------+-----------------------------+-----------------------------+-------------------+
++-----------------------+-------------------------------------+-----------------------------+-------------------+
 | `get_all_automotive_settings` | Get all automotive settings | None                        | Dictionary:       |
 |                               | from the MCU. Returns a     |                             | All automotive    |
 |                               | dictionary of all settings. |                             | settings.         |
