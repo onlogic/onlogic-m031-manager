@@ -1,5 +1,7 @@
+=================
+Automotive Timings
+=================
 
-**Automotive Timings**
 The ignition sense feature can be used to turn the Karbon unit on and off with a battery, 
 the vehicle's ignition (given proper electrical setup), or the use of a switch. Automotive timings and ignition sense can 
 be toggled by bridging DC power to the IGN pin, see the diagram below. The proper sequence microcontroller settings must 
@@ -38,9 +40,9 @@ Note: The HX-52x does not have and ignition pin. So Automotive mode is not suppo
 | Command                         | Description                   | Parameters                 | Returns            |
 +=================================+===============================+============================+====================+
 | ``get_automotive_mode``         | Get the automotive mode of    | None                       | (0:low, 1:high)    |
-|                                 | the device. Enables or        |                            |                    |
-|                                 | disables system automotive    |                            |                    |
-|                                 | features.                     |                            |                    |
+|                                 | the device. Determine if      |                            |                    |
+|                                 | system automotive features    |                            |                    |
+|                                 | are enabled.                  |                            |                    |
 +---------------------------------+-------------------------------+----------------------------+--------------------+
 | ``set_automotive_mode``         | Set the automotive mode of    | (0:low, 1:high)            | Status             |
 |                                 | the device. Enables or        |                            |                    |

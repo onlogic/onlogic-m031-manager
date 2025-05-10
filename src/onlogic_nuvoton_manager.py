@@ -129,7 +129,6 @@ class OnLogicNuvotonManager(ABC):
 
     @abstractmethod
     def show_info(self) -> None:
-        """User """
         pass
 
     @abstractmethod

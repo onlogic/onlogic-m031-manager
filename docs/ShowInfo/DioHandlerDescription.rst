@@ -1,6 +1,8 @@
-**Digital Input/Output Module (DIO) Functionality**
+==============================================
+Digital Input/Output Module (DIO) Functionality
+==============================================
 
-Digital input/output. The DIO module can be configured in two modes:
+The DIO module can be configured in two modes:
 
 1. Wet contact mode:
     To function properly, dio should be connected to external power and ground. 
@@ -38,21 +40,21 @@ Digital input/output. The DIO module can be configured in two modes:
 +--------------+-------------------------------+----------------------------------------+--------------------+
 | Command      | Description                   | Parameters                             | Returns            |
 +==============+===============================+========================================+====================+
-| `get_di`     | Read digital input state      | pin val (0-7)                          | (0:low, 1:high)    |
+| `get_di`     | Read digital input pin state  | pin val (0-7)                          | (0:low, 1:high)    |
 +--------------+-------------------------------+----------------------------------------+--------------------+
-| `get_do`     | Read digital output state     | pin val (0-7)                          | (0:low, 1:high)    |
+| `get_do`     | Read digital output pin state | pin val (0-7)                          | (0:low, 1:high)    |
 +--------------+-------------------------------+----------------------------------------+--------------------+
-| `set_di`     | Set digital input state       | pin val (0-7) \| state (0:low, 1:high) | status             |
+| `set_di`     | Set digital input pin state   | pin val (0-7) \| state (0:low, 1:high) | status             |
 +--------------+-------------------------------+----------------------------------------+--------------------+
-| `set_do`     | Set digital output state      | pin val (0-7) \| state (0:low, 1:high) | status             |
+| `set_do`     | Set digital output pin state  | pin val (0-7) \| state (0:low, 1:high) | status             |
 +--------------+-------------------------------+----------------------------------------+--------------------+
-| `set_all_do` | Set all digital output state  | list of desired pin states             | status list        |
+| `set_all_do` | Set all DO pin states         | list of desired pin states             | status list        |
 +--------------+-------------------------------+----------------------------------------+--------------------+
-| `get_all_do` | Read all digital output state |                                        | list of pin states |
+| `get_all_do` | Read all DO pin states        |                                        | list of pin states |
 +--------------+-------------------------------+----------------------------------------+--------------------+
-| `get_all_di` | Read all digital input states |                                        | list of pin states |
+| `get_all_di` | Read all DI pin states        |                                        | list of pin states |
 +--------------+-------------------------------+----------------------------------------+--------------------+
-| `get_all_dio`| Read all digital io state     |                                        | list of pin states |
+| `get_all_dio`| Read all DIO pin states       |                                        | list of pin states |
 +--------------+-------------------------------+----------------------------------------+--------------------+
 
 **Parameter Summary For Contact Modes**
