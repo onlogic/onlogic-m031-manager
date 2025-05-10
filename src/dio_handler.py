@@ -32,14 +32,15 @@ class DioHandler(OnLogicNuvotonManager):
             self.serial_connection_label = None # Revisit if is worth setting up like this
             raise serial.SerialException(serial_connect_err)
 
-    def show_info(self) -> None:
-        super()._read_files(filename="docs/ShowInfo/DioHandlerDescription.rst")
-
     def _mcu_connection_check(self) -> None:
         super()._mcu_connection_check()
 
         # if self.get_di(0) not in BoundaryTypes.BINARY_VALUE_RANGE:
         #    raise ValueError("Error | Incorrect Value returned, is this the right device?")
+
+    def show_info(self) -> None:
+        relative_path = '../docs/ShowInfo/DioHandlerDescription.rst'
+        super()._read_files(filename=relative_path)
 
     def get_di(self, di_pin: int) -> int:
         """Gets the state of active-low digital inputs on the DIO card.

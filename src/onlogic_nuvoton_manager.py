@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-File: OnLogicNuvotonManager.py
+File: onlogic_nuvoton_manager.py
 
 Author: OnLogic - nick.hanna@onlogic.com, 
 
@@ -48,7 +48,7 @@ class OnLogicNuvotonManager(ABC):
 
     def __str__(self):
         '''String representation.'''
-        # TODO: Add Python utility Version and FW version?
+        # TODO: Add FW version?
         repr_str = (
             f"Port: {self.serial_connection_label}\n"
             #f"FW Version: {self.get_version()}\n"

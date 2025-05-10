@@ -2,11 +2,8 @@
 import time
 import serial
 import logging
-import os
 from .onlogic_nuvoton_manager import OnLogicNuvotonManager
 from .command_set import ProtocolConstants, Kinds, StatusTypes, TargetIndices, BoundaryTypes
-
-import importlib.resources
 
 logger = logging.getLogger(__name__)
 
@@ -15,10 +12,6 @@ class AutomotiveHandler(OnLogicNuvotonManager):
         super().__init__(
                          serial_connection_label=serial_connection_label
                         )
-
-    def show_info(self) -> None:
-        filepath =  importlib.resources.path('OnLogicNuvotonHandler.docs.ShowInfo', 'DioHandlerDescription.rst')
-        super()._read_files(filename=filepath)
 
     def _mcu_connection_check(self) -> None:
         """Check the connection to the MCU.
@@ -84,8 +77,9 @@ class AutomotiveHandler(OnLogicNuvotonManager):
             self._init_port_error_handling(serial_connect_err, return_early=True)
             raise serial.SerialException(serial_connect_err)
 
-    def get_info(self) -> None:
-        super().get_info(filename="AutomotiveModeDescription.log")
+    def show_info(self) -> None:
+        relative_path = '../docs/ShowInfo/AutomotiveModeDescription.rst'
+        super()._read_files(filename=relative_path)
 
     def get_automotive_mode(self) -> int:
         """Get the automotive mode of the device.
