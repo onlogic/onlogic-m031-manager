@@ -133,7 +133,7 @@ def main():
         print("TESTING SET ALL AUTOMOTIVE SETTINGS (set_all_automotive_settings)")
         print(
             "[amd, lpe, sut, sot, hot, sdv]",
-            my_auto.set_all_automotive_settings(setting_input = [
+            my_auto.set_all_automotive_settings(setting_inputs = [
                     0,  # amd 
                     0,  # lpe 
                     10, # sut 
