@@ -2,7 +2,7 @@
 """
 File: onlogic_nuvoton_manager.py
 
-Author: OnLogic - nick.hanna@onlogic.com, 
+Author: OnLogic - nick.hanna@onlogic.com, firmwareengineeringteam@onlogic.com
 
 OnLogicNuvotonManager contains methods which, when used in conjunction with eachother, can 
 control and communicate with the Nuvoton microcontrollers embedded in OnLogic HX/K5xx
@@ -25,12 +25,70 @@ from fastcrc import crc8
 logger = logging.getLogger(__name__)
 
 class OnLogicNuvotonManager(ABC):
-    """
-    Administers the serial connection and communication protocol with the
-    microcontroller embedded in the K/HX-52x DIO-Add and Sequence MCU for Automotive Control.
+    """Administers the serial connection and communication protocols with embedded MCUs.
+
+    This class provides tools to communicate with the microcontrollers embedded in the
+    K/HX-52x DIO-Add and Sequence MCU for Automotive Control. It contains the root
+    context manager, serial handling methods, input validation, command construction,
+    and frame reception and validation functionality. These are all inheritable by
+    the child classes:
+        * :class:`AutomotiveHandler`
+        * :class:`DioHandler`
+
+    Note:
+        This class should not be directly called. Instead, use its child classes like
+        :class:`AutomotiveHandler` or :class:`DioHandler`.
+
+        When using a child class as a context manager, the ``__enter__`` and ``__exit__``
+        methods are called to claim and release the serial port. This means that the
+        `serial_connection_label` should be specified as a parameter during the
+        instantiation of the child class.
+
+        The class and its children also contain extensive logging for debugging and
+        tracking purposes. Logging is designed to trace the execution of the code and
+        log important events, not the target payloads themselves (which are returned
+        by called functions in child classes).
+
+    Example:
+        Instantiating and using a child class (e.g., ``AutomotiveHandler``)
+        with context manager:
+
+        >>> with AutomotiveHandler(serial_connection_label="/dev/ttyS4") as my_auto:
+        ...     # Perform operations with my_auto
+        ...     pass
+
+        Or using ``DioHandler``:
+
+        >>> with DioHandler(serial_connection_label="/dev/ttyS5") as my_dio:
+        ...     # Perform operations with my_dio
+        ...     pass
+
+    Args:
+        serial_connection_label (str): The label or device path for the serial
+            connection (e.g., "/dev/ttyS4"). This is passed when a child class
+            is instantiated.
+
+    Attributes:
+        serial_connection_label (str): Stores the label for the serial connection.
+
+        port (serial.Serial | None): The serial port object for communication,
+            which is an instance of ``serial.Serial`` from the `pyserial` library
+            once the port is opened, or None if not yet opened/set up.
+
+        is_setup (bool): Indicates if the serial connection has been successfully
+            set up (True) or not (False).
     """
     def __init__(self, serial_connection_label: str = None):
-        '''Init class by establishing serial connection.''' 
+        """Initialize the OnLogicNuvotonManager class.
+        
+        
+        Args:
+            serial_connection_label (str): The label or device path for the serial
+                connection (e.g., "/dev/ttySx" or ). This is passed when a child class
+                is instantiated.
+        """
+
+    
         # Setup mechanism so deleter does not delete non-existant objects
         self.is_setup = False
         self.serial_connection_label = serial_connection_label
@@ -159,7 +217,7 @@ class OnLogicNuvotonManager(ABC):
 
     @abstractmethod
     def _mcu_connection_check(self) -> None:
-        """Check state of MCU
+        """Check state of MCU.
 
         If it returns '\a' successively
         within a proper time interval, the correct port is found. 
@@ -212,6 +270,24 @@ class OnLogicNuvotonManager(ABC):
         raise ValueError("ERROR | AKNOWLEDGEMENT ERROR")
 
     def _read_files(self, filename = None) -> None:
+        """Read a file and print to console.
+        
+        This method [presumably] reads the documentation file
+        and prints the contents to fine, skipping the lines that 
+        include .rst code blocks.
+
+        Args:
+            filename (str): The name of the file to be read. 
+                            If None, it will not read any file.
+
+        Returns:
+            None
+        
+        Raises:
+            FileNotFoundError: If the file is not found.
+            IOError: If there is an error reading the file.
+            Exception: For any other exceptions that may occur.
+        """
         try:
             with open(filename, 'r') as file:
                 lines = file.readlines()
@@ -231,8 +307,20 @@ class OnLogicNuvotonManager(ABC):
     def _reset(self, nack_counter: int = ProtocolConstants.NUM_NACKS, reset_buffers: bool = True) -> None:
         """Reset following the LPMCU ACK-NACK pattern.
         
-        
-        
+        This method is used to clear serial buffers of both the MCU serial port and the host port.
+        It ensures the buffer is clear in the LPMCU protocol in order to avild partial frames 
+        being parsed by the host MCU.
+
+        Args:
+            nack_counter (int): The number of NACKs to send to clear the buffer.
+                                Default is ProtocolConstants.NUM_NACKS.
+            reset_buffers (bool): If True, resets the input and output buffers of the port.
+                                  Default is True.
+        Returns:
+            None
+        Raises:
+            RuntimeError: If the number of bytes sent exceeds 1024.
+            serial.SerialException: If the serial connection is not set up.
         """
 
         # Expensive operation, shouldn't be done twice per read
@@ -453,7 +541,6 @@ class OnLogicNuvotonManager(ABC):
     @functools.lru_cache(maxsize=128)
     def _construct_command(self, kind: Kinds, *payload: int) -> bytes:
         # Construct command in the format of [SOF, CRC, LEN, KIND, PAYLOAD]
-        # self.validate_message_bytes(kind, payload)
         if len(payload) > 0 and isinstance(payload[0], bytes):
             payload_bytes, payload_length = payload[0], payload[1]
 

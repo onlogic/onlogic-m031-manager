@@ -21,6 +21,9 @@ The DIO module can be configured in two modes:
     Setup required for Output:
         Shared GND
 
+Operations are blocking but can be threaded to accomodate other processing operations, 
+though the DIO card can only retrieve one value at a time over UART.
+
 **Pinout**
 
 .. code-block:: text

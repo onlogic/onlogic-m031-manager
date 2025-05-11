@@ -8,6 +8,43 @@ from .command_set import TargetIndices, ProtocolConstants, Kinds, StatusTypes, B
 logger = logging.getLogger(__name__)
 
 class DioHandler(OnLogicNuvotonManager):
+    """Handles Digital Input/Output (DIO) operations for the DIO card.
+    
+    This class provides methods to get and set the states of digital input and output pins.
+    It can get and set input and output pins individually, or in bulk. It uses the LPMCU methods
+    and protocolls, inherited from OnLogicNuvotonManager. A new feature in this
+    line of DIO cards is the ability to set the contact type of the pins to Wet or Dry.
+
+    As a reminder, the DIO card has 8 digital input pins and 8 digital output pins.
+    The digital input pins are active-low, meaning that a 0 indicates that the pin is on,
+    and a 1 indicates that the pin is off. The digital output pins are active-high, meaning
+    that a 0 indicates that the pin is off, and a 1 indicates that the pin is on.
+    The DIO card also has a contact type for each pin, which can be either Wet or Dry.
+    The contact type is set using the set_di_contact and set_do_contact methods.
+    The contact type can be gotten by using the get_di_contact and get_do_contact methods.
+    
+    The claim method is used to connect to the DIO card and the parameter can be left blank 
+    for an auto-lock onto the port. The release method disconnects from the DIO card.
+    
+    Note:
+        More information on the DIO card can be found in the Data sheet, and also by calling the
+        show_info method.
+
+    Pin Diagram:
+        ---------------------------------------------------------------
+        ||  _     _     _     _     _     _     _     _     _     _  ||
+        || |_|   |_|   |_|   |_|   |_|   |_|   |_|   |_|   |_|   |_| || Digital Input
+        || INT | DI7 | DI6 | DI5 | DI4 | DI3 | DI2 | DI1 | DI0 |  -  ||
+        ---------------------------------------------------------------
+        ||  _     _     _     _     _     _     _     _     _     _  ||
+        || |_|   |_|   |_|   |_|   |_|   |_|   |_|   |_|   |_|   |_| || Digital Output
+        || GND | DO7 | DO6 | DO5 | DO4 | DO3 | DO2 | DO1 | DO0 |  +  ||
+        ---------------------------------------------------------------
+
+    Attributes:
+        serial_connection_label (str): The label of the serial connection.
+            If None, the class will attempt to find the correct port automatically.    
+    """
     def __init__(self, serial_connection_label: str = None):
         super().__init__(
                           serial_connection_label=serial_connection_label
@@ -33,12 +70,15 @@ class DioHandler(OnLogicNuvotonManager):
             raise serial.SerialException(serial_connect_err)
 
     def _mcu_connection_check(self) -> None:
+        """Inherited method from OnLogicNuvotonManager to check if the DIO card is connected."""
         super()._mcu_connection_check()
 
+        # TODO: issue specific command to see if the DIO card is connected
         # if self.get_di(0) not in BoundaryTypes.BINARY_VALUE_RANGE:
         #    raise ValueError("Error | Incorrect Value returned, is this the right device?")
 
     def show_info(self) -> None:
+        """Displays DIO card info located in the docs folder, required OnLogicNuvotonManager."""
         relative_path = '../docs/ShowInfo/DioHandlerDescription.rst'
         super()._read_files(filename=relative_path)
 
