@@ -25,7 +25,7 @@ from fastcrc import crc8
 logger = logging.getLogger(__name__)
 
 class OnLogicNuvotonManager(ABC):
-    """Administers the serial connection and communication protocols with embedded MCUs.
+    """Administers the serial connection and communication protocol with the embedded MCUs.
 
     This class provides tools to communicate with the microcontrollers embedded in the
     K/HX-52x DIO-Add and Sequence MCU for Automotive Control. It contains the root
@@ -80,7 +80,6 @@ class OnLogicNuvotonManager(ABC):
     """
     def __init__(self, serial_connection_label: str = None):
         """Initialize the OnLogicNuvotonManager class.
-        
         
         Args:
             serial_connection_label (str): The label or device path for the serial
@@ -519,7 +518,25 @@ class OnLogicNuvotonManager(ABC):
         return True
 
     def claim(self, serial_connection_label=None) -> None:
-        # Serial device functionality
+        """Claim the serial port and set up the connection.
+
+        This method initializes the serial port with the given baudrate and device descriptor.
+        If the port is not specified, it will search for the device with the given VID and PID when used for DIO Utility.
+        Otherwise, it will simply initialize the port with the given serial connection label.
+
+        Args:
+            serial_connection_label (str): The label or device path for the serial
+                connection (e.g., "/dev/ttySx" or "COMx"). This is passed when a child class
+                is instantiated.
+        
+        Returns:
+            None
+        
+        Raises:
+            serial.SerialException: If the port cannot be opened or configured.
+            ValueError: If the port is not found or cannot be opened.
+        """
+
         if serial_connection_label is not None:
             self.serial_connection_label = serial_connection_label
 
@@ -530,6 +547,7 @@ class OnLogicNuvotonManager(ABC):
         logging.info("Serial Port Claimed")
 
     def release(self):
+        """Release the serial port, reset the buffers, and reset the connection."""
         if self.is_setup:
             self._reset()
             self.port.reset_input_buffer()
@@ -539,8 +557,28 @@ class OnLogicNuvotonManager(ABC):
             logging.info("Serial Port Successfully Released")
 
     @functools.lru_cache(maxsize=128)
-    def _construct_command(self, kind: Kinds, *payload: int) -> bytes:
-        # Construct command in the format of [SOF, CRC, LEN, KIND, PAYLOAD]
+    def _construct_command(self, kind: Kinds, *payload: int | bytes) -> bytes:
+        """
+        Construct a command to send to the Microcontroller, adhering to LPMCU protocol.
+        
+        This method constructs a bytes type command in the format of [SOF, CRC, LEN, KIND, PAYLOAD] 
+        based on the command kind and payload. It is flexible and can handle differnt kinds of payloads,
+        either a bytes type or a series of integers. The CRC is calculated using the smbus protocol 
+        in thefastcrc library.
+
+        More info on the ``Kinds`` type can be found in the command_set.py file.
+        
+        The method is decorated with @functools.lru_cache to cache the results of the function to prevent
+        reconstructing the same command after the first construction.
+
+        Args:
+            kind (Kinds): The kind of command to construct.
+            *payload (int | bytes): The payload to include in the command.
+                                    It can be a series of integers or a bytes type payload.
+            
+        Returns:
+            bytes: The constructed command in the format of [SOF, CRC, LEN, KIND, PAYLOAD].
+        """
         if len(payload) > 0 and isinstance(payload[0], bytes):
             payload_bytes, payload_length = payload[0], payload[1]
 
@@ -566,6 +604,19 @@ class OnLogicNuvotonManager(ABC):
         return constructed_command
 
     def _send_command(self, command_to_send: bytes) -> bool:
+        """Send a command to the microcontroller byte-by-byte and validate the response.
+        
+        The return condition is that the ack count matches the length of the sent command,
+        confirming that the mcu received every part of the command frame successfully. If not, it returns False.
+        
+        Args:
+            command_to_send (bytes): The command to send to the microcontroller.
+        
+        Returns:
+            bool: True if the command was sent successfully and acknowledged by the microcontroller.
+                  False if there was a mismatch in the number of acknowledgements received.
+        """
+
         # send command byte by byte and validate response
         logger.debug(f"Length of Command to send: {len(command_to_send)}")
         shell_ack_cnt = 0
@@ -585,12 +636,12 @@ class OnLogicNuvotonManager(ABC):
         return False
 
     def _receive_command(self, response_frame_kind: int) -> bytes | int:
-        '''Recieves pertinent response frames from the microcontroller.
+        """Recieves pertinent response frames from the microcontroller.
 
         Receive command in expected format that complies with UART Shell interface.
         The response_frame list should always end with a NACK ['\a'] 
         command indicating the end of the received payload.
-        '''
+        """
         response_frame = []
         is_partial_response_validated = False
         
