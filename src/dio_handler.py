@@ -46,6 +46,12 @@ class DioHandler(OnLogicNuvotonManager):
             If None, the class will attempt to find the correct port automatically.    
     """
     def __init__(self, serial_connection_label: str = None):
+        """Initializes the DioHandler class.
+        
+        Args:
+            serial_connection_label (str): The label of the serial connection.
+                If None, the class will attempt to find the correct port automatically.
+        """
         super().__init__(
                           serial_connection_label=serial_connection_label
                         )

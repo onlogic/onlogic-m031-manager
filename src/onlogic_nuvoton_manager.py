@@ -1,15 +1,8 @@
 # -*- coding: utf-8 -*-
-"""
-File: onlogic_nuvoton_manager.py
+"""Administers the serial connection and communication protocol with the embedded MCUs.
 
-Author: OnLogic - nick.hanna@onlogic.com, firmwareengineeringteam@onlogic.com
-
-OnLogicNuvotonManager contains methods which, when used in conjunction with eachother, can 
-control and communicate with the Nuvoton microcontrollers embedded in OnLogic HX/K5xx
-products. Many are designed to be inherited and used in the Automotive and DIO controller classes
-
-References:
-    https://fastcrc.readthedocs.io/en/latest/
+This module contains the OnLogicNuvotonManager, used to  control and communicate with the 
+Nuvoton microcontrollers embedded in OnLogic HX/K5xx products. 
 """
 
 import time
@@ -36,7 +29,7 @@ class OnLogicNuvotonManager(ABC):
         * :class:`DioHandler`
 
     Note:
-        This class should not be directly called. Instead, use its child classes like
+        This class should not be directly called. Instead, it should be accessed through child classes like
         :class:`AutomotiveHandler` or :class:`DioHandler`.
 
         When using a child class as a context manager, the ``__enter__`` and ``__exit__``
@@ -47,7 +40,9 @@ class OnLogicNuvotonManager(ABC):
         The class and its children also contain extensive logging for debugging and
         tracking purposes. Logging is designed to trace the execution of the code and
         log important events, not the target payloads themselves (which are returned
-        by called functions in child classes).
+        by called functions in child classes).         
+
+        https://fastcrc.readthedocs.io/en/latest/ contains more info on the CRC8 methodology used.
 
     Example:
         Instantiating and using a child class (e.g., ``AutomotiveHandler``)
@@ -86,8 +81,6 @@ class OnLogicNuvotonManager(ABC):
                 connection (e.g., "/dev/ttySx" or ). This is passed when a child class
                 is instantiated.
         """
-
-    
         # Setup mechanism so deleter does not delete non-existant objects
         self.is_setup = False
         self.serial_connection_label = serial_connection_label
@@ -104,7 +97,7 @@ class OnLogicNuvotonManager(ABC):
         self.release()
 
     def __str__(self):
-        '''String representation.'''
+        '''String representation of class.'''
         # TODO: Add FW version?
         repr_str = (
             f"Port: {self.serial_connection_label}\n"
@@ -186,6 +179,24 @@ class OnLogicNuvotonManager(ABC):
 
     @abstractmethod
     def show_info(self) -> None:
+        """Show information about the target MCU depending on the child class.
+
+        This method is used to display information about the target MCU.
+        It is an inheritable method provided to the base class. It will print a manual 
+        to the console, which is a text file with the documentation of the target MCU.
+        It closely interacts with the _read_files method, which is also an inheritable method.
+
+        Args:
+            None
+        
+        Returns:
+            None
+        
+        Raises:
+            FileNotFoundError: If the file is not found.
+            IOError: If there is an error reading the file.
+            Exception: For any other exceptions that may occur.
+        """
         pass
 
     @abstractmethod
@@ -349,7 +360,28 @@ class OnLogicNuvotonManager(ABC):
             else:
                 bytes_to_send = nack_counter
 
-    def _validate_input_param(self, input_value, valid_input_range: tuple, input_type: type):
+    def _validate_input_param(self, input_value, valid_input_range: tuple, input_type: type) -> None:
+        """Validates the input parameters for the LPMCU operation
+
+        This method checks if the input value is of the expected type and within the valid range.
+        If the input value is not of the expected type or out of range, it raises a TypeError or ValueError.    
+        It additionally has a clause to make sure that the serial port is set up before operation,
+        to prevent any runtime errors.
+
+        Args:
+            input_value (int | float): The value to be validated.
+            valid_input_range (tuple): A tuple specifying the valid range for the input value.
+                                       Example: (0, 4) means valid values are 0, 1, 2, 3.
+            input_type (type): The expected type of the input value. Example: int, float.
+        
+        Returns:
+            None: Does not return anything, just raises exceptions if incompatability is detected.
+
+        Raises:
+            serial.SerialException: If the serial connection is not set up.
+            TypeError: If the input value is not of the expected type.
+            ValueError: If the input value is out of the valid range.
+        """
         if self.is_setup is False:
             raise serial.SerialException("ERROR | Serial Connection is not set up, did you claim the port?")
 

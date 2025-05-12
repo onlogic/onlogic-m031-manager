@@ -1,6 +1,13 @@
 # -*- coding: utf-8 -*-
-"""
+"""An optional logging utility for the OnLogic Nuvoton Manager.
 
+This module provides the optional LoggingUtil class, which is designed to 
+configure and manage logging for the OnLogic Nuvoton Manager. 
+
+Note:
+    it is completely optional and not required for the use of the OnLogic Nuvoton Manager,
+    but is provided for convenience and ease of use. The user can make create their own custom
+    logger if desired.
 """
 import sys
 import logging
@@ -8,7 +15,61 @@ from datetime import datetime
 from typing import Optional
 
 class LoggingUtil():
+    """LoggingUtil class for configuring logging in the OnLogic Nuvoton Manager.
+
+    This class provides methods to set up a logger with a specified name, level, and handlers.
+
+    Attributes:
+        logger_name (str): The name of the logger. It is converted to lowercase and stripped of whitespace.
+                           Note, please use 'root' for the root logger unless you are willing to add a field 
+                           to the target class to allow for a custom logger utility. 
+        logger_level (str): The logging level (e.g., 'info', 'debug', 'error').
+                            It is converted to lowercase and stripped of whitespace.          
+        handler_mode (str): The mode for the handler (e.g., 'console', 'file', 'both').
+                            It is converted to lowercase and stripped of whitespace.
+        logger (logging.Logger): The configured logger instance.
+
+        format (str): The format for log messages, specified in the initialization of the class.
+
+    Example:
+        For debug logging to console:
+
+        config_logger = LoggingUtil(
+            logger_name='root',
+            logger_level="DEBUG", 
+            handler_mode="CONSOLE"
+        )
+        config_logger.config_logger_elements()
+
+        For info logging to file:
+
+        config_logger = LoggingUtil(
+            logger_name='root',
+            logger_level="INFO", 
+            handler_mode="FILE"
+        )
+        config_logger.config_logger_elements()
+
+        for error logging to both console and file:
+
+        config_logger = LoggingUtil(
+            logger_name='root',
+            logger_level="ERROR", 
+            handler_mode="BOTH"
+        )
+        config_logger.config_logger_elements()
+    """
     def __init__(self, logger_name, logger_level, handler_mode):
+        """Initialize the LoggingUtil class with the specified logger name, level, and handler mode.
+        Args:
+            logger_name (str): The name of the logger. It is converted to lowercase and stripped of whitespace.
+                               Note, please use 'root' for the root logger unless you are willing to add a field 
+                               to the target class to allow for a custom logger utility. 
+            logger_level (str): The logging level (e.g., 'info', 'debug', 'error').
+                                It is converted to lowercase and stripped of whitespace.          
+            handler_mode (str): The mode for the handler (e.g., 'console', 'file', 'both').
+                                It is converted to lowercase and stripped of whitespace.
+        """
         self.logger_name  = self.__handle_lconfig_str(logger_name)
         self.logger_level  = self.__handle_lconfig_str(logger_level)
         self.handler_mode = self.__handle_lconfig_str(handler_mode)
@@ -25,8 +86,7 @@ class LoggingUtil():
 
     @staticmethod
     def _create_filename():
-        '''
-        Create a filename for the log file. Note: method is private and name mangled.'''
+        '''Create a filename for the log file. Note: method is private and name mangled.'''
         return f"log_session_{datetime.now().strftime("%m_%d_%Y_%H_%M_%S")}.log"
 
     def _get_logger_level(self) -> int | None:

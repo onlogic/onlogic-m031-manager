@@ -6,7 +6,7 @@ from setuptools import setup, find_packages
 setup( 
     name='OnLogicNuvotonManager',
     # url='https://github.com/onlogic',
-    author='OnLogic',
+    author='OnLogic - Nick Hanna',
     author_email='firmwareengineeringteam@onlogic.com',
     packages=['OnLogicNuvotonManager'],
     package_dir={'OnLogicNuvotonManager': 'src'},

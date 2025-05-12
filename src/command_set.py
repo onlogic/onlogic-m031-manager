@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
-"""
-    OnLogic Nuvoton Manager Constants
+"""OnLogic Nuvoton Manager Constants
     
-    This file contains constants used throughout the OnLogic Nuvoton Manager.
-    It includes protocol constants, command kinds, status types, target indices,
-    and boundary types.
+This file contains constants used throughout the OnLogic Nuvoton Manager.
+It includes protocol constants, command kinds, status types, target indices,
+and boundary types.
 
-    Frame format is as follows: 
-        sof (1 Byte), crc (1 Byte), len (1 Byte), kind (1 Byte), data (O-8 Bytes), NACK (1 Byte) 
+Frame format is as follows: 
+    sof (1 Byte), crc (1 Byte), len (1 Byte), kind (1 Byte), data (O-8 Bytes), NACK (1 Byte) 
 """
 
 class ProtocolConstants:

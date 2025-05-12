@@ -4,8 +4,10 @@ OnLogicNuvotonManager
 
 The OnLogicNuvotonManager provides a set of tools to interface with peripherals on Onlogic K/HX-52x series computers.
 
-On the K52x, it can send commands to the DIO Add in card and the Sequence Micro to control automotive timings.
-On the HX52x, it can send commands to the DIO Add in card.
+
+On the HX52x, it can send commands to the DIO add-in-card.
+On the K52x, it can send commands both to the DIO add-in-card and the sequence microcontroller to control automotive timings.
+
 
 Setup Required
 ==============
@@ -53,6 +55,7 @@ Linux Ubuntu has enforced a stricter package management scheme in the new 24.04 
 
     $ python3 -m venv <path/to/venv>
     (One can get <path/to/venv> by navigating to desired directory in terminal and inputting ``pwd``,
+    
     .. code-block:: bash
 
       python3 -m venv venv
@@ -62,15 +65,21 @@ Linux Ubuntu has enforced a stricter package management scheme in the new 24.04 
 
 * Activating a venv::
 
-    $ source <path/to/venv>/bin/activate
+    .. code-block:: bash
+
+      $ source <path/to/venv>/bin/activate
 
 * Deactivating a venv::
+
+    .. code-block:: bash
 
     $ deactivate
 
 - When the venv is activated, running any python scripts will use the venv's interpreter and packages. But, when running a script that needs root privileges (``sudo python ...``), the venv's Python won't be used, even if its activated. My solution has been to explicitly use the venv's interpreter when running a Python script.::
 
-    $ sudo <path/to/venv>/bin/python somescript.py
+  .. code-block:: bash
+
+  $ sudo <path/to/venv>/bin/python somescript.py
 
   We have to use whole path because we need to sudo in, and we can't access IO without sudo privaleges
 

@@ -1,4 +1,8 @@
 # -*- coding: utf-8 -*-
+"""
+
+
+"""
 import time
 import serial
 import logging
@@ -8,6 +12,22 @@ from .command_set import ProtocolConstants, Kinds, StatusTypes, TargetIndices, B
 logger = logging.getLogger(__name__)
 
 class AutomotiveHandler(OnLogicNuvotonManager):
+    """AutomotiveHandler class for managing automotive features of the OnLogic Nuvoton MCU.
+
+    This class provides methods to interact with the automotive features of the OnLogic Nuvoton MCU.
+    For more information about the automotive features, please refer to the Automotive section of
+    the documentation or the docstrings below.
+
+    K52x Ignition Pin Diagram:
+        ---------------------------------
+        ||  _     _     _     _     _  ||
+        || |_|   |_|   |_|   |_|   |_| ||  
+        || IGN |  +  |  +  |  -  |  -  ||  
+        ---------------------------------
+
+    Attributes:
+        serial_connection_label (str): The label of the serial connection. 
+    """
     def __init__(self, serial_connection_label = None):
         super().__init__(
                          serial_connection_label=serial_connection_label
