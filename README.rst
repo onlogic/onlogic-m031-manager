@@ -96,6 +96,8 @@ The examples are designed to be run from the command line with:
 
   sudo /path/to/project/bin/python3 dio_implementation.py
 
+for the dio_implementation.py script in Ubuntu, for example.
+
 Shell Transport Protocol
 ========================
 
