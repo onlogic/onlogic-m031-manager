@@ -1,4 +1,9 @@
 # -*- coding: utf-8 -*-
+"""DioHandler module for managing Digital Input/Output (DIO) operations.
+
+Provides methods that allow users to access nearly all features of DIO card. 
+"""
+
 import time
 import serial
 import logging
@@ -43,7 +48,20 @@ class DioHandler(OnLogicNuvotonManager):
 
     Attributes:
         serial_connection_label (str): The label of the serial connection.
-            If None, the class will attempt to find the correct port automatically.    
+            If None, the class will attempt to find the correct port automatically.
+    
+    Examples:
+        Claim and release port for the DioHandler class with either:
+
+        my_dio = DioHandler() 
+        my_dio.claim()
+        ...
+        my_dio.release()
+
+        or
+
+        with DioHandler() as dio_handler:
+            ...
     """
     def __init__(self, serial_connection_label: str = None):
         """Initializes the DioHandler class.

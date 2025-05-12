@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
+"""Provides the AutomotiveHandler class for managing automotive features of the OnLogic Nuvoton MCU.
+
+This module includes methods to interact with the automotive features of the OnLogic Nuvoton MCU.
+For more information about the automotive mode settings, please refer to the Automotive section of the documentation or the
+docstrings below.
 """
 
-
-"""
 import time
 import serial
 import logging
@@ -27,6 +30,20 @@ class AutomotiveHandler(OnLogicNuvotonManager):
 
     Attributes:
         serial_connection_label (str): The label of the serial connection. 
+    
+    Examples:
+        Claim and release port for the Automotive class with either:
+
+        my_auto = AutomotiveHandler() 
+        my_auto.claim("COMX") # will be "/dev/ttySX" on Linux or "COMX" on Windows
+        ...
+        my_auto.release()
+
+        or
+
+        with AutomotiveHandler() as my_auto:
+            ...
+    
     """
     def __init__(self, serial_connection_label = None):
         super().__init__(

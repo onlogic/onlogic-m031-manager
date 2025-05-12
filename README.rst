@@ -33,7 +33,7 @@ These steps guide you through installing the OnLogicNuvotonManager directly into
      cd path\\to\\OnLogicNuvotonManager
 
 4. Install Required Packages:
-   Run the following command to install the package. This will install it into your global Python site-packages or user-specific site-packages.::
+   Run the following command to install the package. This will install it into your global Python site-packages or user-specific site-packages::
 
      pip install -e .
 
@@ -49,7 +49,9 @@ These steps guide you through installing the OnLogicNuvotonManager directly into
 
 Setting up OnLogicNuvotonManager in a Python3 venv on Ubuntu 24.04 LTS
 -----------------------------------------------------------------------
-Linux Ubuntu has enforced a stricter package management scheme in the new 24.04 LTS distribution to avoid interfering with global package dependencies used by the OS. While this is a more stable way to administer Python on a system, it is also more complex to program in user environments. To run the package OnLogicNuvotonManager in Ubuntu, it's best practice to use a venv.
+Linux Ubuntu has enforced a stricter package management scheme in the new 24.04 LTS distribution to avoid interfering with global package dependencies used by the OS. 
+While this is a more stable way to administer Python on a system, it is also more complex to program in user environments. 
+To run the package OnLogicNuvotonManager in Ubuntu, it's best practice to use a venv.
 
 * Creating a venv::
 
@@ -86,7 +88,12 @@ Examples
 There are several examples in the ``examples`` directory. The examples
 are designed to run from the command line and follow the setup seen above.
 Make sure, however, that for Automotive settings, you enable the COM visibility in
-the BIOS. This is done by ...
+the BIOS.
+
+The examples are designed to be run from the command line with:
+
+.. code-block:: text
+  sudo /path/to/project/bin/python3 dio_implementation.py
 
 Shell Transport Protocol
 ========================

@@ -9,6 +9,7 @@ Note:
     but is provided for convenience and ease of use. The user can make create their own custom
     logger if desired.
 """
+
 import sys
 import logging
 from datetime import datetime

@@ -1,8 +1,6 @@
 '''
 pip install pytest pytest-order
-
 sudo <path/to/venv>/bin/py.test -s -v -x test_ignition.py
-python3 
 '''
 
 from OnLogicNuvotonManager import AutomotiveHandler

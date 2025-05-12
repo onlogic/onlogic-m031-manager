@@ -1,6 +1,9 @@
 '''
 Assumes the DIO card is connected to the computer 
 and the correct  is specified.
+
+pip install pytest pytest-order
+sudo /path/to/project/venv/bin/py.test -s -v -x test_core.py
 '''
 
 from OnLogicNuvotonManager import DioHandler
