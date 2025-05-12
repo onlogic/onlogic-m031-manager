@@ -69,15 +69,13 @@ Linux Ubuntu has enforced a stricter package management scheme in the new 24.04 
 
     $ deactivate
 
-- When the venv is activated, running any python scripts will use the venv's interpreter and packages. 
+* When the venv is activated, running any python scripts will use the venv's interpreter and packages. 
   But, when running a script that needs root privileges (``sudo python ...``), the venv's Python won't be used, even if its activated. 
-  My solution has been to explicitly use the venv's interpreter when running a Python script.
-
-  .. code-block:: 
+  My solution has been to explicitly use the venv's interpreter when running a Python script.::
 
   $ sudo <path/to/venv>/bin/python somescript.py
 
-  We have to use whole path because we need to sudo in, and we can't access IO without sudo privaleges
+* We have to use whole path because we need to sudo in, and we can't access IO without sudo privaleges
 
 After, set up required packages in venv:
 * ``pip install -e .``
