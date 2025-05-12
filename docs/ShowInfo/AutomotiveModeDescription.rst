@@ -1,6 +1,6 @@
-=================
+===================
 Automotive Timings
-=================
+===================
 
 The ignition sense feature can be used to turn the Karbon unit on and off with a battery, 
 the vehicle's ignition (given proper electrical setup), or the use of a switch. Automotive timings and ignition sense can 
