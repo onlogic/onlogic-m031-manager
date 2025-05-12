@@ -1,6 +1,6 @@
-====================
+======================
 OnLogicNuvotonManager
-====================
+======================
 
 The OnLogicNuvotonManager provides a set of tools to interface with peripherals on Onlogic K/HX-52x series computers.
 
@@ -154,7 +154,7 @@ For this reason, the user must manually specify the serial port name for the seq
 whereas for the ``DioHandler``, the ``.claim()`` method can be left blank and the program will autolock on the serial connection label.
 
 Status Types:
-------------
+--------------
 
 The status types are defined in src/command_set.py and are used to mark and indicate failures during 
 different stages of the LPMCU protocol, including command construction, sending, 

@@ -35,7 +35,10 @@ class DioHandler(OnLogicNuvotonManager):
         More information on the DIO card can be found in the Data sheet, and also by calling the
         show_info method.
 
-    Pin Diagram:
+    Pin Diagram:    
+    
+    .. code-block:: text
+
         ---------------------------------------------------------------
         ||  _     _     _     _     _     _     _     _     _     _  ||
         || |_|   |_|   |_|   |_|   |_|   |_|   |_|   |_|   |_|   |_| || Digital Input
