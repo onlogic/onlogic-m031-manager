@@ -92,7 +92,8 @@ the BIOS.
 
 The examples are designed to be run from the command line with:
 
-.. code-block:: text
+.. code-block:: bash
+
   sudo /path/to/project/bin/python3 dio_implementation.py
 
 Shell Transport Protocol
