@@ -56,8 +56,6 @@ Linux Ubuntu has enforced a stricter package management scheme in the new 24.04 
     $ python3 -m venv <path/to/venv>
     (One can get <path/to/venv> by navigating to desired directory in terminal and inputting ``pwd``,
     
-    .. code-block:: bash
-
       python3 -m venv venv
 
     will likely work as well
@@ -65,19 +63,17 @@ Linux Ubuntu has enforced a stricter package management scheme in the new 24.04 
 
 * Activating a venv::
 
-    .. code-block:: bash
-
       $ source <path/to/venv>/bin/activate
 
 * Deactivating a venv::
 
-    .. code-block:: bash
-
     $ deactivate
 
-- When the venv is activated, running any python scripts will use the venv's interpreter and packages. But, when running a script that needs root privileges (``sudo python ...``), the venv's Python won't be used, even if its activated. My solution has been to explicitly use the venv's interpreter when running a Python script.::
+- When the venv is activated, running any python scripts will use the venv's interpreter and packages. 
+  But, when running a script that needs root privileges (``sudo python ...``), the venv's Python won't be used, even if its activated. 
+  My solution has been to explicitly use the venv's interpreter when running a Python script.
 
-  .. code-block:: bash
+  .. code-block:: 
 
   $ sudo <path/to/venv>/bin/python somescript.py
 
