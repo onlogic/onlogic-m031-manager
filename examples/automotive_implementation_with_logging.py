@@ -1,7 +1,7 @@
 """
 Author: OnLogic
-For:    HX-52x/K-52x
-Title:  HX-52x/K-52x Automotive Driver Example with Logging
+For:    K-52x
+Title:  K-52x Automotive Driver Example with Logging
 
 Description:
     A simple demonstration of how to use the AutomotiveHandler class to interact with automotive settings.

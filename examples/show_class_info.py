@@ -12,7 +12,6 @@ Description:
 Usage:
     Windows:
         python automotive_mode_with_dio_implementation.py
-    Linux in venv:
 
 NOTE: 
     - CTRL+C can be used to exit the program.

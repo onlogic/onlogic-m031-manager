@@ -5,8 +5,8 @@ OnLogicNuvotonManager
 The OnLogicNuvotonManager provides a set of tools to interface with peripherals on Onlogic K/HX-52x series computers.
 
 
-On the HX52x, it can send commands to the DIO add-in-card.
-On the K52x, it can send commands both to the DIO add-in-card and the sequence microcontroller to control automotive timings.
+On the HX-52x, it can send commands to the DIO add-in-card.
+On the K-52x, it can send commands both to the DIO add-in-card and the sequence microcontroller to control automotive timings.
 
 
 Setup Required

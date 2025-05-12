@@ -1,7 +1,7 @@
 """
 Author: OnLogic
-For:    HX-52x
-Title:  HX-52x Automotive Setting Python Utility
+For:    K-52x
+Title:  K-52x Automotive Setting Python Utility
 
 Description:
     A simple demonstration of how to use the AutomotiveHandler class to interact with automotive settings.
