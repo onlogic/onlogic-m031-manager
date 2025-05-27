@@ -2,24 +2,54 @@
 Digital Input/Output Module (DIO) Functionality
 ================================================
 
-The DIO module can be configured in two modes:
+The DIO module can be configured in two modes: **wet contact** and **dry contact**. 
+The outputs function as open drains. The inputs are high impedance. 
 
-1. Wet contact mode:
-    To function properly, dio should be connected to external power and ground. 
-    The Digital Outputs are "Open Collector" in wet contact mode, and must be tied 
-    to VIN (+) with a resistor to source current. The load should not exceed 150 mA. 
-    Voltage ranges are between 7 V to 45 V. The contact modes in this type should 
-    be set to 0. So pass the contact type as 0 to the set-di-contact and set-do-contact commands.
+1. **DO Output Configurations:**
 
-    Setup required for Output:
-        Vin + GND + Pull up (10kOhm acceptable).
+   **DO Wet Contact Mode (Suitable for Inductive Load Operation)**
 
-2. Dry contact mode:
-    Voltage is provided by the system by defaulting to DOut external at 12V, but 
-    a diode causes the voltage to drop to 11.2 V - 11.4 V.
+   To function properly, the module **V+ should be connected to external power and ground**. The **high side of the load**
+   should be connected to the **external power source**, and the **low side to the module DO pin**.
 
-    Setup required for Output:
-        Shared GND
+   * **Load current should not exceed 150 mA.**
+   * **Voltage ranges should be 5 V to 30 V.**
+
+   **Setup required for Output:**
+
+   * 
+
+   **DO Dry-Contact Mode**
+
+   * Voltage is provided by the system. Each DO will output **11 V - 12.6 V when active**.
+
+   **Setup required for Output:**
+
+   * 
+
+2. **Digital Input (DI) Configurations**
+
+   **DI Wet Contact Mode**
+
+   There is **no internal pull-up** to the DI[0:7] pins when set to WET mode.
+
+   * Externally supplied **5 V - 30 V is recognized as logic 0**.
+   * Externally supplied **0 V - 3 V is recognized as logic 1**.
+
+   **Setup required for Input:**
+
+   * 
+
+   **DI Dry Contact Mode**
+
+   When the contact type is set to DRY mode, DI[0:7] are **pulled up to the internal isolated ~12V supply**.
+
+   * An **open/floating connection is recognized as logic 0**.
+   * A **short to GND is recognized as logic 1**.
+
+   **Setup required for Input:**
+
+   * 
 
 Operations are blocking but can be threaded to accomodate other processing operations, 
 though the DIO card can only retrieve one value at a time over UART.
@@ -46,8 +76,6 @@ though the DIO card can only retrieve one value at a time over UART.
 | `get_di`     | Read digital input pin state  | pin val (0-7)                          | (0:low, 1:high)    |
 +--------------+-------------------------------+----------------------------------------+--------------------+
 | `get_do`     | Read digital output pin state | pin val (0-7)                          | (0:low, 1:high)    |
-+--------------+-------------------------------+----------------------------------------+--------------------+
-| `set_di`     | Set digital input pin state   | pin val (0-7) \| state (0:low, 1:high) | status             |
 +--------------+-------------------------------+----------------------------------------+--------------------+
 | `set_do`     | Set digital output pin state  | pin val (0-7) \| state (0:low, 1:high) | status             |
 +--------------+-------------------------------+----------------------------------------+--------------------+

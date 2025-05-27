@@ -1,8 +1,20 @@
-# Configuration file for Sphinx documentation
+"""
+Configuration file for Sphinx documentation
 
+PDF generation: 
+
+cd /docs/ 
+
+then run:
+
+sphinx-build -b pdf source build/pdf
+
+
+pip install sphinx rst2pdf sphinx_rtd_theme
+
+"""
 import os
 import sys
-import datetime
 
 # Add the project source directory to the path
 sys.path.insert(0, os.path.abspath('../..'))  # This will include the src directory
