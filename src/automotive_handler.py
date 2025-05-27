@@ -37,16 +37,23 @@ class AutomotiveHandler(OnLogicNuvotonManager):
     Examples:
         Claim and release port for the Automotive class with either:
 
-        my_auto = AutomotiveHandler() 
-        my_auto.claim("COMX") # will be "/dev/ttySX" on Linux or "COMX" on Windows
-        ...
-        my_auto.release()
+        .. code-block:: python
+
+            my_auto = AutomotiveHandler()
+
+            # will be "/dev/ttySX" on Linux or "COMX" on Windows
+            my_auto.claim("COMX")
+            # ... (other operations)
+            my_auto.release()
 
         or
 
-        with AutomotiveHandler() as my_auto:
-            ...
-    
+        .. code-block:: python
+
+            with AutomotiveHandler() as my_auto:
+                # ... (operations within the context manager)
+                # Port is claimed on entry and released on exit
+                pass
     """
     def __init__(self, serial_connection_label = None):
         """Initialize the AutomotiveHandler class.
@@ -167,7 +174,7 @@ class AutomotiveHandler(OnLogicNuvotonManager):
 
         return frame[TargetIndices.PENULTIMATE]
     
-    def set_automotive_mode(self, amd: int):
+    def set_automotive_mode(self, amd: int) -> int:
         """Set the automotive mode of the device.
         
         Automotive-mode enables or disables system automotive features. This method uses the
@@ -185,7 +192,7 @@ class AutomotiveHandler(OnLogicNuvotonManager):
             TypeError: If the input parameter is not of type int.
         
         Example:
-            >>> auto_mode = set_automotive_mode(1)
+            >>> auto_mode = my_auto.set_automotive_mode(1)
             >>> print(f"Automotive Mode Set to: {auto_mode}")
             Automotive Mode Set to: 0
         """
@@ -209,7 +216,7 @@ class AutomotiveHandler(OnLogicNuvotonManager):
 
         return self._validate_recieved_frame(frame, TargetIndices.PENULTIMATE, BoundaryTypes.BINARY_VALUE_RANGE)
 
-    def get_low_power_enable(self):
+    def get_low_power_enable(self) -> int:
         """Get the low power enable status value from the MCU.
 
         Low Power Enable enables entering a very low power state when the system powers off. 
@@ -226,7 +233,7 @@ class AutomotiveHandler(OnLogicNuvotonManager):
                 A value < 0 indicates an error in the command or response.
         
         Example:
-            >>> low_power_enable = get_low_power_enable()
+            >>> low_power_enable = my_auto.get_low_power_enable()
             >>> print(f"Low Power Enable: {low_power_enable}")
             Low Power Enable: 1
         """
@@ -266,8 +273,8 @@ class AutomotiveHandler(OnLogicNuvotonManager):
             int: The status of the command. 0 indicates success, < 0 indicates an error in the command or response.
         
         Example:
-            >>> low_power_enable_status = set_low_power_enable(1)
-            >>> print(f"Success" if low_power_enable_status == 0 else f"Error: {low_power_enable_status}")
+            >>> status = my_auto.set_low_power_enable(1)
+            >>> print(f"Success" if status == 0 else f"Error: {status}")
             Success
         """
         self._validate_input_param(lpe, BoundaryTypes.BINARY_VALUE_RANGE, int)
@@ -296,7 +303,7 @@ class AutomotiveHandler(OnLogicNuvotonManager):
         The start-up timer controls the number of seconds that the 
         ignition input must be stable before the system will power on.
         This method uses the LPMCU protocol discussed in the README and documentation
-        to get the start up timer
+        to get the start up timer.
 
         Args:
             None
@@ -306,7 +313,7 @@ class AutomotiveHandler(OnLogicNuvotonManager):
                  the start-up timer can be configured between 1 - 1048575 seconds
                  A value < 0 indicates an error in the command or response.
         Example:
-            >>> start_up_timer = get_start_up_timer()
+            >>> start_up_timer = my_auto.get_start_up_timer()
             >>> print(f"Start Up Timer: {start_up_timer}")
             Start Up Timer: 10
         """
@@ -353,8 +360,8 @@ class AutomotiveHandler(OnLogicNuvotonManager):
             TypeError: If the input parameter is not of type int.
 
         Example:
-            >>> start_up_timer_status = set_start_up_timer(10)
-            >>> print(f"Success" if start_up_timer_status == 0 else f"Error: {start_up_timer_status}")
+            >>> status = my_auto.set_start_up_timer(10)
+            >>> print(f"Success" if status == 0 else f"Error: {status}")
             Success
         """ 
         self._validate_input_param(sut, BoundaryTypes.AUTOMOTIVE_TIMER_RANGE, int) 
@@ -396,7 +403,7 @@ class AutomotiveHandler(OnLogicNuvotonManager):
                  A value < 0 indicates an error in the command or response.
 
         Example:
-            >>> soft_off_timer = get_soft_up_timer()
+            >>> soft_off_timer = my_auto.get_soft_up_timer()
             >>> print(f"Soft Off Timer: {soft_off_timer}")
             Soft Off Timer: 5
         """
@@ -442,8 +449,8 @@ class AutomotiveHandler(OnLogicNuvotonManager):
             TypeError: If the input parameter is not of type int.
 
         Example:
-            >>> soft_off_timer_status = set_soft_off_timer(5)
-            >>> print(f"Success" if soft_off_timer_status == 0 else f"Error: {soft_off_timer_status}")
+            >>> status = my_auto.set_soft_off_timer(5)
+            >>> print(f"Success" if status == 0 else f"Error: {status}")
             Success
         """
         self._validate_input_param(sot, BoundaryTypes.AUTOMOTIVE_TIMER_RANGE, int)
@@ -483,7 +490,7 @@ class AutomotiveHandler(OnLogicNuvotonManager):
                  The hard-off timer can be configured between 1 - 1048575 seconds
                  A value < 0 indicates an error in the command or response.
         Example:
-            >>> hard_off_timer = get_hard_off_timer()
+            >>> hard_off_timer = my_auto.get_hard_off_timer()
             >>> print(f"Hard Off Timer: {hard_off_timer}")
             Hard Off Timer: 15
         """
@@ -528,8 +535,8 @@ class AutomotiveHandler(OnLogicNuvotonManager):
             TypeError: If the input parameter is not of type int.
         
         Example:
-            >>> hard_off_timer_status = set_hard_off_timer(15)
-            >>> print(f"Success" if hard_off_timer_status == 0 else f"Error: {hard_off_timer_status}")
+            >>> status = my_auto.set_hard_off_timer(15)
+            >>> print(f"Success" if status == 0 else f"Error: {status}")
             Success
         """
         self._validate_input_param(hot, BoundaryTypes.AUTOMOTIVE_TIMER_RANGE, int)
@@ -570,7 +577,7 @@ class AutomotiveHandler(OnLogicNuvotonManager):
                     The low voltage timer can be configured between 1 - 1048575 seconds
                     A value < 0 indicates an error in the command or response.
         Example:
-            >>> low_voltage_timer = get_low_voltage_timer()
+            >>> low_voltage_timer = my_auto.get_low_voltage_timer()
             >>> print(f"Low Voltage Timer: {low_voltage_timer}")
             Low Voltage Timer: 20
         """
@@ -615,13 +622,13 @@ class AutomotiveHandler(OnLogicNuvotonManager):
             TypeError: If the input parameter is not of type int.
         
         Example:
-            >>> low_voltage_timer_status = set_low_voltage_timer(20)
-            >>> print(f"Success" if low_voltage_timer_status == 0 else f"Error: {low_voltage_timer_status}")
+            >>> status = my_auto.set_low_voltage_timer(20)
+            >>> print(f"Success" if status == 0 else f"Error: {status}")
             Success
         """
         self._validate_input_param(lvt, BoundaryTypes.AUTOMOTIVE_TIMER_RANGE, int)
 
-        set_lvt_cmd = self._construct_command(Kinds.SET_LOW_VOLTAGE_TIMER , lvt.to_bytes(8, 'little'), 8)
+        set_lvt_cmd = self._construct_command(Kinds.SET_LOW_VOLTAGE_TIMER, lvt.to_bytes(8, 'little'), 8)
 
         self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES)
 
@@ -655,6 +662,10 @@ class AutomotiveHandler(OnLogicNuvotonManager):
             int: The shutdown voltage value of the device in centi-volts
                  The shutdown voltage can be configured between 1.000 - 48.000
                  A value < 0 indicates an error in the command or response.
+        Example:
+            >>> shutdown_voltage = my_auto.get_shutdown_voltage()
+            >>> print(f"Shutdown Voltage: {shutdown_voltage}")
+            Shutdown Voltage: 600
         """
         sdv_timer_cmd = self._construct_command(Kinds.GET_SHUTDOWN_VOLTAGE)
 
@@ -698,8 +709,8 @@ class AutomotiveHandler(OnLogicNuvotonManager):
             TypeError: If the input parameter is not of type int.
         
         Example:
-            >>> shutdown_voltage_status = set_shutdown_voltage(12)
-            >>> print(f"Success" if shutdown_voltage_status == 0 else f"Error: {shutdown_voltage_status}")
+            >>> status = my_auto.set_shutdown_voltage(12)
+            >>> print(f"Success" if status == 0 else f"Error: {status}")
             Success
         """
         self._validate_input_param(sdv, BoundaryTypes.AUTOMOTIVE_TIMER_RANGE, int)
@@ -745,7 +756,7 @@ class AutomotiveHandler(OnLogicNuvotonManager):
                     "sdv" : shutdown_voltage
                 }
         Example:
-            >>> automotive_settings = get_all_automotive_settings()
+            >>> automotive_settings = my_auto.get_all_automotive_settings()
             >>> print(automotive_settings)
             {
                 "amd" : 1,
@@ -779,13 +790,13 @@ class AutomotiveHandler(OnLogicNuvotonManager):
                 [amd, lpe, sut, sot, hot, sdv].
 
         Returns:
-            list: A list of results from each `set_*` method, particularly:
-            + set_automotive_mode
-            + set_low_power_enable
-            + set_start_up_timer
-            + set_soft_off_timer
-            + set_hard_off_timer 
-            + set_shutdown_voltage
+            list: A list of results from each ``set_*`` method, particularly:
+                - set_automotive_mode
+                - set_low_power_enable
+                - set_start_up_timer
+                - set_soft_off_timer
+                - set_hard_off_timer
+                - set_shutdown_voltage
         """
 
         if len(setting_inputs) != 6:

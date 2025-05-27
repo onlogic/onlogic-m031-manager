@@ -35,30 +35,33 @@ class LoggingUtil():
     Example:
         For debug logging to console:
 
-        config_logger = LoggingUtil(
-            logger_name='root',
-            logger_level="DEBUG", 
-            handler_mode="CONSOLE"
-        )
-        config_logger.config_logger_elements()
+            config_logger = LoggingUtil(
+                logger_name='root',
+                logger_level="DEBUG", 
+                handler_mode="CONSOLE"
+            )
+            
+            config_logger.config_logger_elements()
 
         For info logging to file:
 
-        config_logger = LoggingUtil(
-            logger_name='root',
-            logger_level="INFO", 
-            handler_mode="FILE"
-        )
-        config_logger.config_logger_elements()
+            config_logger = LoggingUtil(
+                logger_name='root',
+                logger_level="INFO", 
+                handler_mode="FILE"
+            )
 
-        for error logging to both console and file:
+            config_logger.config_logger_elements()
 
-        config_logger = LoggingUtil(
-            logger_name='root',
-            logger_level="ERROR", 
-            handler_mode="BOTH"
-        )
-        config_logger.config_logger_elements()
+        For error logging to both console and file:
+
+            config_logger = LoggingUtil(
+                logger_name='root',
+                logger_level="ERROR", 
+                handler_mode="BOTH"
+            )
+
+            config_logger.config_logger_elements()
     """
     def __init__(self, logger_name, logger_level, handler_mode):
         """Initialize the LoggingUtil class with the specified logger name, level, and handler mode.

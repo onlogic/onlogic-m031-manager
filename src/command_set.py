@@ -16,7 +16,7 @@ class ProtocolConstants:
 
 
     Note:
-        NUM_NACKS number isn't magic.  In the worst possible case, the MCU may have an
+        MAX_NACK_CLEARANCES number isn't magic.  In the worst possible case, the MCU may have an
         entire maximum-length frame buffered containing only SHELL_NACK.  To be
         confident that we've received the entire frame and the MCU is ready to accept
         our next command, we need to receive 4 bytes (header) + 255 bytes (payload) of
@@ -29,6 +29,7 @@ class ProtocolConstants:
     TIME_THRESHOLD = 2.5
     STANDARD_DELAY = .003
     STANDARD_NACK_CLEARANCES = 64
+    MAX_NACK_CLEARANCES = 255 + 4  # 255 bytes of payload [MAX] + 4 bytes of header
 
     # Hardcoded transmission values
     SHELL_SOF  = 0x01
@@ -121,7 +122,7 @@ class BoundaryTypes:
     BINARY_VALUE_RANGE = (0, 1)
     DIGITAL_IO_PIN_RANGE = (0, 7)
     DECIMAL_VALUE_RANGE = (0, 9)
-    BYTE_VALUE_RANGE = (0, 255) # should it be 255?
+    BYTE_VALUE_RANGE = (0, 255)
 
     AUTOMOTIVE_TIMER_RANGE = (1, 1 << 20)
 

@@ -17,13 +17,15 @@ class DioHandler(OnLogicNuvotonManager):
     
     This class provides methods to get and set the states of digital input and output pins.
     It can get and set input and output pins individually, or in bulk. It uses the LPMCU methods
-    and protocolls, inherited from OnLogicNuvotonManager. A new feature in this
+    and protocols inherited from OnLogicNuvotonManager. A new feature in this
     line of DIO cards is the ability to set the contact type of the pins to Wet or Dry.
 
     As a reminder, the DIO card has 8 digital input pins and 8 digital output pins.
+    
     The digital input pins are active-low, meaning that a 0 indicates that the pin is on,
     and a 1 indicates that the pin is off. The digital output pins are active-high, meaning
     that a 0 indicates that the pin is off, and a 1 indicates that the pin is on.
+
     The DIO card also has a contact type for each pin, which can be either Wet or Dry.
     The contact type is set using the set_di_contact and set_do_contact methods.
     The contact type can be gotten by using the get_di_contact and get_do_contact methods.

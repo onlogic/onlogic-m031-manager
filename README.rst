@@ -1,21 +1,19 @@
-======================
-OnLogicNuvotonManager
-======================
+================================
+OnLogicNuvotonManager Overview
+================================
 
 The OnLogicNuvotonManager provides a set of tools to interface with peripherals on Onlogic K/HX-52x series computers.
 
-
-On the HX-52x, it can send commands to the DIO add-in-card.
-On the K-52x, it can send commands both to the DIO add-in-card and the sequence microcontroller to control automotive timings.
-
+* On the HX-52x, it can send commands to the DIO add-in-card.
+* On the K-52x, it can send commands both to the DIO add-in-card and the sequence microcontroller to control automotive timings.
 
 Setup Required
-==============
+--------------
 
 You will need to install Python 3 prior to following this guide. You can download Python from python.org. Ensure Python and pip are added to your system's PATH during installation.
 
 Setting up OnLogicNuvotonManager on Windows (Native Install)
--------------------------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 These steps guide you through installing the OnLogicNuvotonManager directly into your system's Python environment.
 
@@ -30,7 +28,7 @@ These steps guide you through installing the OnLogicNuvotonManager directly into
    Use the ``cd`` command to change to the directory where you have the OnLogicNuvotonManager files (e.g., where the ``setup.py`` file is located).
    Example::
 
-     cd path\\to\\OnLogicNuvotonManager
+     cd path\to\OnLogicNuvotonManager
 
 4. Install Required Packages:
    Run the following command to install the package. This will install it into your global Python site-packages or user-specific site-packages::
@@ -48,20 +46,25 @@ These steps guide you through installing the OnLogicNuvotonManager directly into
    icon and select "Run as administrator".
 
 Setting up OnLogicNuvotonManager in a Python3 venv on Ubuntu 24.04 LTS
------------------------------------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 Linux Ubuntu has enforced a stricter package management scheme in the new 24.04 LTS distribution to avoid interfering with global package dependencies used by the OS. 
 While this is a more stable way to administer Python on a system, it is also more complex to program in user environments. 
 To run the package OnLogicNuvotonManager in Ubuntu, it's best practice to use a venv.
 
-* Creating a venv::
+* Creating a venv:
+
+  .. code-block:: shell
 
     $ python3 -m venv <path/to/venv>
-    (One can get <path/to/venv> by navigating to desired directory in terminal and inputting ``pwd``,
-    
+
+  One can get <path/to/venv> by navigating to desired directory in terminal and inputting ``pwd``,
+
+  .. code-block:: shell
+
       python3 -m venv venv
 
-    will likely work as well
-    )
+  Will likely work as well
 
 * Activating a venv::
 
@@ -80,6 +83,7 @@ To run the package OnLogicNuvotonManager in Ubuntu, it's best practice to use a 
 * We have to use whole path because we need to sudo in, and we can't access IO without sudo privaleges
 
 After, set up required packages in venv:
+
 * ``pip install -e .``
 * Verify with: ``pip freeze`` within local directory
 
@@ -92,7 +96,7 @@ the BIOS.
 
 The examples are designed to be run from the command line with:
 
-.. code-block:: bash
+.. code-block:: shell
 
   sudo /path/to/project/bin/python3 dio_implementation.py
 
@@ -111,32 +115,32 @@ and the kind of message. The CRC-8 is calculated from the third byte of the
 message (the length byte) onward, and uses the SMBUS polynomial (``0x107``).
 
 A primitive form of flow control is built into the protocol. After a byte is
-received, the receiver processes it and replies with ``\\r`` if the byte was
-expected, or ``\\a`` if not. An example command/response sequence might look like
+received, the receiver processes it and replies with ``\r`` if the byte was
+expected, or ``\a`` if not. An example command/response sequence might look like
 this:
 
 .. code-block:: text
 
   CPU                                          MCU
   (start of frame) 0x01 ->
-                          <- (acknowledge)      \\r
+                         <- (acknowledge)      \r
   (crc-8)          0x38 ->
-                          <- (acknowledge)      \\r
+                         <- (acknowledge)      \r
   (data length)    0x00 ->
-                          <- (acknowledge)      \\r
+                         <- (acknowledge)      \r
   (message kind)   0x08 ->
-                          <- (acknowledge)      \\r
+                         <- (acknowledge)      \r
   <MCU processes command>
-                          <- (start of frame) 0x01
-  (acknowledge)    \\r   ->
-                          <- (crc-8)          0xc4
-  (acknowledge)    \\r   ->
-                          <- (data length)    0x01
-  (acknowledge)    \\r   ->
-                          <- (message kind)   0x08
-  (acknowledge)    \\r   ->
-                          <- (data byte)      0x01
-  (acknowledge)    \\r   ->
+                         <- (start of frame) 0x01
+  (acknowledge)    \r   ->
+                         <- (crc-8)          0xc4
+  (acknowledge)    \r   ->
+                         <- (data length)    0x01
+  (acknowledge)    \r   ->
+                         <- (message kind)   0x08
+  (acknowledge)    \r   ->
+                         <- (data byte)      0x01
+  (acknowledge)    \r   ->
 
 This sequence shows the CPU sending a ``kGet_LowPowerEnable`` message with no
 additional data and the MCU responding with a ``kGet_LowPowerEnable`` response

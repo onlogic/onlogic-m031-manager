@@ -673,6 +673,18 @@ class OnLogicNuvotonManager(ABC):
         Receive command in expected format that complies with UART Shell interface.
         The response_frame list should always end with a NACK ['\a'] 
         command indicating the end of the received payload.
+
+        Args:
+            response_frame_kind (int): The kind of the response frame to expect.
+                                       It is used to validate the response frame.
+                                       Refer to the ```Kinds``` enum in command_set.py for more info.
+
+        Returns:
+            bytes: The received command as a bytes object if the response is valid.
+                   If the response is not valid, it returns an error code from StatusTypes.
+        Raises:
+            StatusTypes.RECV_UNEXPECTED_PAYLOAD_ERROR: If the payload length is not as expected.
+            StatusTypes.RECV_PARTIAL_FRAME_VALIDATION_ERROR: If the partial frame validation fails.
         """
         response_frame = []
         is_partial_response_validated = False
