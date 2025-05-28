@@ -564,7 +564,7 @@ class AutomotiveHandler(OnLogicNuvotonManager):
     def get_low_voltage_timer(self) -> int:
         """Get the existing low voltage timer value from the MCU.
         
-        The low voltage timer controlls then number of seconds that the measured voltage 
+        The low voltage timer controls the number of seconds that the measured voltage 
         can be lower than the shutdown threshold before a forced shutdown will occur. 
         This method uses the LPMCU protocol discussed in the README and documentation to set 
         the low voltage timer of the sequence MCU.
@@ -738,34 +738,46 @@ class AutomotiveHandler(OnLogicNuvotonManager):
     def get_all_automotive_settings(self, output_to_console: bool = False) -> dict:
         """Get all automotive settings from the sequence MCU.
         
-        This method is a wrapper that calls all get automotive attributes and formats them in one dictionary.
-        It provides the option to print the settings to the console to the console for easy viewing, similar
-        to the screen provided in the BIOS settings. This method uses the LPMCU protocol discussed in the README
-        and documentation to get the automotive settings from the sequence MCU.
+        This method is a wrapper that calls all get automotive attributes and 
+        formats them in one dictionary. It provides the option to print the 
+        settings to the console for easy viewing, similar to the screen 
+        provided in the BIOS settings. This method uses the LPMCU protocol 
+        discussed in the README and documentation to get the automotive 
+        settings from the sequence MCU.
+
+        (Note numpy commenting format was used as this was the only way to get the 
+        docstring to render correctly in Sphinx)
         
-        Args:
-            output_to_console (bool): If True, print the settings to the console.
-        Returns:
-            dict: A dictionary containing the automotive settings of the device.
-                {
-                    "amd" : automotive_mode,
-                    "lpe" : low_power_enable,
-                    "sut" : start_up_timer,
-                    "sot" : soft_off_timer,
-                    "hot" : hard_off_timer,
-                    "sdv" : shutdown_voltage
-                }
-        Example:
-            >>> automotive_settings = my_auto.get_all_automotive_settings()
-            >>> print(automotive_settings)
-            {
-                "amd" : 1,
-                "lpe" : 1,
-                "sut" : 10,
-                "sot" : 5,
-                "hot" : 15,
-                "sdv" : 1200
-            }
+        Parameters
+        ----------
+        output_to_console : bool
+            If True, print the settings to the console.
+
+        Returns
+        -------
+        automotive_settings : dict
+            A dictionary containing the current automotive settings of the device.
+            The keys and their corresponding value types and meanings are:
+            
+            - ``'amd'`` (int): Current state of Automotive Mode (0 for enabled, 1 for disabled).
+            - ``'lpe'`` (int): Current state of Low Power Enable (0 for enabled, 1 for disabled).
+            - ``'sut'`` (int): Current setting for the Start Up Timer (Seconds).
+            - ``'sot'`` (int): Current setting for the Soft Off Timer (Seconds).
+            - ``'hot'`` (int): Current setting for the Hard Off Timer (Seconds).
+            - ``'sdv'`` (int): Current setting for the Shutdown Voltage (millivolts).
+
+        Examples
+        --------
+        >>> automotive_settings = my_auto.get_all_automotive_settings()
+        >>> print(automotive_settings)
+        {
+            "amd": 1,
+            "lpe": 1,
+            "sut": 10,
+            "sot": 5,
+            "hot": 15,
+            "sdv": 1200
+        }
         """
         automotive_settings_dict = {
             "amd" : self.get_automotive_mode(),
@@ -777,26 +789,48 @@ class AutomotiveHandler(OnLogicNuvotonManager):
         }
 
         if output_to_console:
-            for am_label, am_value in automotive_settings_dict.items():
-                print(f"{am_label} : {am_value}") 
+            for auto_label, auto_value in automotive_settings_dict.items():
+                print(f"{auto_label} : {auto_value}") 
         
         return automotive_settings_dict
     
     def set_all_automotive_settings(self, setting_inputs: list) -> list:
         """Sets all automotive settings based on a provided input list of desired states.
 
-        Args:
-            setting_input (list): A list of values corresponding to:
-                [amd, lpe, sut, sot, hot, sdv].
+        (Note numpy commenting format was used as this was the only way to get the 
+        docstring to render correctly in Sphinx)
 
-        Returns:
-            list: A list of results from each ``set_*`` method, particularly:
-                - set_automotive_mode
-                - set_low_power_enable
-                - set_start_up_timer
-                - set_soft_off_timer
-                - set_hard_off_timer
-                - set_shutdown_voltage
+        Args
+        ----
+        setting_input : list
+            A list of values corresponding to the desired states for:
+
+            - ``automotive_mode_enabled`` (int)
+            - ``low_power_enabled`` (int)
+            - ``start_up_timer_seconds`` (int)
+            - ``soft_off_timer_seconds`` (int)
+            - ``hard_off_timer_seconds`` (int)
+            - ``shutdown_voltage_mv`` (int)
+
+        Returns
+        -------
+        operation_results : list
+            A list of integer status codes from each ``set_*`` method, detailing 
+            the outcome of each operation. The items in this list correspond to:
+            
+            - Result of ``set_automotive_mode()`` (int): Status code for setting automotive mode.
+            - Result of ``set_low_power_enable()`` (int): Status code for enabling/disabling low power mode.
+            - Result of ``set_start_up_timer()`` (int): Status code for setting the start-up timer.
+            - Result of ``set_soft_off_timer()`` (int): Status code for setting the soft-off timer.
+            - Result of ``set_hard_off_timer()`` (int): Status code for setting the hard-off timer.
+            - Result of ``set_shutdown_voltage()`` (int): Status code for setting the shutdown voltage.
+
+        Example
+        -------
+        >>> setting_inputs = [1, 1, 10, 5, 15, 12000] # 12000mV for 12.0V
+        >>> results = my_auto.set_all_automotive_settings(setting_inputs)
+        >>> print(results)
+        [0, 0, 0, 0, 0, 0] 
         """
 
         if len(setting_inputs) != 6:

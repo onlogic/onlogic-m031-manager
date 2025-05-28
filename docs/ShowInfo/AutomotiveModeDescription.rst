@@ -2,8 +2,8 @@
 Automotive Timings
 ===================
 
-The ignition sense feature can be used to turn the Karbon unit on and off with a battery, 
-the vehicle's ignition (given proper electrical setup), or the use of a switch. Automotive timings and ignition sense can 
+The ignition sense feature can be used to turn OnLogic K52x units on and off with a battery, 
+a vehicle's ignition (given proper electrical setup), or the use of a switch. Automotive timings and ignition sense can 
 be toggled by bridging DC power to the IGN pin, see the diagram below. The proper sequence microcontroller settings must 
 be set before using either the BIOS settings, LPMCU tool, or this Python API. 
 
@@ -32,7 +32,7 @@ This program additionally administers the LPMCU communication protocol to the se
     ||  -  |  +  |  +  |  -  ||
     ---------------------------
 
-Note: The HX-52x does not have and ignition pin. So Automotive mode is not supported.
+Note: The HX-52x does not have and ignition pin. Therefore, automotive mode is not supported.
 
 **Command Summary**
 

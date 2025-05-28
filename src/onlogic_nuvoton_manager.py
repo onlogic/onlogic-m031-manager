@@ -682,6 +682,7 @@ class OnLogicNuvotonManager(ABC):
         Returns:
             bytes: The received command as a bytes object if the response is valid.
                    If the response is not valid, it returns an error code from StatusTypes.
+
         Raises:
             StatusTypes.RECV_UNEXPECTED_PAYLOAD_ERROR: If the payload length is not as expected.
             StatusTypes.RECV_PARTIAL_FRAME_VALIDATION_ERROR: If the partial frame validation fails.

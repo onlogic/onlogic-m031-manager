@@ -9,7 +9,7 @@ The outputs function as open drains. The inputs are high impedance.
 
    **DO Wet Contact Mode (Suitable for Inductive Load Operation)**
 
-   To function properly, the module **V+ should be connected to external power and ground**. The **high side of the load**
+   To function properly, the **V+ pin of the module should be connected to external power and ground**. The **high side of the load**
    should be connected to the **external power source**, and the **low side to the module DO pin**.
 
    * **Load current should not exceed 150 mA.**
@@ -17,7 +17,7 @@ The outputs function as open drains. The inputs are high impedance.
 
    **Setup required for Output:**
 
-   * 
+   * Vin + GND + Pull up (10kOhm acceptable) + Pin connections
 
    **DO Dry-Contact Mode**
 
@@ -25,7 +25,7 @@ The outputs function as open drains. The inputs are high impedance.
 
    **Setup required for Output:**
 
-   * 
+   * Shared GND + Pin Connections
 
 2. **Digital Input (DI) Configurations**
 
@@ -38,7 +38,7 @@ The outputs function as open drains. The inputs are high impedance.
 
    **Setup required for Input:**
 
-   * 
+   * Vin + GND + Pull up (10kOhm acceptable) + Pin connections
 
    **DI Dry Contact Mode**
 
@@ -49,7 +49,7 @@ The outputs function as open drains. The inputs are high impedance.
 
    **Setup required for Input:**
 
-   * 
+   * Shared GND + Pin Connections
 
 Operations are blocking but can be threaded to accomodate other processing operations, 
 though the DIO card can only retrieve one value at a time over UART.
