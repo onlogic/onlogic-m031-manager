@@ -1,5 +1,5 @@
 """
-Author: OnLogic
+Author: OnLogic - nick.hanna@onlogic.com, firmwareengineeringteam@onlogic.com
 For:    K-52x
 Title:  K-52x Automotive Driver Example with Logging
 

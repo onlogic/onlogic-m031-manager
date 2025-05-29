@@ -47,7 +47,7 @@ def main():
         print(SEPARATOR)
         print()
 
-        print(SEPARATOR)           v    
+        print(SEPARATOR)   
         print("TESTING DIGITAL INPUTS (get_di)")
         print(SEPARATOR)
         for i in range(8):
