@@ -1,5 +1,5 @@
 """
-Author: OnLogic
+Author: OnLogic - nick.hanna@onlogic.com, firmwareengineeringteam@onlogic.com
 For:    K/HX-52x
 Title:  K/HX-52x Automotive Mode and DIO Implementation
 

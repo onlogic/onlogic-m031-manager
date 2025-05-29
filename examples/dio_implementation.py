@@ -1,5 +1,5 @@
 """
-Author: OnLogic
+Author: OnLogic - nick.hanna@onlogic.com, firmwareengineeringteam@onlogic.com
 For:    K/HX-52x
 Title:  K/HX-52x DIO-Add in Card Python Driver
 
@@ -47,7 +47,7 @@ def main():
         print(SEPARATOR)
         print()
 
-        print(SEPARATOR)
+        print(SEPARATOR)           v    
         print("TESTING DIGITAL INPUTS (get_di)")
         print(SEPARATOR)
         for i in range(8):
@@ -146,6 +146,7 @@ def main():
         start_time = timeit.default_timer()
         print(my_dio.get_all_input_states())
         print(f"Elapsed Time [In Seconds] is : {timeit.default_timer() - start_time:.6f}")
+        print()
 
         print(SEPARATOR)
         print("TESTING GET ALL OUTPUT STATES")
@@ -153,6 +154,7 @@ def main():
         start_time = timeit.default_timer()
         print(my_dio.get_all_output_states())
         print(f"Elapsed Time [In Seconds] is : {timeit.default_timer() - start_time:.6f}")
+        print()
 
         print(SEPARATOR)
         print("TESTING SET ALL OUTPUT STATES")
@@ -160,6 +162,7 @@ def main():
         start_time = timeit.default_timer()
         print(my_dio.set_all_output_states([0, 1, 0, 1, 0, 1, 0, 1]))
         print(f"Elapsed Time [In Seconds] is : {timeit.default_timer() - start_time:.6f}")
+        print()
 
         print(SEPARATOR)
         print("TESTING GET ALL INPUT & OUTPUT STATES")
@@ -168,6 +171,7 @@ def main():
             start_time = timeit.default_timer()
             print(my_dio.get_all_io_states())
             print(f"Elapsed Time [In Seconds] is : {timeit.default_timer() - start_time:.6f}")
+        print()
 
     except KeyboardInterrupt:
         print("Operation terminated by user.")

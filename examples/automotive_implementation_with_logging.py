@@ -106,6 +106,18 @@ def main():
         print()
 
         print(SEPARATOR)
+        print("TESTING SET HARD OFF TIMER (set_hard_off_timer)")
+        print("SET HARD OFF RETURN CODE:", my_auto.set_hard_off_timer(61))
+        print(SEPARATOR)
+        print()
+
+        print(SEPARATOR)
+        print("TESTING GET HARD OFF TIMER (get_hard_off_timer)")
+        print("GET HARD OFF VALUE:", my_auto.get_hard_off_timer())
+        print(SEPARATOR)
+        print()
+
+        print(SEPARATOR)
         print("TESTING SET LOW VOLTAGE TIMER (set_low_voltage_timer)")
         print("SET LOW VOLTAGE RETURN CODE:", my_auto.set_low_voltage_timer(301))
         print(SEPARATOR)

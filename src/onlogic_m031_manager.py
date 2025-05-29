@@ -822,7 +822,7 @@ class OnLogicM031Manager(ABC):
         logger.debug(f"Recieved Command Bytes {frame}")
 
         _, payload_end, target_indices = self._isolate_target_indices(frame)
-        
+
         ret_val = self._validate_recieved_frame(frame, target_indices, BoundaryTypes.BYTE_VALUE_RANGE)  
         if ret_val is not StatusTypes.SUCCESS:
             return ret_val
