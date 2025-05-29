@@ -1,8 +1,8 @@
 '''
 pip install pytest pytest-order
-sudo /path/to/project/venv/bin/py.test -s -v -x test_dio_no_loopback.py
+sudo /path/to/project/venv/bin/py.test -s -v -x test_dio_inputs_no_loopback.py
 '''
-from OnLogicNuvotonManager import DioHandler
+from OnLogicM031Manager import DioHandler
 import pytest
 import re
 

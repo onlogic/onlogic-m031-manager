@@ -6,8 +6,8 @@ pip install pytest pytest-order
 sudo /path/to/project/venv/bin/py.test -s -v -x test_core.py
 '''
 
-from OnLogicNuvotonManager import DioHandler
-from OnLogicNuvotonManager import AutomotiveHandler
+from OnLogicM031Manager import DioHandler
+from OnLogicM031Manager import AutomotiveHandler
 import pytest
 import serial
 
