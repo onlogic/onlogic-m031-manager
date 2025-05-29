@@ -50,7 +50,7 @@ Setting up OnLogicM031Manager in a Python3 venv on Ubuntu 24.04 LTS
 
 Linux Ubuntu has enforced a stricter package management scheme in the new 24.04 LTS distribution to avoid interfering with global package dependencies used by the OS. 
 While this is a more stable way to administer Python on a system, it is also more complex to program in user environments. 
-To run package OnLogicM031Manager package in Ubuntu, it's best practice to use a venv.
+To run the OnLogicM031Manager package in Ubuntu, it's best practice to use a venv.
 
 * Creating a venv:
 
