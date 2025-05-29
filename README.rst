@@ -21,7 +21,9 @@ These steps serve as a guide for installing the OnLogicM031Manager directly into
    "cmd" or "powershell" are shorthands that can be entered in the Start Menu to pull them up.
 
 2. Clone Project and Navigate to the Project Directory:
-   In the parent directory where the project is to be run, run the following command in powershell to clone the repository::
+   In the parent directory where the project is to be run, run the following command in powershell to clone the repository
+  
+  .. code-block:: shell
 
     git clone git@github.com:onlogic/onlogic-m031-manager.git
    
