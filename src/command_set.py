@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-"""OnLogic Nuvoton Manager Constants
+"""OnLogic M031 Manager Constants
     
-This file contains constants used throughout the OnLogic Nuvoton Manager.
+This file contains constants used throughout the OnLogic M031 Manager.
 It includes protocol constants, command kinds, status types, target indices,
 and boundary types.
 

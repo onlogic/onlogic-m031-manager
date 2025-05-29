@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Administers the serial connection and communication protocol with the embedded MCUs.
 
-This module contains the OnLogicNuvotonManager, used to  control and communicate with the 
+This module contains the OnLogicM031Manager, used to  control and communicate with the 
 Nuvoton microcontrollers embedded in OnLogic HX/K5xx products. 
 """
 
@@ -17,7 +17,7 @@ from fastcrc import crc8
 
 logger = logging.getLogger(__name__)
 
-class OnLogicNuvotonManager(ABC):
+class OnLogicM031Manager(ABC):
     """Administers the serial connection and communication protocol with the embedded MCUs.
 
     This class provides tools to communicate with the microcontrollers embedded in the
@@ -74,7 +74,7 @@ class OnLogicNuvotonManager(ABC):
             set up (True) or not (False).
     """
     def __init__(self, serial_connection_label: str = None):
-        """Initialize the OnLogicNuvotonManager class.
+        """Initialize the OnLogicM031Manager class.
         
         Args:
             serial_connection_label (str): The label or device path for the serial
@@ -101,7 +101,7 @@ class OnLogicNuvotonManager(ABC):
         # TODO: Add FW version?
         repr_str = (
             f"Port: {self.serial_connection_label}\n"
-            #f"FW Version: {self.get_version()}\n"
+            #f"FW Version\n"
             f"PySerial Version: {serial.__version__}\n"
             f"Main Functionality Setup: {self.is_setup}\n"
             f"Command Set: {Kinds.__name__}\n"

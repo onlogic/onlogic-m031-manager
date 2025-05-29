@@ -1,8 +1,8 @@
 ================================
-OnLogicNuvotonManager Overview
+OnLogicM031Manager Overview
 ================================
 
-The OnLogicNuvotonManager provides a set of tools to interface with peripherals on Onlogic K/HX-52x series computers.
+The OnLogicM031Manager provides a set of tools to interface with peripherals on Onlogic K/HX-52x series computers.
 
 * On the HX-52x, it can send commands to the DIO add-in-card.
 * On the K-52x, it can send commands both to the DIO add-in-card and the sequence microcontroller to control automotive timings.
@@ -12,10 +12,10 @@ Setup Required
 
 You will need to install Python 3 prior to following this guide. You can download Python from python.org. Ensure Python and pip are added to your system's PATH during installation.
 
-Setting up OnLogicNuvotonManager on Windows (Native Install)
+Setting up OnLogicM031Manager on Windows (Native Install)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-These steps guide you through installing the OnLogicNuvotonManager directly into your system's Python environment.
+These steps guide you through installing the OnLogicM031Manager directly into your system's Python environment.
 
 1. Install Python 3:
    If you haven't already, download and install Python 3 from python.org.
@@ -25,10 +25,10 @@ These steps guide you through installing the OnLogicNuvotonManager directly into
    You can search for "cmd" or "powershell" in the Start Menu.
 
 3. Navigate to the Project Directory:
-   Use the ``cd`` command to change to the directory where you have the OnLogicNuvotonManager files (e.g., where the ``setup.py`` file is located).
+   Use the ``cd`` command to change to the directory where you have the OnLogicM031Manager files (e.g., where the ``setup.py`` file is located).
    Example::
 
-     cd path\to\OnLogicNuvotonManager
+     cd path\to\OnLogicM031Manager
 
 4. Install Required Packages:
    Run the following command to install the package. This will install it into your global Python site-packages or user-specific site-packages::
@@ -45,12 +45,12 @@ These steps guide you through installing the OnLogicNuvotonManager directly into
    from a Command Prompt or PowerShell that has been opened "As Administrator". To do this, right-click on the Command Prompt/PowerShell 
    icon and select "Run as administrator".
 
-Setting up OnLogicNuvotonManager in a Python3 venv on Ubuntu 24.04 LTS
+Setting up OnLogicM031Manager in a Python3 venv on Ubuntu 24.04 LTS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Linux Ubuntu has enforced a stricter package management scheme in the new 24.04 LTS distribution to avoid interfering with global package dependencies used by the OS. 
 While this is a more stable way to administer Python on a system, it is also more complex to program in user environments. 
-To run the package OnLogicNuvotonManager in Ubuntu, it's best practice to use a venv.
+To run the package OnLogicM031Manager in Ubuntu, it's best practice to use a venv.
 
 * Creating a venv:
 

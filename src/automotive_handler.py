@@ -9,12 +9,12 @@ docstrings below.
 import time
 import serial
 import logging
-from .onlogic_nuvoton_manager import OnLogicNuvotonManager
+from .onlogic_m031_manager import OnLogicM031Manager
 from .command_set import ProtocolConstants, Kinds, StatusTypes, TargetIndices, BoundaryTypes
 
 logger = logging.getLogger(__name__)
 
-class AutomotiveHandler(OnLogicNuvotonManager):
+class AutomotiveHandler(OnLogicM031Manager):
     """AutomotiveHandler class for managing automotive features of the OnLogic Nuvoton MCU.
 
     This class provides methods to interact with the automotive features of the OnLogic Nuvoton MCU.
@@ -70,7 +70,7 @@ class AutomotiveHandler(OnLogicNuvotonManager):
 
         If it returns '\a' successively within a proper time interval, 
         the correct port is found. If not, the port is not correct or the MCU is not connected.
-        It is inherited from the OnLogicNuvotonManager class.
+        It is inherited from the OnLogicM031Manager class.
 
         Args:
             None

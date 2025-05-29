@@ -23,7 +23,7 @@ NOTE:
 """
 
 import timeit
-from OnLogicNuvotonManager import DioHandler
+from OnLogicM031Manager import DioHandler
 
 SEPARATOR = "=" * 30
 

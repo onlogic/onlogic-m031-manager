@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-"""An optional logging utility for the OnLogic Nuvoton Manager.
+"""An optional logging utility for the OnLogic M031 Manager.
 
 This module provides the optional LoggingUtil class, which is designed to 
-configure and manage logging for the OnLogic Nuvoton Manager. 
+configure and manage logging for the OnLogic M031 Manager. 
 
 Note:
-    it is completely optional and not required for the use of the OnLogic Nuvoton Manager,
+    it is completely optional and not required for the use of the OnLogic M031 Manager,
     but is provided for convenience and ease of use. The user can make create their own custom
     logger if desired.
 """
@@ -16,7 +16,7 @@ from datetime import datetime
 from typing import Optional
 
 class LoggingUtil():
-    """LoggingUtil class for configuring logging in the OnLogic Nuvoton Manager.
+    """LoggingUtil class for configuring logging in the OnLogic M031 Manager.
 
     This class provides methods to set up a logger with a specified name, level, and handlers.
 

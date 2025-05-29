@@ -1,0 +1,647 @@
+[2025-05-28 19:16:41,992 INFO onlogic_m031_manager.py:139 -> list_all_available_ports()] /dev/ttyACM0 - HX52x USB
+[2025-05-28 19:16:41,993 INFO onlogic_m031_manager.py:139 -> list_all_available_ports()] /dev/ttyS0 - n/a
+[2025-05-28 19:16:41,993 INFO onlogic_m031_manager.py:139 -> list_all_available_ports()] /dev/ttyS1 - n/a
+[2025-05-28 19:16:41,993 INFO onlogic_m031_manager.py:139 -> list_all_available_ports()] /dev/ttyS2 - n/a
+[2025-05-28 19:16:41,993 INFO onlogic_m031_manager.py:139 -> list_all_available_ports()] /dev/ttyS3 - n/a
+[2025-05-28 19:16:41,993 INFO onlogic_m031_manager.py:139 -> list_all_available_ports()] /dev/ttyS4 - n/a
+[2025-05-28 19:16:41,993 INFO onlogic_m031_manager.py:139 -> list_all_available_ports()] /dev/ttyS5 - n/a
+[2025-05-28 19:16:41,993 INFO onlogic_m031_manager.py:139 -> list_all_available_ports()] /dev/ttyS6 - n/a
+[2025-05-28 19:16:41,993 INFO onlogic_m031_manager.py:139 -> list_all_available_ports()] /dev/ttyS7 - n/a
+[2025-05-28 19:16:41,993 INFO onlogic_m031_manager.py:139 -> list_all_available_ports()] /dev/ttyS8 - n/a
+[2025-05-28 19:16:41,993 INFO onlogic_m031_manager.py:139 -> list_all_available_ports()] /dev/ttyS9 - n/a
+[2025-05-28 19:16:41,993 INFO onlogic_m031_manager.py:139 -> list_all_available_ports()] /dev/ttyS10 - n/a
+[2025-05-28 19:16:41,993 INFO onlogic_m031_manager.py:139 -> list_all_available_ports()] /dev/ttyS11 - n/a
+[2025-05-28 19:16:41,993 INFO onlogic_m031_manager.py:139 -> list_all_available_ports()] /dev/ttyS12 - n/a
+[2025-05-28 19:16:41,993 INFO onlogic_m031_manager.py:139 -> list_all_available_ports()] /dev/ttyS13 - n/a
+[2025-05-28 19:16:41,993 INFO onlogic_m031_manager.py:139 -> list_all_available_ports()] /dev/ttyS14 - n/a
+[2025-05-28 19:16:41,993 INFO onlogic_m031_manager.py:139 -> list_all_available_ports()] /dev/ttyS15 - n/a
+[2025-05-28 19:16:41,993 INFO onlogic_m031_manager.py:139 -> list_all_available_ports()] /dev/ttyS16 - n/a
+[2025-05-28 19:16:41,993 INFO onlogic_m031_manager.py:139 -> list_all_available_ports()] /dev/ttyS17 - n/a
+[2025-05-28 19:16:41,993 INFO onlogic_m031_manager.py:139 -> list_all_available_ports()] /dev/ttyS18 - n/a
+[2025-05-28 19:16:41,993 INFO onlogic_m031_manager.py:139 -> list_all_available_ports()] /dev/ttyS19 - n/a
+[2025-05-28 19:16:41,993 INFO onlogic_m031_manager.py:139 -> list_all_available_ports()] /dev/ttyS20 - n/a
+[2025-05-28 19:16:41,993 INFO onlogic_m031_manager.py:139 -> list_all_available_ports()] /dev/ttyS21 - n/a
+[2025-05-28 19:16:41,993 INFO onlogic_m031_manager.py:139 -> list_all_available_ports()] /dev/ttyS22 - n/a
+[2025-05-28 19:16:41,993 INFO onlogic_m031_manager.py:139 -> list_all_available_ports()] /dev/ttyS23 - n/a
+[2025-05-28 19:16:41,993 INFO onlogic_m031_manager.py:139 -> list_all_available_ports()] /dev/ttyS24 - n/a
+[2025-05-28 19:16:41,993 INFO onlogic_m031_manager.py:139 -> list_all_available_ports()] /dev/ttyS25 - n/a
+[2025-05-28 19:16:41,993 INFO onlogic_m031_manager.py:139 -> list_all_available_ports()] /dev/ttyS26 - n/a
+[2025-05-28 19:16:41,993 INFO onlogic_m031_manager.py:139 -> list_all_available_ports()] /dev/ttyS27 - n/a
+[2025-05-28 19:16:41,993 INFO onlogic_m031_manager.py:139 -> list_all_available_ports()] /dev/ttyS28 - n/a
+[2025-05-28 19:16:41,993 INFO onlogic_m031_manager.py:139 -> list_all_available_ports()] /dev/ttyS29 - n/a
+[2025-05-28 19:16:41,993 INFO onlogic_m031_manager.py:139 -> list_all_available_ports()] /dev/ttyS30 - n/a
+[2025-05-28 19:16:41,993 INFO onlogic_m031_manager.py:139 -> list_all_available_ports()] /dev/ttyS31 - n/a
+[2025-05-28 19:16:41,996 INFO onlogic_m031_manager.py:171 -> _get_cdc_device_port()] NOTE | DIO CARD FOUND ON:
+Port: /dev/ttyACM0 - HX52x USB
+Port Location: 3-8:1.0
+Hardware ID: USB VID:PID=353F:A105 LOCATION=3-8:1.0
+Device: /dev/ttyACM0
+[2025-05-28 19:16:41,997 DEBUG onlogic_m031_manager.py:263 -> _mcu_connection_check()] b'\x07'
+[2025-05-28 19:16:42,000 DEBUG onlogic_m031_manager.py:263 -> _mcu_connection_check()] b'\x07'
+[2025-05-28 19:16:42,003 DEBUG onlogic_m031_manager.py:263 -> _mcu_connection_check()] b'\x07'
+[2025-05-28 19:16:42,006 DEBUG onlogic_m031_manager.py:263 -> _mcu_connection_check()] b'\x07'
+[2025-05-28 19:16:42,010 DEBUG onlogic_m031_manager.py:263 -> _mcu_connection_check()] b'\x07'
+[2025-05-28 19:16:42,013 INFO onlogic_m031_manager.py:271 -> _mcu_connection_check()] Interface Found
+[2025-05-28 19:16:42,173 INFO onlogic_m031_manager.py:579 -> claim()] Serial Port Claimed
+[2025-05-28 19:16:42,173 INFO onlogic_m031_manager.py:634 -> _construct_command()] Constructed Command b'\x01\t\x00\x03'
+[2025-05-28 19:16:42,214 DEBUG onlogic_m031_manager.py:653 -> _send_command()] Length of Command to send: 4
+[2025-05-28 19:16:42,214 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 1
+[2025-05-28 19:16:42,214 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 9
+[2025-05-28 19:16:42,215 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:42,216 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 3
+[2025-05-28 19:16:42,216 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-28 19:16:42,217 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\xaa'
+[2025-05-28 19:16:42,217 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x03'
+[2025-05-28 19:16:42,218 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x03'
+[2025-05-28 19:16:42,218 DEBUG onlogic_m031_manager.py:708 -> _receive_command()] Validating Partial Frame [b'\x01', b'\xaa', b'\x03', b'\x03']
+[2025-05-28 19:16:42,218 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:42,219 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x03'
+[2025-05-28 19:16:42,219 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x03'
+[2025-05-28 19:16:42,219 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x07'
+[2025-05-28 19:16:42,219 INFO onlogic_m031_manager.py:727 -> _receive_command()] Received Command List [b'\x01', b'\xaa', b'\x03', b'\x03', b'\x00', b'\x03', b'\x03', b'\x07']
+[2025-05-28 19:16:42,246 DEBUG onlogic_m031_manager.py:822 -> get_version()] Recieved Command Bytes b'\x01\xaa\x03\x03\x00\x03\x03\x07'
+[2025-05-28 19:16:42,246 DEBUG onlogic_m031_manager.py:425 -> _check_crc()] CALCULATED 170 : EXISTING 170
+[2025-05-28 19:16:42,246 DEBUG onlogic_m031_manager.py:454 -> _within_valid_range()] Indices to check [4, 5, 6]
+[2025-05-28 19:16:42,246 DEBUG onlogic_m031_manager.py:516 -> _validate_recieved_frame()] Validated frame successfully: b'\x01\xaa\x03\x03\x00\x03\x03\x07'
+[2025-05-28 19:16:42,246 INFO onlogic_m031_manager.py:634 -> _construct_command()] Constructed Command b'\x01\x00\x01\x07\x00'
+[2025-05-28 19:16:42,288 DEBUG onlogic_m031_manager.py:653 -> _send_command()] Length of Command to send: 5
+[2025-05-28 19:16:42,288 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 1
+[2025-05-28 19:16:42,289 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:42,289 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 1
+[2025-05-28 19:16:42,290 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 7
+[2025-05-28 19:16:42,291 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:42,313 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-28 19:16:42,313 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:42,313 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-28 19:16:42,314 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x07'
+[2025-05-28 19:16:42,314 DEBUG onlogic_m031_manager.py:708 -> _receive_command()] Validating Partial Frame [b'\x01', b'\x00', b'\x01', b'\x07']
+[2025-05-28 19:16:42,315 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:42,315 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x07'
+[2025-05-28 19:16:42,315 INFO onlogic_m031_manager.py:727 -> _receive_command()] Received Command List [b'\x01', b'\x00', b'\x01', b'\x07', b'\x00', b'\x07']
+[2025-05-28 19:16:42,345 DEBUG automotive_handler.py:215 -> set_automotive_mode()] Recieved Command Bytes: b'\x01\x00\x01\x07\x00\x07'
+[2025-05-28 19:16:42,346 DEBUG onlogic_m031_manager.py:425 -> _check_crc()] CALCULATED 0 : EXISTING 0
+[2025-05-28 19:16:42,346 DEBUG onlogic_m031_manager.py:516 -> _validate_recieved_frame()] Validated frame successfully: b'\x01\x00\x01\x07\x00\x07'
+[2025-05-28 19:16:42,346 INFO onlogic_m031_manager.py:634 -> _construct_command()] Constructed Command b'\x01\x12\x00\x06'
+[2025-05-28 19:16:42,387 DEBUG onlogic_m031_manager.py:653 -> _send_command()] Length of Command to send: 4
+[2025-05-28 19:16:42,387 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 1
+[2025-05-28 19:16:42,388 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 18
+[2025-05-28 19:16:42,388 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:42,389 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 6
+[2025-05-28 19:16:42,390 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-28 19:16:42,391 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x15'
+[2025-05-28 19:16:42,391 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-28 19:16:42,392 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x06'
+[2025-05-28 19:16:42,392 DEBUG onlogic_m031_manager.py:708 -> _receive_command()] Validating Partial Frame [b'\x01', b'\x15', b'\x01', b'\x06']
+[2025-05-28 19:16:42,392 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:42,393 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x07'
+[2025-05-28 19:16:42,393 INFO onlogic_m031_manager.py:727 -> _receive_command()] Received Command List [b'\x01', b'\x15', b'\x01', b'\x06', b'\x00', b'\x07']
+[2025-05-28 19:16:42,420 DEBUG automotive_handler.py:169 -> get_automotive_mode()] Recieved Command Bytes: b'\x01\x15\x01\x06\x00\x07'
+[2025-05-28 19:16:42,421 DEBUG onlogic_m031_manager.py:425 -> _check_crc()] CALCULATED 21 : EXISTING 21
+[2025-05-28 19:16:42,421 DEBUG onlogic_m031_manager.py:516 -> _validate_recieved_frame()] Validated frame successfully: b'\x01\x15\x01\x06\x00\x07'
+[2025-05-28 19:16:42,421 INFO onlogic_m031_manager.py:634 -> _construct_command()] Constructed Command b'\x01\xd6\x01\t\x00'
+[2025-05-28 19:16:42,465 DEBUG onlogic_m031_manager.py:653 -> _send_command()] Length of Command to send: 5
+[2025-05-28 19:16:42,465 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 1
+[2025-05-28 19:16:42,466 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 214
+[2025-05-28 19:16:42,466 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 1
+[2025-05-28 19:16:42,468 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 9
+[2025-05-28 19:16:42,469 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:42,491 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-28 19:16:42,491 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\xd6'
+[2025-05-28 19:16:42,492 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-28 19:16:42,492 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\t'
+[2025-05-28 19:16:42,492 DEBUG onlogic_m031_manager.py:708 -> _receive_command()] Validating Partial Frame [b'\x01', b'\xd6', b'\x01', b'\t']
+[2025-05-28 19:16:42,493 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:42,493 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x07'
+[2025-05-28 19:16:42,493 INFO onlogic_m031_manager.py:727 -> _receive_command()] Received Command List [b'\x01', b'\xd6', b'\x01', b'\t', b'\x00', b'\x07']
+[2025-05-28 19:16:42,521 DEBUG automotive_handler.py:296 -> set_low_power_enable()] Recieved Command Bytes: b'\x01\xd6\x01\t\x00\x07'
+[2025-05-28 19:16:42,521 DEBUG onlogic_m031_manager.py:425 -> _check_crc()] CALCULATED 214 : EXISTING 214
+[2025-05-28 19:16:42,521 DEBUG onlogic_m031_manager.py:516 -> _validate_recieved_frame()] Validated frame successfully: b'\x01\xd6\x01\t\x00\x07'
+[2025-05-28 19:16:42,522 INFO onlogic_m031_manager.py:634 -> _construct_command()] Constructed Command b'\x018\x00\x08'
+[2025-05-28 19:16:42,578 DEBUG onlogic_m031_manager.py:653 -> _send_command()] Length of Command to send: 4
+[2025-05-28 19:16:42,578 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 1
+[2025-05-28 19:16:42,579 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 56
+[2025-05-28 19:16:42,580 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:42,580 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 8
+[2025-05-28 19:16:42,581 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-28 19:16:42,582 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\xc3'
+[2025-05-28 19:16:42,582 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-28 19:16:42,583 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x08'
+[2025-05-28 19:16:42,583 DEBUG onlogic_m031_manager.py:708 -> _receive_command()] Validating Partial Frame [b'\x01', b'\xc3', b'\x01', b'\x08']
+[2025-05-28 19:16:42,583 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:42,584 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x07'
+[2025-05-28 19:16:42,584 INFO onlogic_m031_manager.py:727 -> _receive_command()] Received Command List [b'\x01', b'\xc3', b'\x01', b'\x08', b'\x00', b'\x07']
+[2025-05-28 19:16:42,610 DEBUG automotive_handler.py:253 -> get_low_power_enable()] Recieved Command Bytes: b'\x01\xc3\x01\x08\x00\x07'
+[2025-05-28 19:16:42,610 DEBUG onlogic_m031_manager.py:425 -> _check_crc()] CALCULATED 195 : EXISTING 195
+[2025-05-28 19:16:42,611 DEBUG onlogic_m031_manager.py:516 -> _validate_recieved_frame()] Validated frame successfully: b'\x01\xc3\x01\x08\x00\x07'
+[2025-05-28 19:16:42,611 INFO onlogic_m031_manager.py:634 -> _construct_command()] Constructed Command b'\x01\xd7\x08\x0b\x0c\x00\x00\x00\x00\x00\x00\x00'
+[2025-05-28 19:16:42,652 DEBUG onlogic_m031_manager.py:653 -> _send_command()] Length of Command to send: 12
+[2025-05-28 19:16:42,652 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 1
+[2025-05-28 19:16:42,653 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 215
+[2025-05-28 19:16:42,654 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 8
+[2025-05-28 19:16:42,654 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 11
+[2025-05-28 19:16:42,655 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 12
+[2025-05-28 19:16:42,656 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:42,656 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:42,657 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:42,658 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:42,658 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:42,659 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:42,660 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:42,682 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-28 19:16:42,683 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\xd7'
+[2025-05-28 19:16:42,683 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x08'
+[2025-05-28 19:16:42,684 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x0b'
+[2025-05-28 19:16:42,684 DEBUG onlogic_m031_manager.py:708 -> _receive_command()] Validating Partial Frame [b'\x01', b'\xd7', b'\x08', b'\x0b']
+[2025-05-28 19:16:42,684 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x0c'
+[2025-05-28 19:16:42,684 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:42,685 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:42,685 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:42,686 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:42,686 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:42,686 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:42,687 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:42,687 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x07'
+[2025-05-28 19:16:42,687 INFO onlogic_m031_manager.py:727 -> _receive_command()] Received Command List [b'\x01', b'\xd7', b'\x08', b'\x0b', b'\x0c', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x07']
+[2025-05-28 19:16:42,715 DEBUG automotive_handler.py:385 -> set_start_up_timer()] Recieved Command Bytes: b'\x01\xd7\x08\x0b\x0c\x00\x00\x00\x00\x00\x00\x00\x07'
+[2025-05-28 19:16:42,715 DEBUG onlogic_m031_manager.py:425 -> _check_crc()] CALCULATED 215 : EXISTING 215
+[2025-05-28 19:16:42,715 DEBUG onlogic_m031_manager.py:454 -> _within_valid_range()] Indices to check [8, 9, 10, 11]
+[2025-05-28 19:16:42,715 DEBUG onlogic_m031_manager.py:516 -> _validate_recieved_frame()] Validated frame successfully: b'\x01\xd7\x08\x0b\x0c\x00\x00\x00\x00\x00\x00\x00\x07'
+[2025-05-28 19:16:42,715 INFO onlogic_m031_manager.py:634 -> _construct_command()] Constructed Command b'\x016\x00\n'
+[2025-05-28 19:16:42,758 DEBUG onlogic_m031_manager.py:653 -> _send_command()] Length of Command to send: 4
+[2025-05-28 19:16:42,758 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 1
+[2025-05-28 19:16:42,759 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 54
+[2025-05-28 19:16:42,760 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:42,760 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 10
+[2025-05-28 19:16:42,761 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-28 19:16:42,762 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\xae'
+[2025-05-28 19:16:42,762 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x08'
+[2025-05-28 19:16:42,763 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\n'
+[2025-05-28 19:16:42,763 DEBUG onlogic_m031_manager.py:708 -> _receive_command()] Validating Partial Frame [b'\x01', b'\xae', b'\x08', b'\n']
+[2025-05-28 19:16:42,763 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x0c'
+[2025-05-28 19:16:42,764 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:42,764 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:42,765 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:42,765 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:42,766 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:42,766 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:42,767 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:42,767 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x07'
+[2025-05-28 19:16:42,767 INFO onlogic_m031_manager.py:727 -> _receive_command()] Received Command List [b'\x01', b'\xae', b'\x08', b'\n', b'\x0c', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x07']
+[2025-05-28 19:16:42,796 DEBUG automotive_handler.py:334 -> get_start_up_timer()] Recieved Command Bytes: b'\x01\xae\x08\n\x0c\x00\x00\x00\x00\x00\x00\x00\x07'
+[2025-05-28 19:16:42,797 DEBUG onlogic_m031_manager.py:425 -> _check_crc()] CALCULATED 174 : EXISTING 174
+[2025-05-28 19:16:42,797 DEBUG onlogic_m031_manager.py:454 -> _within_valid_range()] Indices to check [4, 5, 6, 7, 8, 9, 10, 11]
+[2025-05-28 19:16:42,797 DEBUG onlogic_m031_manager.py:516 -> _validate_recieved_frame()] Validated frame successfully: b'\x01\xae\x08\n\x0c\x00\x00\x00\x00\x00\x00\x00\x07'
+[2025-05-28 19:16:42,797 INFO onlogic_m031_manager.py:634 -> _construct_command()] Constructed Command b'\x01~\x08\r3\x00\x00\x00\x00\x00\x00\x00'
+[2025-05-28 19:16:42,838 DEBUG onlogic_m031_manager.py:653 -> _send_command()] Length of Command to send: 12
+[2025-05-28 19:16:42,839 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 1
+[2025-05-28 19:16:42,839 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 126
+[2025-05-28 19:16:42,840 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 8
+[2025-05-28 19:16:42,841 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 13
+[2025-05-28 19:16:42,841 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 51
+[2025-05-28 19:16:42,842 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:42,843 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:42,843 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:42,844 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:42,845 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:42,845 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:42,846 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:42,868 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-28 19:16:42,869 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'~'
+[2025-05-28 19:16:42,869 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x08'
+[2025-05-28 19:16:42,869 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\r'
+[2025-05-28 19:16:42,869 DEBUG onlogic_m031_manager.py:708 -> _receive_command()] Validating Partial Frame [b'\x01', b'~', b'\x08', b'\r']
+[2025-05-28 19:16:42,870 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'3'
+[2025-05-28 19:16:42,870 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:42,871 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:42,871 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:42,872 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:42,872 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:42,873 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:42,873 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:42,874 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x07'
+[2025-05-28 19:16:42,874 INFO onlogic_m031_manager.py:727 -> _receive_command()] Received Command List [b'\x01', b'~', b'\x08', b'\r', b'3', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x07']
+[2025-05-28 19:16:42,901 DEBUG automotive_handler.py:474 -> set_soft_off_timer()] Recieved Command Bytes: b'\x01~\x08\r3\x00\x00\x00\x00\x00\x00\x00\x07'
+[2025-05-28 19:16:42,901 DEBUG onlogic_m031_manager.py:425 -> _check_crc()] CALCULATED 126 : EXISTING 126
+[2025-05-28 19:16:42,901 DEBUG onlogic_m031_manager.py:454 -> _within_valid_range()] Indices to check [8, 9, 10, 11]
+[2025-05-28 19:16:42,901 DEBUG onlogic_m031_manager.py:516 -> _validate_recieved_frame()] Validated frame successfully: b'\x01~\x08\r3\x00\x00\x00\x00\x00\x00\x00\x07'
+[2025-05-28 19:16:42,901 INFO onlogic_m031_manager.py:634 -> _construct_command()] Constructed Command b'\x01$\x00\x0c'
+[2025-05-28 19:16:42,950 DEBUG onlogic_m031_manager.py:653 -> _send_command()] Length of Command to send: 4
+[2025-05-28 19:16:42,950 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 1
+[2025-05-28 19:16:42,951 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 36
+[2025-05-28 19:16:42,951 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:42,952 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 12
+[2025-05-28 19:16:42,953 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-28 19:16:42,954 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x07'
+[2025-05-28 19:16:42,954 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x08'
+[2025-05-28 19:16:42,954 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x0c'
+[2025-05-28 19:16:42,954 DEBUG onlogic_m031_manager.py:708 -> _receive_command()] Validating Partial Frame [b'\x01', b'\x07', b'\x08', b'\x0c']
+[2025-05-28 19:16:42,955 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'3'
+[2025-05-28 19:16:42,955 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:42,955 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:42,956 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:42,956 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:42,956 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:42,957 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:42,957 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:42,958 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x07'
+[2025-05-28 19:16:42,958 INFO onlogic_m031_manager.py:727 -> _receive_command()] Received Command List [b'\x01', b'\x07', b'\x08', b'\x0c', b'3', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x07']
+[2025-05-28 19:16:42,987 DEBUG automotive_handler.py:423 -> get_soft_off_timer()] Recieved Command Bytes: b'\x01\x07\x08\x0c3\x00\x00\x00\x00\x00\x00\x00\x07'
+[2025-05-28 19:16:42,988 DEBUG onlogic_m031_manager.py:425 -> _check_crc()] CALCULATED 7 : EXISTING 7
+[2025-05-28 19:16:42,988 DEBUG onlogic_m031_manager.py:454 -> _within_valid_range()] Indices to check [4, 5, 6, 7, 8, 9, 10, 11]
+[2025-05-28 19:16:42,988 DEBUG onlogic_m031_manager.py:516 -> _validate_recieved_frame()] Validated frame successfully: b'\x01\x07\x08\x0c3\x00\x00\x00\x00\x00\x00\x00\x07'
+[2025-05-28 19:16:42,989 INFO onlogic_m031_manager.py:634 -> _construct_command()] Constructed Command b'\x01\xc3\x08\x11-\x01\x00\x00\x00\x00\x00\x00'
+[2025-05-28 19:16:43,030 DEBUG onlogic_m031_manager.py:653 -> _send_command()] Length of Command to send: 12
+[2025-05-28 19:16:43,030 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 1
+[2025-05-28 19:16:43,031 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 195
+[2025-05-28 19:16:43,031 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 8
+[2025-05-28 19:16:43,032 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 17
+[2025-05-28 19:16:43,033 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 45
+[2025-05-28 19:16:43,034 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 1
+[2025-05-28 19:16:43,035 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:43,036 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:43,037 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:43,038 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:43,038 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:43,039 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:43,061 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-28 19:16:43,062 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\xc3'
+[2025-05-28 19:16:43,062 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x08'
+[2025-05-28 19:16:43,062 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x11'
+[2025-05-28 19:16:43,062 DEBUG onlogic_m031_manager.py:708 -> _receive_command()] Validating Partial Frame [b'\x01', b'\xc3', b'\x08', b'\x11']
+[2025-05-28 19:16:43,063 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'-'
+[2025-05-28 19:16:43,063 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-28 19:16:43,064 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:43,064 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:43,065 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:43,065 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:43,065 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:43,065 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:43,066 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x07'
+[2025-05-28 19:16:43,066 INFO onlogic_m031_manager.py:727 -> _receive_command()] Received Command List [b'\x01', b'\xc3', b'\x08', b'\x11', b'-', b'\x01', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x07']
+[2025-05-28 19:16:43,094 DEBUG automotive_handler.py:647 -> set_low_voltage_timer()] Recieved Command Bytes: b'\x01\xc3\x08\x11-\x01\x00\x00\x00\x00\x00\x00\x07'
+[2025-05-28 19:16:43,094 DEBUG onlogic_m031_manager.py:425 -> _check_crc()] CALCULATED 195 : EXISTING 195
+[2025-05-28 19:16:43,094 DEBUG onlogic_m031_manager.py:454 -> _within_valid_range()] Indices to check [8, 9, 10, 11]
+[2025-05-28 19:16:43,094 DEBUG onlogic_m031_manager.py:516 -> _validate_recieved_frame()] Validated frame successfully: b'\x01\xc3\x08\x11-\x01\x00\x00\x00\x00\x00\x00\x07'
+[2025-05-28 19:16:43,095 INFO onlogic_m031_manager.py:634 -> _construct_command()] Constructed Command b'\x01p\x00\x10'
+[2025-05-28 19:16:43,139 DEBUG onlogic_m031_manager.py:653 -> _send_command()] Length of Command to send: 4
+[2025-05-28 19:16:43,139 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 1
+[2025-05-28 19:16:43,140 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 112
+[2025-05-28 19:16:43,140 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:43,141 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 16
+[2025-05-28 19:16:43,142 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-28 19:16:43,143 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\xba'
+[2025-05-28 19:16:43,143 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x08'
+[2025-05-28 19:16:43,144 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x10'
+[2025-05-28 19:16:43,144 DEBUG onlogic_m031_manager.py:708 -> _receive_command()] Validating Partial Frame [b'\x01', b'\xba', b'\x08', b'\x10']
+[2025-05-28 19:16:43,144 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'-'
+[2025-05-28 19:16:43,145 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-28 19:16:43,145 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:43,145 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:43,145 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:43,146 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:43,146 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:43,147 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:43,148 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x07'
+[2025-05-28 19:16:43,148 INFO onlogic_m031_manager.py:727 -> _receive_command()] Received Command List [b'\x01', b'\xba', b'\x08', b'\x10', b'-', b'\x01', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x07']
+[2025-05-28 19:16:43,175 DEBUG automotive_handler.py:597 -> get_low_voltage_timer()] Recieved Command Bytes: b'\x01\xba\x08\x10-\x01\x00\x00\x00\x00\x00\x00\x07'
+[2025-05-28 19:16:43,175 DEBUG onlogic_m031_manager.py:425 -> _check_crc()] CALCULATED 186 : EXISTING 186
+[2025-05-28 19:16:43,175 DEBUG onlogic_m031_manager.py:454 -> _within_valid_range()] Indices to check [4, 5, 6, 7, 8, 9, 10, 11]
+[2025-05-28 19:16:43,175 DEBUG onlogic_m031_manager.py:516 -> _validate_recieved_frame()] Validated frame successfully: b'\x01\xba\x08\x10-\x01\x00\x00\x00\x00\x00\x00\x07'
+[2025-05-28 19:16:43,175 INFO onlogic_m031_manager.py:634 -> _construct_command()] Constructed Command b'\x01\x9e\x08\x13Y\x02\x00\x00\x00\x00\x00\x00'
+[2025-05-28 19:16:43,217 DEBUG onlogic_m031_manager.py:653 -> _send_command()] Length of Command to send: 12
+[2025-05-28 19:16:43,217 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 1
+[2025-05-28 19:16:43,217 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 158
+[2025-05-28 19:16:43,218 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 8
+[2025-05-28 19:16:43,219 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 19
+[2025-05-28 19:16:43,220 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 89
+[2025-05-28 19:16:43,221 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 2
+[2025-05-28 19:16:43,222 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:43,222 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:43,223 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:43,224 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:43,225 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:43,226 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:43,248 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-28 19:16:43,248 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\xbc'
+[2025-05-28 19:16:43,249 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x04'
+[2025-05-28 19:16:43,249 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x13'
+[2025-05-28 19:16:43,249 DEBUG onlogic_m031_manager.py:708 -> _receive_command()] Validating Partial Frame [b'\x01', b'\xbc', b'\x04', b'\x13']
+[2025-05-28 19:16:43,249 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'Y'
+[2025-05-28 19:16:43,250 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x02'
+[2025-05-28 19:16:43,250 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:43,250 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:43,251 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x07'
+[2025-05-28 19:16:43,251 INFO onlogic_m031_manager.py:727 -> _receive_command()] Received Command List [b'\x01', b'\xbc', b'\x04', b'\x13', b'Y', b'\x02', b'\x00', b'\x00', b'\x07']
+[2025-05-28 19:16:43,279 DEBUG automotive_handler.py:734 -> set_shutdown_voltage()] Recieved Command Bytes: b'\x01\xbc\x04\x13Y\x02\x00\x00\x07'
+[2025-05-28 19:16:43,280 DEBUG onlogic_m031_manager.py:425 -> _check_crc()] CALCULATED 188 : EXISTING 188
+[2025-05-28 19:16:43,280 DEBUG onlogic_m031_manager.py:454 -> _within_valid_range()] Indices to check [4, 5, 6, 7]
+[2025-05-28 19:16:43,280 DEBUG onlogic_m031_manager.py:516 -> _validate_recieved_frame()] Validated frame successfully: b'\x01\xbc\x04\x13Y\x02\x00\x00\x07'
+[2025-05-28 19:16:43,280 INFO onlogic_m031_manager.py:634 -> _construct_command()] Constructed Command b'\x01~\x00\x12'
+[2025-05-28 19:16:43,322 DEBUG onlogic_m031_manager.py:653 -> _send_command()] Length of Command to send: 4
+[2025-05-28 19:16:43,322 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 1
+[2025-05-28 19:16:43,323 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 126
+[2025-05-28 19:16:43,324 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:43,325 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 18
+[2025-05-28 19:16:43,325 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-28 19:16:43,326 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\xde'
+[2025-05-28 19:16:43,326 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x04'
+[2025-05-28 19:16:43,327 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x12'
+[2025-05-28 19:16:43,327 DEBUG onlogic_m031_manager.py:708 -> _receive_command()] Validating Partial Frame [b'\x01', b'\xde', b'\x04', b'\x12']
+[2025-05-28 19:16:43,327 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'Y'
+[2025-05-28 19:16:43,328 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x02'
+[2025-05-28 19:16:43,328 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:43,328 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:43,329 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x07'
+[2025-05-28 19:16:43,329 INFO onlogic_m031_manager.py:727 -> _receive_command()] Received Command List [b'\x01', b'\xde', b'\x04', b'\x12', b'Y', b'\x02', b'\x00', b'\x00', b'\x07']
+[2025-05-28 19:16:43,358 DEBUG automotive_handler.py:684 -> get_shutdown_voltage()] Recieved Command Bytes: b'\x01\xde\x04\x12Y\x02\x00\x00\x07'
+[2025-05-28 19:16:43,358 DEBUG onlogic_m031_manager.py:425 -> _check_crc()] CALCULATED 222 : EXISTING 222
+[2025-05-28 19:16:43,358 DEBUG onlogic_m031_manager.py:454 -> _within_valid_range()] Indices to check [4, 5, 6, 7]
+[2025-05-28 19:16:43,358 DEBUG onlogic_m031_manager.py:516 -> _validate_recieved_frame()] Validated frame successfully: b'\x01\xde\x04\x12Y\x02\x00\x00\x07'
+[2025-05-28 19:16:43,400 DEBUG onlogic_m031_manager.py:653 -> _send_command()] Length of Command to send: 5
+[2025-05-28 19:16:43,400 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 1
+[2025-05-28 19:16:43,401 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:43,402 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 1
+[2025-05-28 19:16:43,403 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 7
+[2025-05-28 19:16:43,403 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:43,426 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-28 19:16:43,426 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:43,426 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-28 19:16:43,426 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x07'
+[2025-05-28 19:16:43,426 DEBUG onlogic_m031_manager.py:708 -> _receive_command()] Validating Partial Frame [b'\x01', b'\x00', b'\x01', b'\x07']
+[2025-05-28 19:16:43,427 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:43,428 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x07'
+[2025-05-28 19:16:43,428 INFO onlogic_m031_manager.py:727 -> _receive_command()] Received Command List [b'\x01', b'\x00', b'\x01', b'\x07', b'\x00', b'\x07']
+[2025-05-28 19:16:43,454 DEBUG automotive_handler.py:215 -> set_automotive_mode()] Recieved Command Bytes: b'\x01\x00\x01\x07\x00\x07'
+[2025-05-28 19:16:43,454 DEBUG onlogic_m031_manager.py:425 -> _check_crc()] CALCULATED 0 : EXISTING 0
+[2025-05-28 19:16:43,454 DEBUG onlogic_m031_manager.py:516 -> _validate_recieved_frame()] Validated frame successfully: b'\x01\x00\x01\x07\x00\x07'
+[2025-05-28 19:16:43,498 DEBUG onlogic_m031_manager.py:653 -> _send_command()] Length of Command to send: 5
+[2025-05-28 19:16:43,498 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 1
+[2025-05-28 19:16:43,499 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 214
+[2025-05-28 19:16:43,500 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 1
+[2025-05-28 19:16:43,500 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 9
+[2025-05-28 19:16:43,501 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:43,523 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-28 19:16:43,524 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\xd6'
+[2025-05-28 19:16:43,524 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-28 19:16:43,525 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\t'
+[2025-05-28 19:16:43,525 DEBUG onlogic_m031_manager.py:708 -> _receive_command()] Validating Partial Frame [b'\x01', b'\xd6', b'\x01', b'\t']
+[2025-05-28 19:16:43,526 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:43,526 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x07'
+[2025-05-28 19:16:43,526 INFO onlogic_m031_manager.py:727 -> _receive_command()] Received Command List [b'\x01', b'\xd6', b'\x01', b'\t', b'\x00', b'\x07']
+[2025-05-28 19:16:43,553 DEBUG automotive_handler.py:296 -> set_low_power_enable()] Recieved Command Bytes: b'\x01\xd6\x01\t\x00\x07'
+[2025-05-28 19:16:43,553 DEBUG onlogic_m031_manager.py:425 -> _check_crc()] CALCULATED 214 : EXISTING 214
+[2025-05-28 19:16:43,553 DEBUG onlogic_m031_manager.py:516 -> _validate_recieved_frame()] Validated frame successfully: b'\x01\xd6\x01\t\x00\x07'
+[2025-05-28 19:16:43,553 INFO onlogic_m031_manager.py:634 -> _construct_command()] Constructed Command b'\x01\xbd\x08\x0b\n\x00\x00\x00\x00\x00\x00\x00'
+[2025-05-28 19:16:43,595 DEBUG onlogic_m031_manager.py:653 -> _send_command()] Length of Command to send: 12
+[2025-05-28 19:16:43,595 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 1
+[2025-05-28 19:16:43,595 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 189
+[2025-05-28 19:16:43,596 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 8
+[2025-05-28 19:16:43,597 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 11
+[2025-05-28 19:16:43,597 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 10
+[2025-05-28 19:16:43,598 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:43,599 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:43,599 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:43,600 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:43,601 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:43,601 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:43,602 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:43,625 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-28 19:16:43,625 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\xbd'
+[2025-05-28 19:16:43,626 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x08'
+[2025-05-28 19:16:43,626 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x0b'
+[2025-05-28 19:16:43,626 DEBUG onlogic_m031_manager.py:708 -> _receive_command()] Validating Partial Frame [b'\x01', b'\xbd', b'\x08', b'\x0b']
+[2025-05-28 19:16:43,626 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\n'
+[2025-05-28 19:16:43,627 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:43,628 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:43,628 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:43,628 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:43,629 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:43,629 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:43,630 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:43,630 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x07'
+[2025-05-28 19:16:43,630 INFO onlogic_m031_manager.py:727 -> _receive_command()] Received Command List [b'\x01', b'\xbd', b'\x08', b'\x0b', b'\n', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x07']
+[2025-05-28 19:16:43,657 DEBUG automotive_handler.py:385 -> set_start_up_timer()] Recieved Command Bytes: b'\x01\xbd\x08\x0b\n\x00\x00\x00\x00\x00\x00\x00\x07'
+[2025-05-28 19:16:43,657 DEBUG onlogic_m031_manager.py:425 -> _check_crc()] CALCULATED 189 : EXISTING 189
+[2025-05-28 19:16:43,657 DEBUG onlogic_m031_manager.py:454 -> _within_valid_range()] Indices to check [8, 9, 10, 11]
+[2025-05-28 19:16:43,657 DEBUG onlogic_m031_manager.py:516 -> _validate_recieved_frame()] Validated frame successfully: b'\x01\xbd\x08\x0b\n\x00\x00\x00\x00\x00\x00\x00\x07'
+[2025-05-28 19:16:43,657 INFO onlogic_m031_manager.py:634 -> _construct_command()] Constructed Command b'\x01m\x08\r2\x00\x00\x00\x00\x00\x00\x00'
+[2025-05-28 19:16:43,699 DEBUG onlogic_m031_manager.py:653 -> _send_command()] Length of Command to send: 12
+[2025-05-28 19:16:43,700 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 1
+[2025-05-28 19:16:43,700 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 109
+[2025-05-28 19:16:43,702 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 8
+[2025-05-28 19:16:43,703 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 13
+[2025-05-28 19:16:43,703 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 50
+[2025-05-28 19:16:43,704 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:43,705 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:43,705 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:43,706 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:43,707 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:43,707 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:43,708 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:43,730 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-28 19:16:43,731 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'm'
+[2025-05-28 19:16:43,731 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x08'
+[2025-05-28 19:16:43,731 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\r'
+[2025-05-28 19:16:43,731 DEBUG onlogic_m031_manager.py:708 -> _receive_command()] Validating Partial Frame [b'\x01', b'm', b'\x08', b'\r']
+[2025-05-28 19:16:43,732 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'2'
+[2025-05-28 19:16:43,732 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:43,733 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:43,733 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:43,734 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:43,734 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:43,734 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:43,734 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:43,735 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x07'
+[2025-05-28 19:16:43,735 INFO onlogic_m031_manager.py:727 -> _receive_command()] Received Command List [b'\x01', b'm', b'\x08', b'\r', b'2', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x07']
+[2025-05-28 19:16:43,761 DEBUG automotive_handler.py:474 -> set_soft_off_timer()] Recieved Command Bytes: b'\x01m\x08\r2\x00\x00\x00\x00\x00\x00\x00\x07'
+[2025-05-28 19:16:43,761 DEBUG onlogic_m031_manager.py:425 -> _check_crc()] CALCULATED 109 : EXISTING 109
+[2025-05-28 19:16:43,761 DEBUG onlogic_m031_manager.py:454 -> _within_valid_range()] Indices to check [8, 9, 10, 11]
+[2025-05-28 19:16:43,761 DEBUG onlogic_m031_manager.py:516 -> _validate_recieved_frame()] Validated frame successfully: b'\x01m\x08\r2\x00\x00\x00\x00\x00\x00\x00\x07'
+[2025-05-28 19:16:43,761 INFO onlogic_m031_manager.py:634 -> _construct_command()] Constructed Command b'\x01%\x08\x0f\x1e\x00\x00\x00\x00\x00\x00\x00'
+[2025-05-28 19:16:43,802 DEBUG onlogic_m031_manager.py:653 -> _send_command()] Length of Command to send: 12
+[2025-05-28 19:16:43,802 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 1
+[2025-05-28 19:16:43,803 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 37
+[2025-05-28 19:16:43,804 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 8
+[2025-05-28 19:16:43,805 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 15
+[2025-05-28 19:16:43,806 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 30
+[2025-05-28 19:16:43,806 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:43,807 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:43,808 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:43,808 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:43,809 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:43,809 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:43,810 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:43,832 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-28 19:16:43,832 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'%'
+[2025-05-28 19:16:43,833 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x08'
+[2025-05-28 19:16:43,833 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x0f'
+[2025-05-28 19:16:43,833 DEBUG onlogic_m031_manager.py:708 -> _receive_command()] Validating Partial Frame [b'\x01', b'%', b'\x08', b'\x0f']
+[2025-05-28 19:16:43,834 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x1e'
+[2025-05-28 19:16:43,834 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:43,834 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:43,834 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:43,835 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:43,835 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:43,836 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:43,836 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:43,837 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x07'
+[2025-05-28 19:16:43,837 INFO onlogic_m031_manager.py:727 -> _receive_command()] Received Command List [b'\x01', b'%', b'\x08', b'\x0f', b'\x1e', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x07']
+[2025-05-28 19:16:43,864 DEBUG automotive_handler.py:560 -> set_hard_off_timer()] Recieved Command Bytes: b'\x01%\x08\x0f\x1e\x00\x00\x00\x00\x00\x00\x00\x07'
+[2025-05-28 19:16:43,864 DEBUG onlogic_m031_manager.py:425 -> _check_crc()] CALCULATED 37 : EXISTING 37
+[2025-05-28 19:16:43,864 DEBUG onlogic_m031_manager.py:454 -> _within_valid_range()] Indices to check [8, 9, 10, 11]
+[2025-05-28 19:16:43,864 DEBUG onlogic_m031_manager.py:516 -> _validate_recieved_frame()] Validated frame successfully: b'\x01%\x08\x0f\x1e\x00\x00\x00\x00\x00\x00\x00\x07'
+[2025-05-28 19:16:43,864 INFO onlogic_m031_manager.py:634 -> _construct_command()] Constructed Command b'\x01\x8d\x08\x13X\x02\x00\x00\x00\x00\x00\x00'
+[2025-05-28 19:16:43,905 DEBUG onlogic_m031_manager.py:653 -> _send_command()] Length of Command to send: 12
+[2025-05-28 19:16:43,905 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 1
+[2025-05-28 19:16:43,906 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 141
+[2025-05-28 19:16:43,907 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 8
+[2025-05-28 19:16:43,908 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 19
+[2025-05-28 19:16:43,910 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 88
+[2025-05-28 19:16:43,911 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 2
+[2025-05-28 19:16:43,911 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:43,912 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:43,912 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:43,914 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:43,914 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:43,915 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:43,938 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-28 19:16:43,938 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\xaa'
+[2025-05-28 19:16:43,939 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x04'
+[2025-05-28 19:16:43,939 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x13'
+[2025-05-28 19:16:43,939 DEBUG onlogic_m031_manager.py:708 -> _receive_command()] Validating Partial Frame [b'\x01', b'\xaa', b'\x04', b'\x13']
+[2025-05-28 19:16:43,940 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'X'
+[2025-05-28 19:16:43,940 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x02'
+[2025-05-28 19:16:43,941 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:43,941 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:43,941 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x07'
+[2025-05-28 19:16:43,941 INFO onlogic_m031_manager.py:727 -> _receive_command()] Received Command List [b'\x01', b'\xaa', b'\x04', b'\x13', b'X', b'\x02', b'\x00', b'\x00', b'\x07']
+[2025-05-28 19:16:43,972 DEBUG automotive_handler.py:734 -> set_shutdown_voltage()] Recieved Command Bytes: b'\x01\xaa\x04\x13X\x02\x00\x00\x07'
+[2025-05-28 19:16:43,972 DEBUG onlogic_m031_manager.py:425 -> _check_crc()] CALCULATED 170 : EXISTING 170
+[2025-05-28 19:16:43,972 DEBUG onlogic_m031_manager.py:454 -> _within_valid_range()] Indices to check [4, 5, 6, 7]
+[2025-05-28 19:16:43,972 DEBUG onlogic_m031_manager.py:516 -> _validate_recieved_frame()] Validated frame successfully: b'\x01\xaa\x04\x13X\x02\x00\x00\x07'
+[2025-05-28 19:16:44,016 DEBUG onlogic_m031_manager.py:653 -> _send_command()] Length of Command to send: 4
+[2025-05-28 19:16:44,016 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 1
+[2025-05-28 19:16:44,017 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 18
+[2025-05-28 19:16:44,017 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:44,018 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 6
+[2025-05-28 19:16:44,019 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-28 19:16:44,019 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x15'
+[2025-05-28 19:16:44,019 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-28 19:16:44,020 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x06'
+[2025-05-28 19:16:44,020 DEBUG onlogic_m031_manager.py:708 -> _receive_command()] Validating Partial Frame [b'\x01', b'\x15', b'\x01', b'\x06']
+[2025-05-28 19:16:44,020 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:44,021 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x07'
+[2025-05-28 19:16:44,021 INFO onlogic_m031_manager.py:727 -> _receive_command()] Received Command List [b'\x01', b'\x15', b'\x01', b'\x06', b'\x00', b'\x07']
+[2025-05-28 19:16:44,048 DEBUG automotive_handler.py:169 -> get_automotive_mode()] Recieved Command Bytes: b'\x01\x15\x01\x06\x00\x07'
+[2025-05-28 19:16:44,048 DEBUG onlogic_m031_manager.py:425 -> _check_crc()] CALCULATED 21 : EXISTING 21
+[2025-05-28 19:16:44,048 DEBUG onlogic_m031_manager.py:516 -> _validate_recieved_frame()] Validated frame successfully: b'\x01\x15\x01\x06\x00\x07'
+[2025-05-28 19:16:44,092 DEBUG onlogic_m031_manager.py:653 -> _send_command()] Length of Command to send: 4
+[2025-05-28 19:16:44,093 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 1
+[2025-05-28 19:16:44,093 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 56
+[2025-05-28 19:16:44,094 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:44,094 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 8
+[2025-05-28 19:16:44,095 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-28 19:16:44,096 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\xc3'
+[2025-05-28 19:16:44,096 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-28 19:16:44,097 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x08'
+[2025-05-28 19:16:44,097 DEBUG onlogic_m031_manager.py:708 -> _receive_command()] Validating Partial Frame [b'\x01', b'\xc3', b'\x01', b'\x08']
+[2025-05-28 19:16:44,097 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:44,097 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x07'
+[2025-05-28 19:16:44,097 INFO onlogic_m031_manager.py:727 -> _receive_command()] Received Command List [b'\x01', b'\xc3', b'\x01', b'\x08', b'\x00', b'\x07']
+[2025-05-28 19:16:44,124 DEBUG automotive_handler.py:253 -> get_low_power_enable()] Recieved Command Bytes: b'\x01\xc3\x01\x08\x00\x07'
+[2025-05-28 19:16:44,124 DEBUG onlogic_m031_manager.py:425 -> _check_crc()] CALCULATED 195 : EXISTING 195
+[2025-05-28 19:16:44,124 DEBUG onlogic_m031_manager.py:516 -> _validate_recieved_frame()] Validated frame successfully: b'\x01\xc3\x01\x08\x00\x07'
+[2025-05-28 19:16:44,164 DEBUG onlogic_m031_manager.py:653 -> _send_command()] Length of Command to send: 4
+[2025-05-28 19:16:44,165 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 1
+[2025-05-28 19:16:44,166 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 54
+[2025-05-28 19:16:44,166 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:44,167 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 10
+[2025-05-28 19:16:44,168 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-28 19:16:44,169 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\xc4'
+[2025-05-28 19:16:44,169 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x08'
+[2025-05-28 19:16:44,170 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\n'
+[2025-05-28 19:16:44,170 DEBUG onlogic_m031_manager.py:708 -> _receive_command()] Validating Partial Frame [b'\x01', b'\xc4', b'\x08', b'\n']
+[2025-05-28 19:16:44,170 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\n'
+[2025-05-28 19:16:44,171 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:44,171 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:44,171 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:44,172 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:44,172 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:44,173 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:44,173 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:44,174 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x07'
+[2025-05-28 19:16:44,174 INFO onlogic_m031_manager.py:727 -> _receive_command()] Received Command List [b'\x01', b'\xc4', b'\x08', b'\n', b'\n', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x07']
+[2025-05-28 19:16:44,200 DEBUG automotive_handler.py:334 -> get_start_up_timer()] Recieved Command Bytes: b'\x01\xc4\x08\n\n\x00\x00\x00\x00\x00\x00\x00\x07'
+[2025-05-28 19:16:44,200 DEBUG onlogic_m031_manager.py:425 -> _check_crc()] CALCULATED 196 : EXISTING 196
+[2025-05-28 19:16:44,200 DEBUG onlogic_m031_manager.py:454 -> _within_valid_range()] Indices to check [4, 5, 6, 7, 8, 9, 10, 11]
+[2025-05-28 19:16:44,200 DEBUG onlogic_m031_manager.py:516 -> _validate_recieved_frame()] Validated frame successfully: b'\x01\xc4\x08\n\n\x00\x00\x00\x00\x00\x00\x00\x07'
+[2025-05-28 19:16:44,240 DEBUG onlogic_m031_manager.py:653 -> _send_command()] Length of Command to send: 4
+[2025-05-28 19:16:44,240 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 1
+[2025-05-28 19:16:44,242 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 36
+[2025-05-28 19:16:44,242 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:44,243 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 12
+[2025-05-28 19:16:44,244 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-28 19:16:44,245 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x14'
+[2025-05-28 19:16:44,245 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x08'
+[2025-05-28 19:16:44,246 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x0c'
+[2025-05-28 19:16:44,246 DEBUG onlogic_m031_manager.py:708 -> _receive_command()] Validating Partial Frame [b'\x01', b'\x14', b'\x08', b'\x0c']
+[2025-05-28 19:16:44,246 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'2'
+[2025-05-28 19:16:44,247 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:44,247 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:44,248 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:44,248 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:44,248 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:44,248 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:44,249 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:44,250 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x07'
+[2025-05-28 19:16:44,250 INFO onlogic_m031_manager.py:727 -> _receive_command()] Received Command List [b'\x01', b'\x14', b'\x08', b'\x0c', b'2', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x07']
+[2025-05-28 19:16:44,277 DEBUG automotive_handler.py:423 -> get_soft_off_timer()] Recieved Command Bytes: b'\x01\x14\x08\x0c2\x00\x00\x00\x00\x00\x00\x00\x07'
+[2025-05-28 19:16:44,277 DEBUG onlogic_m031_manager.py:425 -> _check_crc()] CALCULATED 20 : EXISTING 20
+[2025-05-28 19:16:44,277 DEBUG onlogic_m031_manager.py:454 -> _within_valid_range()] Indices to check [4, 5, 6, 7, 8, 9, 10, 11]
+[2025-05-28 19:16:44,277 DEBUG onlogic_m031_manager.py:516 -> _validate_recieved_frame()] Validated frame successfully: b'\x01\x14\x08\x0c2\x00\x00\x00\x00\x00\x00\x00\x07'
+[2025-05-28 19:16:44,277 INFO onlogic_m031_manager.py:634 -> _construct_command()] Constructed Command b'\x01*\x00\x0e'
+[2025-05-28 19:16:44,321 DEBUG onlogic_m031_manager.py:653 -> _send_command()] Length of Command to send: 4
+[2025-05-28 19:16:44,321 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 1
+[2025-05-28 19:16:44,322 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 42
+[2025-05-28 19:16:44,323 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:44,323 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 14
+[2025-05-28 19:16:44,324 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-28 19:16:44,325 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\\'
+[2025-05-28 19:16:44,325 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x08'
+[2025-05-28 19:16:44,326 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x0e'
+[2025-05-28 19:16:44,326 DEBUG onlogic_m031_manager.py:708 -> _receive_command()] Validating Partial Frame [b'\x01', b'\\', b'\x08', b'\x0e']
+[2025-05-28 19:16:44,326 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x1e'
+[2025-05-28 19:16:44,327 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:44,327 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:44,328 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:44,328 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:44,329 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:44,329 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:44,330 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:44,330 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x07'
+[2025-05-28 19:16:44,330 INFO onlogic_m031_manager.py:727 -> _receive_command()] Received Command List [b'\x01', b'\\', b'\x08', b'\x0e', b'\x1e', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x00', b'\x07']
+[2025-05-28 19:16:44,359 DEBUG automotive_handler.py:510 -> get_hard_off_timer()] Recieved Command Bytes: b'\x01\\\x08\x0e\x1e\x00\x00\x00\x00\x00\x00\x00\x07'
+[2025-05-28 19:16:44,359 DEBUG onlogic_m031_manager.py:425 -> _check_crc()] CALCULATED 92 : EXISTING 92
+[2025-05-28 19:16:44,359 DEBUG onlogic_m031_manager.py:454 -> _within_valid_range()] Indices to check [4, 5, 6, 7, 8, 9, 10, 11]
+[2025-05-28 19:16:44,359 DEBUG onlogic_m031_manager.py:516 -> _validate_recieved_frame()] Validated frame successfully: b'\x01\\\x08\x0e\x1e\x00\x00\x00\x00\x00\x00\x00\x07'
+[2025-05-28 19:16:44,402 DEBUG onlogic_m031_manager.py:653 -> _send_command()] Length of Command to send: 4
+[2025-05-28 19:16:44,402 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 1
+[2025-05-28 19:16:44,403 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 126
+[2025-05-28 19:16:44,403 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 0
+[2025-05-28 19:16:44,404 DEBUG onlogic_m031_manager.py:656 -> _send_command()] Sending 18
+[2025-05-28 19:16:44,405 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x01'
+[2025-05-28 19:16:44,406 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\xc8'
+[2025-05-28 19:16:44,406 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x04'
+[2025-05-28 19:16:44,406 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x12'
+[2025-05-28 19:16:44,406 DEBUG onlogic_m031_manager.py:708 -> _receive_command()] Validating Partial Frame [b'\x01', b'\xc8', b'\x04', b'\x12']
+[2025-05-28 19:16:44,407 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'X'
+[2025-05-28 19:16:44,407 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x02'
+[2025-05-28 19:16:44,407 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:44,408 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x00'
+[2025-05-28 19:16:44,408 DEBUG onlogic_m031_manager.py:703 -> _receive_command()] Received Byte: b'\x07'
+[2025-05-28 19:16:44,409 INFO onlogic_m031_manager.py:727 -> _receive_command()] Received Command List [b'\x01', b'\xc8', b'\x04', b'\x12', b'X', b'\x02', b'\x00', b'\x00', b'\x07']
+[2025-05-28 19:16:44,438 DEBUG automotive_handler.py:684 -> get_shutdown_voltage()] Recieved Command Bytes: b'\x01\xc8\x04\x12X\x02\x00\x00\x07'
+[2025-05-28 19:16:44,438 DEBUG onlogic_m031_manager.py:425 -> _check_crc()] CALCULATED 200 : EXISTING 200
+[2025-05-28 19:16:44,438 DEBUG onlogic_m031_manager.py:454 -> _within_valid_range()] Indices to check [4, 5, 6, 7]
+[2025-05-28 19:16:44,438 DEBUG onlogic_m031_manager.py:516 -> _validate_recieved_frame()] Validated frame successfully: b'\x01\xc8\x04\x12X\x02\x00\x00\x07'
+[2025-05-28 19:16:44,608 INFO onlogic_m031_manager.py:589 -> release()] Serial Port Successfully Released

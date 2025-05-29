@@ -1,4 +1,4 @@
-OnLogic Nuvoton Manager Documentation
+OnLogic M031 Manager Documentation
 =====================================
 
 .. include:: ../../README.rst

@@ -12,10 +12,10 @@ src Module
    :undoc-members:
    :show-inheritance:
 
-src.onlogic_nuvoton_manager Module
+src.onlogic_m031_manager Module
 ------------------------------------
 
-.. automodule:: src.onlogic_nuvoton_manager
+.. automodule:: src.onlogic_m031_manager
    :members:
    :undoc-members:
    :show-inheritance:

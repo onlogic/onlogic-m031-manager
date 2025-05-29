@@ -20,11 +20,10 @@ import sys
 sys.path.insert(0, os.path.abspath('../..'))  # This will include the src directory
 
 # -- Project information -----------------------------------------------------
-project = 'OnLogicNuvotonManager'
+project = 'OnLogicM031Manager'
 copyright = '2025, nick.hanna@onlogic.com, fwengineeringteam@onlogic.com'
 author = 'nick.hanna@onlogic.com, fwengineeringteam@onlogic.com'
-release = '0.0.1'
-version = '0.0.1'
+version = release = '0.0.1'
 
 # -- General configuration ---------------------------------------------------
 extensions = [
@@ -58,8 +57,8 @@ html_static_path = ['_static']
 # -- Options for PDF output --------------------------------------------------
 pdf_documents = [(
     'index',
-    'OnLogicNuvotonManager',
-    'OnLogic Nuvoton Manager Documentation',
+    'OnLogicM031Manager',
+    'OnLogic M031 Manager Documentation',
     'nick.hanna@onlogic.com, fwengineeringteam@onlogic.com'
 )]
 pdf_stylesheets = ['sphinx', 'a4']

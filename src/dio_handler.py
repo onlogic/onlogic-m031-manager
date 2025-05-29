@@ -7,17 +7,17 @@ Provides methods that allow users to access nearly all features of DIO card.
 import time
 import serial
 import logging
-from .onlogic_nuvoton_manager import OnLogicNuvotonManager
+from .onlogic_m031_manager import OnLogicM031Manager
 from .command_set import TargetIndices, ProtocolConstants, Kinds, StatusTypes, BoundaryTypes
 
 logger = logging.getLogger(__name__)
 
-class DioHandler(OnLogicNuvotonManager):
+class DioHandler(OnLogicM031Manager):
     """Handles Digital Input/Output (DIO) operations for the DIO card.
     
     This class provides methods to get and set the states of digital input and output pins.
     It can get and set input and output pins individually, or in bulk. It uses the LPMCU methods
-    and protocols inherited from OnLogicNuvotonManager. A new feature in this
+    and protocols inherited from OnLogicM031Manager. A new feature in this
     line of DIO cards is the ability to set the contact type of the pins to Wet or Dry.
 
     As a reminder, the DIO card has 8 digital input pins and 8 digital output pins.
@@ -99,7 +99,7 @@ class DioHandler(OnLogicNuvotonManager):
             raise serial.SerialException(serial_connect_err)
 
     def _mcu_connection_check(self) -> None:
-        """Inherited method from OnLogicNuvotonManager to check if the DIO card is connected."""
+        """Inherited method from OnLogicM031Manager to check if the DIO card is connected."""
         super()._mcu_connection_check()
 
         # TODO: issue specific command to see if the DIO card is connected
@@ -107,7 +107,7 @@ class DioHandler(OnLogicNuvotonManager):
         #    raise ValueError("Error | Incorrect Value returned, is this the right device?")
 
     def show_info(self) -> None:
-        """Displays DIO card info located in the docs folder, required OnLogicNuvotonManager."""
+        """Displays DIO card info located in the docs folder, required OnLogicM031Manager."""
         relative_path = '../docs/ShowInfo/DioHandlerDescription.rst'
         super()._read_files(filename=relative_path)
 

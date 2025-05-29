@@ -18,7 +18,7 @@ NOTE:
     - Please replace "/dev/ttyS4" with the appropriate serial port configured on your system.
 """
 
-from OnLogicNuvotonManager import AutomotiveHandler
+from OnLogicM031Manager import AutomotiveHandler
 
 SEPARATOR = "=" * 30
 
