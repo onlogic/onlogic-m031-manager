@@ -22,17 +22,18 @@ These steps serve as a guide for installing the OnLogicM031Manager directly into
 
 2. Clone Project and Navigate to the Project Directory:
    In the parent directory where the project is to be run, run the following command in powershell to clone the repository
-  
-  .. code-block:: shell
 
-    git clone git@github.com:onlogic/onlogic-m031-manager.git
-   
-  or download the directory clicking the green button and then ``Download ZIP`` on the top right of the GitHub page.
+   .. code-block:: shell
 
-  Use the ``cd`` command to change to the directory where the OnLogicM031Manager files are located (same directory as where the ``setup.py`` file is located).
-  Example::
+      git clone git@github.com:onlogic/onlogic-m031-manager.git
 
-    cd path\to\onlogic-m031-manager
+   Or download the directory by clicking the green button and then ``Download ZIP`` on the top right of the GitHub page.
+
+   Use the ``cd`` command to change to the directory where the OnLogicM031Manager files are located (same directory as where the ``setup.py`` file is located):
+
+   .. code-block:: shell
+
+      cd path\to\onlogic-m031-manager
 
 3. Install Required Packages:
    Run the following command to install the package. This will install it into the global Python site-packages or user-specific site-packages::
