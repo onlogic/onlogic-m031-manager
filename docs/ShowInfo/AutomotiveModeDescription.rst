@@ -10,7 +10,8 @@ be set before using either the BIOS settings, LPMCU tool, or this Python API.
 The unit will turn on when power is applied to the IGN pin, and turn off when power is removed.
 
 Ignition sensing can be enabled and adjusted through a UART connection to the system's microcontroller. 
-This program additionally administers the LPMCU communication protocol to the sequence microcontroller to allow .
+This program administers the LPMCU communication protocol to the sequence microcontroller to allow control
+over various timers and values detailed in the Command Summary table below.
 
 **Terminal Block Diagram of K-52x - Ignition pin is on leftmost side**
 

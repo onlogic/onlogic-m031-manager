@@ -50,7 +50,7 @@ Setting up OnLogicM031Manager in a Python3 venv on Ubuntu 24.04 LTS
 
 Linux Ubuntu has enforced a stricter package management scheme in the new 24.04 LTS distribution to avoid interfering with global package dependencies used by the OS. 
 While this is a more stable way to administer Python on a system, it is also more complex to program in user environments. 
-To run the package OnLogicM031Manager in Ubuntu, it's best practice to use a venv.
+To run package OnLogicM031Manager package in Ubuntu, it's best practice to use a venv.
 
 * Creating a venv:
 
@@ -75,8 +75,8 @@ To run the package OnLogicM031Manager in Ubuntu, it's best practice to use a ven
     $ deactivate
 
 * When the venv is activated, running any python scripts will use the venv's interpreter and packages. 
-  But, when running a script that needs root privileges (``sudo python ...``), the venv's Python won't be used, even if its activated. 
-  My solution has been to explicitly use the venv's interpreter when running a Python script.::
+  But, when running a script that needs root privileges (``sudo python ...``), the venv's Python won't be used, even if it's activated. 
+  One solution is to explicitly use the venv's interpreter when running a Python script::
 
   $ sudo <path/to/venv>/bin/python somescript.py
 
