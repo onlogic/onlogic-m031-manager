@@ -161,7 +161,7 @@ Status Types:
 --------------
 
 The status types are defined in src/command_set.py and are used to mark and indicate failures during 
-different stages of the LPMCU protocol, including command construction, sending, 
+different stages of the LPMCU protocol.
 
 The table below is a summary of the status types, but note that method class members
 do not all report the status types in the same way. 
