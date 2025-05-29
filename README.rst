@@ -10,38 +10,40 @@ The OnLogicM031Manager provides a set of tools to interface with peripherals on 
 Setup Required
 --------------
 
-You will need to install Python 3 prior to following this guide. You can download Python from python.org. Ensure Python and pip are added to your system's PATH during installation.
+Python 3 must be installed prior to following this guide. Python 3 can be installed from python.org. Ensure Python and pip are added to the system's PATH during installation.
 
 Setting up OnLogicM031Manager on Windows (Native Install)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-These steps guide you through installing the OnLogicM031Manager directly into your system's Python environment.
+These steps serve as a guide for installing the OnLogicM031Manager directly into the local Windows Python environment.
 
-1. Install Python 3:
-   If you haven't already, download and install Python 3 from python.org.
-   Make sure to check the box that says "Add Python to PATH" during the installation.
+1. Open Command Prompt or PowerShell:
+   "cmd" or "powershell" are shorthands that can be entered in the Start Menu to pull them up.
 
-2. Open Command Prompt or PowerShell:
-   You can search for "cmd" or "powershell" in the Start Menu.
+2. Clone Project and Navigate to the Project Directory:
+   In the parent directory where the project is to be run, run the following command in powershell to clone the repository::
 
-3. Navigate to the Project Directory:
-   Use the ``cd`` command to change to the directory where you have the OnLogicM031Manager files (e.g., where the ``setup.py`` file is located).
-   Example::
+    git clone git@github.com:onlogic/onlogic-m031-manager.git
+   
+  or download the directory clicking the green button and then ``Download ZIP`` on the top right of the GitHub page.
 
-     cd path\to\OnLogicM031Manager
+  Use the ``cd`` command to change to the directory where the OnLogicM031Manager files are located (same directory as where the ``setup.py`` file is located).
+  Example::
 
-4. Install Required Packages:
-   Run the following command to install the package. This will install it into your global Python site-packages or user-specific site-packages::
+    cd path\to\onlogic-m031-manager
+
+3. Install Required Packages:
+   Run the following command to install the package. This will install it into the global Python site-packages or user-specific site-packages::
 
      pip install -e .
 
 5. Verify Installation:
-   To see all installed Python packages in your environment (this will include packages beyond this project)::
+   To see all installed Python packages in the global environment (this will include packages beyond this project)::
 
      pip freeze
 
 6. Running Scripts Requiring Elevated Privileges:
-   For operations that require direct hardware access (like interacting with serial ports), you might need to run your Python scripts 
+   For operations that require direct hardware access (like interacting with serial ports), the Python scripts may need to be run 
    from a Command Prompt or PowerShell that has been opened "As Administrator". To do this, right-click on the Command Prompt/PowerShell 
    icon and select "Run as administrator".
 
@@ -50,7 +52,7 @@ Setting up OnLogicM031Manager in a Python3 venv on Ubuntu 24.04 LTS
 
 Linux Ubuntu has enforced a stricter package management scheme in the new 24.04 LTS distribution to avoid interfering with global package dependencies used by the OS. 
 While this is a more stable way to administer Python on a system, it is also more complex to program in user environments. 
-To run the OnLogicM031Manager package in Ubuntu, it's best practice to use a venv.
+To run the OnLogicM031Manager package in Ubuntu, it's best practice to use a venv. Download the OnLogicM031Manager package by following step 2 above.
 
 * Creating a venv:
 
@@ -80,7 +82,7 @@ To run the OnLogicM031Manager package in Ubuntu, it's best practice to use a ven
 
   $ sudo <path/to/venv>/bin/python somescript.py
 
-* We have to use whole path because we need to sudo in, and we can't access IO without sudo privaleges
+* The whole path must be used to sudo in, and IO cannot be accessed without sudo privaleges
 
 After, set up required packages in venv:
 
@@ -91,7 +93,7 @@ Examples
 ========
 There are several examples in the ``examples`` directory. The examples
 are designed to run from the command line and follow the setup seen above.
-Make sure, however, that for Automotive settings, you enable the COM visibility in
+Make sure, however, that for Automotive settings, COM visibility is enabled within
 the BIOS.
 
 The examples are designed to be run from the command line with:

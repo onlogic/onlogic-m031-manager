@@ -10,9 +10,12 @@ OnLogic M031 Manager Documentation
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
+   :titlesonly:
 
+   ../../docs/ShowInfo/AutomotiveModeDescription
+   ../../docs/ShowInfo/DioHandlerDescription
    modules/src
-   
+
 Indices and tables
 ==================
 
