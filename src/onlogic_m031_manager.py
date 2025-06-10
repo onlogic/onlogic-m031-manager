@@ -229,7 +229,7 @@ class OnLogicM031Manager(ABC):
     def _mcu_connection_check(self) -> None:
         """Check state of MCU.
 
-        If it returns '\a' successively
+        If MCU returns '\a' successively
         within a proper time interval, the correct port is found. 
         If not, the port is not correct or the MCU is not connected.
         It is an inheritable method provided to the base class.
@@ -257,7 +257,6 @@ class OnLogicM031Manager(ABC):
 
             current_time = time.time()
             if self.port.inWaiting() > 0:
-                # If received byte is not what was expected, reset counter
                 byte_in_port = self.port.read(1)
                 if int.from_bytes(byte_in_port, byteorder='little') == ProtocolConstants.SHELL_NACK:
                     logging.debug(f"{byte_in_port}")
@@ -431,7 +430,8 @@ class OnLogicM031Manager(ABC):
         return True
 
     def _within_valid_range(self, return_frame: bytes, target_index: int | tuple, target_range: tuple) -> bool:        
-        """
+        """ Check if the target index or indices in the return_frame are within the valid range.
+
         Args:
             return_frame (bytes): The frame received from the microcontroller.
 
@@ -440,22 +440,28 @@ class OnLogicM031Manager(ABC):
                                         If tuple: A range of indices (start, stop) to validate. 
                                         The range is inclusive of start and exclusive of stop.        
             
-            target_range (tuple): The range of valid values for the target index.
-                                        The range is inclusive of the first value and exclusive of the second value.
-                                        Example: (0, 4) means valid values are 0, 1, 2, 3.
+            target_range (tuple): The range target indices to check within the frame.
+        
+        Returns:
+            bool: False if index check fails, True if all indices are within the valid range.  
         """
+        payload_indices_to_check = []
+
         if isinstance(target_index, int):
-            if return_frame[target_index] < target_range[0] or \
-                    return_frame[target_index] > target_range[1]:
-                return False
-            
+            payload_indices_to_check = [target_index]
+
         elif isinstance(target_index, tuple):
-            payload_indices_to_check = [p_idx for p_idx in range(target_index[0], target_index[1])]
-            logger.debug(f"Indices to check {payload_indices_to_check}")
-            for payload_idx in payload_indices_to_check:
-                if return_frame[payload_idx] < target_range[0] or \
-                        return_frame[payload_idx] > target_range[1]:
-                    return False
+            payload_indices_to_check = list(range(target_index[0], target_index[1]))
+            logger.debug(f"Indices to check {payload_indices_to_check}")            
+
+        else:
+            logging.error(f"Invalid target_index type: {type(target_index)} or length: {len(target_index)}")
+            return False
+
+        for payload_idx in payload_indices_to_check:
+            if not (target_range[0] <= return_frame[payload_idx] <= target_range[1]):
+                return False
+
         return True
 
     def _validate_recieved_frame(self, return_frame: list, target_index: int | tuple = None, target_range: tuple = None) -> int:
@@ -663,7 +669,7 @@ class OnLogicM031Manager(ABC):
         if shell_ack_cnt == len(command_to_send):
             return True 
 
-        logging.error(f"ERROR | AKNOWLEDGEMENT ERROR mismatch in number of aknowledgements, reduce access speed?")
+        logging.error(f"ERROR | AKNOWLEDGEMENT ERROR mismatch in number of acknowledgements, reduce access speed?")
 
         return False
 
@@ -732,7 +738,7 @@ class OnLogicM031Manager(ABC):
         """Format bytes type payload to a string representation.
 
         Format the payload byte to a string representation in the format Byte1.Byte2.Byte3, 
-        where each byte is a coverted byte value to string
+        where each byte is a converted byte value to string
 
         Example: b'\x01\x02\x03' -> '1.2.3'
 

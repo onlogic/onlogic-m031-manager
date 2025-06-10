@@ -155,7 +155,7 @@ class AutomotiveHandler(OnLogicM031Manager):
         """
         amd = self._construct_command(Kinds.GET_AUTOMOTIVE_MODE)
 
-        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES)
+        self._reset(nack_counter=ProtocolConstants.MAX_NACK_CLEARANCES)
         if not self._send_command(amd):
             return StatusTypes.SEND_CMD_FAILURE
 
@@ -163,7 +163,7 @@ class AutomotiveHandler(OnLogicM031Manager):
         if not isinstance(frame, bytes):
             return frame
 
-        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False) 
+        self._reset(nack_counter=ProtocolConstants.MAX_NACK_CLEARANCES, reset_buffers=False) 
         time.sleep(ProtocolConstants.STANDARD_DELAY)
 
         logger.debug(f"Recieved Command Bytes: {frame}")
@@ -200,7 +200,7 @@ class AutomotiveHandler(OnLogicM031Manager):
 
         set_auto_mode = self._construct_command(Kinds.SET_AUTOMOTIVE_MODE, amd)
 
-        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES)
+        self._reset(nack_counter=ProtocolConstants.MAX_NACK_CLEARANCES)
 
         if not self._send_command(set_auto_mode):
             return StatusTypes.SEND_CMD_FAILURE
@@ -209,7 +209,7 @@ class AutomotiveHandler(OnLogicM031Manager):
         if not isinstance(frame, bytes):
             return frame
 
-        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False)
+        self._reset(nack_counter=ProtocolConstants.MAX_NACK_CLEARANCES, reset_buffers=False)
         time.sleep(ProtocolConstants.STANDARD_DELAY)
 
         logger.debug(f"Recieved Command Bytes: {frame}")
@@ -239,7 +239,7 @@ class AutomotiveHandler(OnLogicM031Manager):
         """
         lpe_command = self._construct_command(Kinds.GET_LOW_POWER_ENABLE)
 
-        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES)
+        self._reset(nack_counter=ProtocolConstants.MAX_NACK_CLEARANCES)
         if not self._send_command(lpe_command):
             return StatusTypes.SEND_CMD_FAILURE
 
@@ -247,7 +247,7 @@ class AutomotiveHandler(OnLogicM031Manager):
         if not isinstance(frame, bytes):
             return frame
 
-        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False) 
+        self._reset(nack_counter=ProtocolConstants.MAX_NACK_CLEARANCES, reset_buffers=False) 
         time.sleep(ProtocolConstants.STANDARD_DELAY)
 
         logger.debug(f"Recieved Command Bytes: {frame}")
@@ -281,7 +281,7 @@ class AutomotiveHandler(OnLogicM031Manager):
 
         set_lpe_cmd = self._construct_command(Kinds.SET_LOW_POWER_ENABLE, lpe)
 
-        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES)
+        self._reset(nack_counter=ProtocolConstants.MAX_NACK_CLEARANCES)
 
         if not self._send_command(set_lpe_cmd):
             return StatusTypes.SEND_CMD_FAILURE
@@ -290,7 +290,7 @@ class AutomotiveHandler(OnLogicM031Manager):
         if not isinstance(frame, bytes):
             return frame
 
-        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False)
+        self._reset(nack_counter=ProtocolConstants.MAX_NACK_CLEARANCES, reset_buffers=False)
         time.sleep(ProtocolConstants.STANDARD_DELAY)
 
         logger.debug(f"Recieved Command Bytes: {frame}")
@@ -320,7 +320,7 @@ class AutomotiveHandler(OnLogicM031Manager):
         sut_cmd = self._construct_command(Kinds.GET_START_UP_TIMER)
 
         # Enclose each value read with buffer clearances
-        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES)
+        self._reset(nack_counter=ProtocolConstants.MAX_NACK_CLEARANCES)
         if not self._send_command(sut_cmd):
             return StatusTypes.SEND_CMD_FAILURE
 
@@ -328,7 +328,7 @@ class AutomotiveHandler(OnLogicM031Manager):
         if not isinstance(frame, bytes):
             return frame
 
-        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False)
+        self._reset(nack_counter=ProtocolConstants.MAX_NACK_CLEARANCES, reset_buffers=False)
         time.sleep(ProtocolConstants.STANDARD_DELAY)
 
         logger.debug(f"Recieved Command Bytes: {frame}")
@@ -368,7 +368,7 @@ class AutomotiveHandler(OnLogicM031Manager):
 
         set_sut_cmd = self._construct_command(Kinds.SET_START_UP_TIMER, sut.to_bytes(8, 'little'), 8)
 
-        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES)
+        self._reset(nack_counter=ProtocolConstants.MAX_NACK_CLEARANCES)
 
         if not self._send_command(set_sut_cmd):
             return StatusTypes.SEND_CMD_FAILURE
@@ -379,7 +379,7 @@ class AutomotiveHandler(OnLogicM031Manager):
 
         target_indices = self._isolate_target_indices(frame)
 
-        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False)
+        self._reset(nack_counter=ProtocolConstants.MAX_NACK_CLEARANCES, reset_buffers=False)
         time.sleep(ProtocolConstants.STANDARD_DELAY)
 
         logger.debug(f"Recieved Command Bytes: {frame}")
@@ -409,7 +409,7 @@ class AutomotiveHandler(OnLogicM031Manager):
         """
         sot_timer_cmd = self._construct_command(Kinds.GET_SOFT_OFF_TIMER)
 
-        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES)
+        self._reset(nack_counter=ProtocolConstants.MAX_NACK_CLEARANCES)
         if not self._send_command(sot_timer_cmd):
             return StatusTypes.SEND_CMD_FAILURE
 
@@ -417,7 +417,7 @@ class AutomotiveHandler(OnLogicM031Manager):
         if not isinstance(frame, bytes):
             return frame
 
-        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False)
+        self._reset(nack_counter=ProtocolConstants.MAX_NACK_CLEARANCES, reset_buffers=False)
         time.sleep(ProtocolConstants.STANDARD_DELAY)
 
         logger.debug(f"Recieved Command Bytes: {frame}")
@@ -457,7 +457,7 @@ class AutomotiveHandler(OnLogicM031Manager):
 
         set_sot_cmd = self._construct_command(Kinds.SET_SOFT_OFF_TIMER, sot.to_bytes(8, 'little'), 8)
 
-        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES)
+        self._reset(nack_counter=ProtocolConstants.MAX_NACK_CLEARANCES)
 
         if not self._send_command(set_sot_cmd):
             return StatusTypes.SEND_CMD_FAILURE
@@ -468,7 +468,7 @@ class AutomotiveHandler(OnLogicM031Manager):
 
         target_indices = self._isolate_target_indices(frame)
 
-        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False)
+        self._reset(nack_counter=ProtocolConstants.MAX_NACK_CLEARANCES, reset_buffers=False)
         time.sleep(ProtocolConstants.STANDARD_DELAY)
 
         logger.debug(f"Recieved Command Bytes: {frame}")
@@ -496,7 +496,7 @@ class AutomotiveHandler(OnLogicM031Manager):
         """
         hot_timer_cmd = self._construct_command(Kinds.GET_HARD_OFF_TIMER)
 
-        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES)
+        self._reset(nack_counter=ProtocolConstants.MAX_NACK_CLEARANCES)
         if not self._send_command(hot_timer_cmd):
             return StatusTypes.SEND_CMD_FAILURE
 
@@ -504,7 +504,7 @@ class AutomotiveHandler(OnLogicM031Manager):
         if not isinstance(frame, bytes):
             return frame
 
-        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False)
+        self._reset(nack_counter=ProtocolConstants.MAX_NACK_CLEARANCES, reset_buffers=False)
         time.sleep(ProtocolConstants.STANDARD_DELAY)
 
         logger.debug(f"Recieved Command Bytes: {frame}")
@@ -543,7 +543,7 @@ class AutomotiveHandler(OnLogicM031Manager):
 
         set_hot_cmd = self._construct_command(Kinds.SET_HARD_OFF_TIMER, hot.to_bytes(8, 'little'), 8)
 
-        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES)
+        self._reset(nack_counter=ProtocolConstants.MAX_NACK_CLEARANCES)
 
         if not self._send_command(set_hot_cmd):
             return StatusTypes.SEND_CMD_FAILURE
@@ -554,7 +554,7 @@ class AutomotiveHandler(OnLogicM031Manager):
 
         target_indices = self._isolate_target_indices(frame)
 
-        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False)
+        self._reset(nack_counter=ProtocolConstants.MAX_NACK_CLEARANCES, reset_buffers=False)
         time.sleep(ProtocolConstants.STANDARD_DELAY)
 
         logger.debug(f"Recieved Command Bytes: {frame}")
@@ -583,7 +583,7 @@ class AutomotiveHandler(OnLogicM031Manager):
         """
         lvt_timer_cmd = self._construct_command(Kinds.GET_LOW_VOLTAGE_TIMER)
 
-        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES)
+        self._reset(nack_counter=ProtocolConstants.MAX_NACK_CLEARANCES)
         if not self._send_command(lvt_timer_cmd):
             return StatusTypes.SEND_CMD_FAILURE
 
@@ -591,7 +591,7 @@ class AutomotiveHandler(OnLogicM031Manager):
         if not isinstance(frame, bytes):
             return frame
 
-        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False)
+        self._reset(nack_counter=ProtocolConstants.MAX_NACK_CLEARANCES, reset_buffers=False)
         time.sleep(ProtocolConstants.STANDARD_DELAY)
 
         logger.debug(f"Recieved Command Bytes: {frame}")
@@ -630,7 +630,7 @@ class AutomotiveHandler(OnLogicM031Manager):
 
         set_lvt_cmd = self._construct_command(Kinds.SET_LOW_VOLTAGE_TIMER, lvt.to_bytes(8, 'little'), 8)
 
-        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES)
+        self._reset(nack_counter=ProtocolConstants.MAX_NACK_CLEARANCES)
 
         if not self._send_command(set_lvt_cmd):
             return StatusTypes.SEND_CMD_FAILURE
@@ -641,7 +641,7 @@ class AutomotiveHandler(OnLogicM031Manager):
 
         target_indices = self._isolate_target_indices(frame)
 
-        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False)
+        self._reset(nack_counter=ProtocolConstants.MAX_NACK_CLEARANCES, reset_buffers=False)
         time.sleep(ProtocolConstants.STANDARD_DELAY)
 
         logger.debug(f"Recieved Command Bytes: {frame}")
@@ -670,7 +670,7 @@ class AutomotiveHandler(OnLogicM031Manager):
         sdv_timer_cmd = self._construct_command(Kinds.GET_SHUTDOWN_VOLTAGE)
 
         # Enclose each value read with buffer clearances
-        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES)
+        self._reset(nack_counter=ProtocolConstants.MAX_NACK_CLEARANCES)
         if not self._send_command(sdv_timer_cmd):
             return StatusTypes.SEND_CMD_FAILURE
 
@@ -678,7 +678,7 @@ class AutomotiveHandler(OnLogicM031Manager):
         if not isinstance(frame, bytes):
             return frame
 
-        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False)
+        self._reset(nack_counter=ProtocolConstants.MAX_NACK_CLEARANCES, reset_buffers=False)
         time.sleep(ProtocolConstants.STANDARD_DELAY)
 
         logger.debug(f"Recieved Command Bytes: {frame}")
@@ -717,7 +717,7 @@ class AutomotiveHandler(OnLogicM031Manager):
 
         set_sdv_cmd = self._construct_command(Kinds.SET_SHUTDOWN_VOLTAGE, sdv.to_bytes(8, 'little'), 8)
 
-        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES)
+        self._reset(nack_counter=ProtocolConstants.MAX_NACK_CLEARANCES)
 
         if not self._send_command(set_sdv_cmd):
             return StatusTypes.SEND_CMD_FAILURE
@@ -728,7 +728,7 @@ class AutomotiveHandler(OnLogicM031Manager):
 
         target_indices = self._isolate_target_indices(frame)
 
-        self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES, reset_buffers=False)
+        self._reset(nack_counter=ProtocolConstants.MAX_NACK_CLEARANCES, reset_buffers=False)
         time.sleep(ProtocolConstants.STANDARD_DELAY)
 
         logger.debug(f"Recieved Command Bytes: {frame}")
