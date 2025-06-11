@@ -151,7 +151,7 @@ def main():
                     10, # sut 
                     50, # sot 
                     30, # hot 
-                    600 # sdv
+                    600.0 # sdv
                 ]
             ),
             sep = '\n'
