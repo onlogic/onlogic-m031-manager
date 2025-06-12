@@ -124,6 +124,7 @@ class BoundaryTypes:
     DECIMAL_VALUE_RANGE = (0, 9)
     BYTE_VALUE_RANGE = (0, 255)
 
-    AUTOMOTIVE_TIMER_RANGE = (1, 1 << 20)
+    AUTOMOTIVE_TIMER_RANGE = (1, 36_000)
+    AUTOMOTIVE_SHUTDOWN_VOLTAGE_RANGE = (1.0, 60.0)
 
 ############################################

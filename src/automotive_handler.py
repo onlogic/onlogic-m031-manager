@@ -9,6 +9,7 @@ docstrings below.
 import time
 import serial
 import logging
+import struct
 from .onlogic_m031_manager import OnLogicM031Manager
 from .command_set import ProtocolConstants, Kinds, StatusTypes, TargetIndices, BoundaryTypes
 
@@ -541,7 +542,7 @@ class AutomotiveHandler(OnLogicM031Manager):
         """
         self._validate_input_param(hot, BoundaryTypes.AUTOMOTIVE_TIMER_RANGE, int)
 
-        set_hot_cmd = self._construct_command(Kinds.SET_HARD_OFF_TIMER, hot.to_bytes(8, 'little'), 8)
+        set_hot_cmd = self._construct_command(Kinds.SET_HARD_OFF_TIMER, hot.to_bytes(4, 'little'), 4)
 
         self._reset(nack_counter=ProtocolConstants.MAX_NACK_CLEARANCES)
 
@@ -628,7 +629,7 @@ class AutomotiveHandler(OnLogicM031Manager):
         """
         self._validate_input_param(lvt, BoundaryTypes.AUTOMOTIVE_TIMER_RANGE, int)
 
-        set_lvt_cmd = self._construct_command(Kinds.SET_LOW_VOLTAGE_TIMER, lvt.to_bytes(8, 'little'), 8)
+        set_lvt_cmd = self._construct_command(Kinds.SET_LOW_VOLTAGE_TIMER, lvt.to_bytes(4, 'little'), 4)
 
         self._reset(nack_counter=ProtocolConstants.MAX_NACK_CLEARANCES)
 
@@ -688,10 +689,11 @@ class AutomotiveHandler(OnLogicM031Manager):
         ret_val = self._validate_recieved_frame(frame, target_indices, BoundaryTypes.BYTE_VALUE_RANGE)
         if ret_val is not StatusTypes.SUCCESS:
             return ret_val
+        
+        # this is going to need to be modified to handle the float conversion
+        return self._format_response_number(frame[TargetIndices.PAYLOAD_START: payload_end], float) 
 
-        return self._format_response_number(frame[TargetIndices.PAYLOAD_START: payload_end]) 
-
-    def set_shutdown_voltage(self, sdv: int) -> int:
+    def set_shutdown_voltage(self, sdv: float) -> int:
         """Set the shutdown voltage value in the sequence MCU.
         
         The shutdown voltage value dictates threshold voltage for triggering low-voltage
@@ -713,9 +715,14 @@ class AutomotiveHandler(OnLogicM031Manager):
             >>> print(f"Success" if status == 0 else f"Error: {status}")
             Success
         """
-        self._validate_input_param(sdv, BoundaryTypes.AUTOMOTIVE_TIMER_RANGE, int)
+        if isinstance(sdv, int):
+            sdv = float(sdv)
 
-        set_sdv_cmd = self._construct_command(Kinds.SET_SHUTDOWN_VOLTAGE, sdv.to_bytes(8, 'little'), 8)
+        self._validate_input_param(sdv, BoundaryTypes.AUTOMOTIVE_TIMER_RANGE, float)
+
+        # Will return a 4-byte float in little-endian format as a bytes object
+        float_32_value = struct.pack('<f', sdv)  
+        set_sdv_cmd = self._construct_command(Kinds.SET_SHUTDOWN_VOLTAGE, float_32_value, len(float_32_value))
 
         self._reset(nack_counter=ProtocolConstants.MAX_NACK_CLEARANCES)
 
@@ -842,7 +849,13 @@ class AutomotiveHandler(OnLogicM031Manager):
         self._validate_input_param(setting_inputs[2], BoundaryTypes.AUTOMOTIVE_TIMER_RANGE, int)  # sut
         self._validate_input_param(setting_inputs[3], BoundaryTypes.AUTOMOTIVE_TIMER_RANGE, int)  # sot
         self._validate_input_param(setting_inputs[4], BoundaryTypes.AUTOMOTIVE_TIMER_RANGE, int)  # hot
-        self._validate_input_param(setting_inputs[5], BoundaryTypes.AUTOMOTIVE_TIMER_RANGE, int)  # sdv
+
+        # Convert shutdown voltage to float if it is an int
+        # makes input more forgiving
+        if isinstance(setting_inputs[5], int):
+            setting_inputs[5] = float(setting_inputs[5])    
+            
+        self._validate_input_param(setting_inputs[5], BoundaryTypes.AUTOMOTIVE_TIMER_RANGE, float)  # sdv
 
         # Call individual set methods with inputs corresponding to list order
         return [

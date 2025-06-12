@@ -25,7 +25,7 @@ def test_dio_handler_initialization(auto_handler):
 
 def test_crank_values(auto_handler):
     collective_automotive_setting = 1
-    while collective_automotive_setting <= (1 << 20):
+    while collective_automotive_setting <= 36_000:
         print(collective_automotive_setting)
         return_codes = auto_handler.set_all_automotive_settings (
             [

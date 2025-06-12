@@ -9,6 +9,7 @@ import time
 import serial
 import functools
 import logging
+import struct
 
 from abc import ABC, abstractmethod
 from serial.tools import list_ports as system_ports
@@ -659,8 +660,12 @@ class OnLogicM031Manager(ABC):
         logger.debug(f"Length of Command to send: {len(command_to_send)}")
         shell_ack_cnt = 0
         for byte in command_to_send:
-            logger.debug(f"Sending {byte}")
-            self.port.write(byte.to_bytes(1, byteorder='little'))
+            byte_to_send = byte.to_bytes(1, byteorder='little')
+
+            logger.debug(f"Sending {byte} | {byte_to_send}")
+            
+            # self.port.write(byte.to_bytes(1, byteorder='little'))
+            self.port.write(byte_to_send)
             byte_in_port = self.port.read(1)
 
             if int.from_bytes(byte_in_port, byteorder='little') == ProtocolConstants.SHELL_ACK:
@@ -756,7 +761,7 @@ class OnLogicM031Manager(ABC):
                 return_str += '.'
         return return_str
     
-    def _format_response_number(self, payload_bytes: bytes) -> int:
+    def _format_response_number(self, payload_bytes: bytes, format_type: type = int) -> int:
         """Simple shorthand method to format the payload bytes to an integer representation.
 
         A simple method that formats the payload bytes to an integer representation with an additional None check.
@@ -770,7 +775,17 @@ class OnLogicM031Manager(ABC):
             int: The formatted integer value of the payload bytes.
                  If the payload is empty, it returns StatusTypes.FORMAT_NONE_ERROR.
         """
-        return int.from_bytes(payload_bytes, byteorder='little') if payload_bytes else StatusTypes.FORMAT_NONE_ERROR
+        ret_val = StatusTypes.FORMAT_NONE_ERROR
+
+        if payload_bytes:
+            if format_type == int:
+                ret_val = int.from_bytes(payload_bytes, byteorder='little')  
+            elif format_type == float:
+                # Will return a tuple with the remaining values in a buffer,
+                # need to get the first value from the tuple
+                ret_val = struct.unpack('<f', payload_bytes)[0]
+
+        return ret_val
 
     def _isolate_target_indices(self, frame: bytes) -> tuple:
         """Isolate target indices from the frame. 

@@ -316,7 +316,6 @@ class DioHandler(OnLogicM031Manager):
             ...     dio_handler.get_do_contact()
             0
         """
-
         do_contact_state_cmd = self._construct_command(Kinds.GET_DO_CONTACT)
 
         self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES)
@@ -340,7 +339,7 @@ class DioHandler(OnLogicM031Manager):
 
     def set_di_contact(self, contact_type: int) -> int:
         """Sets the contact state of the digital input pins on the DIO card.
-        
+
         0 indicates that DI is in Wet Contact mode and 1 Indicates that DI is in Dry Contact Mode.
 
         Args:
@@ -364,7 +363,7 @@ class DioHandler(OnLogicM031Manager):
         set_di_contact_state_cmd = self._construct_command(Kinds.SET_DI_CONTACT, contact_type)
 
         self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES)
-    
+
         if not self._send_command(set_di_contact_state_cmd):
             return StatusTypes.SEND_CMD_FAILURE
 
@@ -383,19 +382,19 @@ class DioHandler(OnLogicM031Manager):
         """Sets the contact state of the digital output pins on the DIO card.
 
         0 indicates that DO is in Wet Contact mode and 1 Indicates that DO is in Dry Contact Mode.
-        
+
         Args:
             contact_type (int): 0 for Wet Contact, 1 for Dry Contact
-        
+
         Returns:
             int: 0, indicating success,
                  StatusTypes.SEND_CMD_FAILURE if command send failed,
                  or any other negative value indicating failure.
-        
+
         Raises:
             TypeError: if contact_type is not an integer
             ValueError: if contact_type is not in the range of 0-1
-        
+
         Note:
             Consult DIO description section of the data sheet for more details on 
             the specification of contact types.
