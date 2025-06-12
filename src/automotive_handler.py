@@ -125,8 +125,8 @@ class AutomotiveHandler(OnLogicM031Manager):
         try:
             return serial.Serial(self.serial_connection_label, ProtocolConstants.BAUDRATE, timeout=1)
         except serial.SerialException as e:
-            serial_connect_err = f"ERROR | {e}: Are you on the right port?" \
-                                  "Did you enable correct bios settings []?"
+            serial_connect_err = f"ERROR | {e}: Are you on the right port?\n" \
+                                  "Did you enable correct bios settings?"
             self._init_port_error_handling(serial_connect_err, return_early=True)
             raise serial.SerialException(serial_connect_err)
 
@@ -718,7 +718,7 @@ class AutomotiveHandler(OnLogicM031Manager):
         if isinstance(sdv, int):
             sdv = float(sdv)
 
-        self._validate_input_param(sdv, BoundaryTypes.AUTOMOTIVE_TIMER_RANGE, float)
+        self._validate_input_param(sdv, BoundaryTypes.AUTOMOTIVE_SHUTDOWN_VOLTAGE_RANGE, float)
 
         # Will return a 4-byte float in little-endian format as a bytes object
         float_32_value = struct.pack('<f', sdv)  

@@ -52,7 +52,7 @@ def main():
 
         print(SEPARATOR)
         print("TESTING SET SHUTDOWN VOLTAGE (set_shutdown_voltage)")
-        print("SET SHUT OFF VOLTAGE RETURN CODE:", my_auto.set_shutdown_voltage(200))
+        print("SET SHUT OFF VOLTAGE RETURN CODE:", my_auto.set_shutdown_voltage(1))
         print(SEPARATOR)
         print()
 
