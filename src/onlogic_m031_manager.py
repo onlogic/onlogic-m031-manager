@@ -551,7 +551,7 @@ class OnLogicM031Manager(ABC):
 
         # Make sure that the Kinds between the response frame and the type of message sent is correct.
         if response_frame[TargetIndices.KIND] != response_frame_kind.to_bytes(1, byteorder='little'):
-            logger.error(f"Kind Value Not Correct, Got {response_frame[TargetIndices.KIND]},expected {response_frame_kind}")
+            logger.error(f"Kind Value Not Correct, Got {response_frame[TargetIndices.KIND]}, expected {response_frame_kind}")
             return False
 
         return True

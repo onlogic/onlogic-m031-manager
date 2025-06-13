@@ -129,11 +129,11 @@ def main():
         print(SEPARATOR)
         print()
 
-        # print(SEPARATOR)
-        # print("TESTING SET SHUTDOWN VOLTAGE (set_shutdown_voltage)")
-        # print("SET SHUT OFF VOLTAGE RETURN CODE:", my_auto.set_shutdown_voltage(601.0))
-        # print(SEPARATOR)
-        # print()
+        print(SEPARATOR)
+        print("TESTING SET SHUTDOWN VOLTAGE (set_shutdown_voltage)")
+        print("SET SHUT OFF VOLTAGE RETURN CODE:", my_auto.set_shutdown_voltage(21.0))
+        print(SEPARATOR)
+        print()
 
         print(SEPARATOR)
         print("TESTING GET SHUTDOWN VOLTAGE (get_shutdown_voltage)")
@@ -151,7 +151,7 @@ def main():
                     10, # sut 
                     50, # sot 
                     30, # hot 
-                    60.0 # sdv
+                    21.0 # sdv
                 ]
             ),
             sep = '\n'

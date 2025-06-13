@@ -711,7 +711,7 @@ class AutomotiveHandler(OnLogicM031Manager):
             TypeError: If the input parameter is not of type int.
         
         Example:
-            >>> status = my_auto.set_shutdown_voltage(12)
+            >>> status = my_auto.set_shutdown_voltage(12.0)
             >>> print(f"Success" if status == 0 else f"Error: {status}")
             Success
         """
@@ -741,6 +741,43 @@ class AutomotiveHandler(OnLogicM031Manager):
         logger.debug(f"Recieved Command Bytes: {frame}")
 
         return self._validate_recieved_frame(frame, target_indices, BoundaryTypes.BYTE_VALUE_RANGE)
+    
+    def get_input_voltage(self) -> float:
+        """Get the voltage measurement input into  the MCU.
+
+        Args:
+            None
+        
+        Returns:
+            TBD
+            >>> input_voltage = my_auto.get_shutdown_voltage()
+            >>> print(f"Input Voltage : {input_voltage}")
+            Input Voltage: 12.0
+        """
+        input_voltage_cmd = self._construct_command(Kinds.GET_INPUT_VOLTAGE)
+
+        # Enclose each value read with buffer clearances
+        self._reset(nack_counter=ProtocolConstants.MAX_NACK_CLEARANCES)
+        if not self._send_command(input_voltage_cmd):
+            return StatusTypes.SEND_CMD_FAILURE
+
+        frame = self._receive_command(Kinds.GET_INPUT_VOLTAGE)
+        if not isinstance(frame, bytes):
+            return frame
+
+        self._reset(nack_counter=ProtocolConstants.MAX_NACK_CLEARANCES, reset_buffers=False)
+        time.sleep(ProtocolConstants.STANDARD_DELAY)
+
+        logger.debug(f"Recieved Command Bytes: {frame}")
+
+        _, payload_end, target_indices = self._isolate_target_indices(frame)
+
+        ret_val = self._validate_recieved_frame(frame, target_indices, BoundaryTypes.BYTE_VALUE_RANGE)
+        if ret_val is not StatusTypes.SUCCESS:
+            return ret_val
+        
+        # this is going to need to be modified to handle the float conversion
+        return self._format_response_number(frame[TargetIndices.PAYLOAD_START: payload_end], float) 
 
     def get_all_automotive_settings(self, output_to_console: bool = False) -> dict:
         """Get all automotive settings from the sequence MCU.
@@ -783,7 +820,7 @@ class AutomotiveHandler(OnLogicM031Manager):
             "sut": 10,
             "sot": 5,
             "hot": 15,
-            "sdv": 1200
+            "sdv": 12.0
         }
         """
         automotive_settings_dict = {
@@ -798,9 +835,9 @@ class AutomotiveHandler(OnLogicM031Manager):
         if output_to_console:
             for auto_label, auto_value in automotive_settings_dict.items():
                 print(f"{auto_label} : {auto_value}") 
-        
+
         return automotive_settings_dict
-    
+
     def set_all_automotive_settings(self, setting_inputs: list) -> list:
         """Sets all automotive settings based on a provided input list of desired states.
 
