@@ -1,10 +1,10 @@
 """
 Author: OnLogic - nick.hanna@onlogic.com, firmwareengineeringteam@onlogic.com
 For:    K-52x
-Title:  K-52x Automotive Driver Example with Logging
+Title:  K-52x Shut Down Voltage Example with Logging
 
 Description:
-    A simple demonstration of how to use the AutomotiveHandler class to interact with automotive settings.
+    A simple demonstration of how to use the AutomotiveHandler class to interact with sdv automotive settings.
     This example includes logging functionality to track the operations performed.
 
 Usage:
@@ -34,7 +34,8 @@ def main():
         config_logger = LoggingUtil(
             logger_name='root',
             logger_level="DEBUG",
-            handler_mode="CONSOLE"
+            handler_mode="CONSOLE",
+            log_directory="logs"
         )
         config_logger.config_logger_elements()
     except FileNotFoundError as e:

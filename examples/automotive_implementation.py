@@ -80,7 +80,7 @@ def main():
 
         print(SEPARATOR)
         print("TESTING SET SOFT OFF TIMER (set_soft_off_timer)")
-        print("SET SOFT OFF RETURN CODE:", my_auto.set_soft_off_timer(51))
+        print("SET SOFT OFF RETURN CODE:", my_auto.set_soft_off_timer(21))
         print(SEPARATOR)
         print()
 
@@ -92,7 +92,7 @@ def main():
 
         print(SEPARATOR)
         print("TESTING SET HARD OFF TIMER (set_hard_off_timer)")
-        print("SET HARD OFF RETURN CODE:", my_auto.set_hard_off_timer(61))
+        print("SET HARD OFF RETURN CODE:", my_auto.set_hard_off_timer(31))
         print(SEPARATOR)
         print()
 
@@ -122,9 +122,9 @@ def main():
                     0,  # amd 
                     0,  # lpe 
                     10, # sut 
-                    50, # sot 
-                    60, # hot 
-                    600 # sdv
+                    20, # sot 
+                    30, # hot 
+                    12.0 # sdv
                 ]
             ),
             sep = '\n'
