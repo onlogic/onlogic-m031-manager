@@ -542,7 +542,7 @@ class AutomotiveHandler(OnLogicM031Manager):
         """
         self._validate_input_param(hot, BoundaryTypes.AUTOMOTIVE_TIMER_RANGE, int)
 
-        set_hot_cmd = self._construct_command(Kinds.SET_HARD_OFF_TIMER, hot.to_bytes(4, 'little'), 4)
+        set_hot_cmd = self._construct_command(Kinds.SET_HARD_OFF_TIMER, hot.to_bytes(8, 'little'), 8)
 
         self._reset(nack_counter=ProtocolConstants.MAX_NACK_CLEARANCES)
 

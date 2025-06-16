@@ -14,6 +14,7 @@ import sys
 import logging
 from datetime import datetime
 from typing import Optional
+import os
 
 class LoggingUtil():
     """LoggingUtil class for configuring logging in the OnLogic M031 Manager.
@@ -63,7 +64,7 @@ class LoggingUtil():
 
             config_logger.config_logger_elements()
     """
-    def __init__(self, logger_name, logger_level, handler_mode):
+    def __init__(self, logger_name: str, logger_level: str, handler_mode: str, log_directory: str = None):
         """Initialize the LoggingUtil class with the specified logger name, level, and handler mode.
         Args:
             logger_name (str): The name of the logger. It is converted to lowercase and stripped of whitespace.
@@ -73,13 +74,18 @@ class LoggingUtil():
                                 It is converted to lowercase and stripped of whitespace.          
             handler_mode (str): The mode for the handler (e.g., 'console', 'file', 'both').
                                 It is converted to lowercase and stripped of whitespace.
+            log_directory (str): The directory where log files will be stored. 
+                                 If None, no file handler will be created.
+                                 It is cleaned of invalid characters and stripped of whitespace.
+                                 Defaults to None.
         """
         self.logger_name  = self.__handle_lconfig_str(logger_name)
         self.logger_level  = self.__handle_lconfig_str(logger_level)
         self.handler_mode = self.__handle_lconfig_str(handler_mode)
+        self.log_directory = self.__handle_ldirectory_str(log_directory)
         self.logger = None
         self.format = '[%(asctime)s %(levelname)s %(filename)s:%(lineno)d -> %(funcName)s()] %(message)s'
-
+        
     @staticmethod
     def __handle_lconfig_str(input_str: str) -> str | None:
         '''
@@ -88,10 +94,41 @@ class LoggingUtil():
         '''
         return input_str.lower().strip() if isinstance(input_str, str) else input_str
 
-    @staticmethod
-    def _create_filename():
+    def __handle_ldirectory_str(self, input_str: str | None) -> str | None:
+        '''
+        Clean string input for log_directory. 
+        Note: method is private and name mangled
+        '''
+        if input_str is None or self.handler_mode in [None, "off", "console"]:
+            return None
+        
+        if not isinstance(input_str, str):
+            return None
+
+        input_str = input_str.strip()
+
+        # Remove invalid characters for directory names, linux can handle most these, but windows cannot
+        invalid_chars = r'<>:"/\\|?*'
+
+        for char in invalid_chars:
+            input_str = input_str.replace(char, '')
+
+        # Ensure the directory path is not empty after cleaning
+        if not input_str:
+            raise ValueError("ERROR | log_directory cannot be empty after cleaning invalid characters.")
+
+        return input_str
+        
+    def _create_filename(self, log_directory: str = None) -> str:
         '''Create a filename for the log file. Note: method is private and name mangled.'''
-        return f"log_session_{datetime.now().strftime("%m_%d_%Y_%H_%M_%S")}.log"
+        base_log_file_name = f"log_session_{datetime.now().strftime("%m_%d_%Y_%H_%M_%S")}.log"
+
+        if log_directory:
+            if not os.path.exists(log_directory):
+                os.makedirs(log_directory)
+            base_log_file_name = os.path.join(log_directory, base_log_file_name)
+
+        return base_log_file_name
 
     def _get_logger_level(self) -> int | None:
         """Get the logger level based on the provided logger_level string
@@ -189,7 +226,7 @@ class LoggingUtil():
         logger.handlers.clear()
 
         if self.handler_mode in ['file', 'both']:
-            filename = self._create_filename()
+            filename = self._create_filename(self.log_directory)
         else:
             filename = None
 
