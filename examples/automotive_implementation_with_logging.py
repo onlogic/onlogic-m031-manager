@@ -22,17 +22,18 @@ NOTE:
 from OnLogicM031Manager import AutomotiveHandler
 from OnLogicM031Manager import LoggingUtil
 
+ACTIVATE_IGNITION = False
+SEPARATOR = "=" * 30
+
 def main():
     '''main, implementation of session logic.'''
-
-    SEPARATOR = "=" * 30
 
     # Initialize logging configuration
     try:
         config_logger = LoggingUtil(
             logger_name='root',
             logger_level="DEBUG",
-            handler_mode="CONSOLE",
+            handler_mode="console",
             log_directory="logs"
         )
         config_logger.config_logger_elements()
@@ -84,7 +85,7 @@ def main():
 
         print(SEPARATOR)
         print("TESTING SET START UP TIMER (set_start_up_timer)")
-        print("SET START UP RETURN CODE:", my_auto.set_start_up_timer(12))
+        print("SET START UP RETURN CODE:", my_auto.set_start_up_timer(11))
         print(SEPARATOR)
         print()
 
@@ -96,7 +97,7 @@ def main():
 
         print(SEPARATOR)
         print("TESTING SET SOFT OFF TIMER (set_soft_off_timer)")
-        print("SET SOFT OFF RETURN CODE:", my_auto.set_soft_off_timer(51))
+        print("SET SOFT OFF RETURN CODE:", my_auto.set_soft_off_timer(21))
         print(SEPARATOR)
         print()
 
@@ -108,7 +109,7 @@ def main():
 
         print(SEPARATOR)
         print("TESTING SET HARD OFF TIMER (set_hard_off_timer)")
-        print("SET HARD OFF RETURN CODE:", my_auto.set_hard_off_timer(61))
+        print("SET HARD OFF RETURN CODE:", my_auto.set_hard_off_timer(31))
         print(SEPARATOR)
         print()
 
@@ -125,25 +126,19 @@ def main():
         print()
 
         print(SEPARATOR)
-        print("TESTING GET LOW VOLTAGE TIMER (get_low_voltage_timer)")
-        print("GET LOW VOLTAGE TIMER VALUE:", my_auto.get_low_voltage_timer())
-        print(SEPARATOR)
-        print()
-
-        print(SEPARATOR)
-        print("TESTING SET SHUTDOWN VOLTAGE (set_shutdown_voltage)")
-        print("SET SHUT OFF VOLTAGE RETURN CODE:", my_auto.set_shutdown_voltage(21.0))
-        print(SEPARATOR)
-        print()
-
-        print(SEPARATOR)
         print("TESTING GET SHUTDOWN VOLTAGE (get_shutdown_voltage)")
         print("GET SHUT OFF VOLTAGE VALUE:", my_auto.get_shutdown_voltage())
         print(SEPARATOR)
         print()
 
         print(SEPARATOR)
-        print("TESTING SET ALL AUTOMOTIVE SETTINGS (set_all_automotive_settings)")
+        print("TESTING GET INPUT VOLTAGE (get_input_voltage)")
+        print("GET INPUT VOLTAGE VALUE:", my_auto.get_input_voltage())
+        print(SEPARATOR)
+        print()
+
+        print(SEPARATOR)
+        print("TESTING SET SHUTDOWN VOLTAGE (set_all_automotive_settings)")
         print(
             "[amd, lpe, sut, sot, hot, sdv]",
             my_auto.set_all_automotive_settings(setting_inputs = [
@@ -152,7 +147,7 @@ def main():
                     10, # sut 
                     20, # sot 
                     30, # hot 
-                    21.0 # sdv
+                    12.0 # sdv << NOTE: Should be a float
                 ]
             ),
             sep = '\n'
@@ -165,6 +160,13 @@ def main():
         my_auto.get_all_automotive_settings(output_to_console=True)
         print(SEPARATOR)
         print()
+
+        if ACTIVATE_IGNITION:
+            print(SEPARATOR)
+            print("ACTIVATING AUTOMOTIVE MODE | APPLYING IGNITION SETTINGS.")
+            print("Set Automotive Mode 1, RETURN CODE:", my_auto.set_automotive_mode(1))
+            print(SEPARATOR)
+            print()
 
     except KeyboardInterrupt:
         print("Operation terminated by user.")

@@ -41,14 +41,16 @@ class ProtocolConstants:
     RESPONSE_FRAME_LEN = 7
     NACKS_NEEDED = 5
 
+    HYSTERESIS = 0.2
+
 class Kinds:
     """
     The Kinds class categorizes the command classifiers for automotive and DIO commands,
     providing a clear mapping of command types to their respective identifiers.
 
     The message kind can indicate:
-        1. That a message was an error
-        2. How to decode the incoming body data
+        1. How to decode the incoming body data
+        2. If there was an error in the message
     """
     # Automotive Command Classifiers
     ERR_ZERO_KIND = 0x00
@@ -96,6 +98,16 @@ class StatusTypes:
     RECV_PARTIAL_FRAME_VALIDATION_ERROR = -7
     RECV_FRAME_VALUE_ERROR = -8
     FORMAT_NONE_ERROR = -9
+    SHUTDOWN_VOLTAGE_LOW = -10
+    SHUTDOWN_VOLTAGE_HIGH = -11
+    SHUTDOWN_VOLTAGE_OVER_SYSTEM_VAL = -12
+
+    @classmethod
+    def name_from_code(cls, code: int) -> str:
+        for key, val in cls.__dict__.items():
+            if val == code:
+                return key
+        return "Unknown Status Code"
 
 class TargetIndices:
     '''    
@@ -118,7 +130,7 @@ class BoundaryTypes:
     '''
     BASE_FRAME_SIZE = 4
 
-    # Numeric boundries for various command parameters)
+    # Numeric boundries for various command parameters, inclusive boundaries.
     BINARY_VALUE_RANGE = (0, 1)
     DIGITAL_IO_PIN_RANGE = (0, 7)
     DECIMAL_VALUE_RANGE = (0, 9)

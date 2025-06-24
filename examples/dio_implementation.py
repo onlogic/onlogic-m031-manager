@@ -76,6 +76,7 @@ def main():
             result = my_dio.set_do(i, 1)
             print(f"Elapsed Time [In Seconds] is : {timeit.default_timer() - start_time:.6f}")
             print(f"Setting DO Channel {i} to 1: Status Code = {result}")
+
         print("\nSetting DO channels to 0:")
         for i in range(0, 8):
             start_time = timeit.default_timer()

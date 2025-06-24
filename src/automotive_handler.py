@@ -691,7 +691,46 @@ class AutomotiveHandler(OnLogicM031Manager):
             return ret_val
         
         # this is going to need to be modified to handle the float conversion
-        return self._format_response_number(frame[TargetIndices.PAYLOAD_START: payload_end], float) 
+        return self._format_response_number(frame[TargetIndices.PAYLOAD_START: payload_end], float)
+    
+    def _check_within_hysteresis_threshold(self, voltage, hysteresis_offset_value = ProtocolConstants.HYSTERESIS_BOUNDARIES) -> tuple[float, float] | int:
+        threshold_low, threshold_high = voltage - hysteresis_offset_value, voltage + hysteresis_offset_value
+        
+        if threshold_low <= BoundaryTypes.AUTOMOTIVE_SHUTDOWN_VOLTAGE_RANGE[0]:
+            return StatusTypes.SHUTDOWN_VOLTAGE_LOW
+        elif threshold_high >= BoundaryTypes.AUTOMOTIVE_SHUTDOWN_VOLTAGE_RANGE[1]:
+            return StatusTypes.SHUTDOWN_VOLTAGE_HIGH
+
+        return (threshold_low, threshold_high)
+
+    def _sdv_input_validation(self, sdv: float) -> tuple[float, float] | int:
+        """Validate the shutdown voltage input parameter.
+        
+        This method checks if the shutdown voltage is within the valid range and calculates
+        the hysteresis threshold for the shutdown voltage.
+        
+        Args:
+            sdv (float): The shutdown voltage to validate.
+        
+        Returns:
+            tuple[float, float] | int: A tuple containing the low and high hysteresis thresholds if valid,
+                                       or an error code if invalid.
+        """
+        # Check current voltage levels, returns negative if error
+        system_voltage = self.get_input_voltage()
+        if system_voltage < 0: 
+            return system_voltage
+
+        # Generate hysteresis threshold bosed on current voltage and ensure within range
+        # for automotive operation
+        hysteresis_threshold = self._check_within_hysteresis_threshold(system_voltage)
+        if isinstance(hysteresis_threshold, int) and hysteresis_threshold < 0:
+            return hysteresis_threshold
+
+        if sdv > hysteresis_threshold[1]:
+            return StatusTypes.SHUTDOWN_VOLTAGE_OVER_SYSTEM_VAL
+        
+        return StatusTypes.SUCCESS
 
     def set_shutdown_voltage(self, sdv: float) -> int:
         """Set the shutdown voltage value in the sequence MCU.
@@ -699,16 +738,19 @@ class AutomotiveHandler(OnLogicM031Manager):
         The shutdown voltage value dictates threshold voltage for triggering low-voltage
         shutdown events. This method uses the LPMCU protocol discussed in the README and documentation
         to set the shutdown voltage threshold of the sequence MCU.
-        
+
+        Warning:
+            The shutdown voltage MUST be set to a value that is lower than the system voltage.
+
         Args:
-            sdv (int): The shutdown voltage to set. 1.000 - 48.000 volts.
+            sdv (float): The shutdown voltage to set. 1.000 - 48.000 volts.
         
         Returns:
             int: The status of the command. 0 indicates success, < 0 indicates an error in the command or response.
         
         Raises:
-            ValueError: If the input parameter is not a valid integer or is out of range.
-            TypeError: If the input parameter is not of type int.
+            ValueError: If the input parameter is not a valid float or is out of range.
+            TypeError: If the input parameter is not of type float.
         
         Example:
             >>> status = my_auto.set_shutdown_voltage(12.0)
@@ -719,6 +761,10 @@ class AutomotiveHandler(OnLogicM031Manager):
             sdv = float(sdv)
 
         self._validate_input_param(sdv, BoundaryTypes.AUTOMOTIVE_SHUTDOWN_VOLTAGE_RANGE, float)
+        
+        if (error_val := self._sdv_input_validation(sdv)) < 0:
+            logger.error(f"Invalid Shutdown Voltage: {error_val}")
+            raise ValueError(f"Error | Shutdown Voltage Provided is not within the valid range or exceeds system voltage {error_val}.")
 
         # Will return a 4-byte float in little-endian format as a bytes object
         float_32_value = struct.pack('<f', sdv)  
@@ -742,17 +788,19 @@ class AutomotiveHandler(OnLogicM031Manager):
 
         return self._validate_recieved_frame(frame, target_indices, BoundaryTypes.BYTE_VALUE_RANGE)
     
-    def get_input_voltage(self) -> float:
-        """Get the voltage measurement input into  the MCU.
+    def get_input_voltage(self) -> float | int:
+        """Get the voltage measurement of system input into the MCU.
 
         Args:
             None
         
         Returns:
-            TBD
-            >>> input_voltage = my_auto.get_shutdown_voltage()
+            float | int: The input voltage value of the system as a float (should be positive) 
+                         or a negative Kinds type int error code if an error occured in the communication.
+        
+            >>> input_voltage = my_auto.get_input_voltage()
             >>> print(f"Input Voltage : {input_voltage}")
-            Input Voltage: 12.0
+            Input Voltage: 24.000
         """
         input_voltage_cmd = self._construct_command(Kinds.GET_INPUT_VOLTAGE)
 

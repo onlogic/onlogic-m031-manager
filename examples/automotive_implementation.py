@@ -21,6 +21,7 @@ NOTE:
 from OnLogicM031Manager import AutomotiveHandler
 
 SEPARATOR = "=" * 30
+ACTIVATE_IGNITION = False
 
 def main():
     '''main, implementation of session logic.'''
@@ -115,6 +116,12 @@ def main():
         print()
 
         print(SEPARATOR)
+        print("TESTING GET INPUT VOLTAGE (get_input_voltage)")
+        print("GET INPUT VOLTAGE VALUE:", my_auto.get_input_voltage())
+        print(SEPARATOR)
+        print()
+
+        print(SEPARATOR)
         print("TESTING SET SHUTDOWN VOLTAGE (set_all_automotive_settings)")
         print(
             "[amd, lpe, sut, sot, hot, sdv]",
@@ -124,7 +131,7 @@ def main():
                     10, # sut 
                     20, # sot 
                     30, # hot 
-                    12.0 # sdv
+                    12.0 # sdv << NOTE: Should be a float
                 ]
             ),
             sep = '\n'
@@ -137,6 +144,13 @@ def main():
         my_auto.get_all_automotive_settings(output_to_console=True)
         print(SEPARATOR)
         print()
+
+        if ACTIVATE_IGNITION:
+            print(SEPARATOR)
+            print("ACTIVATING AUTOMOTIVE MODE | APPLYING IGNITION SETTINGS.")
+            print("Set Automotive Mode 1, RETURN CODE:", my_auto.set_automotive_mode(1))
+            print(SEPARATOR)
+            print()
 
     except KeyboardInterrupt:
         print("Operation terminated by user.")

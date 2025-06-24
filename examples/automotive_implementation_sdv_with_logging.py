@@ -34,7 +34,7 @@ def main():
         config_logger = LoggingUtil(
             logger_name='root',
             logger_level="DEBUG",
-            handler_mode="CONSOLE",
+            handler_mode="console",
             log_directory="logs"
         )
         config_logger.config_logger_elements()
@@ -52,6 +52,12 @@ def main():
         my_auto = AutomotiveHandler()
         my_auto.list_all_available_ports()
         my_auto.claim("/dev/ttyS4") # will be "/dev/ttySX" on Linux or "COMX" on Windows
+
+        print(SEPARATOR)
+        print("TESTING SET SHUTDOWN VOLTAGE (set_shutdown_voltage)")
+        print("SET SHUT OFF VOLTAGE VALUE:", my_auto.set_shutdown_voltage(21.0))
+        print(SEPARATOR)
+        print()
 
         print(SEPARATOR)
         print("TESTING GET SHUTDOWN VOLTAGE (get_shutdown_voltage)")

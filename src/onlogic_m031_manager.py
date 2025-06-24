@@ -761,7 +761,7 @@ class OnLogicM031Manager(ABC):
                 return_str += '.'
         return return_str
     
-    def _format_response_number(self, payload_bytes: bytes, format_type: type = int) -> int:
+    def _format_response_number(self, payload_bytes: bytes, format_type: type = int, digits_if_float: int = 4) -> int | float:
         """Simple shorthand method to format the payload bytes to an integer representation.
 
         A simple method that formats the payload bytes to an integer representation with an additional None check.
@@ -783,7 +783,7 @@ class OnLogicM031Manager(ABC):
             elif format_type == float:
                 # Will return a tuple with the remaining values in a buffer,
                 # need to get the first value from the tuple
-                ret_val = struct.unpack('<f', payload_bytes)[0]
+                ret_val = round(struct.unpack('<f', payload_bytes)[0], digits_if_float)
 
         return ret_val
 
@@ -849,3 +849,18 @@ class OnLogicM031Manager(ABC):
             return ret_val
 
         return self._format_version_string(frame[TargetIndices.PAYLOAD_START: payload_end])
+    
+    def status_decoder(self, status_code: int) -> str:
+        """Decode the status code into a human-readable string.
+
+        This method takes a status code and returns a human-readable string
+        that describes the status code. It is used to decode the status codes
+        returned by the microcontroller.
+
+        Args:
+            status_code (int): The status code to decode.
+        
+        Returns:
+            str: A human-readable string describing the status code.
+        """
+        return StatusTypes.name_from_code(status_code)
