@@ -98,9 +98,7 @@ class StatusTypes:
     RECV_PARTIAL_FRAME_VALIDATION_ERROR = -7
     RECV_FRAME_VALUE_ERROR = -8
     FORMAT_NONE_ERROR = -9
-    SHUTDOWN_VOLTAGE_LOW = -10
-    SHUTDOWN_VOLTAGE_HIGH = -11
-    SHUTDOWN_VOLTAGE_OVER_SYSTEM_VAL = -12
+    SHUTDOWN_VOLTAGE_OVER_SYSTEM_VAL = -10
 
     @classmethod
     def name_from_code(cls, code: int) -> str:

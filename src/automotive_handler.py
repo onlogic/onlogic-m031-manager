@@ -692,44 +692,26 @@ class AutomotiveHandler(OnLogicM031Manager):
         
         # this is going to need to be modified to handle the float conversion
         return self._format_response_number(frame[TargetIndices.PAYLOAD_START: payload_end], float)
-    
-    def _check_within_hysteresis_threshold(self, voltage, hysteresis_offset_value = ProtocolConstants.HYSTERESIS_BOUNDARIES) -> tuple[float, float] | int:
-        threshold_low, threshold_high = voltage - hysteresis_offset_value, voltage + hysteresis_offset_value
-        
-        if threshold_low <= BoundaryTypes.AUTOMOTIVE_SHUTDOWN_VOLTAGE_RANGE[0]:
-            return StatusTypes.SHUTDOWN_VOLTAGE_LOW
-        elif threshold_high >= BoundaryTypes.AUTOMOTIVE_SHUTDOWN_VOLTAGE_RANGE[1]:
-            return StatusTypes.SHUTDOWN_VOLTAGE_HIGH
 
-        return (threshold_low, threshold_high)
 
-    def _sdv_input_validation(self, sdv: float) -> tuple[float, float] | int:
+    def _sdv_input_validation(self, sdv: float) -> int:
         """Validate the shutdown voltage input parameter.
-        
-        This method checks if the shutdown voltage is within the valid range and calculates
-        the hysteresis threshold for the shutdown voltage.
         
         Args:
             sdv (float): The shutdown voltage to validate.
         
         Returns:
-            tuple[float, float] | int: A tuple containing the low and high hysteresis thresholds if valid,
-                                       or an error code if invalid.
+            int: A status code indicating the result of the validation.
         """
+        # TODO: Determine if hysteresis is needed for shutdown voltage
         # Check current voltage levels, returns negative if error
         system_voltage = self.get_input_voltage()
         if system_voltage < 0: 
             return system_voltage
 
-        # Generate hysteresis threshold bosed on current voltage and ensure within range
-        # for automotive operation
-        hysteresis_threshold = self._check_within_hysteresis_threshold(system_voltage)
-        if isinstance(hysteresis_threshold, int) and hysteresis_threshold < 0:
-            return hysteresis_threshold
-
-        if sdv > hysteresis_threshold[1]:
+        if sdv >= system_voltage:
             return StatusTypes.SHUTDOWN_VOLTAGE_OVER_SYSTEM_VAL
-        
+
         return StatusTypes.SUCCESS
 
     def set_shutdown_voltage(self, sdv: float) -> int:

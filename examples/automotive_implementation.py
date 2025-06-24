@@ -44,7 +44,6 @@ def main():
 
         print(SEPARATOR)
         print("TESTING SET AUTOMOTIVE MODE (set_automotive_mode)")
-        # print("Set Automotive Mode 1, RETURN CODE:", my_auto.set_automotive_mode(1))
         print("SET AUTOMOTIVE MODE, RETURN CODE:", my_auto.set_automotive_mode(0))
         print(SEPARATOR)
         print()
