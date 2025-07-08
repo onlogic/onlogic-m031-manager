@@ -182,14 +182,14 @@ do not all report the status types in the same way.
 | `RECV_UNEXPECTED_PAYLOAD_ERROR`              |  -2   | The received payload did not match the expected   |
 |                                              |       | format or structure during validation.            |
 +----------------------------------------------+-------+-----------t---------------------------------------+
-| `RECV_FRAME_NACK_ERROR`                      |  -3   | The CRC value of the received frame did not       |
-|                                              |       | match the expected value, indicating corruption.  |
+| `RECV_FRAME_NACK_ERROR`                      |  -3   | The acknowledgment frame validation failed,       |
+|                                              |       | indicating an issue with the tail frame.          |
 +----------------------------------------------+-------+---------------------------------------------------+
 | `RECV_FRAME_CRC_ERROR`                       |  -4   | The CRC value of the received frame did not       |
 |                                              |       | match the expected value, indicating corruption.  |
 +----------------------------------------------+-------+---------------------------------------------------+
-| `RECV_FRAME_ACK_ERROR`                       |  -5   | The acknowledgment frame validation failed,       |
-|                                              |       | indicating an issue with the tail frame.          |
+| `RECV_FRAME_ACK_ERROR`                       |  -5   | Missmatched ACKs in the send of frame             |
+|                                              |       |                                                   |
 +----------------------------------------------+-------+---------------------------------------------------+
 | `RECV_FRAME_SOF_ERROR`                       |  -6   | The start-of-frame (SOF) byte `0x01` was not      |
 |                                              |       | found in the received frame.                      |
