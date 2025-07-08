@@ -8,7 +8,7 @@ Description:
 
 Usage:
     Windows: 
-        python dio_implementation.py
+        python dio_implementation_with_logging.py
 
     Linux in venv:
         sudo source/bin/python3 dio_implementation_with_logging.py

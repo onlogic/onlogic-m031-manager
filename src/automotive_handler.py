@@ -34,7 +34,7 @@ class AutomotiveHandler(OnLogicM031Manager):
 
     Attributes:
         serial_connection_label (str): The label of the serial connection. 
-    
+
     Examples:
         Claim and release port for the Automotive class with either:
 
@@ -137,7 +137,7 @@ class AutomotiveHandler(OnLogicM031Manager):
     def get_automotive_mode(self) -> int:
         """Get the automotive mode of the device.
 
-        Automotive-mode enables or disables system automotive features,
+        Automotive-mode enables or disables all automotive ignition features,
         this method uses the LPMCU protocol discussed in the README and 
         documentation to get the automotive mode from the Sequence MCU.
 
@@ -178,7 +178,7 @@ class AutomotiveHandler(OnLogicM031Manager):
     def set_automotive_mode(self, amd: int) -> int:
         """Set the automotive mode of the device.
         
-        Automotive-mode enables or disables system automotive features. This method uses the
+        Automotive-mode enables or disables all automotive ignition features. This method uses the
         LPMCU protocol discussed in the README and documentation to set the set whether the device 
         is in automotive mode or not.
         
@@ -220,9 +220,9 @@ class AutomotiveHandler(OnLogicM031Manager):
     def get_low_power_enable(self) -> int:
         """Get the low power enable status value from the MCU.
 
-        Low Power Enable enables entering a very low power state when the system powers off. 
-        The system can only wake from the power-button and the ignition switch 
-        when in this power state.This method uses the LPMCU protocol discussed in the README 
+        Low Power Enable enables entering a low power state when the system is powered off by 
+        ignition switch. System can only wake from ignition switch in this power state.
+        This method uses the LPMCU protocol discussed in the README 
         and documentation to get the low power enable status from the Sequence MCU.
         
         Args:
@@ -262,8 +262,8 @@ class AutomotiveHandler(OnLogicM031Manager):
     def set_low_power_enable(self, lpe: int) -> int:
         """Set the low power enable status in the sequence MCU.
 
-        Low Power Enable enables entering a very low power state when the system powers off. 
-        The system can only wake from the power-button and the ignition switch when in this power state.
+        Low Power Enable enables entering a low power state when the system is powered off by 
+        ignition switch. System can only wake from ignition switch in this power state.
         This method uses the LPMCU protocol discussed in the README and documentation to set the low power 
         enable status of the sequence MCU.
         
@@ -301,8 +301,8 @@ class AutomotiveHandler(OnLogicM031Manager):
     def get_start_up_timer(self) -> int:
         """Get the start-up timer value from the MCU.
 
-        The start-up timer controls the number of seconds that the 
-        ignition input must be stable before the system will power on.
+        The number of seconds that the ignition input must be stable before the system powers on,
+        The input voltage must also recover from low-voltage shutdown before powering on.
         This method uses the LPMCU protocol discussed in the README and documentation
         to get the start up timer.
 
@@ -311,7 +311,7 @@ class AutomotiveHandler(OnLogicM031Manager):
 
         Returns:
             int: the start-up timer value of the device in seconds.  
-                 the start-up timer can be configured between 1 - 1048575 seconds
+                 the start-up timer can be configured between 1 - 36_000 seconds
                  A value < 0 indicates an error in the command or response.
         Example:
             >>> start_up_timer = my_auto.get_start_up_timer()
@@ -351,7 +351,7 @@ class AutomotiveHandler(OnLogicM031Manager):
         of the sequence MCU.
         
         Args:
-            sut (int): The start up timer to set. 1 - 1048575 seconds.
+            sut (int): The start up timer to set. 1 - 36_000 seconds.
 
         Returns:
             int: The status of the command. 0 indicates success, < 0 indicates an error in the command or response.
@@ -400,7 +400,7 @@ class AutomotiveHandler(OnLogicM031Manager):
 
         Returns: 
             int: The soft-off timer value of the device in seconds.   
-                 The soft-off timer can be configured between 1 - 1048575 seconds
+                 The soft-off timer can be configured between 1 - 36_000 seconds
                  A value < 0 indicates an error in the command or response.
 
         Example:
@@ -440,7 +440,7 @@ class AutomotiveHandler(OnLogicM031Manager):
         and documentation to set the soft off timer of the sequence MCU.
 
         Args:
-            sot (int): The soft off timer to set. 1 - 1048575 seconds.
+            sot (int): The soft off timer to set. 1 - 36_000 seconds.
 
         Returns:
             int: The status of the command. 0 indicates success, < 0 indicates an error in the command or response.
@@ -488,7 +488,7 @@ class AutomotiveHandler(OnLogicM031Manager):
 
         Returns:
             int: The hard-off timer value of the device in seconds.  
-                 The hard-off timer can be configured between 1 - 1048575 seconds
+                 The hard-off timer can be configured between 1 - 36_000 seconds
                  A value < 0 indicates an error in the command or response.
         Example:
             >>> hard_off_timer = my_auto.get_hard_off_timer()
@@ -526,7 +526,7 @@ class AutomotiveHandler(OnLogicM031Manager):
         and documentation to set the hard off timer of the sequence MCU.
         
         Args:
-            hot (int): The hard off timer to set. 1 - 1048575 seconds.
+            hot (int): The hard off timer to set. 1 - 36_000 seconds.
         
         Returns:
             int: The status of the command. 0 indicates success, < 0 indicates an error in the command or response.
@@ -575,7 +575,7 @@ class AutomotiveHandler(OnLogicM031Manager):
         
         Returns:
             int: The low voltage timer value of the device in seconds.
-                    The low voltage timer can be configured between 1 - 1048575 seconds
+                    The low voltage timer can be configured between 1 - 36_000 seconds
                     A value < 0 indicates an error in the command or response.
         Example:
             >>> low_voltage_timer = my_auto.get_low_voltage_timer()
@@ -609,11 +609,12 @@ class AutomotiveHandler(OnLogicM031Manager):
         """Set the low voltage timer value in the sequence MCU.
         
         The number of seconds that the measured voltage can be lower than the shutdown
-        threshold before a forced shutdown will occur. This method uses the LPMCU protocol
-        discussed in the README and documentation to set the low voltage timer of the sequence MCU.
+        threshold before a forced shutdown will occur.
+        This method uses the LPMCU protocol discussed in the README and documentation 
+        to set the low voltage timer of the sequence MCU.
         
         Args:
-            lvt (int): The low voltage timer to set. 1 - 1048575 seconds.
+            lvt (int): The low voltage timer to set. 1 - 36_000 seconds.
         
         Returns:
             int: The status of the command. 0 indicates success, < 0 indicates an error in the command or response.
@@ -652,8 +653,9 @@ class AutomotiveHandler(OnLogicM031Manager):
     def get_shutdown_voltage(self) -> int:
         """Get the existing shutdown voltage value from the MCU.
         
-        The shutdown voltage value dictates threshold voltage for triggering low-voltage
-        shutdown events. This method uses the LPMCU protocol discussed in the README and documentation
+        Input voltage level that triggers a low-voltage shutdown event. 
+        The minimum recommended value is 10.5 V.
+        This method uses the LPMCU protocol discussed in the README and documentation
         to get the shutdown voltage threshold of the sequence MCU.
 
         Args:
@@ -716,9 +718,10 @@ class AutomotiveHandler(OnLogicM031Manager):
 
     def set_shutdown_voltage(self, sdv: float) -> int:
         """Set the shutdown voltage value in the sequence MCU.
-        
-        The shutdown voltage value dictates threshold voltage for triggering low-voltage
-        shutdown events. This method uses the LPMCU protocol discussed in the README and documentation
+
+        Input voltage level that triggers a low-voltage shutdown event. 
+        The minimum recommended value is 10.5 V.
+        This method uses the LPMCU protocol discussed in the README and documentation
         to set the shutdown voltage threshold of the sequence MCU.
 
         Warning:
@@ -726,14 +729,14 @@ class AutomotiveHandler(OnLogicM031Manager):
 
         Args:
             sdv (float): The shutdown voltage to set. 1.000 - 48.000 volts.
-        
+
         Returns:
             int: The status of the command. 0 indicates success, < 0 indicates an error in the command or response.
-        
+
         Raises:
             ValueError: If the input parameter is not a valid float or is out of range.
             TypeError: If the input parameter is not of type float.
-        
+
         Example:
             >>> status = my_auto.set_shutdown_voltage(12.0)
             >>> print(f"Success" if status == 0 else f"Error: {status}")
@@ -773,6 +776,11 @@ class AutomotiveHandler(OnLogicM031Manager):
     def get_input_voltage(self) -> float | int:
         """Get the voltage measurement of system input into the MCU.
 
+        Input voltage level that triggers a low-voltage shutdown event. 
+        The minimum recommended value is 10.5 V. This method uses the LPMCU
+        protocol discussed in the README and documentation
+        to set the shutdown voltage threshold of the sequence MCU.
+
         Args:
             None
         
@@ -811,9 +819,9 @@ class AutomotiveHandler(OnLogicM031Manager):
 
     def get_all_automotive_settings(self, output_to_console: bool = False) -> dict:
         """Get all automotive settings from the sequence MCU.
-        
+
         This method is a wrapper that calls all get automotive attributes and 
-        formats them in one dictionary. It provides the option to print the 
+        formats them into one dictionary. It provides the option to print the 
         settings to the console for easy viewing, similar to the screen 
         provided in the BIOS settings. This method uses the LPMCU protocol 
         discussed in the README and documentation to get the automotive 
@@ -906,7 +914,6 @@ class AutomotiveHandler(OnLogicM031Manager):
         >>> print(results)
         [0, 0, 0, 0, 0, 0] 
         """
-
         if len(setting_inputs) != 6:
             raise ValueError("ERROR | setting_input must contain exactly 6 values: [amd, lpe, sut, sot, hot, sdv]")
 

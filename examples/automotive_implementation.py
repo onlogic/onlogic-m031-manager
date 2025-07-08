@@ -7,7 +7,11 @@ Description:
     A simple demonstration of how to use the AutomotiveHandler class to interact with automotive settings.
 
 Usage:
-    python main.py
+    Windows:
+        python automotive_implementation.py
+    
+    Linux in venv: 
+        sudo source/bin/python3 automotive_implementation.py
 
 NOTE: 
     - CTRL+C can be used to exit the program.

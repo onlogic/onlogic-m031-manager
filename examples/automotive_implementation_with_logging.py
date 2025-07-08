@@ -8,7 +8,11 @@ Description:
     This example includes logging functionality to track the operations performed.
 
 Usage:
-    python main.py
+    Windows:
+        python automotive_implementation_with_logging.py
+    
+    Linux in venv: 
+        sudo source/bin/python3 automotive_implementation_with_logging.py    
 
 NOTE: 
     - CTRL+C can be used to exit the program.

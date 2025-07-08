@@ -11,7 +11,10 @@ Description:
 
 Usage:
     Windows:
-        python automotive_mode_with_dio_implementation.py
+        python show_class_info.py
+    
+    Linux in venv: 
+        sudo source/bin/python3 show_class_info.py
 
 NOTE: 
     - CTRL+C can be used to exit the program.

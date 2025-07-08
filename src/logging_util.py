@@ -39,9 +39,9 @@ class LoggingUtil():
             config_logger = LoggingUtil(
                 logger_name='root',
                 logger_level="DEBUG", 
-                handler_mode="CONSOLE"
+                handler_mode="CONSOLE",
             )
-            
+
             config_logger.config_logger_elements()
 
         For info logging to file:
@@ -49,7 +49,8 @@ class LoggingUtil():
             config_logger = LoggingUtil(
                 logger_name='root',
                 logger_level="INFO", 
-                handler_mode="FILE"
+                handler_mode="FILE",
+                log_directory="logs"
             )
 
             config_logger.config_logger_elements()
@@ -59,7 +60,8 @@ class LoggingUtil():
             config_logger = LoggingUtil(
                 logger_name='root',
                 logger_level="ERROR", 
-                handler_mode="BOTH"
+                handler_mode="BOTH",
+                log_directory="logs"
             )
 
             config_logger.config_logger_elements()

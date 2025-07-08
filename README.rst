@@ -181,22 +181,28 @@ do not all report the status types in the same way.
 +----------------------------------------------+-------+---------------------------------------------------+
 | `RECV_UNEXPECTED_PAYLOAD_ERROR`              |  -2   | The received payload did not match the expected   |
 |                                              |       | format or structure during validation.            |
-+----------------------------------------------+-------+---------------------------------------------------+
-| `RECV_FRAME_CRC_ERROR`                       |  -3   | The CRC value of the received frame did not       |
++----------------------------------------------+-------+-----------t---------------------------------------+
+| `RECV_FRAME_NACK_ERROR`                      |  -3   | The CRC value of the received frame did not       |
 |                                              |       | match the expected value, indicating corruption.  |
 +----------------------------------------------+-------+---------------------------------------------------+
-| `RECV_FRAME_ACK_ERROR`                       |  -4   | The acknowledgment frame validation failed,       |
+| `RECV_FRAME_CRC_ERROR`                       |  -4   | The CRC value of the received frame did not       |
+|                                              |       | match the expected value, indicating corruption.  |
++----------------------------------------------+-------+---------------------------------------------------+
+| `RECV_FRAME_ACK_ERROR`                       |  -5   | The acknowledgment frame validation failed,       |
 |                                              |       | indicating an issue with the tail frame.          |
 +----------------------------------------------+-------+---------------------------------------------------+
-| `RECV_FRAME_SOF_ERROR`                       |  -5   | The start-of-frame (SOF) byte `0x01` was not      |
+| `RECV_FRAME_SOF_ERROR`                       |  -6   | The start-of-frame (SOF) byte `0x01` was not      |
 |                                              |       | found in the received frame.                      |
 +----------------------------------------------+-------+---------------------------------------------------+
-| `RECV_PARTIAL_FRAME_VALIDATION_ERROR`        |  -6   | Validation of a partially received frame failed,  |
-|                                              |       | indicating incomplete or corrupted data.          |
+| `RECV_PARTIAL_FRAME_VALIDATION_ERROR`        |  -7   | Validation of a partially received frame failed,  |
+|                                              |       | likely incomplete/corrupted data in mcu response. |
 +----------------------------------------------+-------+---------------------------------------------------+
-| `RECV_FRAME_VALUE_ERROR`                     |  -7   | The received payload contained unexpected or      |
+| `RECV_FRAME_VALUE_ERROR`                     |  -8   | The received payload contained unexpected or      |
 |                                              |       | invalid values.                                   |
 +----------------------------------------------+-------+---------------------------------------------------+
-| `FORMAT_NONE_ERROR`                          |  -8   | A `None` value was encountered during type        |
+| `FORMAT_NONE_ERROR`                          |  -9   | A `None` value was encountered during type        |
 |                                              |       | formatting, indicating a missing or invalid type. |
++----------------------------------------------+-------+---------------------------------------------------+
+| `SHUTDOWN_VOLTAGE_OVER_SYSTEM_VAL`           |  -10  | System voltage not underneath low-voltage shut-   |
+|                                              |       | down value + 0.2V.                                |
 +----------------------------------------------+-------+---------------------------------------------------+

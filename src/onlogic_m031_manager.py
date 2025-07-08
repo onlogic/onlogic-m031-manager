@@ -315,8 +315,8 @@ class OnLogicM031Manager(ABC):
             print("Finished reading file.")
 
     def _reset(self, nack_counter: int = ProtocolConstants.NUM_NACKS, reset_buffers: bool = True) -> None:
-        """Reset following the LPMCU ACK-NACK pattern.
-        
+        """Reset before/following the LPMCU ACK-NACK pattern.
+
         This method is used to clear serial buffers of both the MCU serial port and the host port.
         It ensures the buffer is clear in the LPMCU protocol in order to avild partial frames 
         being parsed by the host MCU.
@@ -675,7 +675,6 @@ class OnLogicM031Manager(ABC):
             return True 
 
         logging.error(f"ERROR | AKNOWLEDGEMENT ERROR mismatch in number of acknowledgements, reduce access speed?")
-
         return False
 
     def _receive_command(self, response_frame_kind: int) -> bytes | int:
@@ -794,9 +793,10 @@ class OnLogicM031Manager(ABC):
         1) input is a bytes object type and 2) there is at least 1 payload value indicated
         by the len field of the returned frame.
         
-        ATTENTION: The payload_end value is exclusive to follow Python list slicing.
-        The start index is inclusive, while the end index is exclusive.
-        This means that the target indices are from start to end-1.
+        ATTENTION: 
+            The payload_end value is exclusive to follow Python list slicing.
+            The start index is inclusive, while the end index is exclusive.
+            This means that the target indices are from start to end-1.
 
         Args:
             frame (bytes): The formetted bytestring frame received from microcontroller
@@ -815,11 +815,11 @@ class OnLogicM031Manager(ABC):
 
     def get_version(self) -> str | int:
         """Get the firmware version of the microcontroller.
-        
+
         Retrieves the firmware of the microcontroller by using the GET_FIRMWARE_VERSION command
         and the LPMCU protocol discussed in the documentation and README. 
         The version is returned as a string in the format "X.X.X",
-        
+
         Params:
             None
 
@@ -849,18 +849,45 @@ class OnLogicM031Manager(ABC):
             return ret_val
 
         return self._format_version_string(frame[TargetIndices.PAYLOAD_START: payload_end])
-    
+
     def status_decoder(self, status_code: int) -> str:
         """Decode the status code into a human-readable string.
 
-        This method takes a status code and returns a human-readable string
+        Will take a status code and returns a human-readable string
         that describes the status code. It is used to decode the status codes
         returned by the microcontroller.
 
         Args:
             status_code (int): The status code to decode.
-        
+
         Returns:
             str: A human-readable string describing the status code.
         """
         return StatusTypes.name_from_code(status_code)
+    
+    def clear_buffers(self) -> None:
+        """User facing hardware and logical clear of serial port buffers.
+
+        Will clear the input and output buffers of the serial port.
+        It is used to ensure that the buffers are clear before sending or receiving data.
+        Will use logical clear for uart shell and also pyserial api clear input/output buffer clear.
+
+        .. attention::
+            This method is useful to ensure that buffers are not full of stale data after an error happens
+            in the communication protocol with the MCU.
+
+        Args:
+            None
+
+        Returns:
+            None
+
+        Raises:
+            serial.SerialException: If the serial connection is not set up.
+        """
+        if not self.is_setup:
+            raise serial.SerialException("ERROR | Serial Connection is not set up, did you claim the port?")
+        
+        self._reset()
+        
+        logging.info("Serial Port Buffers Cleared")

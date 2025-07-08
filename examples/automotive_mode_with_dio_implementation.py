@@ -7,12 +7,14 @@ Description:
     A simple demonstration of how to use the AutomotiveHandler class to interact with automotive settings
     and the DioHandler class to interact with digital inputs and output functions.
 
-    This example combines both functionalities to show how they can work together.
+    This example combines the functionality of both to show how they can work together.
 
 Usage:
     Windows:
         python automotive_mode_with_dio_implementation.py
-    Linux in venv:
+    
+    Linux in venv: 
+        sudo source/bin/python3 automotive_mode_with_dio_implementation.py
 
 NOTE: 
     - CTRL+C can be used to exit the program.

@@ -7,9 +7,10 @@ Description:
     A simple demonstration of how to use the DioHandler class to interact with digital inputs and outputs.
 
 Usage:
-    Windows: python dio_implementation.py
-
-    Linux in venv:
+    Windows:
+        python dio_implementation.py
+    
+    Linux in venv: 
         sudo source/bin/python3 dio_implementation.py
 
 NOTE:
