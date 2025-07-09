@@ -22,7 +22,7 @@ sys.path.insert(0, os.path.abspath('../..'))  # This will include the src direct
 project = 'OnLogicM031Manager'
 copyright = '2025, nick.hanna@onlogic.com, fwengineeringteam@onlogic.com'
 author = 'nick.hanna@onlogic.com, fwengineeringteam@onlogic.com'
-version = release = '0.0.1'
+version = release = '1.0.2'
 
 # -- General configuration ---------------------------------------------------
 extensions = [

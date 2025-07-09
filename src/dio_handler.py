@@ -461,7 +461,7 @@ class DioHandler(OnLogicM031Manager):
             None
         
         Returns:
-            list[list[int]: A list of two lists, fist list contains states of all digital input pins,
+            list[list[int]: A list of two lists, first list contains states of all digital input pins,
                             second list contains states of all digital output pins.
         """
         return [self.get_all_input_states(), self.get_all_output_states()]

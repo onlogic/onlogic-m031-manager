@@ -10,7 +10,7 @@ The OnLogicM031Manager provides a set of tools to interface with peripherals on 
 Setup Required
 --------------
 
-Python 3 must be installed prior to following this guide. Python 3 can be installed from python.org. Ensure Python and pip are added to the system's PATH during installation.
+Python3 must be installed prior to following this guide. Python3 can be installed from python.org. Ensure Python and pip are added to the system's PATH during installation.
 
 Setting up OnLogicM031Manager on Windows (Native Install)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -103,7 +103,7 @@ The examples are designed to be run from the command line with:
 
 .. code-block:: shell
 
-  sudo /path/to/project/bin/python3 dio_implementation.py
+  sudo <path/to/venv>/bin/python3 dio_implementation.py
 
 for the dio_implementation.py script in Ubuntu, for example.
 
@@ -188,7 +188,7 @@ do not all report the status types in the same way.
 | `RECV_FRAME_CRC_ERROR`                       |  -4   | The CRC value of the received frame did not       |
 |                                              |       | match the expected value, indicating corruption.  |
 +----------------------------------------------+-------+---------------------------------------------------+
-| `RECV_FRAME_ACK_ERROR`                       |  -5   | Missmatched ACKs in the send of frame. May        |
+| `RECV_FRAME_ACK_ERROR`                       |  -5   | Mismatched ACKs in the send of frame. May        |
 |                                              |       | indicate issues with MCU receiving cmds from CPU. |
 +----------------------------------------------+-------+---------------------------------------------------+
 | `RECV_FRAME_SOF_ERROR`                       |  -6   | The start-of-frame (SOF) byte `0x01` was not      |

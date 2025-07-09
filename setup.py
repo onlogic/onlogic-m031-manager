@@ -1,17 +1,17 @@
 '''
 Setup file that configures the package.
 '''
-from setuptools import setup, find_packages
+from setuptools import setup
 
 setup( 
     name='OnLogicM031Manager',
-    # url='https://github.com/onlogic',
+    url='https://github.com/onlogic/onlogic-m031-manager',
     author='OnLogic - Nick Hanna',
     author_email='firmwareengineeringteam@onlogic.com',
     packages=['OnLogicM031Manager'],
     package_dir={'OnLogicM031Manager': 'src'},
     install_requires=['pyserial>=3.4', 'fastcrc>=0.3.2', 'pytest>=7.0.0'],
-    version='0.0.1',
+    version='1.0.2',
     license='BSD-2.0',
     description='Tools for Helix 52x and Karbon 52x Peripherals',
     long_description=open('README.rst').read(),
