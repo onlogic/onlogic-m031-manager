@@ -318,7 +318,7 @@ class OnLogicM031Manager(ABC):
         """Reset before/following the LPMCU ACK-NACK pattern.
 
         This method is used to clear serial buffers of both the MCU serial port and the host port.
-        It ensures the buffer is clear in the LPMCU protocol in order to avild partial frames 
+        It ensures the buffer is clear in the LPMCU protocol in order to avoid partial frames 
         being parsed by the host MCU.
 
         Args:
@@ -465,7 +465,7 @@ class OnLogicM031Manager(ABC):
 
         return True
 
-    def _validate_recieved_frame(self, return_frame: list, target_index: int | tuple = None, target_range: tuple = None) -> int:
+    def _validate_recieved_frame(self, return_frame: bytes, target_index: int | tuple = None, target_range: tuple = None) -> int:
         """Validate the received frame from the microcontroller.
 
         Checks for SOF, NACK, CRC and if the target index is within the valid range.
@@ -473,7 +473,7 @@ class OnLogicM031Manager(ABC):
         Returns StatusTypes.SUCCESS if the frame is valid, otherwise returns the appropriate error code.
         
         Args:
-            return_frame (list): The frame received from the microcontroller.
+            return_frame (bytes): The frame received from the microcontroller.
             target_index (int | tuple): Specifies the index or range of indices in the return_frame to check.
                                         If int: A single index in the return_frame to validate.
                                         If tuple: A range of indices (start, stop) to validate.
@@ -486,7 +486,7 @@ class OnLogicM031Manager(ABC):
         Returns:
             int: Status code indicating the result of the validation.
                 - StatusTypes.SUCCESS: Frame is valid.
-                - StatusTypes.RECV_FRAME_VALUE_ERROR: Frame is None, not a list, or too short.
+                - StatusTypes.RECV_FRAME_VALUE_ERROR: Frame is None, a list, or too short.
                 - StatusTypes.RECV_FRAME_SOF_ERROR: SOF value is not correct.
                 - StatusTypes.RECV_FRAME_NACK_ERROR: NACK not found in desired index.
                 - StatusTypes.RECV_FRAME_CRC_ERROR: CRC check failed.
@@ -497,7 +497,7 @@ class OnLogicM031Manager(ABC):
         """
         if return_frame is None or isinstance(return_frame, list) \
               or len(return_frame) < BoundaryTypes.BASE_FRAME_SIZE:
-            logging.error(f"Received Frame {return_frame} is None, not a list, or too short")
+            logging.error(f"Received Frame {return_frame} is None, a list, or too short")
             return StatusTypes.RECV_FRAME_VALUE_ERROR
         
         if return_frame[TargetIndices.SOF] != ProtocolConstants.SHELL_SOF:
@@ -642,40 +642,43 @@ class OnLogicM031Manager(ABC):
         
         return constructed_command
 
-    def _send_command(self, command_to_send: bytes) -> bool:
+    def _send_command(self, command_to_send: bytes) -> int:
         """Send a command to the microcontroller byte-by-byte and validate the response.
         
         The return condition is that the ack count matches the length of the sent command,
-        confirming that the mcu received every part of the command frame successfully. If not, it returns False.
+        confirming that the mcu received every part of the command frame successfully. If not, it returns Error Type.
         
         Args:
             command_to_send (bytes): The command to send to the microcontroller.
         
         Returns:
-            bool: True if the command was sent successfully and acknowledged by the microcontroller.
-                  False if there was a mismatch in the number of acknowledgements received.
-        """
+            StatusTypes (int), SEND_CMD_FAILURE for generic send failure, 
+            RECV_FRAME_ACK_ERROR for specific issues, SUCCESS for successful send.
 
-        # send command byte by byte and validate response
+        """
         logger.debug(f"Length of Command to send: {len(command_to_send)}")
         shell_ack_cnt = 0
-        for byte in command_to_send:
-            byte_to_send = byte.to_bytes(1, byteorder='little')
+        try:
+            for byte in command_to_send:
+                byte_to_send = byte.to_bytes(1, byteorder='little')
 
-            logger.debug(f"Sending {byte} | {byte_to_send}")
-            
-            # self.port.write(byte.to_bytes(1, byteorder='little'))
-            self.port.write(byte_to_send)
-            byte_in_port = self.port.read(1)
+                logger.debug(f"Sending {byte} | {byte_to_send}")
+                
+                # self.port.write(byte.to_bytes(1, byteorder='little'))
+                self.port.write(byte_to_send)
+                byte_in_port = self.port.read(1)
 
-            if int.from_bytes(byte_in_port, byteorder='little') == ProtocolConstants.SHELL_ACK:
-                shell_ack_cnt += 1
+                if int.from_bytes(byte_in_port, byteorder='little') == ProtocolConstants.SHELL_ACK:
+                    shell_ack_cnt += 1
+        except Exception as e:
+            logger.error(f"ERROR {e} \n An error occurred in the command send process. Check connection or reduce access speed?")
+            return StatusTypes.SEND_CMD_FAILURE 
 
         if shell_ack_cnt == len(command_to_send):
-            return True 
+            return StatusTypes.SUCCESS 
 
         logging.error(f"ERROR | AKNOWLEDGEMENT ERROR mismatch in number of acknowledgements, reduce access speed?")
-        return False
+        return StatusTypes.RECV_FRAME_ACK_ERROR
 
     def _receive_command(self, response_frame_kind: int) -> bytes | int:
         """Recieves pertinent response frames from the microcontroller.
@@ -771,8 +774,8 @@ class OnLogicM031Manager(ABC):
             payload_bytes (bytes): The payload bytes to be formatted.
         
         Returns:
-            int: The formatted integer value of the payload bytes.
-                 If the payload is empty, it returns StatusTypes.FORMAT_NONE_ERROR.
+            int | float: The formatted numeric value of the payload bytes.
+                         If the payload is empty, it returns StatusTypes.FORMAT_NONE_ERROR.
         """
         ret_val = StatusTypes.FORMAT_NONE_ERROR
 
@@ -820,20 +823,23 @@ class OnLogicM031Manager(ABC):
         and the LPMCU protocol discussed in the documentation and README. 
         The version is returned as a string in the format "X.X.X",
 
-        Params:
+        Args:
             None
 
         Returns:
             str: The firmware version of the microcontroller in the format "X.X.X".
                   If the version cannot be retrieved, it returns StatusTypes.SEND_CMD_FAILURE.
                   If the payload is empty, it returns StatusTypes.FORMAT_NONE_ERROR.
+                  It will return an int error type if there is a failure.
         """
         version_command = self._construct_command(Kinds.GET_FIRMWARE_VERSION)
 
         # Enclose each value read with buffer clearances
         self._reset(nack_counter=ProtocolConstants.STANDARD_NACK_CLEARANCES)
-        if not self._send_command(version_command):
-            return StatusTypes.SEND_CMD_FAILURE
+
+        send_status = self._send_command(version_command)
+        if send_status is not StatusTypes.SUCCESS:
+            return send_status
 
         frame = self._receive_command(Kinds.GET_FIRMWARE_VERSION)
 

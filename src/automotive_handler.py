@@ -157,8 +157,10 @@ class AutomotiveHandler(OnLogicM031Manager):
         amd = self._construct_command(Kinds.GET_AUTOMOTIVE_MODE)
 
         self._reset(nack_counter=ProtocolConstants.MAX_NACK_CLEARANCES)
-        if not self._send_command(amd):
-            return StatusTypes.SEND_CMD_FAILURE
+
+        send_status = self._send_command(amd)
+        if send_status is not StatusTypes.SUCCESS:
+            return send_status
 
         frame = self._receive_command(Kinds.GET_AUTOMOTIVE_MODE)
         if not isinstance(frame, bytes):
@@ -203,8 +205,9 @@ class AutomotiveHandler(OnLogicM031Manager):
 
         self._reset(nack_counter=ProtocolConstants.MAX_NACK_CLEARANCES)
 
-        if not self._send_command(set_auto_mode):
-            return StatusTypes.SEND_CMD_FAILURE
+        send_status = self._send_command(set_auto_mode)
+        if send_status is not StatusTypes.SUCCESS:
+            return send_status
 
         frame = self._receive_command(Kinds.SET_AUTOMOTIVE_MODE)
         if not isinstance(frame, bytes):
@@ -241,8 +244,10 @@ class AutomotiveHandler(OnLogicM031Manager):
         lpe_command = self._construct_command(Kinds.GET_LOW_POWER_ENABLE)
 
         self._reset(nack_counter=ProtocolConstants.MAX_NACK_CLEARANCES)
-        if not self._send_command(lpe_command):
-            return StatusTypes.SEND_CMD_FAILURE
+        
+        send_status = self._send_command(lpe_command)
+        if send_status is not StatusTypes.SUCCESS:
+            return send_status
 
         frame = self._receive_command(Kinds.GET_LOW_POWER_ENABLE)
         if not isinstance(frame, bytes):
@@ -284,8 +289,9 @@ class AutomotiveHandler(OnLogicM031Manager):
 
         self._reset(nack_counter=ProtocolConstants.MAX_NACK_CLEARANCES)
 
-        if not self._send_command(set_lpe_cmd):
-            return StatusTypes.SEND_CMD_FAILURE
+        send_status = self._send_command(set_lpe_cmd)
+        if send_status is not StatusTypes.SUCCESS:
+            return send_status
 
         frame = self._receive_command(Kinds.SET_LOW_POWER_ENABLE) 
         if not isinstance(frame, bytes):
@@ -320,10 +326,11 @@ class AutomotiveHandler(OnLogicM031Manager):
         """
         sut_cmd = self._construct_command(Kinds.GET_START_UP_TIMER)
 
-        # Enclose each value read with buffer clearances
         self._reset(nack_counter=ProtocolConstants.MAX_NACK_CLEARANCES)
-        if not self._send_command(sut_cmd):
-            return StatusTypes.SEND_CMD_FAILURE
+
+        send_status = self._send_command(sut_cmd)
+        if send_status is not StatusTypes.SUCCESS:
+            return send_status
 
         frame = self._receive_command(Kinds.GET_START_UP_TIMER)
         if not isinstance(frame, bytes):
@@ -371,8 +378,9 @@ class AutomotiveHandler(OnLogicM031Manager):
 
         self._reset(nack_counter=ProtocolConstants.MAX_NACK_CLEARANCES)
 
-        if not self._send_command(set_sut_cmd):
-            return StatusTypes.SEND_CMD_FAILURE
+        send_status = self._send_command(set_sut_cmd)
+        if send_status is not StatusTypes.SUCCESS:
+            return send_status
 
         frame = self._receive_command(Kinds.SET_START_UP_TIMER) 
         if not isinstance(frame, bytes):
@@ -411,8 +419,10 @@ class AutomotiveHandler(OnLogicM031Manager):
         sot_timer_cmd = self._construct_command(Kinds.GET_SOFT_OFF_TIMER)
 
         self._reset(nack_counter=ProtocolConstants.MAX_NACK_CLEARANCES)
-        if not self._send_command(sot_timer_cmd):
-            return StatusTypes.SEND_CMD_FAILURE
+        
+        send_status = self._send_command(sot_timer_cmd)
+        if send_status is not StatusTypes.SUCCESS:
+            return send_status
 
         frame = self._receive_command(Kinds.GET_SOFT_OFF_TIMER)
         if not isinstance(frame, bytes):
@@ -460,8 +470,9 @@ class AutomotiveHandler(OnLogicM031Manager):
 
         self._reset(nack_counter=ProtocolConstants.MAX_NACK_CLEARANCES)
 
-        if not self._send_command(set_sot_cmd):
-            return StatusTypes.SEND_CMD_FAILURE
+        send_status = self._send_command(set_sot_cmd)
+        if send_status is not StatusTypes.SUCCESS:
+            return send_status
 
         frame = self._receive_command(Kinds.SET_SOFT_OFF_TIMER)
         if not isinstance(frame, bytes):
@@ -498,8 +509,10 @@ class AutomotiveHandler(OnLogicM031Manager):
         hot_timer_cmd = self._construct_command(Kinds.GET_HARD_OFF_TIMER)
 
         self._reset(nack_counter=ProtocolConstants.MAX_NACK_CLEARANCES)
-        if not self._send_command(hot_timer_cmd):
-            return StatusTypes.SEND_CMD_FAILURE
+        
+        send_status = self._send_command(hot_timer_cmd)
+        if send_status is not StatusTypes.SUCCESS:
+            return send_status
 
         frame = self._receive_command(Kinds.GET_HARD_OFF_TIMER)
         if not isinstance(frame, bytes):
@@ -546,8 +559,9 @@ class AutomotiveHandler(OnLogicM031Manager):
 
         self._reset(nack_counter=ProtocolConstants.MAX_NACK_CLEARANCES)
 
-        if not self._send_command(set_hot_cmd):
-            return StatusTypes.SEND_CMD_FAILURE
+        send_status = self._send_command(set_hot_cmd)
+        if send_status is not StatusTypes.SUCCESS:
+            return send_status
 
         frame = self._receive_command(Kinds.SET_HARD_OFF_TIMER) 
         if not isinstance(frame, bytes):
@@ -585,8 +599,10 @@ class AutomotiveHandler(OnLogicM031Manager):
         lvt_timer_cmd = self._construct_command(Kinds.GET_LOW_VOLTAGE_TIMER)
 
         self._reset(nack_counter=ProtocolConstants.MAX_NACK_CLEARANCES)
-        if not self._send_command(lvt_timer_cmd):
-            return StatusTypes.SEND_CMD_FAILURE
+        
+        send_status = self._send_command(lvt_timer_cmd)
+        if send_status is not StatusTypes.SUCCESS:
+            return send_status
 
         frame = self._receive_command(Kinds.GET_LOW_VOLTAGE_TIMER)
         if not isinstance(frame, bytes):
@@ -634,8 +650,9 @@ class AutomotiveHandler(OnLogicM031Manager):
 
         self._reset(nack_counter=ProtocolConstants.MAX_NACK_CLEARANCES)
 
-        if not self._send_command(set_lvt_cmd):
-            return StatusTypes.SEND_CMD_FAILURE
+        send_status = self._send_command(set_lvt_cmd)
+        if send_status is not StatusTypes.SUCCESS:
+            return send_status
 
         frame = self._receive_command(Kinds.SET_LOW_VOLTAGE_TIMER)
         if not isinstance(frame, bytes):
@@ -672,10 +689,11 @@ class AutomotiveHandler(OnLogicM031Manager):
         """
         sdv_timer_cmd = self._construct_command(Kinds.GET_SHUTDOWN_VOLTAGE)
 
-        # Enclose each value read with buffer clearances
         self._reset(nack_counter=ProtocolConstants.MAX_NACK_CLEARANCES)
-        if not self._send_command(sdv_timer_cmd):
-            return StatusTypes.SEND_CMD_FAILURE
+        
+        send_status = self._send_command(sdv_timer_cmd)
+        if send_status is not StatusTypes.SUCCESS:
+            return send_status
 
         frame = self._receive_command(Kinds.GET_SHUTDOWN_VOLTAGE)
         if not isinstance(frame, bytes):
@@ -705,13 +723,11 @@ class AutomotiveHandler(OnLogicM031Manager):
         Returns:
             int: A status code indicating the result of the validation.
         """
-        # TODO: Determine if hysteresis is needed for shutdown voltage
-        # Check current voltage levels, returns negative if error
         system_voltage = self.get_input_voltage()
         if system_voltage < 0: 
             return system_voltage
 
-        if sdv >= system_voltage:
+        if sdv >= system_voltage + ProtocolConstants.HYSTERESIS:
             return StatusTypes.SHUTDOWN_VOLTAGE_OVER_SYSTEM_VAL
 
         return StatusTypes.SUCCESS
@@ -757,8 +773,9 @@ class AutomotiveHandler(OnLogicM031Manager):
 
         self._reset(nack_counter=ProtocolConstants.MAX_NACK_CLEARANCES)
 
-        if not self._send_command(set_sdv_cmd):
-            return StatusTypes.SEND_CMD_FAILURE
+        send_status = self._send_command(set_sdv_cmd)
+        if send_status is not StatusTypes.SUCCESS:
+            return send_status
 
         frame = self._receive_command(Kinds.SET_SHUTDOWN_VOLTAGE) 
         if not isinstance(frame, bytes):
@@ -794,10 +811,11 @@ class AutomotiveHandler(OnLogicM031Manager):
         """
         input_voltage_cmd = self._construct_command(Kinds.GET_INPUT_VOLTAGE)
 
-        # Enclose each value read with buffer clearances
         self._reset(nack_counter=ProtocolConstants.MAX_NACK_CLEARANCES)
-        if not self._send_command(input_voltage_cmd):
-            return StatusTypes.SEND_CMD_FAILURE
+
+        send_status = self._send_command(input_voltage_cmd)
+        if send_status is not StatusTypes.SUCCESS:
+            return send_status
 
         frame = self._receive_command(Kinds.GET_INPUT_VOLTAGE)
         if not isinstance(frame, bytes):
@@ -813,7 +831,7 @@ class AutomotiveHandler(OnLogicM031Manager):
         ret_val = self._validate_recieved_frame(frame, target_indices, BoundaryTypes.BYTE_VALUE_RANGE)
         if ret_val is not StatusTypes.SUCCESS:
             return ret_val
-        
+
         # this is going to need to be modified to handle the float conversion
         return self._format_response_number(frame[TargetIndices.PAYLOAD_START: payload_end], float) 
 
@@ -846,7 +864,7 @@ class AutomotiveHandler(OnLogicM031Manager):
             - ``'sut'`` (int): Current setting for the Start Up Timer (Seconds).
             - ``'sot'`` (int): Current setting for the Soft Off Timer (Seconds).
             - ``'hot'`` (int): Current setting for the Hard Off Timer (Seconds).
-            - ``'sdv'`` (int): Current setting for the Shutdown Voltage (millivolts).
+            - ``'sdv'`` (float): Current setting for the Shutdown Voltage (Volts).
 
         Examples
         --------
@@ -858,6 +876,7 @@ class AutomotiveHandler(OnLogicM031Manager):
             "sut": 10,
             "sot": 5,
             "hot": 15,
+            "lvt" : 10,
             "sdv": 12.0
         }
         """
@@ -867,6 +886,7 @@ class AutomotiveHandler(OnLogicM031Manager):
             "sut" : self.get_start_up_timer(),
             "sot" : self.get_soft_off_timer(),
             "hot" : self.get_hard_off_timer(),
+            "lvt" : self.get_low_voltage_timer(),
             "sdv" : self.get_shutdown_voltage(),
         }
 
@@ -884,15 +904,16 @@ class AutomotiveHandler(OnLogicM031Manager):
 
         Args
         ----
-        setting_input : list
+        setting_inputs : list
             A list of values corresponding to the desired states for:
 
-            - ``automotive_mode_enabled`` (int)
-            - ``low_power_enabled`` (int)
-            - ``start_up_timer_seconds`` (int)
-            - ``soft_off_timer_seconds`` (int)
-            - ``hard_off_timer_seconds`` (int)
-            - ``shutdown_voltage_mv`` (int)
+            - ``automotive-mode`` (int)
+            - ``low-power-enable`` (int)
+            - ``startup-timer`` (int)
+            - ``soft-off-timer`` (int)
+            - ``hard-off-timer`` (int)
+            - ``low-voltage-timer`` (int)
+            - ``shutdown-voltage`` (float)
 
         Returns
         -------
@@ -905,17 +926,20 @@ class AutomotiveHandler(OnLogicM031Manager):
             - Result of ``set_start_up_timer()`` (int): Status code for setting the start-up timer.
             - Result of ``set_soft_off_timer()`` (int): Status code for setting the soft-off timer.
             - Result of ``set_hard_off_timer()`` (int): Status code for setting the hard-off timer.
+            - Result of ``set_low_voltage_timer()`` (int): Status code for setting the low-voltage timer.
             - Result of ``set_shutdown_voltage()`` (int): Status code for setting the shutdown voltage.
 
         Example
         -------
-        >>> setting_inputs = [1, 1, 10, 5, 15, 12000] # 12000mV for 12.0V
+        >>> setting_inputs = [1, 1, 10, 5, 15, 10, 20.0]
         >>> results = my_auto.set_all_automotive_settings(setting_inputs)
         >>> print(results)
-        [0, 0, 0, 0, 0, 0] 
+        [0, 0, 0, 0, 0, 0, 0] 
         """
-        if len(setting_inputs) != 6:
-            raise ValueError("ERROR | setting_input must contain exactly 6 values: [amd, lpe, sut, sot, hot, sdv]")
+        NUM_INPUT_PARAMS = 7
+        if len(setting_inputs) != NUM_INPUT_PARAMS:
+            
+            raise ValueError(f"ERROR | setting_input must contain exactly {NUM_INPUT_PARAMS} values: [amd, lpe, sut, sot, hot, lvt, sdv]")
 
         # Validate each input parameter
         self._validate_input_param(setting_inputs[0], BoundaryTypes.BINARY_VALUE_RANGE, int)  # amd
@@ -923,13 +947,14 @@ class AutomotiveHandler(OnLogicM031Manager):
         self._validate_input_param(setting_inputs[2], BoundaryTypes.AUTOMOTIVE_TIMER_RANGE, int)  # sut
         self._validate_input_param(setting_inputs[3], BoundaryTypes.AUTOMOTIVE_TIMER_RANGE, int)  # sot
         self._validate_input_param(setting_inputs[4], BoundaryTypes.AUTOMOTIVE_TIMER_RANGE, int)  # hot
+        self._validate_input_param(setting_inputs[5], BoundaryTypes.AUTOMOTIVE_TIMER_RANGE, int)  # lvt
 
-        # Convert shutdown voltage to float if it is an int
+        # Convert shutdown voltage to float if it is an int:
         # makes input more forgiving
-        if isinstance(setting_inputs[5], int):
-            setting_inputs[5] = float(setting_inputs[5])    
+        if isinstance(setting_inputs[6], int):
+            setting_inputs[6] = float(setting_inputs[6])    
             
-        self._validate_input_param(setting_inputs[5], BoundaryTypes.AUTOMOTIVE_TIMER_RANGE, float)  # sdv
+        self._validate_input_param(setting_inputs[6], BoundaryTypes.AUTOMOTIVE_SHUTDOWN_VOLTAGE_RANGE, float)  # sdv
 
         # Call individual set methods with inputs corresponding to list order
         return [
@@ -938,5 +963,6 @@ class AutomotiveHandler(OnLogicM031Manager):
             self.set_start_up_timer(setting_inputs[2]),
             self.set_soft_off_timer(setting_inputs[3]),
             self.set_hard_off_timer(setting_inputs[4]),
-            self.set_shutdown_voltage(setting_inputs[5]),
+            self.set_low_voltage_timer(setting_inputs[5]),
+            self.set_shutdown_voltage(setting_inputs[6]),
         ]

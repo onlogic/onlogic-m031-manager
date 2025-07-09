@@ -3,12 +3,11 @@ Configuration file for Sphinx documentation
 
 PDF generation: 
 
-cd /docs/ 
+cd docs/ 
 
 then run:
 
 sphinx-build -b pdf source build/pdf
-
 
 pip install sphinx rst2pdf sphinx_rtd_theme
 

@@ -183,13 +183,13 @@ do not all report the status types in the same way.
 |                                              |       | format or structure during validation.            |
 +----------------------------------------------+-------+-----------t---------------------------------------+
 | `RECV_FRAME_NACK_ERROR`                      |  -3   | The acknowledgment frame validation failed,       |
-|                                              |       | indicating an issue with the tail frame.          |
+|                                              |       | indicating an issue with the last index of frame. |
 +----------------------------------------------+-------+---------------------------------------------------+
 | `RECV_FRAME_CRC_ERROR`                       |  -4   | The CRC value of the received frame did not       |
 |                                              |       | match the expected value, indicating corruption.  |
 +----------------------------------------------+-------+---------------------------------------------------+
-| `RECV_FRAME_ACK_ERROR`                       |  -5   | Missmatched ACKs in the send of frame             |
-|                                              |       |                                                   |
+| `RECV_FRAME_ACK_ERROR`                       |  -5   | Missmatched ACKs in the send of frame. May        |
+|                                              |       | indicate issues with MCU receiving cmds from CPU. |
 +----------------------------------------------+-------+---------------------------------------------------+
 | `RECV_FRAME_SOF_ERROR`                       |  -6   | The start-of-frame (SOF) byte `0x01` was not      |
 |                                              |       | found in the received frame.                      |

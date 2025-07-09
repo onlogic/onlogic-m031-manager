@@ -127,13 +127,14 @@ def main():
         print(SEPARATOR)
         print("TESTING SET SHUTDOWN VOLTAGE (set_all_automotive_settings)")
         print(
-            "[amd, lpe, sut, sot, hot, sdv]",
+            "[amd, lpe, sut, sot, hot, lvt, sdv]",
             my_auto.set_all_automotive_settings(setting_inputs = [
                     0,  # amd 
                     0,  # lpe 
                     10, # sut 
                     20, # sot 
-                    30, # hot 
+                    30, # hot
+                    10, # lvt
                     12.0 # sdv << NOTE: Should be a float
                 ]
             ),

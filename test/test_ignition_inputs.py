@@ -33,8 +33,9 @@ def test_crank_values(auto_handler):
                 0, # set_low_power_enable
                 collective_automotive_setting, # set_start_up_timer
                 collective_automotive_setting, # set_soft_off_timer
-                collective_automotive_setting, # setting_input
-                collective_automotive_setting, # set_shutdown_voltage
+                collective_automotive_setting, # set_soft_off_timer
+                collective_automotive_setting, # set_low_voltage_timer
+                20.0, # set_shutdown_voltage
             ]
         )
 
@@ -48,7 +49,8 @@ def test_crank_values(auto_handler):
         assert automitive_setting_dict["sut"] == collective_automotive_setting
         assert automitive_setting_dict["sot"] == collective_automotive_setting
         assert automitive_setting_dict["hot"] == collective_automotive_setting
-        assert automitive_setting_dict["sdv"] == collective_automotive_setting
+        assert automitive_setting_dict["lvt"] == collective_automotive_setting
+        assert automitive_setting_dict["sdv"] == 20.0
 
         collective_automotive_setting = (collective_automotive_setting << 1)
 
@@ -59,11 +61,12 @@ def test_edge_case_values(auto_handler):
         0, # set_low_power_enable
         254, # set_start_up_timer
         254, # set_soft_off_timer
-        254, # setting_input
-        254, # set_shutdown_voltage
+        254, # set hard_off_timer
+        254, # set_low_voltage_timer
+        20.0, # set_shutdown_voltage
     ]
 
-    for i in range(1, 4):
+    for _ in range(1, 4):
         return_codes = auto_handler.set_all_automotive_settings(edge_case)
 
         if any( i != 0 for i in return_codes ):
@@ -76,7 +79,8 @@ def test_edge_case_values(auto_handler):
         assert automitive_setting_dict["sut"] == edge_case[2]
         assert automitive_setting_dict["sot"] == edge_case[3]
         assert automitive_setting_dict["hot"] == edge_case[4]
-        assert automitive_setting_dict["sdv"] == edge_case[5]
+        assert automitive_setting_dict["lvt"] == edge_case[5]
+        assert automitive_setting_dict["sdv"] == 20.0
 
         edge_case[2] = edge_case[2] + 1
         edge_case[3] = edge_case[3] + 1

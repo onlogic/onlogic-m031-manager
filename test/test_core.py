@@ -110,7 +110,7 @@ def test_context_manager_both():
         with AutomotiveHandler("/dev/ttyS4") as my_auto:
             assert my_dio.is_setup == True
             assert my_auto.is_setup == True
-            print(my_auto.set_all_automotive_settings([0, 0, 5, 5, 10, 600]))
+            print(my_auto.set_all_automotive_settings([0, 0, 5, 5, 5, 5, 20.0]))
 
             print(my_auto.get_all_automotive_settings())
             print(my_dio.get_all_input_states())

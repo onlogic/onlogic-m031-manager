@@ -150,6 +150,7 @@ def main():
                     10, # sut 
                     20, # sot 
                     30, # hot 
+                    10, # lvt
                     12.0 # sdv << NOTE: Should be a float
                 ]
             ),

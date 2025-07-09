@@ -20,7 +20,7 @@ class ProtocolConstants:
         entire maximum-length frame buffered containing only SHELL_NACK.  To be
         confident that we've received the entire frame and the MCU is ready to accept
         our next command, we need to receive 4 bytes (header) + 255 bytes (payload) of
-        NACKs. This said, we have yet to implement the the worst-case scenario in Python Package.
+        NACKs.
     """
     BAUDRATE = 115_200
 
