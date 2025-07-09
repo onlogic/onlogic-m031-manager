@@ -181,7 +181,7 @@ do not all report the status types in the same way.
 +----------------------------------------------+-------+---------------------------------------------------+
 | `RECV_UNEXPECTED_PAYLOAD_ERROR`              |  -2   | The received payload did not match the expected   |
 |                                              |       | format or structure during validation.            |
-+----------------------------------------------+-------+-----------t---------------------------------------+
++----------------------------------------------+-------+---------------------------------------------------+
 | `RECV_FRAME_NACK_ERROR`                      |  -3   | The acknowledgment frame validation failed,       |
 |                                              |       | indicating an issue with the last index of frame. |
 +----------------------------------------------+-------+---------------------------------------------------+
