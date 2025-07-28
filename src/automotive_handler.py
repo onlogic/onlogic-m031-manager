@@ -741,7 +741,7 @@ class AutomotiveHandler(OnLogicM031Manager):
         to set the shutdown voltage threshold of the sequence MCU.
 
         Warning:
-            The shutdown voltage MUST be set to a value that is lower than the system voltage.
+            The shutdown voltage MUST be set to a value that is lower than the system voltage + 0.2V.
 
         Args:
             sdv (float): The shutdown voltage to set. 1.000 - 48.000 volts.

@@ -10,7 +10,7 @@ The OnLogicM031Manager provides a set of tools to interface with peripherals on 
 Setup Required
 --------------
 
-Python3 must be installed prior to following this guide. Python3 can be installed from python.org. Ensure Python and pip are added to the system's PATH during installation.
+Python 3 must be installed prior to following this guide. Python 3 can be installed from python.org. Ensure Python and pip are added to the system's PATH during installation.
 
 Setting up OnLogicM031Manager on Windows (Native Install)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -21,7 +21,7 @@ These steps serve as a guide for installing the OnLogicM031Manager directly into
    "cmd" or "powershell" are shorthands that can be entered in the Start Menu to pull them up.
 
 2. Clone Project and Navigate to the Project Directory:
-   In the parent directory where the project is to be run, run the following command in powershell to clone the repository
+   In the parent directory where the project is to be run, run the following command in PowerShell to clone the repository
 
    .. code-block:: shell
 
@@ -80,12 +80,12 @@ To run the OnLogicM031Manager package in Ubuntu, it's best practice to use a ven
     $ deactivate
 
 * When the venv is activated, running any python scripts will use the venv's interpreter and packages. 
-  But, when running a script that needs root privileges (``sudo python ...``), the venv's Python won't be used, even if it's activated. 
-  One solution is to explicitly use the venv's interpreter when running a Python script::
+  But, when running a script that needs root privileges (``sudo python ...``), the venv's Python won't be used, 
+  even if it's activated. One solution is to explicitly use the venv's interpreter when running a Python script::
 
   $ sudo <path/to/venv>/bin/python somescript.py
 
-* The whole path must be used to sudo in, and IO cannot be accessed without sudo privaleges
+* The full path to the venv's Python binary must be used with sudo. IO operations cannot be accessed without sudo privileges.
 
 After, set up required packages in venv:
 
@@ -94,12 +94,12 @@ After, set up required packages in venv:
 
 Examples
 ========
-There are several examples in the ``examples`` directory. The examples
-are designed to run from the command line and follow the setup seen above.
-Make sure, however, that for Automotive settings, COM visibility is enabled within
-the BIOS.
+There are several automotive and DIO sample implementations in the ``examples`` directory. 
+These examples are designed to run from the command line and follow the setup seen above.
+Make sure, however, that COM visibility is enabled within the BIOS to properly configure 
+automotive settings.
 
-The examples are designed to be run from the command line with:
+The examples are run from the command line with:
 
 .. code-block:: shell
 
@@ -147,20 +147,22 @@ this:
                          <- (data byte)      0x01
   (acknowledge)    \r   ->
 
-This sequence shows the CPU sending a ``kGet_LowPowerEnable`` message with no
+The example sequence above shows the CPU sending a ``kGet_LowPowerEnable`` message with no
 additional data and the MCU responding with a ``kGet_LowPowerEnable`` response
-with one byte of additional data.
+with one additional data byte.
 
-This Python Module administers this protocol in communication with both DIO and Sequence microcontrollers.
-It makes native Python datatypes, converts them to byte compatable communication, and administers this process
+This Python library administers the Shell Transport Protocol with both DIO and Sequence microcontrollers.
+It takes inputs as Python datatypes, converts them to byte-compatible equivalents, and administers the shell protocol
 with additional type and value checking.
 
 **Note** the CPU uses two distinct communication protocols to talk with the DIO and Sequence Microcontrollers.
-1. CDC-USB with the DIO Card
-2. UART with the Sequence Micro
+1. CDC-USB with the DIO Card.
+2. UART with the Sequence Micro.
 
-For this reason, the user must manually specify the serial port name for the sequence micro ``.claim()`` method in the ``AutomotiveManager`` class, 
-whereas for the ``DioHandler``, the ``.claim()`` method can be left blank and the program will autolock on the serial connection label.
+The serial port name must be explicitly specified in the UART protocol on both Linux and Windows. 
+For the ``AutomotiveManager`` class, the serial port name is passed into the ``.claim()`` method.
+For the ``DioHandler`` class, the ``.claim()`` method can be left blank and 
+the program will autolock on the serial connection label.
 
 Status Types:
 --------------
@@ -203,6 +205,6 @@ do not all report the status types in the same way.
 | `FORMAT_NONE_ERROR`                          |  -9   | A `None` value was encountered during type        |
 |                                              |       | formatting, indicating a missing or invalid type. |
 +----------------------------------------------+-------+---------------------------------------------------+
-| `SHUTDOWN_VOLTAGE_OVER_SYSTEM_VAL`           |  -10  | System voltage not underneath low-voltage shut-   |
-|                                              |       | down value + 0.2V.                                |
+| `SHUTDOWN_VOLTAGE_OVER_SYSTEM_VAL`           |  -10  | System voltage exceeds low-voltage shut-down      |
+|                                              |       | value + 0.2V.                                     |
 +----------------------------------------------+-------+---------------------------------------------------+

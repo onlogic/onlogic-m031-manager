@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """DioHandler module for managing Digital Input/Output (DIO) operations.
 
-Provides methods that allow users to access nearly all features of DIO card. 
+Provides methods that allow users to access nearly all the features available on the DIO card. 
 """
 
 import time
