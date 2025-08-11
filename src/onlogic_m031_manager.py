@@ -137,7 +137,7 @@ class OnLogicM031Manager(ABC):
         for port in sorted(all_ports):
             if not verbose:
                 print(port)
-                logging.info(port)
+                logger.info(port)
             elif verbose:
                 comport_info = (
                         f"Port: {port}\n"
@@ -146,7 +146,7 @@ class OnLogicM031Manager(ABC):
                         f"Device: {port.device}\n"
                  )
                 print(comport_info)
-                logging.info(comport_info)  
+                logger.info(comport_info)  
 
     def _get_cdc_device_port(self, dev_id: str, location: str = None) -> str | None:
         """Scan and return the port of the target device.
@@ -169,7 +169,7 @@ class OnLogicM031Manager(ABC):
         for port in sorted(all_ports):
             if dev_id in port.hwid:
                 if location and location in port.location:
-                    logging.info(f"NOTE | DIO CARD FOUND ON:\n"
+                    logger.info(f"NOTE | DIO CARD FOUND ON:\n"
                                 f"Port: {port}\n"
                                 f"Port Location: {port.location}\n"
                                 f"Hardware ID: {port.hwid}\n"
@@ -260,7 +260,7 @@ class OnLogicM031Manager(ABC):
             if self.port.inWaiting() > 0:
                 byte_in_port = self.port.read(1)
                 if int.from_bytes(byte_in_port, byteorder='little') == ProtocolConstants.SHELL_NACK:
-                    logging.debug(f"{byte_in_port}")
+                    logger.debug(f"{byte_in_port}")
                     nack_count += 1
                     self.port.write(ProtocolConstants.SHELL_ACK.to_bytes(1, byteorder='little'))
                     time.sleep(ProtocolConstants.STANDARD_DELAY)
@@ -345,7 +345,7 @@ class OnLogicM031Manager(ABC):
             if bytes_sent > 1024:
                 ack_error_msg = f"ERROR | AKNOWLEDGEMENT ERROR: Cannot recover MCU"
                 
-                logging.error(ack_error_msg)
+                logger.error(ack_error_msg)
                 
                 raise RuntimeError(ack_error_msg)
 
@@ -388,7 +388,7 @@ class OnLogicM031Manager(ABC):
         if type(input_value) != input_type:
             type_error_msg = f"ERROR | {type(input_value)} was found when {input_type} was expected"
 
-            logging.error(type_error_msg)
+            logger.error(type_error_msg)
 
             raise TypeError(type_error_msg)
 
@@ -397,7 +397,7 @@ class OnLogicM031Manager(ABC):
             value_error_msg = "ERROR | Out of Range Value Provided: " + str(input_value) + "." + \
                               " Valid Range " + str(valid_input_range)
 
-            logging.error(value_error_msg)
+            logger.error(value_error_msg)
 
             raise ValueError(value_error_msg)
 
@@ -422,10 +422,10 @@ class OnLogicM031Manager(ABC):
         
         crc_val = crc8.smbus(crc_bytes)
 
-        logging.debug(f"CALCULATED {crc_val} : EXISTING {frame[TargetIndices.CRC]}")
+        logger.debug(f"CALCULATED {crc_val} : EXISTING {frame[TargetIndices.CRC]}")
 
         if crc_val != frame[TargetIndices.CRC]:
-            logging.debug(f"CRC MISMATCH")
+            logger.debug(f"CRC MISMATCH")
             return False
 
         return True
@@ -456,7 +456,7 @@ class OnLogicM031Manager(ABC):
             logger.debug(f"Indices to check {payload_indices_to_check}")            
 
         else:
-            logging.error(f"Invalid target_index type: {type(target_index)} or length: {len(target_index)}")
+            logger.error(f"Invalid target_index type: {type(target_index)} or length: {len(target_index)}")
             return False
 
         for payload_idx in payload_indices_to_check:
@@ -497,26 +497,26 @@ class OnLogicM031Manager(ABC):
         """
         if return_frame is None or isinstance(return_frame, list) \
               or len(return_frame) < BoundaryTypes.BASE_FRAME_SIZE:
-            logging.error(f"Received Frame {return_frame} is None, a list, or too short")
+            logger.error(f"Received Frame {return_frame} is None, a list, or too short")
             return StatusTypes.RECV_FRAME_VALUE_ERROR
         
         if return_frame[TargetIndices.SOF] != ProtocolConstants.SHELL_SOF:
-            logging.error(f"SOF Value Not Correct")
+            logger.error(f"SOF Value Not Correct")
             return StatusTypes.RECV_FRAME_SOF_ERROR
 
         if return_frame[TargetIndices.NACK] != ProtocolConstants.SHELL_NACK:
-            logging.error(f"NACK Not Found in Desired Index")
+            logger.error(f"NACK Not Found in Desired Index")
             return StatusTypes.RECV_FRAME_NACK_ERROR
 
         is_crc = self._check_crc(return_frame)
         if not is_crc:
-            logging.error(f"CRC Check fail")
+            logger.error(f"CRC Check fail")
             return StatusTypes.RECV_FRAME_CRC_ERROR
 
         if target_index is not None \
                 and not self._within_valid_range(return_frame, target_index, target_range): 
             
-            logging.error(f"Value(s) at idx {target_index} not in target range: {target_range}")
+            logger.error(f"Value(s) at idx {target_index} not in target range: {target_range}")
             
             return StatusTypes.RECV_UNEXPECTED_PAYLOAD_ERROR
 
@@ -583,7 +583,7 @@ class OnLogicM031Manager(ABC):
         self._mcu_connection_check()
         self.is_setup = True
         self._reset() 
-        logging.info("Serial Port Claimed")
+        logger.info("Serial Port Claimed")
 
     def release(self):
         """Release the serial port, reset the buffers, and reset the connection."""
@@ -593,7 +593,7 @@ class OnLogicM031Manager(ABC):
             self.port.reset_output_buffer()
             self.port.close()
             self.is_setup = False
-            logging.info("Serial Port Successfully Released")
+            logger.info("Serial Port Successfully Released")
 
     @functools.lru_cache(maxsize=128)
     def _construct_command(self, kind: Kinds, *payload: int | bytes) -> bytes:
@@ -638,7 +638,7 @@ class OnLogicM031Manager(ABC):
                                         *payload
                                         ])
 
-        logging.info(f"Constructed Command {constructed_command}")
+        logger.info(f"Constructed Command {constructed_command}")
         
         return constructed_command
 
@@ -677,7 +677,7 @@ class OnLogicM031Manager(ABC):
         if shell_ack_cnt == len(command_to_send):
             return StatusTypes.SUCCESS 
 
-        logging.error(f"ERROR | AKNOWLEDGEMENT ERROR mismatch in number of acknowledgements, reduce access speed?")
+        logger.error(f"ERROR | AKNOWLEDGEMENT ERROR mismatch in number of acknowledgements, reduce access speed?")
         return StatusTypes.RECV_FRAME_ACK_ERROR
 
     def _receive_command(self, response_frame_kind: int) -> bytes | int:
@@ -896,4 +896,4 @@ class OnLogicM031Manager(ABC):
         
         self._reset()
         
-        logging.info("Serial Port Buffers Cleared")
+        logger.info("Serial Port Buffers Cleared")

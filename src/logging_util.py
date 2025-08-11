@@ -81,7 +81,7 @@ class LoggingUtil():
                                  It is cleaned of invalid characters and stripped of whitespace.
                                  Defaults to None.
         """
-        self.logger_name  = self.__handle_lconfig_str(logger_name)
+        self.logger_name  = logger_name
         self.logger_level  = self.__handle_lconfig_str(logger_level)
         self.handler_mode = self.__handle_lconfig_str(handler_mode)
         self.log_directory = self.__handle_ldirectory_str(log_directory)
