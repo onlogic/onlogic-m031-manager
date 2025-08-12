@@ -250,6 +250,7 @@ class LoggingUtil():
         logger.propagate = False
 
         self.logger = logger
+
         print(f"Configured logger '{self.logger_name}'"
               f"(Level: {self.logger_level.upper()}," 
               f"Handlers: {[h.__class__.__name__ for h in logger.handlers]}," 

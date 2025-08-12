@@ -1,17 +1,17 @@
 """
 Author: OnLogic - nick.hanna@onlogic.com, firmwareengineeringteam@onlogic.com
 For:    K-52x
-Title:  K-52x Logging Multiple Logger Implementation Example
+Title:  K-52x Multiple Logger Implementation Example
 
 Description:
     A simple demonstration of how to use several loggers in a simple implementation across multiple classes.
 
 Usage:
     Windows:
-        python automotive_implementation_sdv_with_logging.py
+        python multiple_logger_implementation.py
     
     Linux in venv: 
-        sudo source/bin/python3 automotive_implementation_sdv_with_logging.py    
+        sudo source/bin/python3 multiple_logger_implementation.py    
 
 NOTE: 
     - CTRL+C can be used to exit the program.
@@ -24,6 +24,7 @@ NOTE:
 
 from OnLogicM031Manager import DioHandler
 from OnLogicM031Manager import AutomotiveHandler
+from OnLogicM031Manager import LoggingUtil
 
 import logging
 import time
@@ -35,18 +36,14 @@ def main():
 
     SEPARATOR = "=" * 30
 
-    from OnLogicM031Manager.logging_util import LoggingUtil
-
     # Initialize logging configurations
     try:
-        # 1. Configure the root logger to INFO to see messages from this script.
+        # root logger to INFO to see messages from this script.
         LoggingUtil('root', 'info', 'console').config_logger_elements()
-        
-        # 2. These loggers remain independent and will only show ERROR messages.
+
+        # loggers remain independent and will only show ERROR messages
         LoggingUtil('OnLogicM031Manager.dio_handler', 'error', 'console').config_logger_elements()
         LoggingUtil('OnLogicM031Manager.automotive_handler', 'error', 'console').config_logger_elements()
-        
-        # 3. This logger will only show DEBUG messages.
         LoggingUtil('OnLogicM031Manager.onlogic_m031_manager', 'error', 'console').config_logger_elements()
 
         # Get the logger for use in this file (__main__)
@@ -64,12 +61,13 @@ def main():
 
     try:
         # Init MCU Handlers
-        my_dio = DioHandler()
+        my_dio = DioHandler() # should automatically find the DIO card if connected
         my_auto = AutomotiveHandler(serial_connection_label="/dev/ttyS4") # will be "/dev/ttySX" on Linux or "COMX" on Windows
 
         my_dio.claim() 
         my_auto.claim()
 
+        ### DIO FUNCTIONALITY ###
         # set dio contact to wet
         my_dio.set_di_contact(0) 
         my_dio.set_do_contact(0)
@@ -91,7 +89,7 @@ def main():
         print(SEPARATOR)
         main_logger.info("TESTING GET SHUTDOWN VOLTAGE (get_shutdown_voltage)")
         main_logger.info(f"GET SHUT OFF VOLTAGE VALUE: {my_auto.get_shutdown_voltage()}")
-        main_logger.info(SEPARATOR)
+        print(SEPARATOR)
         print()
 
         print(SEPARATOR)
@@ -108,7 +106,7 @@ def main():
         print("Exiting...") 
         if my_auto is not None:
             my_auto.release() 
-        
+
         if my_dio is not None:
             my_dio.release()
 
