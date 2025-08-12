@@ -62,7 +62,7 @@ def main():
     try:
         # Init MCU Handlers
         my_dio = DioHandler() # should automatically find the DIO card if connected
-        my_auto = AutomotiveHandler(serial_connection_label="/dev/ttyS4") # will be "/dev/ttySX" on Linux or "COMX" on Windows
+        my_auto = AutomotiveHandler(serial_connection_label="COM5") # will be "/dev/ttySX" on Linux or "COMX" on Windows
 
         my_dio.claim() 
         my_auto.claim()
@@ -73,13 +73,15 @@ def main():
         my_dio.set_do_contact(0)
 
         pin_val = 1
-        main_logger.info(f"\nSetting DO channels to {pin_val}")
+        print()
+        main_logger.info(f"Setting DO channels to {pin_val}")
         for i in range(0, 8):
             result = my_dio.set_do(i, pin_val)
             main_logger.info(f"Setting DO Channel {i} to 1: Status Code = {result}")
 
         pin_val = 0
-        main_logger.info(f"\nSetting DO channels to {pin_val}")
+        print()
+        main_logger.info(f"Setting DO channels to {pin_val}")
         for i in range(0, 8):
             result = my_dio.set_do(i, pin_val)
             main_logger.info(f"Setting DO Channel {i} to 0: Status Code = {result}")

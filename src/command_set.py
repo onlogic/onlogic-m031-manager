@@ -136,5 +136,3 @@ class BoundaryTypes:
 
     AUTOMOTIVE_TIMER_RANGE = (1, 36_000)
     AUTOMOTIVE_SHUTDOWN_VOLTAGE_RANGE = (1.0, 48.2)
-
-############################################
