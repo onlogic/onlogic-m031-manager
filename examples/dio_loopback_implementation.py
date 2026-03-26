@@ -73,7 +73,7 @@ def main():
                     print(f"Error: DO pin {pin} set to {initial_val}, but DI reads {di_val}")
                     print(f"Total errors so far: {error_count}")
 
-                    # Evaluates the new boolean
+                    # Evaluates the boolean
                     if STOP_ON_MAX_ERROR and error_count >= MAX_ERRORS_ALLOWED:
                         print(f"\nMax errors ({MAX_ERRORS_ALLOWED}) reached. Terminating test.")
                         run_test = False
