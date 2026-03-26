@@ -32,8 +32,8 @@ The outputs function as open drains. The inputs are high impedance.
 
    There is **no internal pull-up** to the DI[0:7] pins when set to WET mode.
 
-   * Externally supplied **5 V - 30 V is recognized as logic 0**.
-   * Externally supplied **0 V - 3 V is recognized as logic 1**.
+   * Externally supplied **10 V - 30 V is recognized as logic 1**.
+   * Externally supplied **0 V - 10 V is recognized as logic 0**.
 
    **Setup required for Input:**
 
@@ -43,8 +43,8 @@ The outputs function as open drains. The inputs are high impedance.
 
    When the contact type is set to DRY mode, DI[0:7] are **pulled up to the internal isolated ~12V supply**.
 
-   * An **open/floating connection is recognized as logic 0**.
-   * A **short to GND is recognized as logic 1**.
+   * An **open/floating connection is recognized as logic 1**.
+   * A **short to GND is recognized as logic 0**.
 
    **Setup required for Input:**
 

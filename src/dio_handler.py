@@ -22,9 +22,10 @@ class DioHandler(OnLogicM031Manager):
 
     As a reminder, the DIO card has 8 digital input pins and 8 digital output pins.
     
-    The digital input pins are active-low, meaning that a 0 indicates that the pin is on,
-    and a 1 indicates that the pin is off. The digital output pins are active-high, meaning
-    that a 0 indicates that the pin is off, and a 1 indicates that the pin is on.
+    In this software API, both the digital input and digital output pins operate using 
+    positive logic based on voltage levels. A 1 indicates a high voltage state 
+    (5-48V in wet mode, or a 11 V - 12.6 V when active connection in dry mode). A 0 indicates a 
+    low voltage state (a short to GND). 
 
     The DIO card also has a contact type for each pin, which can be either Wet or Dry.
     The contact type is set using the set_di_contact and set_do_contact methods.
@@ -158,7 +159,7 @@ class DioHandler(OnLogicM031Manager):
         return frame[TargetIndices.PENULTIMATE]
 
     def get_do(self, do_pin: int) -> int:
-        """Gets the state of active-high digital outputs on the DIO card.
+        """Gets the state of the digital outputs on the DIO card.
 
         Args:
             do_pin (int): digital output pin with range [0-7]
@@ -204,7 +205,7 @@ class DioHandler(OnLogicM031Manager):
         return frame[TargetIndices.PENULTIMATE]
 
     def set_do(self, pin: int, value: int) -> int:
-        """Sets the state of active-high digital outputs on the DIO card.
+        """Sets the state of the digital outputs on the DIO card.
 
         Args:
             pin (int): digital output pin with range [0-7]
@@ -428,6 +429,10 @@ class DioHandler(OnLogicM031Manager):
         
         Args:
             None
+
+        Returns:
+            list[int]: A list of 8 binary-valued pin states, if successful, all values should be between 0 and 1. 
+                       values < 0 indicate failure.
         '''
         DI_PIN_MIN, DI_PIN_MAX = BoundaryTypes.DIGITAL_IO_PIN_RANGE
         return [self.get_di(state) for state in range(DI_PIN_MIN, DI_PIN_MAX + 1)]
