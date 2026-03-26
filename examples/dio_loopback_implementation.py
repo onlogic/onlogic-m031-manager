@@ -28,14 +28,16 @@ from OnLogicM031Manager import DioHandler
 def main():
     '''main, implementation of session logic.'''
 
-    # Set to None outside exception handling
-    # incase of improper class initialization
-    my_dio = None
-
+    # --- Test Configuration ---
+    STOP_ON_MAX_ERROR = True   # Set to True to stop at MAX_ERRORS_ALLOWED, False to run infinitely
+    MAX_ERRORS_ALLOWED = 16     # Only applies if STOP_ON_MAX_ERROR is True
     NUM_PINS = 8
     SLEEP_TIME = 0.1
     ERROR_SLEEP_TIME = 1 
-    max_errors_allowed = NUM_PINS * 2
+
+    # Set to None outside exception handling
+    # incase of improper class initialization
+    my_dio = None
 
     try:
         # Init DIO handler
@@ -54,9 +56,13 @@ def main():
 
         initial_val = 1
         error_count = 0
-        while True:
+        attempt_count = 0
+        
+        run_test = True
+        while run_test:
             for pin in range(NUM_PINS):
                 print(f"Setting DO pin {pin} to {initial_val}")
+                attempt_count += 1
                 my_dio.set_do(pin, initial_val)
                 di_val = my_dio.get_di(pin)
 
@@ -65,20 +71,27 @@ def main():
                     error_count += 1
 
                     print(f"Error: DO pin {pin} set to {initial_val}, but DI reads {di_val}")
-                    print("Number of errors: ", error_count, ", Max allowed: ", max_errors_allowed, sep="")
-                    if error_count >= max_errors_allowed:
-                        print("Too many errors, check connection(s).")
-                        exit(1)
+                    print(f"Total errors so far: {error_count}")
+
+                    # Evaluates the new boolean
+                    if STOP_ON_MAX_ERROR and error_count >= MAX_ERRORS_ALLOWED:
+                        print(f"\nMax errors ({MAX_ERRORS_ALLOWED}) reached. Terminating test.")
+                        run_test = False
+                        break 
 
                     time.sleep(ERROR_SLEEP_TIME)
                     continue
 
                 time.sleep(SLEEP_TIME)
 
-            initial_val ^= 1
+            if run_test:
+                initial_val ^= 1
+
+        print(f"\nTest Summary -> Total attempts: {attempt_count}, Total errors: {error_count}")
 
     except KeyboardInterrupt:
-        print("Operation terminated by user.")
+        print("\nOperation terminated by user.")
+        print(f"Test Summary -> Total attempts: {attempt_count}, Total errors: {error_count}")
     finally: 
         print("Exiting...")
         if my_dio is not None:
